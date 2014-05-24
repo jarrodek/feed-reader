@@ -1,0 +1,93 @@
+#feed-list {
+  margin: 0 10px 0 0;
+  padding: 0 0;
+  list-style: none;
+  position: fixed;
+  width: 30%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px #e5e5e5 solid;
+  max-width: 400px;
+  min-width: 200px;
+}
+#feed-list .feed-list-display{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.feed-icon{
+  display: inline-block;
+  vertical-align: middle;
+  width: 24px;
+  height: 24px;
+  margin-right: 7px;
+  
+}
+.feed-title{
+  display: inline-block;
+  vertical-align: middle;
+  word-break: break-all;
+}
+.feed-icon.star{
+  background-image: url('/packages/rss_app/component/star-active.png');
+  background-size: 16px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.feed-icon.star.inactive{
+  background-image: url('/packages/rss_app/component/star.png');
+}
+#feed-list .feed-list-display li {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px #e5e5e5 solid;
+  cursor: pointer;
+}
+#feed-list .feed-list-display li a{
+  padding: 12px 15px;
+  display: block;
+  color: rgb(51, 51, 51);
+}
+#feed-list .feed-list-display li.noborder{
+  border-bottom: none;
+}
+#feed-list .feed-list-display li.title-divider{
+  font-weight: bold;
+  color: #265180;
+  border-color: #265180;
+  padding-bottom: 1px;
+  padding-left: 5px;
+}
+#feed-list .feed-list-display li.subscription-feed a{
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+}
+#feed-list .feed-list-display li.subscription-feed .feed-title{
+  flex: 1;
+}
+#feed-list .feed-list-display li.subscription-feed .feed-icon.star{
+  margin-left: 7px;
+  margin-right: 0;
+}
+#feed-list .feed-list-display li.selected{
+  background-color: #F1F1F1;
+}
+
+.label {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: bold;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+}
+.label-default {
+  background-color: #999;
+}

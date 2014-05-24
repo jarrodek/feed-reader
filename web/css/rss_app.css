@@ -1,0 +1,70 @@
+body {
+  background-color: #F8F8F8;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.2em;
+  margin: 15px;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  /*overflow: auto;*/
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
+.ng-cloak, .x-ng-cloak,
+.ng-hide {
+  display: none !important;
+}
+
+ng\:form {
+  display: block;
+}
+
+.ng-animate-block-transitions {
+  transition:0s all!important;
+  -webkit-transition:0s all!important;
+}
+
+[ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+   display: none !important;
+}
+body {
+  display: flex;
+  /*align-content: stretch;
+  flex-direction: row;*/
+  flex-direction: column;
+  height: 100%;
+}
+#app-container{
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  overflow: auto;
+}
+#app-container > feed-list {
+  width: 30%;
+  position: relative;
+  max-width: 400px;
+  min-width: 200px;
+}
+#app-container > .main-content{
+  flex: 1;
+  overflow: auto;
+  max-width: 800px;
+}
+.top-header {
+  border-bottom: 1px #e5e5e5 solid;
+  padding: 7px 10px;
+}
+.feed-content .page-title{
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
+  margin-left: 30px;
+  margin-bottom: 25px;
+  margin-top: 10px;
+  color: rgb(20, 121, 230);
+}

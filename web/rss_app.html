@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app lang="en" ng-csp>
+  <head>
+    <meta charset="utf-8">
+    <title>Rss app</title>
+    <link rel="stylesheet" href="css/rss_app.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+  </head>
+  <body rss-app ng-cloak>
+    
+    <header class="top-header">
+      <add-feed-header></add-feed-header>
+    </header>
+    
+    <div id="app-container">
+      <feed-list feeds="ctrl.feeds" selected="ctrl.currentFeed" unread-count="ctrl.unreadCount"></feed-list>
+      <div class="main-content">
+        <ng-view></ng-view>
+      </div>
+    </div>
+    
+    
+    
+    
+    <script src="packages/chrome/bootstrap.js" defer></script>
+
+    <script src="rss_app.dart" type="application/dart"></script>    
+  </body>
+</html>

@@ -1,0 +1,20 @@
+<nav id="feed-list">
+  <ul class="feed-list-display" ng-if="cmp.feeds != null && cmp.feeds.length > 0">
+    <li ng-class="{'selected':cmp.selected == 'unread'}" ng-click="cmp.selected = 'unread'">
+      <a href="#/unread"><span class="feed-icon unread"></span><span class="feed-title">Unread ({{cmp.unreadCount}})</span></a>
+    </li>
+    <li ng-class="{'selected':cmp.selected == 'starred'}" ng-click="cmp.selected = 'starred'">
+      <a href="#/starred"><span class="feed-icon star"></span><span class="feed-title">Starred</span></a>
+    </li>
+    <li class="noborder" ng-class="{'selected':cmp.selected == 'all'}" ng-click="cmp.selected = 'all'">
+      <a href="#/all"><span class="feed-icon all-items"></span><span class="feed-title">All items</span></a>
+    </li>
+    <li class="title-divider">Subscriptions</li>
+    <li ng-repeat="feed in cmp.feeds" class="subscription-feed" ng-class="{'selected':cmp.selected == feed.feedid}" ng-click="cmp.selected = feed.feedid">
+      <a href="#/feed/{{feed.id}}"><span class="feed-title">{{feed.display}} <span class="label label-default">{{feed.unreadCounter}}</span></span><span class="feed-icon star inactive"></span></a>
+    </li>
+  </ul>
+  <div classs="" ng-if="cmp.feeds == null || cmp.feeds.length == 0">
+    <p>Add a feed to the app.</p>
+  </div>
+</nav>

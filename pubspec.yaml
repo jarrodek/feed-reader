@@ -1,0 +1,11 @@
+name: rss_app
+description: A sample Chrome packaged application
+dependencies:
+  angular: any
+  angular_dart_ui_bootstrap: any
+  angular_ui: any
+  chrome: any
+  shadow_dom: any
+transformers:
+- chrome
+- angular
