@@ -33,7 +33,7 @@
  *      }
  *
  *      var module = new Module()
- *          ..bind(RouteInitializerFn, toValue: initRoutes);
+ *          ..value(RouteInitializerFn, initRoutes);
  *
  *  Let's see how we could define our routes using the routing framework:
  *
@@ -166,20 +166,20 @@ part 'ng_bind_route.dart';
 
 class RoutingModule extends Module {
   RoutingModule({bool usePushState: true}) {
-    bind(NgRoutingUsePushState);
-    bind(Router, toFactory: (injector) {
+    type(NgRoutingUsePushState);
+    factory(Router, (injector) {
       var useFragment = !injector.get(NgRoutingUsePushState).usePushState;
       return new Router(useFragment: useFragment,
                         windowImpl: injector.get(Window));
     });
-    bind(NgRoutingHelper);
-    bind(RouteProvider, toValue: null);
-    bind(RouteInitializer, toValue: null);
-    bind(RouteInitializerFn, toValue: null);
+    type(NgRoutingHelper);
+    value(RouteProvider, null);
+    value(RouteInitializer, null);
+    value(RouteInitializerFn, null);
 
     // directives
-    bind(NgView, toValue: null);
-    bind(NgBindRoute);
+    value(NgView, null);
+    type(NgBindRoute);
   }
 }
 

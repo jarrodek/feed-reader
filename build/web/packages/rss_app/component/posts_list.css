@@ -6,6 +6,21 @@ article.list-feed-post{
 article.list-feed-post:last-child{
   border-bottom: none;
 }
+
+
+.list-feed-post{
+  display: flex;
+  flex-direction: row;
+}
+.list-feed-post .content{
+  flex:1;
+}
+.list-feed-post .actions{
+  min-width: 25px;
+  margin-left: 10px;
+}
+
+
 .list-feed-post > header h1{
   font-size: 1.3em;
   /* color: rgb(97, 173, 255); */
@@ -82,3 +97,4 @@ header h1 {
   vertical-align: baseline;
   border-radius: .25em;
 }
+

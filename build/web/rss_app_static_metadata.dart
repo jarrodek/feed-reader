@@ -11,10 +11,11 @@ import 'package:angular/routing/module.dart' as import_4;
 import 'package:rss_app/rss_controller.dart' as import_5;
 import 'package:rss_app/component/feed_list.dart' as import_6;
 import 'package:rss_app/component/posts_list.dart' as import_7;
-import 'package:rss_app/component/add_feed_header.dart' as import_8;
+import 'package:rss_app/component/add_feed_header/add_feed_header.dart' as import_8;
 import 'package:rss_app/formatter/text_formatter.dart' as import_9;
+import 'package:rss_app/component/star/star.dart' as import_10;
 Module get metadataModule => new Module()
-    ..bind(MetadataExtractor, toValue: new _StaticMetadataExtractor());
+    ..value(MetadataExtractor, new _StaticMetadataExtractor());
 
 class _StaticMetadataExtractor implements MetadataExtractor {
   Iterable call(Type type) {
@@ -33,14 +34,11 @@ final Map<Type, Object> typeAnnotations = {
   import_0.AttrMustache: const [
     const import_1.Decorator(selector: r'[*=/{{.*}}/]'),
   ],
-  import_0.Content: const [
-    const import_1.Decorator(selector: 'content'),
-  ],
   import_2.AHref: const [
     const import_1.Decorator(selector: 'a[href]'),
   ],
   import_2.NgBaseCss: const [
-    const import_1.Decorator(selector: '[ng-base-css]', map: const {'ng-base-css': '@urls'}),
+    const import_1.Decorator(selector: '[ng-base-css]', visibility: import_1.Directive.CHILDREN_VISIBILITY, map: const {'ng-base-css': '@urls'}),
   ],
   import_2.NgBind: const [
     const import_1.Decorator(selector: '[ng-bind]', map: const {'ng-bind': '=>value'}),
@@ -138,7 +136,6 @@ final Map<Type, Object> typeAnnotations = {
     const import_1.Decorator(selector: 'input[type=url][ng-model]'),
     const import_1.Decorator(selector: 'input[type=email][ng-model]'),
     const import_1.Decorator(selector: 'input[type=search][ng-model]'),
-    const import_1.Decorator(selector: 'input[type=tel][ng-model]'),
   ],
   import_2.InputNumberLike: const [
     const import_1.Decorator(selector: 'input[type=number][ng-model]'),
@@ -146,11 +143,11 @@ final Map<Type, Object> typeAnnotations = {
   ],
   import_2.NgBindTypeForDateLike: const [
     const import_1.Decorator(selector: 'input[type=date][ng-model][ng-bind-type]', map: const {'ng-bind-type': '@idlAttrKind'}),
-    const import_1.Decorator(selector: 'input[type=time][ng-model][ng-bind-type]', map: const {'ng-bind-type': '@idlAttrKind'}),
-    const import_1.Decorator(selector: 'input[type=datetime][ng-model][ng-bind-type]', map: const {'ng-bind-type': '@idlAttrKind'}),
-    const import_1.Decorator(selector: 'input[type=datetime-local][ng-model][ng-bind-type]', map: const {'ng-bind-type': '@idlAttrKind'}),
-    const import_1.Decorator(selector: 'input[type=month][ng-model][ng-bind-type]', map: const {'ng-bind-type': '@idlAttrKind'}),
-    const import_1.Decorator(selector: 'input[type=week][ng-model][ng-bind-type]', map: const {'ng-bind-type': '@idlAttrKind'}),
+    const import_1.Decorator(selector: 'input[type=time][ng-model][ng-bind-type]'),
+    const import_1.Decorator(selector: 'input[type=datetime][ng-model][ng-bind-type]'),
+    const import_1.Decorator(selector: 'input[type=datetime-local][ng-model][ng-bind-type]'),
+    const import_1.Decorator(selector: 'input[type=month][ng-model][ng-bind-type]'),
+    const import_1.Decorator(selector: 'input[type=week][ng-model][ng-bind-type]'),
   ],
   import_2.InputDateLike: const [
     const import_1.Decorator(selector: 'input[type=date][ng-model]', module: import_2.InputDateLike.moduleFactory),
@@ -162,7 +159,7 @@ final Map<Type, Object> typeAnnotations = {
   ],
   import_2.NgValue: const [
     const import_1.Decorator(selector: 'input[type=radio][ng-model][ng-value]', map: const {'ng-value': '=>value'}),
-    const import_1.Decorator(selector: 'option[ng-value]', map: const {'ng-value': '=>value'}),
+    const import_1.Decorator(selector: 'option[ng-value]'),
   ],
   import_2.NgTrueValue: const [
     const import_1.Decorator(selector: 'input[type=checkbox][ng-model][ng-true-value]', map: const {'ng-true-value': '=>value'}),
@@ -226,16 +223,16 @@ final Map<Type, Object> typeAnnotations = {
     const import_1.Decorator(selector: '[ng-non-bindable]', children: import_1.Directive.IGNORE_CHILDREN),
   ],
   import_2.InputSelect: const [
-    const import_1.Decorator(selector: 'select[ng-model]'),
+    const import_1.Decorator(selector: 'select[ng-model]', visibility: import_1.Directive.CHILDREN_VISIBILITY),
   ],
   import_2.OptionValue: const [
     const import_1.Decorator(selector: 'option', module: import_2.NgValue.moduleFactory),
   ],
   import_2.NgForm: const [
-    const import_1.Decorator(selector: 'form', module: import_2.NgForm.module, map: const {'name': '@name'}),
-    const import_1.Decorator(selector: 'fieldset', module: import_2.NgForm.module, map: const {'name': '@name'}),
-    const import_1.Decorator(selector: '.ng-form', module: import_2.NgForm.module, map: const {'name': '@name'}),
-    const import_1.Decorator(selector: '[ng-form]', module: import_2.NgForm.module, map: const {'ng-form': '@name', 'name': '@name'}),
+    const import_1.Decorator(selector: 'form', module: import_2.NgForm.module, visibility: import_1.Directive.CHILDREN_VISIBILITY, map: const {'name': '@name'}),
+    const import_1.Decorator(selector: 'fieldset', module: import_2.NgForm.module, visibility: import_1.Directive.CHILDREN_VISIBILITY),
+    const import_1.Decorator(selector: '.ng-form', module: import_2.NgForm.module, visibility: import_1.Directive.CHILDREN_VISIBILITY),
+    const import_1.Decorator(selector: '[ng-form]', module: import_2.NgForm.module, map: const {'ng-form': '@name'}, visibility: import_1.Directive.CHILDREN_VISIBILITY),
   ],
   import_2.NgModelRequiredValidator: const [
     const import_1.Decorator(selector: '[ng-model][required]'),
@@ -253,27 +250,27 @@ final Map<Type, Object> typeAnnotations = {
   ],
   import_2.NgModelMaxNumberValidator: const [
     const import_1.Decorator(selector: 'input[type=number][ng-model][max]', map: const {'max': '@max'}),
-    const import_1.Decorator(selector: 'input[type=range][ng-model][max]', map: const {'max': '@max'}),
-    const import_1.Decorator(selector: 'input[type=number][ng-model][ng-max]', map: const {'ng-max': '=>max', 'max': '@max'}),
-    const import_1.Decorator(selector: 'input[type=range][ng-model][ng-max]', map: const {'ng-max': '=>max', 'max': '@max'}),
+    const import_1.Decorator(selector: 'input[type=range][ng-model][max]'),
+    const import_1.Decorator(selector: 'input[type=number][ng-model][ng-max]', map: const {'ng-max': '=>max'}),
+    const import_1.Decorator(selector: 'input[type=range][ng-model][ng-max]', map: const {'ng-max': '=>max'}),
   ],
   import_2.NgModelMinNumberValidator: const [
     const import_1.Decorator(selector: 'input[type=number][ng-model][min]', map: const {'min': '@min'}),
-    const import_1.Decorator(selector: 'input[type=range][ng-model][min]', map: const {'min': '@min'}),
-    const import_1.Decorator(selector: 'input[type=number][ng-model][ng-min]', map: const {'ng-min': '=>min', 'min': '@min'}),
-    const import_1.Decorator(selector: 'input[type=range][ng-model][ng-min]', map: const {'ng-min': '=>min', 'min': '@min'}),
+    const import_1.Decorator(selector: 'input[type=range][ng-model][min]'),
+    const import_1.Decorator(selector: 'input[type=number][ng-model][ng-min]', map: const {'ng-min': '=>min'}),
+    const import_1.Decorator(selector: 'input[type=range][ng-model][ng-min]', map: const {'ng-min': '=>min'}),
   ],
   import_2.NgModelPatternValidator: const [
     const import_1.Decorator(selector: '[ng-model][pattern]', map: const {'pattern': '@pattern'}),
-    const import_1.Decorator(selector: '[ng-model][ng-pattern]', map: const {'ng-pattern': '=>pattern', 'pattern': '@pattern'}),
+    const import_1.Decorator(selector: '[ng-model][ng-pattern]', map: const {'ng-pattern': '=>pattern'}),
   ],
   import_2.NgModelMinLengthValidator: const [
     const import_1.Decorator(selector: '[ng-model][minlength]', map: const {'minlength': '@minlength'}),
-    const import_1.Decorator(selector: '[ng-model][ng-minlength]', map: const {'ng-minlength': '=>minlength', 'minlength': '@minlength'}),
+    const import_1.Decorator(selector: '[ng-model][ng-minlength]', map: const {'ng-minlength': '=>minlength'}),
   ],
   import_2.NgModelMaxLengthValidator: const [
     const import_1.Decorator(selector: '[ng-model][maxlength]', map: const {'maxlength': '@maxlength'}),
-    const import_1.Decorator(selector: '[ng-model][ng-maxlength]', map: const {'ng-maxlength': '=>maxlength', 'maxlength': '@maxlength'}),
+    const import_1.Decorator(selector: '[ng-model][ng-maxlength]', map: const {'ng-maxlength': '=>maxlength'}),
   ],
   import_3.Currency: const [
     const import_1.Formatter(name: 'currency'),
@@ -293,9 +290,6 @@ final Map<Type, Object> typeAnnotations = {
   import_3.Lowercase: const [
     const import_1.Formatter(name: 'lowercase'),
   ],
-  import_3.Arrayify: const [
-    const import_1.Formatter(name: 'arrayify'),
-  ],
   import_3.Number: const [
     const import_1.Formatter(name: 'number'),
   ],
@@ -312,7 +306,7 @@ final Map<Type, Object> typeAnnotations = {
     const import_1.Decorator(selector: 'ng-view', module: import_4.NgView.module, visibility: import_1.Directive.CHILDREN_VISIBILITY),
   ],
   import_4.NgBindRoute: const [
-    const import_1.Decorator(selector: '[ng-bind-route]', module: import_4.NgBindRoute.module, map: const {'ng-bind-route': '@routeName'}),
+    const import_1.Decorator(visibility: import_1.Directive.CHILDREN_VISIBILITY, selector: '[ng-bind-route]', module: import_4.NgBindRoute.module, map: const {'ng-bind-route': '@routeName'}),
   ],
   import_5.RssController: const [
     const import_1.Controller(selector: '[rss-app]', publishAs: 'ctrl'),
@@ -324,12 +318,15 @@ final Map<Type, Object> typeAnnotations = {
     const import_1.Component(selector: 'posts-list', templateUrl: 'packages/rss_app/component/posts_list.html', cssUrl: 'packages/rss_app/component/posts_list.css', publishAs: 'cmp', map: const {'data-source': '@dataSource'}),
   ],
   import_8.AddFeedHeqaderComponent: const [
-    const import_1.Component(selector: 'add-feed-header', templateUrl: 'packages/rss_app/component/add_feed_header.html', publishAs: 'cmp', applyAuthorStyles: true),
+    const import_1.Component(selector: 'add-feed-header', templateUrl: 'packages/rss_app/component/add_feed_header/add_feed_header.html', cssUrl: 'packages/rss_app/component/add_feed_header/add_feed_header.css', publishAs: 'cmp'),
   ],
   import_9.TruncateFilter: const [
     const import_1.Formatter(name: 'truncate'),
   ],
   import_9.SanitizeFilter: const [
     const import_1.Formatter(name: 'sanitize'),
+  ],
+  import_10.StarringComponent: const [
+    const import_1.Component(selector: 'star', templateUrl: 'packages/rss_app/component/star/star.html', cssUrl: 'packages/rss_app/component/star/star.css', applyAuthorStyles: true, publishAs: 'cmp', map: const {'starred': '<=>starred'}),
   ],
 };

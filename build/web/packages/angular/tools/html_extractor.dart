@@ -70,7 +70,7 @@ class HtmlExpressionExtractor {
   visitNodes(List<Node> nodes, NodeVisitor visitor) {
     for (Node node in nodes) {
       visitor(node);
-      if (node.nodes.isNotEmpty) {
+      if (node.nodes.length > 0) {
         visitNodes(node.nodes, visitor);
       }
     }

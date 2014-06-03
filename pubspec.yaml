@@ -2,10 +2,14 @@ name: rss_app
 description: A sample Chrome packaged application
 dependencies:
   angular: any
-  angular_dart_ui_bootstrap: any
-  angular_ui: any
-  chrome: any
-  shadow_dom: any
+  web_components: any
 transformers:
-- chrome
 - angular
+- $dart2js:
+    checked: false
+    minify: false
+    verbose: false
+    analyzeAll: false
+    suppressWarnings: false
+    suppressHints: false
+    terse: false

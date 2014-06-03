@@ -69,7 +69,7 @@ class QueryService {
       case 'all':
         return this.db.listAll().then((List<FeedEntry> posts) => currentPosts = posts);
       default:
-        return this.db.getPosts(feedId).then((List<FeedEntry> posts) => currentPosts = posts);
+        return this.db.getPosts(int.parse(feedId)).then((List<FeedEntry> posts) => currentPosts = posts);
     }
   }
   
@@ -87,5 +87,28 @@ class QueryService {
     });
   }
   
+  Future updateEntry(FeedEntry entry){
+    return this.db.updateEntry(entry).then((_){
+      //print(currentPosts.contains(entry));
+    });
+  }
+  
+  Feed getFeedById(int id){
+    try{
+      return this.feeds.firstWhere((Feed f) => f.id == id);
+    } catch(e){
+      return null;
+    }
+  }
+  
+  Future<FeedEntry> getPost(int id){
+    
+    FeedEntry entry = currentPosts.firstWhere((FeedEntry e) => e.id == id);
+    if(entry != null){
+      return new Future.value(entry);
+    }
+    
+    return this.db.getPost(id);
+  }
   
 }

@@ -97,11 +97,9 @@ class ScopeLocals implements Map {
   void operator []=(String name, value) {
     _scope[name] = value;
   }
-  dynamic operator [](String name) {
-    // Map needed to clear Dart2js warning
-    Map map = _locals.containsKey(name) ? _locals : _scope;
-    return map[name];
-  }
+  dynamic operator [](String name) =>
+      // as Map needed to clear Dart2js warning
+      ((_locals.containsKey(name) ? _locals : _scope) as Map)[name];
 
   bool get isEmpty => _scope.isEmpty && _locals.isEmpty;
   bool get isNotEmpty => _scope.isNotEmpty || _locals.isNotEmpty;
@@ -189,22 +187,15 @@ class Scope {
         this._stats);
 
   /**
-   * Use [watch] to set up change detection on an expression.
+   * Use [watch] to set up a watch in the [apply] cycle.
    *
-   * * [expression]: The expression to watch for changes.
-   * * [reactionFn]: The reaction function to execute when a change is detected in the watched
-   *   expression.
-   * * [context]: The object against which the expression is evaluated. This defaults to the
-   *   [Scope.context] if no context is specified.
-   * * [formatters]: If the watched expression contains formatters,
-   *   this map specifies the set of formatters that are used by the expression.
-   * * [canChangeModel]: Specifies whether the [reactionFn] changes the model. Reaction
-   *   functions that change the model are processed as part of the [digest] cycle. Otherwise,
-   *   they are processed as part of the [flush] cycle.
-   * * [collection]: If [:true:], then the expression points to a collection (a list or a map),
-   *   and the collection should be shallow watched. If [:false:] then the expression is watched
-   *   by reference. When watching a collection, the reaction function receives a
-   *   [CollectionChangeItem] that lists all the changes.
+   * When [canChangeModel] is [:false:], the watch will be executed in the
+   * [flush] cycle. It should be used when the [reactionFn] does not change the
+   * model and allows speeding up the [digest] phase.
+   *
+   * On the opposite, [canChangeModel] should be set to [:true:] if the
+   * [reactionFn] could change the model so that the watch is evaluated in the
+   * [digest] cycle.
    */
   Watch watch(String expression, ReactionFn reactionFn,  {context,
       FormatterMap formatters, bool canChangeModel: true, bool collection: false}) {
@@ -509,18 +500,7 @@ class ScopeStatsConfig {
     emit = true;
   }
 }
-/**
- *
- * Every Angular application has exactly one RootScope. RootScope extends Scope, adding
- * services related to change detection, async unit-of-work processing, and DOM read/write queues.
- * The RootScope can not be destroyed.
- *
- * ## Lifecycle
- *
- * All work in Angular must be done within a context of a VmTurnZone. VmTurnZone detects the end
- * of the VM turn, and calls the Apply method to process the changes at the end of VM turn.
- *
- */
+
 @Injectable()
 class RootScope extends Scope {
   static final STATE_APPLY = 'apply';
@@ -542,57 +522,10 @@ class RootScope extends Scope {
 
   String _state;
 
-  /**
-   *
-   * While processing data bindings, Angular passes through multiple states. When testing or
-   * debugging, it can be useful to access the current `state`, which is one of the following:
-   *
-   * * null
-   * * apply
-   * * digest
-   * * flush
-   * * assert
-   *
-   * ##null
-   *
-   *  Angular is not currently processing changes
-   *
-   * ##apply
-   *
-   * The apply state begins by executing the optional expression within the context of
-   * angular change detection mechanism. Any exceptions are delegated to [ExceptionHandler]. At the
-   * end of apply state RootScope enters the digest followed by flush phase (optionally if asserts
-   * enabled run assert phase.)
-   *
-   * ##digest
-   *
-   * The apply state begins by processing the async queue,
-   * followed by change detection
-   * on non-DOM listeners. Any changes detected are process using the reaction function. The digest
-   * phase is repeated as long as at least one change has been detected. By default, after 5
-   * iterations the model is considered unstable and angular exists with an exception. (See
-   * ScopeDigestTTL)
-   *
-   * ##flush
-   *
-   * The flush phase consists of these steps:
-   *
-   * 1. processing the DOM write queue
-   * 2. change detection on DOM only updates (these are reaction functions which must
-   *    not change the model state and hence don't need stabilization as in digest phase).
-   * 3. processing the DOM read queue
-   * 4. repeat steps 1 and 3 (not 2) until queues are empty
-   *
-   * ##assert
-   *
-   * Optionally if Dart assert is on, verify that flush reaction functions did not make any changes
-   * to model and throw error if changes detected.
-   *
-   */
   String get state => _state;
 
   RootScope(Object context, Parser parser, FieldGetterFactory fieldGetterFactory,
-            FormatterMap formatters, this._exceptionHandler, this._ttl, this._zone,
+            FormatterMap filterMap, this._exceptionHandler, this._ttl, this._zone,
             ScopeStats _scopeStats, ClosureMap closureMap)
       : _scopeStats = _scopeStats,
         _parser = parser,
@@ -612,23 +545,6 @@ class RootScope extends Scope {
   RootScope get rootScope => this;
   bool get isAttached => true;
 
-/**
-  * Propagates changes between different parts of the application model. Normally called by
-  * [VMTurnZone] right before DOM rendering to initiate data binding. May also be called directly
-  * for unit testing.
-  *
-  * Before each iteration of change detection, [digest] first processes the async queue. Any
-  * work scheduled on the queue is executed before change detection. Since work scheduled on
-  * the queue may generate more async calls, [digest] must process the queue multiple times before
-  * it completes. The async queue must be empty before the model is considered stable.
-  *
-  * Next, [digest] collects the changes that have occurred in the model. For each change,
-  * [digest] calls the associated [ReactionFn]. Since a [ReactionFn] may further change the model,
-  * [digest] processes changes multiple times until no more changes are detected.
-  *
-  * If the model does not stabilize within 5 iterations, an exception is thrown. See
-  * [ScopeDigestTTL].
-  */
   void digest() {
     _transitionState(null, STATE_DIGEST);
     try {
@@ -1063,7 +979,7 @@ class _AstParser {
   }
 }
 
-class ExpressionVisitor implements syntax.Visitor {
+class ExpressionVisitor implements Visitor {
   static final ContextReferenceAST scopeContextRef = new ContextReferenceAST();
   final ClosureMap _closureMap;
   AST contextRef = scopeContextRef;
@@ -1074,7 +990,7 @@ class ExpressionVisitor implements syntax.Visitor {
   AST ast;
   FormatterMap formatters;
 
-  AST visit(syntax.Expression exp) {
+  AST visit(Expression exp) {
     exp.accept(this);
     assert(ast != null);
     try {
@@ -1084,68 +1000,68 @@ class ExpressionVisitor implements syntax.Visitor {
     }
   }
 
-  AST visitCollection(syntax.Expression exp) => new CollectionAST(visit(exp));
-  AST _mapToAst(syntax.Expression expression) => visit(expression);
+  AST visitCollection(Expression exp) => new CollectionAST(visit(exp));
+  AST _mapToAst(Expression expression) => visit(expression);
 
-  List<AST> _toAst(List<syntax.Expression> expressions) =>
+  List<AST> _toAst(List<Expression> expressions) =>
       expressions.map(_mapToAst).toList();
 
-  Map<Symbol, AST> _toAstMap(Map<String, syntax.Expression> expressions) {
+  Map<Symbol, AST> _toAstMap(Map<String, Expression> expressions) {
     if (expressions.isEmpty) return const {};
     Map<Symbol, AST> result = new Map<Symbol, AST>();
-    expressions.forEach((String name, syntax.Expression expression) {
+    expressions.forEach((String name, Expression expression) {
       result[_closureMap.lookupSymbol(name)] = _mapToAst(expression);
     });
     return result;
   }
 
-  void visitCallScope(syntax.CallScope exp) {
+  void visitCallScope(CallScope exp) {
     List<AST> positionals = _toAst(exp.arguments.positionals);
     Map<Symbol, AST> named = _toAstMap(exp.arguments.named);
     ast = new MethodAST(contextRef, exp.name, positionals, named);
   }
-  void visitCallMember(syntax.CallMember exp) {
+  void visitCallMember(CallMember exp) {
     List<AST> positionals = _toAst(exp.arguments.positionals);
     Map<Symbol, AST> named = _toAstMap(exp.arguments.named);
     ast = new MethodAST(visit(exp.object), exp.name, positionals, named);
   }
-  void visitAccessScope(syntax.AccessScope exp) {
+  visitAccessScope(AccessScope exp) {
     ast = new FieldReadAST(contextRef, exp.name);
   }
-  void visitAccessMember(syntax.AccessMember exp) {
+  visitAccessMember(AccessMember exp) {
     ast = new FieldReadAST(visit(exp.object), exp.name);
   }
-  void visitBinary(syntax.Binary exp) {
+  visitBinary(Binary exp) {
     ast = new PureFunctionAST(exp.operation,
                               _operationToFunction(exp.operation),
                               [visit(exp.left), visit(exp.right)]);
   }
-  void visitPrefix(syntax.Prefix exp) {
+  void visitPrefix(Prefix exp) {
     ast = new PureFunctionAST(exp.operation,
                               _operationToFunction(exp.operation),
                               [visit(exp.expression)]);
   }
-  void visitConditional(syntax.Conditional exp) {
+  void visitConditional(Conditional exp) {
     ast = new PureFunctionAST('?:', _operation_ternary,
                               [visit(exp.condition), visit(exp.yes),
                               visit(exp.no)]);
   }
-  void visitAccessKeyed(syntax.AccessKeyed exp) {
+  void visitAccessKeyed(AccessKeyed exp) {
     ast = new ClosureAST('[]', _operation_bracket,
                              [visit(exp.object), visit(exp.key)]);
   }
-  void visitLiteralPrimitive(syntax.LiteralPrimitive exp) {
+  void visitLiteralPrimitive(LiteralPrimitive exp) {
     ast = new ConstantAST(exp.value);
   }
-  void visitLiteralString(syntax.LiteralString exp) {
+  void visitLiteralString(LiteralString exp) {
     ast = new ConstantAST(exp.value);
   }
-  void visitLiteralArray(syntax.LiteralArray exp) {
+  void visitLiteralArray(LiteralArray exp) {
     List<AST> items = _toAst(exp.elements);
     ast = new PureFunctionAST('[${items.join(', ')}]', new ArrayFn(), items);
   }
 
-  void visitLiteralObject(syntax.LiteralObject exp) {
+  void visitLiteralObject(LiteralObject exp) {
     List<String> keys = exp.keys;
     List<AST> values = _toAst(exp.values);
     assert(keys.length == values.length);
@@ -1156,31 +1072,31 @@ class ExpressionVisitor implements syntax.Visitor {
     ast = new PureFunctionAST('{${kv.join(', ')}}', new MapFn(keys), values);
   }
 
-  void visitFormatter(syntax.Formatter exp) {
+  void visitFilter(Filter exp) {
     if (formatters == null) {
       throw new Exception("No formatters have been registered");
     }
-    Function formatterFunction = formatters(exp.name);
+    Function filterFunction = formatters(exp.name);
     List<AST> args = [visitCollection(exp.expression)];
     args.addAll(_toAst(exp.arguments).map((ast) => new CollectionAST(ast)));
     ast = new PureFunctionAST('|${exp.name}',
-        new _FormatterWrapper(formatterFunction, args.length), args);
+        new _FilterWrapper(filterFunction, args.length), args);
   }
 
   // TODO(misko): this is a corner case. Choosing not to implement for now.
-  void visitCallFunction(syntax.CallFunction exp) {
+  void visitCallFunction(CallFunction exp) {
     _notSupported("function's returing functions");
   }
-  void visitAssign(syntax.Assign exp) {
+  void visitAssign(Assign exp) {
     _notSupported('assignement');
   }
-  void visitLiteral(syntax.Literal exp) {
+  void visitLiteral(Literal exp) {
     _notSupported('literal');
   }
-  void visitExpression(syntax.Expression exp) {
+  void visitExpression(Expression exp) {
     _notSupported('?');
   }
-  void visitChain(syntax.Chain exp) {
+  void visitChain(Chain exp) {
     _notSupported(';');
   }
 
@@ -1251,11 +1167,11 @@ class MapFn extends FunctionApply {
   }
 }
 
-class _FormatterWrapper extends FunctionApply {
-  final Function formatterFn;
+class _FilterWrapper extends FunctionApply {
+  final Function filterFn;
   final List args;
   final List<Watch> argsWatches;
-  _FormatterWrapper(this.formatterFn, length):
+  _FilterWrapper(this.filterFn, length):
       args = new List(length),
       argsWatches = new List(length);
 
@@ -1273,7 +1189,7 @@ class _FormatterWrapper extends FunctionApply {
        }
       }
     }
-    var value = Function.apply(formatterFn, args);
+    var value = Function.apply(filterFn, args);
     if (value is Iterable) {
       // Since formatters are pure we can guarantee that this well never change.
       // By wrapping in UnmodifiableListView we can hint to the dirty checker

@@ -87,6 +87,7 @@ final Map<String, FieldGetter> getters = {
   r"feeds": (o) => o.feeds,
   r"unreadCount": (o) => o.unreadCount,
   r"dataSource": (o) => o.dataSource,
+  r"starred": (o) => o.starred,
   r"cmp": (o) => o.cmp,
   r"length": (o) => o.length,
   r"feed": (o) => o.feed,
@@ -104,7 +105,12 @@ final Map<String, FieldGetter> getters = {
   r"content": (o) => o.content,
   r"showAddFeed": (o) => o.showAddFeed,
   r"feedAddUrl": (o) => o.feedAddUrl,
-  r"addFeed": (o) => o.addFeed
+  r"ctrl": (o) => o.ctrl,
+  r"currentFeed": (o) => o.currentFeed,
+  r"addFeed": (o) => o.addFeed,
+  r"starClass": (o) => o.starClass,
+  r"handleClick": (o) => o.handleClick,
+  r"starChar": (o) => o.starChar
 };
 final Map<String, FieldSetter> setters = {
   r"urls": (o, v) => o.urls = v,
@@ -191,6 +197,7 @@ final Map<String, FieldSetter> setters = {
   r"feeds": (o, v) => o.feeds = v,
   r"unreadCount": (o, v) => o.unreadCount = v,
   r"dataSource": (o, v) => o.dataSource = v,
+  r"starred": (o, v) => o.starred = v,
   r"cmp": (o, v) => o.cmp = v,
   r"length": (o, v) => o.length = v,
   r"feed": (o, v) => o.feed = v,
@@ -207,7 +214,9 @@ final Map<String, FieldSetter> setters = {
   r"newitem": (o, v) => o.newitem = v,
   r"content": (o, v) => o.content = v,
   r"showAddFeed": (o, v) => o.showAddFeed = v,
-  r"feedAddUrl": (o, v) => o.feedAddUrl = v
+  r"feedAddUrl": (o, v) => o.feedAddUrl = v,
+  r"ctrl": (o, v) => o.ctrl = v,
+  r"currentFeed": (o, v) => o.currentFeed = v
 };
 final Map<String, Symbol> symbols = {
 

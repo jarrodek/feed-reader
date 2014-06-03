@@ -102,7 +102,7 @@ class RssDatabase {
   Future<List<FeedEntry>> listAll() => db == null ? _loaded.then((_) => _listPosts()) : _listPosts();
   
   Future<List<FeedEntry>> _listPosts([String source = null]) {
-    var completer = new Completer<Map<int, int>>();
+    var completer = new Completer<List<FeedEntry>>();
     Transaction transaction = this.db.transaction([POSTS_STORE], "readonly");
     ObjectStore objectStore = transaction.objectStore(POSTS_STORE);
     

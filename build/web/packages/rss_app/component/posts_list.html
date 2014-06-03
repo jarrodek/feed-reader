@@ -5,11 +5,15 @@
   </header>
   
   <article ng-class="{'unread':post.unread}" class="list-feed-post" ng-repeat="post in cmp.postsMap[feed]">
-    <header>
-      <h1 class="post-title">{{post.title}}</h1>
-      <time pubdate datetime="{{post.published}}">{{post.published|date:fullDate}}</time>&nbsp;<span ng-if="post.newitem && false" class="label label-danger">New</span>
-    </header>
-    <p class="post-summary" ng-bind-html="post.content|truncate:250:true:false"></p>
-    <div class="post-summary-footer-display"></div>
+    <div class="content">
+      <header>
+        <h1 class="post-title">{{post.title}}</h1>
+        <time pubdate datetime="{{post.published}}">{{post.published|date:fullDate}}</time>&nbsp;<span ng-if="post.newitem && false" class="label label-danger">New</span>
+      </header>
+      <p class="post-summary" ng-bind-html="post.content|truncate:250:true:false"></p>
+    </div>
+    <div class="actions">
+      <star starred="post.starred" class="star-action"></star>
+    </div>
   </article>
 </div>

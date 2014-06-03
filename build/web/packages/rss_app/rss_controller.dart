@@ -18,8 +18,11 @@ class RssController {
   int get unreadCount => queryService.unread.length;
   String currentFeed = "unread";
   bool showAddFeed = false;
+  String aaa = "aaa";
   
-  RssController(QueryService this.queryService);
+  RssController(QueryService this.queryService){
+    print('RssController');
+  }
   
 }
 

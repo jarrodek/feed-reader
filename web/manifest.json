@@ -6,11 +6,15 @@
   
   "icons": {"128": "dart_icon.png"},
   
-  "permissions": ["storage","<all_urls>","alarms","unlimitedStorage", "notifications"],
+  "permissions": ["storage","<all_urls>","alarms","unlimitedStorage", "notifications", "webview"],
   
   "app": {
     "background": {
       "scripts": ["js/workers/structures.js","js/app_db.js","background.js"]
     }
+  },
+  
+  "sandbox": {
+     "pages": ["sandbox.html"]
   }
 }

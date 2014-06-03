@@ -10,6 +10,10 @@ part of angular.core_internal;
  */
 @Injectable()
 class Interpolate implements Function {
+  final Parser _parse;
+
+  Interpolate(this._parse);
+
   /**
    * Compiles markup text into expression.
    *
@@ -45,7 +49,7 @@ class Interpolate implements Function {
         if (index < startIdx) {
           // Empty strings could be stripped thanks to the stringify
           // formatter
-          expParts.add(_wrapInQuotes(template.substring(index, startIdx)));
+          expParts.add('"${template.substring(index, startIdx)}"');
         }
         expParts.add('(' + template.substring(startIdx + startLen, endIdx) +
         '|stringify)');
@@ -54,16 +58,11 @@ class Interpolate implements Function {
         hasInterpolation = true;
       } else {
         // we did not find any interpolation, so add the remainder
-        expParts.add(_wrapInQuotes(template.substring(index)));
+        expParts.add('"${template.substring(index)}"');
         break;
       }
     }
 
     return !mustHaveExpression || hasInterpolation ? expParts.join('+') : null;
-  }
-
-  String _wrapInQuotes(String s){
-    final escaped = s.replaceAll(r'\', r'\\').replaceAll(r'"', r'\"');
-    return '"$escaped"';
   }
 }

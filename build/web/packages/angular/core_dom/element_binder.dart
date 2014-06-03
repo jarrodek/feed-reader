@@ -14,23 +14,19 @@ class TemplateElementBinder extends ElementBinder {
     return _directiveCache = [template];
   }
 
-  TemplateElementBinder(perf, expando, parser, componentFactory,
-                        transcludingComponentFactory, shadowDomComponentFactory,
-                        this.template, this.templateBinder,
+  TemplateElementBinder(_perf, _expando, _parser, this.template, this.templateBinder,
                         onEvents, bindAttrs, childMode)
-      : super(perf, expando, parser, componentFactory,
-          transcludingComponentFactory, shadowDomComponentFactory,
-          null, null, onEvents, bindAttrs, childMode);
+      : super(_perf, _expando, _parser, null, null, onEvents, bindAttrs, childMode);
 
   String toString() => "[TemplateElementBinder template:$template]";
 
   _registerViewFactory(node, parentInjector, nodeModule) {
     assert(templateViewFactory != null);
     nodeModule
-      ..bind(ViewPort, toFactory: (_) =>
+      ..factory(ViewPort, (_) =>
           new ViewPort(node, parentInjector.get(Animate)))
-      ..bind(ViewFactory, toValue: templateViewFactory)
-      ..bind(BoundViewFactory, toFactory: (Injector injector) =>
+      ..value(ViewFactory, templateViewFactory)
+      ..factory(BoundViewFactory, (Injector injector) =>
           templateViewFactory.bind(injector));
   }
 }
@@ -45,11 +41,6 @@ class ElementBinder {
   final Profiler _perf;
   final Expando _expando;
   final Parser _parser;
-
-  // The default component factory
-  final ComponentFactory _componentFactory;
-  final TranscludingComponentFactory _transcludingComponentFactory;
-  final ShadowDomComponentFactory _shadowDomComponentFactory;
   final Map onEvents;
   final Map bindAttrs;
 
@@ -61,11 +52,7 @@ class ElementBinder {
   // Can be either COMPILE_CHILDREN or IGNORE_CHILDREN
   final String childMode;
 
-  ElementBinder(this._perf, this._expando, this._parser,
-                this._componentFactory,
-                this._transcludingComponentFactory,
-                this._shadowDomComponentFactory,
-                this.component, this.decorators,
+  ElementBinder(this._perf, this._expando, this._parser, this.component, this.decorators,
                 this.onEvents, this.bindAttrs, this.childMode);
 
   final bool hasTemplate = false;
@@ -83,70 +70,16 @@ class ElementBinder {
   bool get hasDirectivesOrEvents =>
       _usableDirectiveRefs.isNotEmpty || onEvents.isNotEmpty;
 
-  _bindTwoWay(tasks, expression, scope, dstPathFn, controller, formatters, dstExpression) {
-    var taskId = tasks.registerTask();
-    Expression expressionFn = _parser(expression);
-
-    var viewOutbound = false;
-    var viewInbound = false;
-    scope.watch(expression, (inboundValue, _) {
-      if (!viewInbound) {
-        viewOutbound = true;
-        scope.rootScope.runAsync(() => viewOutbound = false);
-        var value = dstPathFn.assign(controller, inboundValue);
-        tasks.completeTask(taskId);
-        return value;
-      }
-    }, formatters: formatters);
-    if (expressionFn.isAssignable) {
-      scope.watch(dstExpression, (outboundValue, _) {
-        if (!viewOutbound) {
-          viewInbound = true;
-          scope.rootScope.runAsync(() => viewInbound = false);
-          expressionFn.assign(scope.context, outboundValue);
-          tasks.completeTask(taskId);
-        }
-      }, context: controller, formatters: formatters);
-    }
-  }
-
-  _bindOneWay(tasks, expression, scope, dstPathFn, controller, formatters) {
-    var taskId = tasks.registerTask();
-
-    Expression attrExprFn = _parser(expression);
-    scope.watch(expression, (v, _) {
-      dstPathFn.assign(controller, v);
-      tasks.completeTask(taskId);
-    }, formatters: formatters);
-  }
-
-  _bindCallback(dstPathFn, controller, expression, scope) {
-    dstPathFn.assign(controller, _parser(expression).bind(scope.context, ScopeLocals.wrapper));
-  }
-
-  _createAttrMappings(controller, scope, List<MappingParts> mappings, nodeAttrs, formatters, tasks) {
-    mappings.forEach((MappingParts p) {
+  _createAttrMappings(controller, scope, DirectiveRef ref, nodeAttrs, formatters, tasks) {
+    ref.mappings.forEach((MappingParts p) {
       var attrName = p.attrName;
       var dstExpression = p.dstExpression;
+      if (nodeAttrs == null) nodeAttrs = new _AnchorAttrs(ref);
 
       Expression dstPathFn = _parser(dstExpression);
       if (!dstPathFn.isAssignable) {
         throw "Expression '$dstExpression' is not assignable in mapping '${p.originalValue}' "
               "for attribute '$attrName'.";
-      }
-
-      // Check if there is a bind attribute for this mapping.
-      var bindAttr = bindAttrs["bind-${p.attrName}"];
-      if (bindAttr != null) {
-        if (p.mode == '<=>') {
-          _bindTwoWay(tasks, bindAttr, scope, dstPathFn,
-              controller, formatters, dstExpression);
-        } else if(p.mode == '&') {
-          _bindCallback(dstPathFn, controller, bindAttr, scope);
-        } else {
-          _bindOneWay(tasks, bindAttr, scope, dstPathFn, controller, formatters);
-        }
-        return;
       }
 
       switch (p.mode) {
@@ -161,14 +94,41 @@ class ElementBinder {
         case '<=>': // two-way
           if (nodeAttrs[attrName] == null) return;
 
-          _bindTwoWay(tasks, nodeAttrs[attrName], scope, dstPathFn,
-              controller, formatters, dstExpression);
+          var taskId = tasks.registerTask();
+          String expression = nodeAttrs[attrName];
+          Expression expressionFn = _parser(expression);
+          var viewOutbound = false;
+          var viewInbound = false;
+          scope.watch(expression, (inboundValue, _) {
+            if (!viewInbound) {
+              viewOutbound = true;
+              scope.rootScope.runAsync(() => viewOutbound = false);
+              var value = dstPathFn.assign(controller, inboundValue);
+              tasks.completeTask(taskId);
+              return value;
+            }
+          }, formatters: formatters);
+          if (expressionFn.isAssignable) {
+            scope.watch(dstExpression, (outboundValue, _) {
+              if (!viewOutbound) {
+                viewInbound = true;
+                scope.rootScope.runAsync(() => viewInbound = false);
+                expressionFn.assign(scope.context, outboundValue);
+                tasks.completeTask(taskId);
+              }
+            }, context: controller, formatters: formatters);
+          }
           break;
 
         case '=>': // one-way
           if (nodeAttrs[attrName] == null) return;
-          _bindOneWay(tasks, nodeAttrs[attrName], scope,
-              dstPathFn, controller, formatters);
+          var taskId = tasks.registerTask();
+
+          Expression attrExprFn = _parser(nodeAttrs[attrName]);
+          scope.watch(nodeAttrs[attrName], (v, _) {
+            dstPathFn.assign(controller, v);
+            tasks.completeTask(taskId);
+          }, formatters: formatters);
           break;
 
         case '=>!': //  one-way, one-time
@@ -184,7 +144,8 @@ class ElementBinder {
           break;
 
         case '&': // callback
-          _bindCallback(dstPathFn, controller, nodeAttrs[attrName], scope);
+          dstPathFn.assign(controller,
+              _parser(nodeAttrs[attrName]).bind(scope.context, ScopeLocals.wrapper));
           break;
       }
     });
@@ -208,10 +169,7 @@ class ElementBinder {
           if (scope.isAttached) controller.attach();
         } : null);
 
-        if (ref.mappings.isNotEmpty) {
-          if (nodeAttrs == null) nodeAttrs = new _AnchorAttrs(ref);
-          _createAttrMappings(controller, scope, ref.mappings, nodeAttrs, formatters, tasks);
-        }
+        _createAttrMappings(controller, scope, ref, nodeAttrs, formatters, tasks);
 
         if (controller is AttachAware) {
           var taskId = tasks.registerTask();
@@ -239,13 +197,13 @@ class ElementBinder {
   _createDirectiveFactories(DirectiveRef ref, nodeModule, node, nodesAttrsDirectives, nodeAttrs,
                             visibility) {
     if (ref.type == TextMustache) {
-      nodeModule.bind(TextMustache, toFactory: (Injector injector) {
+      nodeModule.factory(TextMustache, (Injector injector) {
         return new TextMustache(node, ref.value, injector.get(Interpolate),
             injector.get(Scope), injector.get(FormatterMap));
       });
     } else if (ref.type == AttrMustache) {
       if (nodesAttrsDirectives.isEmpty) {
-        nodeModule.bind(AttrMustache, toFactory: (Injector injector) {
+        nodeModule.factory(AttrMustache, (Injector injector) {
           var scope = injector.get(Scope);
           var interpolate = injector.get(Interpolate);
           for (var ref in nodesAttrsDirectives) {
@@ -256,26 +214,36 @@ class ElementBinder {
       }
       nodesAttrsDirectives.add(ref);
     } else if (ref.annotation is Component) {
-      var factory;
-      var annotation = ref.annotation as Component;
-      if (annotation.useShadowDom == true) {
-        factory = _shadowDomComponentFactory;
-      } else if (annotation.useShadowDom == false) {
-        factory = _transcludingComponentFactory;
-      } else {
-        factory = _componentFactory;
-      }
-      nodeModule.bind(ref.type, toFactory: factory.call(node, ref), visibility: visibility);
+      //nodeModule.factory(type, new ComponentFactory(node, ref.directive), visibility: visibility);
+      // TODO(misko): there should be no need to wrap function like this.
+      nodeModule.factory(ref.type, (Injector injector) {
+        var component = ref.annotation as Component;
+        Compiler compiler = injector.get(Compiler);
+        Scope scope = injector.get(Scope);
+        ViewCache viewCache = injector.get(ViewCache);
+        Http http = injector.get(Http);
+        TemplateCache templateCache = injector.get(TemplateCache);
+        DirectiveMap directives = injector.get(DirectiveMap);
+        NgBaseCss baseCss = injector.get(NgBaseCss);
+        // This is a bit of a hack since we are returning different type then we are.
+        var componentFactory = new _ComponentFactory(node, ref.type, component,
+            injector.get(dom.NodeTreeSanitizer), _expando, baseCss);
+        var controller = componentFactory.call(injector, scope, viewCache, http, templateCache,
+            directives);
+
+        componentFactory.shadowScope.context[component.publishAs] = controller;
+        return controller;
+      }, visibility: visibility);
     } else {
-      nodeModule.bind(ref.type, visibility: visibility);
+      nodeModule.type(ref.type, visibility: visibility);
     }
   }
 
   // Overridden in TemplateElementBinder
   _registerViewFactory(node, parentInjector, nodeModule) {
-    nodeModule..bind(ViewPort, toValue: null)
-              ..bind(ViewFactory, toValue: null)
-              ..bind(BoundViewFactory, toValue: null);
+    nodeModule..factory(ViewPort, null)
+              ..factory(ViewFactory, null)
+              ..factory(BoundViewFactory, null);
   }
 
   Injector bind(View view, Injector parentInjector, dom.Node node) {
@@ -293,19 +261,19 @@ class ElementBinder {
 
       var nodesAttrsDirectives = [];
       var nodeModule = new Module()
-          ..bind(NgElement)
-          ..bind(View, toValue: view)
-          ..bind(dom.Element, toValue: node)
-          ..bind(dom.Node, toValue: node)
-          ..bind(NodeAttrs, toValue: nodeAttrs)
-          ..bind(ElementProbe, toFactory: (_) => probe);
+          ..type(NgElement)
+          ..value(View, view)
+          ..value(dom.Element, node)
+          ..value(dom.Node, node)
+          ..value(NodeAttrs, nodeAttrs)
+          ..factory(ElementProbe, (_) => probe);
 
       directiveRefs.forEach((DirectiveRef ref) {
         Directive annotation = ref.annotation;
         var visibility = ref.annotation.visibility;
         if (ref.annotation is Controller) {
           scope = scope.createChild(new PrototypeMap(scope.context));
-          nodeModule.bind(Scope, toValue: scope);
+          nodeModule.value(Scope, scope);
         }
 
         _createDirectiveFactories(ref, nodeModule, node, nodesAttrsDirectives, nodeAttrs,

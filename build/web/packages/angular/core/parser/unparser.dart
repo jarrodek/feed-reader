@@ -41,13 +41,13 @@ class Unparser extends Visitor {
     }
   }
 
-  void visitFormatter(Formatter formatter) {
+  void visitFilter(Filter filter) {
     write('(');
-    visit(formatter.expression);
-    write('|${formatter.name}');
-    for (int i = 0; i < formatter.arguments.length; i++) {
+    visit(filter.expression);
+    write('|${filter.name}');
+    for (int i = 0; i < filter.arguments.length; i++) {
       write(' :');
-      visit(formatter.arguments[i]);
+      visit(filter.arguments[i]);
     }
     write(')');
   }

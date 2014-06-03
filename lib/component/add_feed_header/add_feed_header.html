@@ -1,0 +1,33 @@
+<header class="app-header">
+  <div class="app-action-buttons">
+    <button ng-show="!cmp.showAddFeed" type="button" class="btn btn-primary" ng-click="cmp.showAddFeed = true;">
+      <span class="glyphicon glyphicon-plus"></span> Add
+    </button>
+    
+    <div ng-show="cmp.showAddFeed" class="col-md-6">
+      <div class="input-group">
+        <input type="url" class="form-control" ng-model="cmp.feedAddUrl" placeholder="Enter feed URL here." ng-class="{'loading':cmp.addingFeed}">
+        <span class="input-group-btn">
+          <button class="btn btn-primary" type="button" ng-click="cmp.addFeed()" ng-disabled="cmp.addFeedDisabled">Add</button>
+          <button class="btn btn-default" type="button" ng-click="cmp.showAddFeed = false;">Cancel</button>
+        </span>
+      </div>
+    </div>
+    
+    <button type="button" class="btn btn-default">
+      <span ng-class="{'glyphicon glyphicon-refresh': !cmp.refreshingFeeds, 'loading inline': cmp.refreshingFeeds}"></span> Refresh
+    </button>
+    
+  </div>
+  <div class="page-action-buttons">
+    <div ng-show="cmp.readingPost" class="post-pagination">
+      <b>{{cmp.currentPostsIndex}}</b> of <b>{{cmp.currentPostsLength}}</b> 
+      <div class="btn-group">
+        <button type="button" class="btn btn-default" title="Previous post" ng-disabled="cmp.prevEntry == null" ng-click="cmp.goToPost('prev')"><span class="glyphicon glyphicon-chevron-left"></span></button>
+        <button type="button" class="btn btn-default" title="Next post" ng-disabled="cmp.nextEntry == null" ng-click="cmp.goToPost('next')"><span class="glyphicon glyphicon-chevron-right"></span></button>
+      </div>
+    </div>
+  </div>
+  
+  
+</header>

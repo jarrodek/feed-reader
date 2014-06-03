@@ -1,0 +1,11 @@
+.star-off {
+  color: #6E6E6E;
+}
+.star-on {
+  color: #FACC2E;
+}
+.star {
+  letter-spacing: -2px;
+  cursor: pointer;
+  font-size: 24px;
+}

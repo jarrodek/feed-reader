@@ -232,8 +232,8 @@ class FeedAuthor {
 }
 
 class FeedAuthorImage {
-  int width;
-  int height;
+  var width;
+  var height;
   String src;
 
   FeedAuthorImage(this.src, [this.width, this.height]);

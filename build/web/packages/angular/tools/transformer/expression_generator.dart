@@ -46,8 +46,8 @@ class ExpressionGenerator extends Transformer with ResolverTransformer {
         .forEach(htmlExtractor.parseHtml)
         .then((_) {
       var module = new Module()
-        ..bind(Parser, toImplementation: DynamicParser)
-        ..bind(ParserBackend, toImplementation: DartGetterSetterGen);
+        ..type(Parser, implementedBy: DynamicParser)
+        ..type(ParserBackend, implementedBy: DartGetterSetterGen);
       var injector =
           new DynamicInjector(modules: [module], allowImplicitInjection: true);
 
@@ -132,7 +132,7 @@ class ExpressionGenerator extends Transformer with ResolverTransformer {
 }
 
 void _writeStaticExpressionHeader(AssetId id, StringSink sink) {
-  var libPath = path.withoutExtension(id.path).replaceAll('/', '.').replaceAll('-', '_');
+  var libPath = path.withoutExtension(id.path).replaceAll('/', '.');
   sink.write('''
 library ${id.package}.$libPath.generated_expressions;
 

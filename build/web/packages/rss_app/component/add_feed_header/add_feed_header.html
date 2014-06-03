@@ -1,0 +1,9 @@
+<div class="">
+<button ng-show="!cmp.showAddFeed" type="button" class="btn btn-primary" ng-click="cmp.showAddFeed = true;">Add</button>
+<div ng-show="cmp.showAddFeed" class="form-group">
+  <input type="text" class="form-control" ng-model="cmp.feedAddUrl">
+  <span class="input-group-btn">
+    <button class="btn btn-default" type="button" ng-click="cmp.showAddFeed = false; cmp.addFeed()">Add</button>
+  </span>
+</div>
+</div>

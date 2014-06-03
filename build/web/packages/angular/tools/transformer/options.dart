@@ -1,5 +1,9 @@
 library angular.tools.transformer.options;
 
+import 'dart:async';
+
+import 'package:barback/barback.dart';
+import 'package:code_transformers/resolver.dart';
 import 'package:di/transformer/options.dart' as di;
 
 /** Options used by Angular transformers */

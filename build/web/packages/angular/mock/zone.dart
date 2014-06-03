@@ -18,15 +18,8 @@ final _asyncErrors = [];
 bool _noMoreAsync = false;
 
 /**
- * Processes the asynchronous queue established by [async].
- *
- * [microLeap] will process all items in the asynchronous queue,
- * including new items queued during its execution. It will re-raise
- * any exceptions that occur.
- *
- * NOTE: [microLeap] can only be used in [async] tests.
- *
- * Example:
+ * Runs any queued up async calls and any async calls queued with
+ * running microLeap. Example:
  *
  *     it('should run async code', async(() {
  *       var thenRan = false;
@@ -153,16 +146,7 @@ noMoreAsync() {
 }
 
 /**
- * Captures all scheduleMicrotask calls and newly created Timers
- * inside of a function.
- *
- * [async] will raise an exception if there are still active Timers
- * when the function completes.
- *
- * Use [clockTick] to process timers, and [microLeap] to process
- * scheduleMicrotask calls.
- *
- * NOTE: [async] will not return the result of [fn].
+ * Captures all scheduleMicrotask calls inside of a function.
  *
  * Typically used within a test:
  *

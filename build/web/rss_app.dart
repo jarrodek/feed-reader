@@ -10,9 +10,10 @@ import 'package:rss_app/service/query_service.dart';
 import 'package:rss_app/service/database.dart';
 import 'package:rss_app/component/feed_list.dart';
 import 'package:rss_app/component/posts_list.dart';
-import 'package:rss_app/component/add_feed_header.dart';
+import 'package:rss_app/component/add_feed_header/add_feed_header.dart';
 import 'package:rss_app/router/rss_router.dart';
 import 'package:rss_app/formatter/text_formatter.dart';
+import 'package:rss_app/component/star/star.dart';
 import 'rss_app_static_expressions.dart' as generated_static_expressions;
 import 'rss_app_static_metadata.dart' as generated_static_metadata;
 import 'rss_app_static_injector.dart' as generated_static_injector;
@@ -30,6 +31,7 @@ class RssAppModule extends Module {
     bind(TruncateFilter);
     bind(SanitizeFilter);
     bind(AddFeedHeqaderComponent);
+    bind(StarringComponent);
     
     var myValidator = new NodeValidatorBuilder() //.common()
       ..allowHtml5()

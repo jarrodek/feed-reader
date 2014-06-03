@@ -35,9 +35,9 @@ class DirectiveRef {
  * Creates a child injector that allows loading new directives, formatters and
  * services from the provided modules.
  */
-Injector forceNewDirectivesAndFormatters(Injector injector, List<Module> modules) {
+Injector forceNewDirectivesAndFilters(Injector injector, List<Module> modules) {
   modules.add(new Module()
-      ..bind(Scope, toFactory: (i) {
+      ..factory(Scope, (i) {
         var scope = i.parent.get(Scope);
         return scope.createChild(new PrototypeMap(scope.context));
       }));

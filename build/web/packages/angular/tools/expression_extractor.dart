@@ -52,8 +52,8 @@ main(args) {
 
   printer.write('// Found ${expressions.length} expressions\n');
   Module module = new Module()
-      ..bind(Parser, toImplementation: DynamicParser)
-      ..bind(ParserBackend, toImplementation: DartGetterSetterGen);
+      ..type(Parser, implementedBy: DynamicParser)
+      ..type(ParserBackend, implementedBy: DartGetterSetterGen);
   Injector injector =
       new DynamicInjector(modules: [module], allowImplicitInjection: true);
 

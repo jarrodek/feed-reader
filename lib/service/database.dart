@@ -102,7 +102,7 @@ class RssDatabase {
   Future<List<FeedEntry>> listAll() => db == null ? _loaded.then((_) => _listPosts()) : _listPosts();
   
   Future<List<FeedEntry>> _listPosts([String source = null]) {
-    var completer = new Completer<Map<int, int>>();
+    var completer = new Completer<List<FeedEntry>>();
     Transaction transaction = this.db.transaction([POSTS_STORE], "readonly");
     ObjectStore objectStore = transaction.objectStore(POSTS_STORE);
     
@@ -150,22 +150,11 @@ class RssDatabase {
     return completer.future;
   }
   /**
-   * Get posts list for specified by [feedIdExt] feed. [feedIdExt] is a feed's ID from server's response. 
+   * Get posts list for specified by [feedId] (feed's database id). 
    * 
    */
-  Future<List<FeedEntry>> getPosts(String feedIdExt) => db == null ? _loaded.then((_) => _getPosts(feedIdExt)) : _getPosts(feedIdExt);
-  Future<List<FeedEntry>> _getPosts(String feedIdExt) {
-    return _getFeeds().then((List<Feed> feeds) => _getFeed(feeds, feedIdExt)).then((Feed feed) => _getPostsForFeed(feed.id));
-  }
-  Feed _getFeed(List<Feed> feeds, feedIdExt) {
-    for (int i = 0,
-        len = feeds.length; i < len; i++) {
-      if (feeds[i].feedid == feedIdExt) {
-        return feeds[i];
-      }
-    }
-    return null;
-  }
+  Future<List<FeedEntry>> getPosts(int feedId) => db == null ? _loaded.then((_) => _getPostsForFeed(feedId)) : _getPostsForFeed(feedId);
+  
   Future<List<FeedEntry>> _getPostsForFeed(int feedId) {
     var completer = new Completer<List<FeedEntry>>();
     
@@ -185,6 +174,38 @@ class RssDatabase {
     transaction.completed.then((_) {
       completer.complete(entries);
     });
+    return completer.future;
+  }
+  
+  Future updateEntry(FeedEntry entry){
+    var completer = new Completer();
+    Transaction transaction = this.db.transaction([POSTS_STORE], "readwrite");
+    ObjectStore objectStore = transaction.objectStore(POSTS_STORE);
+    
+    objectStore.put(entry.toJson()).catchError((error) {
+      window.console.error('[Method] Unable update FeedEntry $entry');
+    });
+
+    transaction.completed.then((_) {
+      completer.complete(entry);
+    });
+    transaction.onError.listen((e) {
+      window.console.error('[Transaction] Unable update FeedEntry');
+      completer.completeError(e);
+    });
+    return completer.future;
+  }
+  
+  Future<FeedEntry> getPost(int id){
+    var completer = new Completer<FeedEntry>();
+    
+    Transaction transaction = this.db.transaction([POSTS_STORE], "readonly");
+    ObjectStore objectStore = transaction.objectStore(POSTS_STORE);
+    objectStore.getObject(id).then((post){
+      FeedEntry entry = new FeedEntry.fromDb(post);
+      completer.complete(entry);
+    });
+    
     return completer.future;
   }
 }

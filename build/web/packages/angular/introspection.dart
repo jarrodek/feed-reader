@@ -10,35 +10,25 @@ import 'package:angular/core/module_internal.dart';
 import 'package:angular/core_dom/module_internal.dart';
 
 /**
- * Return the [ElementProbe] object for the closest [Element] in the hierarchy.
- *
- * The node parameter could be:
- * * a [dom.Node],
- * * a CSS selector for this node.
+ * Return the closest [ElementProbe] object for a given [Element].
  *
  * **NOTE:** This global method is here to make it easier to debug Angular
  * application from the browser's REPL, unit or end-to-end tests. The
  * function is not intended to be called from Angular application.
  */
-ElementProbe ngProbe(nodeOrSelector) {
-  var errorMsg;
-  var node;
-  if (nodeOrSelector == null) throw "ngProbe called without node";
-  if (nodeOrSelector is String) {
-    var nodes = ngQuery(dom.document, nodeOrSelector);
-    if (nodes.isNotEmpty) node = nodes.first;
-    errorMsg = "Could not find a probe for the selector '$nodeOrSelector' nor its parents";
-  } else {
-    node = nodeOrSelector;
-    errorMsg = "Could not find a probe for the node '$node' nor its parents";
+ElementProbe ngProbe(dom.Node node) {
+  if (node == null) {
+    throw "ngProbe called without node";
   }
+  var origNode = node;
   while (node != null) {
     var probe = elementExpando[node];
     if (probe != null) return probe;
     node = node.parent;
   }
-  throw errorMsg;
+  throw "Could not find a probe for [$origNode]";
 }
+
 
 /**
  * Return the [Injector] associated with a current [Element].
@@ -47,7 +37,7 @@ ElementProbe ngProbe(nodeOrSelector) {
  * application from the browser's REPL, unit or end-to-end tests. The function
  * is not intended to be called from Angular application.
  */
-Injector ngInjector(nodeOrSelector) => ngProbe(nodeOrSelector).injector;
+Injector ngInjector(dom.Node node) => ngProbe(node).injector;
 
 
 /**
@@ -57,7 +47,7 @@ Injector ngInjector(nodeOrSelector) => ngProbe(nodeOrSelector).injector;
  * application from the browser's REPL, unit or end-to-end tests. The function
  * is not intended to be called from Angular application.
  */
-Scope ngScope(nodeOrSelector) => ngProbe(nodeOrSelector).scope;
+Scope ngScope(dom.Node node) => ngProbe(node).scope;
 
 
 List<dom.Element> ngQuery(dom.Node element, String selector,
@@ -80,11 +70,14 @@ List<dom.Element> ngQuery(dom.Node element, String selector,
 }
 
 /**
- * Return a List of directives associated with a current [Element].
+ * Return a List of directive controllers associated with a current [Element].
  *
  * **NOTE**: This global method is here to make it easier to debug Angular
  * application from the browser's REPL, unit or end-to-end tests. The function
  * is not intended to be called from Angular application.
  */
-List<Object> ngDirectives(nodeOrSelector) => ngProbe(nodeOrSelector).directives;
+List<Object> ngDirectives(dom.Node node) {
+  ElementProbe probe = elementExpando[node];
+  return probe == null ? [] : probe.directives;
+}
 

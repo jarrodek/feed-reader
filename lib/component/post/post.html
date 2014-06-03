@@ -1,0 +1,23 @@
+<article class="post">
+  <header>
+    <div class="title-area">
+      <h1 class="post-title">{{cmp.entry.title}}</h1>
+      <span class="star-container">
+        <star starred="cmp.entry.starred" class="star-action" ng-click="cmp.onStarChange()"></star>
+      </span>
+    </div>
+    
+    <div class="meta-area">
+      <div class="time">
+        <img ng-if="cmp.entry.author.image.src != null" class="author-image" ng-src="{{cmp.imageUrl}}"/>
+        <span ng-if="cmp.entry.author.name != null" class="author-name">by <a target="_blank" ng-if="cmp.entry.author.url != null" href="{{cmp.entry.author.url}}">{{cmp.entry.author.name}}</a><b ng-if="cmp.entry.author.url == null">{{cmp.entry.author.name}}</b>, </span>
+        <span>published</span> <time pubdate datetime="{{cmp.entry.published}}"></time>&nbsp;<span ng-if="cmp.entry.newitem && false" class="label label-danger">New</span>
+      </div>
+      <div class="action">
+        <a href="{{cmp.entry.url}}" target="_blank" class="btn btn-primary" type="button">Open</a>
+      </div>
+    </div>
+    
+  </header>
+  <iframe src="sandbox.html" class="entry-webview" ng-load="cmp.frameLoad()" id="{{cmp.elementId}}" seamless="seamless"></iframe>
+</article>
