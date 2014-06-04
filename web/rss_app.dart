@@ -15,6 +15,7 @@ import 'package:rss_app/component/posts_list/posts_list.dart';
 import 'package:rss_app/component/add_feed_header/add_feed_header.dart';
 import 'package:rss_app/component/post/post.dart';
 import 'package:rss_app/component/pubdate/pubdate.dart';
+import 'package:rss_app/component/unread_counter/unread_counter.dart';
 import 'package:rss_app/router/rss_router.dart';
 import 'package:rss_app/formatter/text_formatter.dart';
 import 'package:rss_app/formatter/date_formatter.dart';
@@ -52,6 +53,7 @@ void main() {
      ..bind(PostsListComponent)
      ..bind(PostComponent)
      ..bind(PubdateComponent)
+     ..bind(UnreadCounterComponent)
      
      ..bind(RssController)
      

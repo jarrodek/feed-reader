@@ -138,6 +138,7 @@ article.list-feed-post .post-summary{
   line-height: 18px;
   cursor: pointer;
 }
+
 .list-feed-post header h1 a,
 .list-feed-post.unread header time,
 .list-feed-post.unread .post-summary{
@@ -153,6 +154,11 @@ article.list-feed-post .post-summary{
 }
 .list-feed-post:hover header h1 a {
   color: rgba(51, 51, 51, 1); 
+}
+
+.list-feed-post.unread header h1 a{
+  font-weight: bold;
+  color: rgb(20, 121, 230);
 }
 
 header h1 a {

@@ -24,38 +24,49 @@ class AddFeedHeqaderComponent extends DetachAware {
   bool readingPost = false;
   String feedAddUrl = "";
   int currentPostId = 0;
-  FeedEntry currentFeed;
+  
   
   StreamSubscription<RouteStartEvent> routerListener;
   
   bool get addFeedDisabled => !(feedAddUrl.startsWith("http://") || feedAddUrl.startsWith("https://"));
-  int get currentPostsLength => queryService.currentPosts.length;
+  
+  List<FeedEntry> get entries => queryService.currentPosts;
+  
+  ///Get posts list current size.
+  int get currentPostsLength => entries.length;
+  ///Result currently selected feed entry 0-based position in the list.
+  int feedEntryPosition = 0;
+  ///Result currently selected feed entry 1-based position in the list.
   int get currentPostsIndex{
-    try{
-      currentFeed = queryService.currentPosts.firstWhere((FeedEntry f) => f.id == currentPostId);
-    } catch(e){
-      //window.console.error(e);
+    if(currentPostId == 0){
       return 0;
     }
-    return queryService.currentPosts.indexOf(currentFeed) + 1;
-  }
-  FeedEntry get nextEntry{
-    var pos = queryService.currentPosts.indexOf(currentFeed);
-    if(pos == -1){
-      return null;
+    bool found = false;
+    feedEntryPosition = 0;
+    for(int len = currentPostsLength; feedEntryPosition<len; feedEntryPosition++){
+      if(entries[feedEntryPosition].id == currentPostId){
+        found = true;
+        break;
+      }
     }
-    if(queryService.currentPosts.length >= pos+1){
-      return queryService.currentPosts[pos+1];
+    if(!found){
+      return 0;
+    }
+    return feedEntryPosition + 1;
+  }
+  
+  FeedEntry get nextEntry{
+    if(currentPostsLength-1 >= feedEntryPosition+1){
+      return entries[feedEntryPosition+1];
     }
     return null;
   }
   
   FeedEntry get prevEntry{
-    var pos = queryService.currentPosts.indexOf(currentFeed);
-    if(pos == -1 || pos == 0){
+    if(feedEntryPosition == 0){
       return null;
     }
-    return queryService.currentPosts[pos-1];
+    return entries[feedEntryPosition-1];
   }
 
   AddFeedHeqaderComponent(QueryService this.queryService, Router this.router){
@@ -90,9 +101,7 @@ class AddFeedHeqaderComponent extends DetachAware {
       readingPost = true;
       try{
         var postId = url.substring(6);
-        print('postId: $postId');
         currentPostId = int.parse(url.substring(6));
-        print('currentPostId: $currentPostId');
       } catch(e){
         currentPostId = 0;
       }
@@ -104,9 +113,6 @@ class AddFeedHeqaderComponent extends DetachAware {
   
   void goToPost(String dir){
     FeedEntry post = dir == 'prev' ? prevEntry : nextEntry;
-    
-    print('aaaaaaaaaaaa. Dir: $dir, post: $post');
-    
     if(post == null) return;
     router.gotoUrl('/post/${post.id}');
   }

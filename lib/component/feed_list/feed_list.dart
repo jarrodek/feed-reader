@@ -1,6 +1,7 @@
 library rssapp.component.feedlist;
 
 import 'package:angular/angular.dart';
+import '../../service/query_service.dart';
 import '../../service/dbstructures.dart';
 
 @Component(
@@ -10,13 +11,12 @@ import '../../service/dbstructures.dart';
     publishAs: 'cmp')
 class FeedListComponent {
   
-  @NgOneWay('feeds')
-  List<Feed> feeds;
+  List<Feed> get feeds => queryService.feeds;
+  String get selected => queryService.currentFeedId;
+  int unreadCount = 0;
   
-  @NgTwoWay('selected')
-  String selected;
+  QueryService queryService;
   
-  @NgOneWay('unread-count')
-  int unreadCount;
+  FeedListComponent(QueryService this.queryService);
   
 }

@@ -28,7 +28,10 @@ var feed = {
      * @returns {undefined}
      */
     'getFeedsList': function(clb) {
-        
+        console.log('Now getting feeds list.');
+        rss_app.indexedDB.onerror = function(e){
+          console.error('Unable read feeds list.', e);
+        }
         rss_app.indexedDB.getFeeds(function(feeds) {
             rss_app.indexedDB.close();
             clb(feeds);
@@ -36,7 +39,9 @@ var feed = {
         
     },
     'update': function() {
+        console.log('Updating posts list in feeds.');
         this.getFeedsList(function(feeds) {
+            console.log('Result feed list with:', feeds);
             if (!feeds)
                 return;
             feed._queue = feed._queue.concat(feeds);

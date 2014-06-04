@@ -14,14 +14,11 @@
       <add-feed-header></add-feed-header>
     </header>
     <div id="app-container">
-      <feed-list feeds="ctrl.feeds" selected="ctrl.currentFeed" unread-count="ctrl.unreadCount"></feed-list>
+      <feed-list></feed-list>
       <div class="main-content">
         <ng-view autoscroll="true" class="view-animate"></ng-view>
       </div>
     </div>
-    
-    <!--script src="packages/chrome/bootstrap.js" defer></script-->
-
     <script src="rss_app.dart" type="application/dart"></script>   
     <script type="text/javascript" src="packages/browser/dart.js"></script> 
   </body>

@@ -33,12 +33,22 @@ class PostComponent {
       return;
     }
     
-    this.queryService.getPost(id).then(_handleEntry);
+    this.queryService.getPost(id).then(_handleEntry).catchError(_handleEntryError);
   }
   
   void _handleEntry(FeedEntry entry){
     this.entry = entry;
+    if(entry.unread){
+      queryService.setEntryRead(entry).then((_){
+        this.entry = entry;
+      });
+    }
     _handleAuthorImage();
+  }
+  
+  void _handleEntryError(e){
+    //TODO: error reporting.
+    window.console.error(e);
   }
   
   void frameLoad(){

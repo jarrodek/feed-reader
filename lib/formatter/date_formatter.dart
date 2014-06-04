@@ -18,11 +18,11 @@ class RelativeDateFilter {
     DateTime todayMidnight = new DateTime(now.year, now.month, now.day, 0, 0, 0, 0);
     
     if(todayMidnight.isBefore(date)){
-      return "today, at ${date.hour}:${date.minute}";
+      return "Today, at ${date.hour}:${date.minute}";
     }
     DateTime yesterdayMidnight = todayMidnight.subtract(new Duration(days:1));
     if(yesterdayMidnight.isBefore(date)){
-      return "yesterday, at ${date.hour}:${date.minute}";
+      return "Yesterday, at ${date.hour}:${date.minute}";
     }
     
     var formatter = new DateFormat.yMMMMd();

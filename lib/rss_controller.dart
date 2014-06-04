@@ -12,23 +12,8 @@ class RssController {
 
 
   QueryService queryService;
-  List<Feed> get feeds => queryService.feeds;
-  List<FeedEntry> get posts => queryService.currentPosts;
-  int get unreadCount => queryService.unread.length;
-  String currentFeed = "unread";
-  bool showAddFeed = false;
-  
-  Feed get feed {
-    try{
-      int id = int.parse(currentFeed);
-      return feeds.firstWhere((Feed f) => f.id == id);
-    } catch(e){}
-    return null;
-  }
   
   
   RssController(QueryService this.queryService);
   
 }
-
-//http://blog.gdgpoland.org/feeds/posts/default, http://stackoverflow.com/feeds/tag/dart, https://www.blogger.com/feeds/1989580893980143369/posts/default

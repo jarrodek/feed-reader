@@ -13,41 +13,52 @@ class QueryService {
   final Http _http;
   final RssDatabase db; 
   Future _loaded;
+  
   List<Feed> feeds = [];
-  List<FeedEntry> unread = [];
   List<FeedEntry> currentPosts = [];
+  Map<int, int> unreadMap = new Map<int, int>();
+  
+  
+  String _currentFeedId;
+  set currentFeedId(String id) {
+    print('currentFeedId in QueryService $id');
+    _currentFeedId = id; 
+  }
+  String get currentFeedId => _currentFeedId;
+  
+  int _unreadCount;
+  int get unreadCount {
+    if(_unreadCount == null){
+      return 0;
+    }
+    return _unreadCount;
+  }
+  
+  
   
   QueryService(Http this._http, RssDatabase this.db) {
-    
-    _loaded = Future.wait([_loadFeeds()])
-    .then((_) => _getFeedIds())
-    .then((List<int> ids) => this.db.countPosts(ids))
-    .then((Map<int,int> res) => _mapPostsCounters(res))
-    .then((_) => this.db.listUnread())
-    .then((List<FeedEntry> unread) => this.unread = unread)
-    .then((_) => _mapUnreadCounters())
-    .then((_) => getPosts('unread'))
-    .then((List<FeedEntry> posts) => currentPosts = posts);
-    
+    _loaded = Future.wait([_loadFeeds(), _countUnreads()]);
   }
   
-  List<int> _getFeedIds(){
-    List<int> ids = new List<int>();
-    this.feeds.forEach((Feed feed) => ids.add(feed.id));
-    return ids;
+  ///Load all feeds data.
+  Future _loadFeeds(){
+    return this.db.getFeeds().then((List<Feed> feeds) => this.feeds = feeds);
+  }
+  ///Count number of unread posts.
+  Future _countUnreads(){
+    return this.db.countUnread(null).then((int cnt) => _unreadCount = cnt);
   }
   
-  void _mapPostsCounters(Map<int,int> counters){
-    this.feeds.forEach((Feed feed) => counters.containsKey(feed.id) ? feed.postsCounter = counters[feed.id] : 0);
+  
+  int countUnread(int feedId){
+    if(unreadMap.containsKey(feedId)){
+      return unreadMap[feedId];
+    }
+    this.db.countUnread(feedId).then((int cnt) => unreadMap[feedId] = cnt);
   }
-  void _mapUnreadCounters(){
-    this.unread.forEach((FeedEntry entry) {
-      //TODO: check it's performance. If it returns event loop it will not be efficient.
-      Feed feed = getFeed(entry.feedid);
-      if(feed == null) return;
-      feed.unreadCounter++;
-    });
-  }
+  
+  
+  
   Feed getFeed(int feedId){
     if(feeds == null) return null;
     
@@ -73,10 +84,7 @@ class QueryService {
     }
   }
   
-  ///Load all feeds data.
-  Future _loadFeeds(){
-    return this.db.getFeeds().then((List<Feed> feeds) => this.feeds = feeds);
-  }
+  
   
   Future addFeed(String url){
     return this.db.addFeed(url).then((Feed feed){
@@ -93,6 +101,23 @@ class QueryService {
     });
   }
   
+  Future setEntryRead(FeedEntry entry){
+    if(!entry.unread){
+      return new Future.value(entry);
+    }
+    
+    
+    entry.unread = false;
+    var result = null;
+    return this.db.updateEntry(entry)
+        .then((entry) => result = entry)
+        .then((_) => this.db.listUnread())
+        .then((_){
+          return result;
+        });
+  }
+  
+  
   Feed getFeedById(int id){
     try{
       return this.feeds.firstWhere((Feed f) => f.id == id);
@@ -102,13 +127,13 @@ class QueryService {
   }
   
   Future<FeedEntry> getPost(int id){
-    
-    FeedEntry entry = currentPosts.firstWhere((FeedEntry e) => e.id == id);
-    if(entry != null){
-      return new Future.value(entry);
+    for(int i=0, len=currentPosts.length; i<len; i++){
+      if(currentPosts[i].id == id){
+        return new Future.value(currentPosts[i]);
+      }
     }
     
-    return this.db.getPost(id);
+    return this.db.getPost(id).then((FeedEntry entry) => currentPosts.add(entry));
   }
   
 }
