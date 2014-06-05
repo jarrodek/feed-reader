@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app lang="en" >
+<html ng-app lang="en" ng-csp>
   <head>
     <meta charset="utf-8">
     <title>Rss app</title>
@@ -13,19 +13,12 @@
     <header class="top-header">
       <add-feed-header></add-feed-header>
     </header>
-    
     <div id="app-container">
-      <feed-list feeds="ctrl.feeds" selected="ctrl.currentFeed" unread-count="ctrl.unreadCount"></feed-list>
+      <feed-list></feed-list>
       <div class="main-content">
-        <ng-view></ng-view>
+        <ng-view autoscroll="true" class="view-animate"></ng-view>
       </div>
     </div>
-    
-    <div class="input-group">
-      <input type="text" class="form-control" >
-    </div>
-    <!--script src="packages/chrome/bootstrap.js" defer></script-->
-
     <script src="rss_app.dart" type="application/dart"></script>   
     <script type="text/javascript" src="packages/browser/dart.js"></script> 
   </body>

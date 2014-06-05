@@ -123,7 +123,7 @@ abstract class Directive {
    *       module: Foo.moduleFactory)
    *     class Foo {
    *       static moduleFactory() => new Module()
-   *         ..type(SomeTypeA, visibility: Directive.LOCAL_VISIBILITY);
+   *         ..bind(SomeTypeA, visibility: Directive.LOCAL_VISIBILITY);
    *     }
    *
    * When specifying types, factories or values in the module, notice that
@@ -308,6 +308,13 @@ class Component extends Directive {
   @deprecated
   final String publishAs;
 
+  /**
+   * If set to true, this component will always use shadow DOM.
+   * If set to false, this component will never use shadow DOM.
+   * If unset, the compiler's default construction strategy will be used
+   */
+  final bool useShadowDom;
+
   const Component({
     this.template,
     this.templateUrl,
@@ -320,7 +327,8 @@ class Component extends Directive {
     selector,
     visibility,
     exportExpressions,
-    exportExpressionAttrs})
+    exportExpressionAttrs,
+    this.useShadowDom})
       : _cssUrls = cssUrl,
         _applyAuthorStyles = applyAuthorStyles,
         _resetStyleInheritance = resetStyleInheritance,
@@ -349,7 +357,8 @@ class Component extends Directive {
           selector: selector,
           visibility: visibility,
           exportExpressions: exportExpressions,
-          exportExpressionAttrs: exportExpressionAttrs);
+          exportExpressionAttrs: exportExpressionAttrs,
+          useShadowDom: useShadowDom);
 }
 
 /**
@@ -544,9 +553,9 @@ abstract class DetachAware {
  * Usage:
  *
  *     // Declaration
- *     @Formatter(name:'myFilter')
- *     class MyFilter {
- *       call(valueToFilter, optArg1, optArg2) {
+ *     @Formatter(name:'myFormatter')
+ *     class MyFormatter {
+ *       call(valueToFormat, optArg1, optArg2) {
  *          return ...;
  *       }
  *     }
@@ -554,11 +563,11 @@ abstract class DetachAware {
  *
  *     // Registration
  *     var module = ...;
- *     module.type(MyFilter);
+ *     module.bind(MyFormatter);
  *
  *
  *     <!-- Usage -->
- *     <span>{{something | myFilter:arg1:arg2}}</span>
+ *     <span>{{something | myFormatter:arg1:arg2}}</span>
  */
 class Formatter {
   final String name;

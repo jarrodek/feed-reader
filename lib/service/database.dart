@@ -11,7 +11,7 @@ import 'dbstructures.dart';
 
 @Injectable()
 class RssDatabase {
-  static final int DB_VERSION = 3;
+  static final int DB_VERSION = 4;
   static final String FEEDS_STORE = "feeds";
   static final String POSTS_STORE = "posts";
 
@@ -45,7 +45,7 @@ class RssDatabase {
     poststore.createIndex('feedid', 'feedid', unique: false, multiEntry: false);
     poststore.createIndex('unread', 'unread', unique: false, multiEntry: false);
     poststore.createIndex('starred', 'starred', unique: false, multiEntry: false);
-    poststore.createIndex('unread, id', ['unread', 'id'], unique: false);
+    poststore.createIndex('unread, feedid', ['unread', 'feedid'], unique: false);
   }
 
   Future<List<Feed>> getFeeds() => db == null ? _loaded.then((_) => _getFeeds()) : _getFeeds();
@@ -133,22 +133,26 @@ class RssDatabase {
   
   Future<int> countUnread(int feedId) => db == null ? _loaded.then((_) => _countUnread(feedId)) : _countUnread(feedId);
   Future<int> _countUnread(int feedId) {
-    var completer = new Completer<int>();
     
     Transaction transaction = this.db.transaction([POSTS_STORE], "readonly");
     ObjectStore objectStore = transaction.objectStore(POSTS_STORE);
     
-    var index = objectStore.index("unread");
-    var range = new KeyRange.only(0);
-    index.count(range);
+    var index, range;
+    if(feedId == null){
+      index = objectStore.index("unread");
+      range = new KeyRange.only(1);
+    } else {
+      index = objectStore.index("unread, feedid");
+      range = new KeyRange.only([1, feedId]);
+    }
     
-    return completer.future;
+    
+    return index.count(range);
   }
 
   Future<Map<int, int>> countPosts(List<int> feedIds) => db == null ? _loaded.then((_) => _countPosts(feedIds)) : _countPosts(feedIds);
   Future<Map<int, int>> _countPosts(List<int> feedIds) {
     var completer = new Completer<Map<int, int>>();
-
     var ops = [];
     Map<int, int> result = new Map<int, int>();
     feedIds.forEach((int feedId) {

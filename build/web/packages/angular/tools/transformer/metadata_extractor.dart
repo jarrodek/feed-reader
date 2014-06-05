@@ -10,7 +10,7 @@ import 'package:code_transformers/resolver.dart';
 
 class AnnotatedType {
   final ClassElement type;
-  Iterable<Annotation> annotations;
+  List<Annotation> annotations;
 
   AnnotatedType(this.type);
 
@@ -242,24 +242,34 @@ class AnnotationExtractor {
 
   /// Extracts all of the annotations for the specified class.
   AnnotatedType extractAnnotations(ClassElement cls) {
-    if (resolver.getImportUri(cls.library, from: outputId) == null) {
-      warn('Dropping annotations for ${cls.name} because the '
-          'containing file cannot be imported (must be in a lib folder).', cls);
-      return null;
-    }
-
+    var classElement = cls;
     var visitor = new _AnnotationVisitor(_annotationElements);
-    cls.node.accept(visitor);
+    while (classElement != null) {
+      if (resolver.getImportUri(classElement.library, from: outputId) == null) {
+        warn('Dropping annotations for ${classElement.name} because the '
+            'containing file cannot be imported (must be in a lib folder).', classElement);
+        return null;
+      }
+      if (classElement.node != null) {
+        classElement.node.accept(visitor);
+      }
+
+      if (classElement.supertype != null) {
+        visitor.visitingSupertype = true;
+        classElement = classElement.supertype.element;
+      } else {
+        classElement = null;
+      }
+    }
 
     if (!visitor.hasAnnotations) return null;
 
     var type = new AnnotatedType(cls);
     type.annotations = visitor.classAnnotations
-        .where((annotation) {
+        .where((Annotation annotation) {
           var element = annotation.element;
           if (element != null && !element.isPublic) {
-            warn('Annotation $annotation is not public.',
-                annotation.parent.element);
+            warn('Annotation $annotation is not public.', cls);
             return false;
           }
           if (element is! ConstructorElement) {
@@ -267,16 +277,16 @@ class AnnotationExtractor {
             return false;
           }
           ConstructorElement ctor = element;
-          var cls = ctor.enclosingElement;
-          if (!cls.isPublic) {
-            warn('Annotation $annotation is not public.',
-                annotation.parent.element);
+          var annotationClass = ctor.enclosingElement;
+          if (!annotationClass.isPublic) {
+            warn('Annotation $annotation is not public.', cls);
             return false;
           }
           return element.enclosingElement.type.isAssignableTo(directiveType.type) ||
                  element.enclosingElement.type.isAssignableTo(formatterType.type);
         }).toList();
 
+    if (type.annotations.isEmpty) return null;
 
     var memberAnnotations = {};
     visitor.memberAnnotations.forEach((memberName, annotations) {
@@ -293,8 +303,6 @@ class AnnotationExtractor {
       _foldMemberAnnotations(memberAnnotations, type);
     }
 
-    if (type.annotations.isEmpty) return null;
-
     return type;
   }
 
@@ -309,10 +317,6 @@ class AnnotationExtractor {
       return element.enclosingElement.type.isAssignableTo(
           directiveType.type);
     });
-    if (ngAnnotations.isEmpty) {
-      warn('Found field annotation but no class directives.', type.type);
-      return;
-    }
 
     var mapType = resolver.getType('dart.core.Map').type;
     // Find acceptable constructors- ones which take a param named 'map'
@@ -336,53 +340,52 @@ class AnnotationExtractor {
       return;
     }
 
-    // Default to using the first acceptable annotation- not sure if
-    // more than one should ever occur.
-    var sourceAnnotation = acceptableAnnotations.first;
+    // Merge attribute annotations in all of the class annotations
+    acceptableAnnotations.forEach((srcAnnotation) {
+      // Clone the annotation so we don't modify the one in the persistent AST.
+      var index = type.annotations.indexOf(srcAnnotation);
+      var annotation = new AstCloner().visitAnnotation(srcAnnotation);
+      ResolutionCopier.copyResolutionData(srcAnnotation, annotation);
+      type.annotations[index] = annotation;
 
-    // Clone the annotation so we don't modify the one in the persistent AST.
-    var index = type.annotations.indexOf(sourceAnnotation);
-    var annotation = new AstCloner().visitAnnotation(sourceAnnotation);
-    ResolutionCopier.copyResolutionData(sourceAnnotation, annotation);
-    type.annotations[index] = annotation;
+      var mapArg = annotation.arguments.arguments.firstWhere(
+          (arg) => (arg is NamedExpression) && (arg.name.label.name == 'map'),
+          orElse: () => null);
 
-    var mapArg = annotation.arguments.arguments.firstWhere((arg) =>
-        (arg is NamedExpression) && (arg.name.label.name == 'map'),
-        orElse: () => null);
-
-    // If we don't have a 'map' parameter yet, add one.
-    if (mapArg == null) {
-      var map = new MapLiteral(null, null, null, [], null);
-      var label = new Label(new SimpleIdentifier(
-          new _GeneratedToken(TokenType.STRING, 'map')),
-          new _GeneratedToken(TokenType.COLON, ':'));
-      mapArg = new NamedExpression(label, map);
-      annotation.arguments.arguments.add(mapArg);
-    }
-
-    var map = mapArg.expression;
-    if (map is! MapLiteral) {
-      warn('Expected \'map\' argument of $annotation to be a map literal',
-          type.type);
-      return;
-    }
-    memberAnnotations.forEach((memberName, annotation) {
-      var key = annotation.arguments.arguments.first;
-      // If the key already exists then it means we have two annotations for
-      // same member.
-      if (map.entries.any((entry) => entry.key.toString() == key.toString())) {
-        warn('Directive $annotation already contains an entry for $key',
-            type.type);
-        return;
+      // If we don't have a 'map' parameter yet, add one.
+      if (mapArg == null) {
+        var map = new MapLiteral(null, null, null, [], null);
+        var label = new Label(new SimpleIdentifier(
+            new _GeneratedToken(TokenType.STRING, 'map')),
+        new _GeneratedToken(TokenType.COLON, ':'));
+        mapArg = new NamedExpression(label, map);
+        annotation.arguments.arguments.add(mapArg);
       }
 
-      var typeName = annotation.element.enclosingElement.name;
-      var value = '${_annotationToMapping[typeName]}$memberName';
-      var entry = new MapLiteralEntry(
-          key,
-          new _GeneratedToken(TokenType.COLON, ':'),
-          new SimpleStringLiteral(stringToken(value), value));
-      map.entries.add(entry);
+      var map = mapArg.expression;
+      if (map is! MapLiteral) {
+        warn('Expected \'map\' argument of $annotation to be a map literal',
+             type.type);
+        return;
+      }
+      memberAnnotations.forEach((memberName, annotation) {
+        var key = annotation.arguments.arguments.first;
+        // If the key already exists then it means we have two annotations for
+        // same member.
+        if (map.entries.any((entry) => entry.key.toString() == key.toString())) {
+          warn('Directive $annotation already contains an entry for $key',
+               type.type);
+          return;
+        }
+
+        var typeName = annotation.element.enclosingElement.name;
+        var value = '${_annotationToMapping[typeName]}$memberName';
+        var entry = new MapLiteralEntry(
+            key,
+            new _GeneratedToken(TokenType.COLON, ':'),
+            new SimpleStringLiteral(stringToken(value), value));
+        map.entries.add(entry);
+      });
     });
   }
 
@@ -410,6 +413,7 @@ class _AnnotationVisitor extends GeneralizingAstVisitor {
   final List<Element> allowedMemberAnnotations;
   final List<Annotation> classAnnotations = [];
   final Map<String, List<Annotation>> memberAnnotations = {};
+  var visitingSupertype = false;
 
   _AnnotationVisitor(this.allowedMemberAnnotations);
 
@@ -417,8 +421,9 @@ class _AnnotationVisitor extends GeneralizingAstVisitor {
     var parent = annotation.parent;
     if (parent is! Declaration) return;
 
-    if (parent.element is ClassElement) {
+    if (parent.element is ClassElement && !visitingSupertype) {
       classAnnotations.add(annotation);
+
     } else if (allowedMemberAnnotations.contains(annotation.element)) {
       if (parent is MethodDeclaration) {
         memberAnnotations.putIfAbsent(parent.name.name, () => [])
@@ -431,5 +436,5 @@ class _AnnotationVisitor extends GeneralizingAstVisitor {
   }
 
   bool get hasAnnotations =>
-      !classAnnotations.isEmpty || !memberAnnotations.isEmpty;
+      classAnnotations.isNotEmpty || memberAnnotations.isNotEmpty;
 }

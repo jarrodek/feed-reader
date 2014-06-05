@@ -11,7 +11,6 @@ import 'package:angular/angular.dart';
     selector: 'star',
     templateUrl: 'packages/rss_app/component/star/star.html',
     cssUrl: 'packages/rss_app/component/star/star.css',
-    applyAuthorStyles: true,
     publishAs: 'cmp')
 class StarringComponent {
   static const String _STAR_ON_CHAR = "\u2605";

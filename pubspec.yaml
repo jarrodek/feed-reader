@@ -4,7 +4,8 @@ dependencies:
   angular: any
   web_components: any
 transformers:
-- angular
+- angular:
+    csp: true
 - $dart2js:
     checked: false
     minify: false
@@ -13,3 +14,4 @@ transformers:
     suppressWarnings: false
     suppressHints: false
     terse: false
+    

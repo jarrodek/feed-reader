@@ -1,6 +1,5 @@
 library angular.tools.transformer.metadata_generator;
 
-import 'dart:async';
 import 'package:analyzer/src/generated/element.dart';
 import 'package:angular/tools/transformer/options.dart';
 import 'package:barback/barback.dart';
@@ -70,7 +69,7 @@ class MetadataGenerator extends Transformer with ResolverTransformer {
 }
 
 void _writeHeader(AssetId id, StringSink sink) {
-  var libPath = path.withoutExtension(id.path).replaceAll('/', '.');
+  var libPath = path.withoutExtension(id.path).replaceAll('/', '.').replaceAll('-', '_');
   sink.write('''
 library ${id.package}.$libPath.generated_metadata;
 
@@ -83,7 +82,7 @@ import 'package:di/di.dart' show Module;
 void _writePreamble(StringSink sink) {
   sink.write('''
 Module get metadataModule => new Module()
-    ..value(MetadataExtractor, new _StaticMetadataExtractor());
+    ..bind(MetadataExtractor, toValue: new _StaticMetadataExtractor());
 
 class _StaticMetadataExtractor implements MetadataExtractor {
   Iterable call(Type type) {

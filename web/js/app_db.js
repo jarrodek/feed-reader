@@ -7,7 +7,7 @@ var rss_app = {
                 callback();
                 return;
             }
-            var version = 3;
+            var version = 4;
             var request = indexedDB.open("rss_feeds", version);
             request.onupgradeneeded = function(e) {
                 console.log('onupgradeneeded', e);
@@ -29,7 +29,7 @@ var rss_app = {
                 poststore.createIndex('feedid', 'feedid', {unique: false, multiEntry: false});
                 poststore.createIndex('unread', 'unread', {unique: false, multiEntry: false});
                 poststore.createIndex('starred', 'starred', {unique: false, multiEntry: false});
-                poststore.createIndex('unread, id', ['unread', 'id'], {unique: false});
+                poststore.createIndex('unread, feedid', ['unread', 'feedid'], {unique: false});
             };
             request.onsuccess = function(e) {
                 rss_app.indexedDB.db = e.target.result;

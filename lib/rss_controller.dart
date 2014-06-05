@@ -17,3 +17,4 @@ class RssController {
   RssController(QueryService this.queryService);
   
 }
+//http://blog.gdgpoland.org/feeds/posts/default, http://stackoverflow.com/feeds/tag/dart, https://www.blogger.com/feeds/1989580893980143369/posts/default

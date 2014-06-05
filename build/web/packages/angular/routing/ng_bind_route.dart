@@ -23,7 +23,6 @@ part of angular.routing;
  * however it does not effect view resolution by nested ng-view(s).
  */
 @Decorator(
-    visibility: Directive.CHILDREN_VISIBILITY,
     selector: '[ng-bind-route]',
     module: NgBindRoute.module,
     map: const {'ng-bind-route': '@routeName'})
@@ -33,9 +32,8 @@ class NgBindRoute implements RouteProvider {
   Injector _injector;
 
   static final Module _module = new Module()
-      ..factory(RouteProvider,
-                (i) => i.get(NgBindRoute),
-                visibility: Directive.CHILDREN_VISIBILITY);
+      ..bind(RouteProvider, toFactory: (i) => i.get(NgBindRoute),
+             visibility: Directive.CHILDREN_VISIBILITY);
   static module() => _module;
 
   // We inject NgRoutingHelper to force initialization of routing.

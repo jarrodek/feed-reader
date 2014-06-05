@@ -33,40 +33,51 @@ part 'http.dart';
 part 'mustache.dart';
 part 'node_cursor.dart';
 part 'selector.dart';
+part 'shadow_dom_component_factory.dart';
+part 'shadowless_shadow_root.dart';
 part 'tagging_compiler.dart';
 part 'tagging_view_factory.dart';
 part 'template_cache.dart';
+part 'transcluding_component_factory.dart';
 part 'tree_sanitizer.dart';
 part 'walking_compiler.dart';
 part 'ng_element.dart';
 
 class CoreDomModule extends Module {
   CoreDomModule() {
-    value(dom.Window, dom.window);
-    value(ElementProbe, null);
+    bind(dom.Window, toValue: dom.window);
+    bind(ElementProbe, toValue: null);
 
-    factory(TemplateCache, (_) => new TemplateCache(capacity: 0));
-    type(dom.NodeTreeSanitizer, implementedBy: NullTreeSanitizer);
+    // Default to a unlimited-sized TemplateCache
+    bind(TemplateCache, toFactory: (_) => new TemplateCache());
+    bind(dom.NodeTreeSanitizer, toImplementation: NullTreeSanitizer);
 
-    type(TextMustache);
-    type(AttrMustache);
+    bind(TextMustache);
+    bind(AttrMustache);
 
-    type(Compiler, implementedBy: TaggingCompiler);
-    type(Http);
-    type(UrlRewriter);
-    type(HttpBackend);
-    type(HttpDefaultHeaders);
-    type(HttpDefaults);
-    type(HttpInterceptors);
-    type(Animate);
-    type(ViewCache);
-    type(BrowserCookies);
-    type(Cookies);
-    type(LocationWrapper);
-    type(DirectiveMap);
-    type(DirectiveSelectorFactory);
-    type(ElementBinderFactory);
-    type(NgElement);
-    type(EventHandler);
+    bind(Compiler, toImplementation: TaggingCompiler);
+
+    bind(ComponentFactory, toImplementation: ShadowDomComponentFactory);
+    bind(ShadowDomComponentFactory);
+    bind(TranscludingComponentFactory);
+    bind(Content);
+    bind(ContentPort, toValue: null);
+    
+    bind(Http);
+    bind(UrlRewriter);
+    bind(HttpBackend);
+    bind(HttpDefaultHeaders);
+    bind(HttpDefaults);
+    bind(HttpInterceptors);
+    bind(Animate);
+    bind(ViewCache);
+    bind(BrowserCookies);
+    bind(Cookies);
+    bind(LocationWrapper);
+    bind(DirectiveMap);
+    bind(DirectiveSelectorFactory);
+    bind(ElementBinderFactory);
+    bind(NgElement);
+    bind(EventHandler);
   }
 }

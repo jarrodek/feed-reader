@@ -155,12 +155,12 @@ final Logger _logger = new Logger('ng.animate');
  */
 class AnimationModule extends Module {
   AnimationModule() {
-    type(AnimationFrame);
-    type(AnimationLoop);
-    type(CssAnimationMap);
-    type(AnimationOptimizer);
-    type(NgAnimate);
-    type(NgAnimateChildren);
-    type(NgAnimate, implementedBy: CssAnimate);
+    bind(AnimationFrame);
+    bind(AnimationLoop);
+    bind(CssAnimationMap);
+    bind(AnimationOptimizer);
+    bind(NgAnimate, toValue: null);
+    bind(NgAnimateChildren);
+    bind(Animate, toImplementation: CssAnimate);
   }
 }

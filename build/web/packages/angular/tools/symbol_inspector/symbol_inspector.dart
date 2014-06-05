@@ -25,16 +25,17 @@ Iterable<Symbol> _getUsedSymbols(DeclarationMirror decl, seenDecls, path, onlyTy
   seenDecls[decl.qualifiedName] = true;
 
   if (decl.isPrivate) return [];
+
   path = "$path -> $decl";
 
   var used = [];
 
   if (decl is TypedefMirror) {
-    var tddecl = decl as TypedefMirror;
+    TypedefMirror tddecl = decl;
     used.addAll(_getUsedSymbols(tddecl.referent, seenDecls, path, onlyType));
   }
   if (decl is FunctionTypeMirror) {
-    var ftdecl = decl as FunctionTypeMirror;
+    FunctionTypeMirror ftdecl = decl;
 
     ftdecl.parameters.forEach((ParameterMirror p) {
       used.addAll(_getUsedSymbols(p.type, seenDecls, path, onlyType));
@@ -49,7 +50,7 @@ Iterable<Symbol> _getUsedSymbols(DeclarationMirror decl, seenDecls, path, onlyTy
 
   if (!onlyType) {
     if (decl is ClassMirror) {
-      var cdecl = decl as ClassMirror;
+      ClassMirror cdecl = decl;
       cdecl.declarations.forEach((s, d) {
         try {
           used.addAll(_getUsedSymbols(d, seenDecls, path, false));
@@ -61,7 +62,7 @@ Iterable<Symbol> _getUsedSymbols(DeclarationMirror decl, seenDecls, path, onlyTy
     }
 
     if (decl is MethodMirror) {
-      var mdecl = decl as MethodMirror;
+      MethodMirror mdecl = decl;
       if (mdecl.parameters != null)
         mdecl.parameters.forEach((p) {
           used.addAll(_getUsedSymbols(p.type, seenDecls, path, true));
@@ -70,14 +71,14 @@ Iterable<Symbol> _getUsedSymbols(DeclarationMirror decl, seenDecls, path, onlyTy
     }
 
     if (decl is VariableMirror) {
-      var vdecl = decl as VariableMirror;
+      VariableMirror vdecl = decl;
       used.addAll(_getUsedSymbols(vdecl.type, seenDecls, path, true));
     }
   }
 
   // Strip out type variables.
   if (decl is TypeMirror) {
-    var tdecl = decl as TypeMirror;
+    TypeMirror tdecl = decl;
     var typeVariables = tdecl.typeVariables.map((tv) => tv.qualifiedName);
     used = used.where((x) => !typeVariables.contains(x));
   }
@@ -97,6 +98,11 @@ getSymbolsFromLibrary(String libraryName) {
     if (SHOULD_PRINT_SYMBOL_TREE) print(printPrefix + unwrapSymbol(lib.qualifiedName));
     printPrefix += "  ";
     lib.declarations.forEach((symbol, decl) {
+      if (decl.isPrivate) return;
+
+      // Work-around for dartbug.com/18271
+      if (decl is TypedefMirror && unwrapSymbol(symbol).startsWith('_')) return;
+
       if (SHOULD_PRINT_SYMBOL_TREE) print(printPrefix + unwrapSymbol(symbol));
       names.add(new QualifiedSymbol(symbol, decl.qualifiedName, lib.qualifiedName));
       used[decl.qualifiedName] = _getUsedSymbols(decl, {}, "", false);
@@ -141,10 +147,69 @@ getSymbolsFromLibrary(String libraryName) {
   };
 
   var lib = currentMirrorSystem().findLibrary(new Symbol(libraryName));
-  try {
-    return extractSymbols(lib);
-  } catch (e,s) { print("EE: $e\nSS: $s"); }
+  return extractSymbols(lib);
 }
 
 var _SYMBOL_NAME = new RegExp('"(.*)"');
 unwrapSymbol(sym) => _SYMBOL_NAME.firstMatch(sym.toString()).group(1);
+
+assertSymbolNamesAreOk(List<String> allowedNames, LibraryInfo libraryInfo) {
+  var _nameMap = {};
+  var _qualifiedNameMap = {};
+
+  allowedNames.forEach((x) => _nameMap[x] = true);
+
+  libraryInfo.names.forEach((x) => _qualifiedNameMap[x.qualified] = true);
+
+  var usedButNotExported = {};
+  var exported = [];
+
+
+  libraryInfo.names.forEach((nameInfo) {
+    String name = unwrapSymbol(nameInfo.qualified);
+    String libName = unwrapSymbol(nameInfo.libraryName);
+
+    var key = "$name";
+    if (_nameMap.containsKey(key)) {
+      _nameMap[key] = false;
+
+      // Check that all the exposed types are also exported
+      assert(libraryInfo.symbolsUsedForName.containsKey(nameInfo.qualified));
+      libraryInfo.symbolsUsedForName[nameInfo.qualified].forEach((usedSymbol) {
+        if ("$usedSymbol".contains('"dart.')) return;
+        if ("$usedSymbol" == 'Symbol("dynamic")') return;
+        if ("$usedSymbol" == 'Symbol("void")') return;
+
+        if (!_qualifiedNameMap.containsKey(usedSymbol)) {
+          usedButNotExported.putIfAbsent(usedSymbol, () => []);
+          usedButNotExported[usedSymbol].add(nameInfo.qualified);
+        }
+      });
+      return;
+    }
+
+    exported.add(key);
+  });
+  if (exported.isNotEmpty) {
+    throw "These symbols are exported thru the angular library, but it shouldn't be:\n"
+          "${exported.join('\n')}";
+  }
+
+  bool needHeader = true;
+  usedButNotExported.forEach((used, locs) {
+    print("  ${unwrapSymbol(used)} : unexported, used from:");
+    locs.forEach((l) {
+      print("      ${unwrapSymbol(l)}");
+    });
+    print("");
+  });
+
+  // If there are keys that no longer need to be in the ALLOWED_NAMES list, complain.
+  var keys = [];
+  _nameMap.forEach((k,v) {
+    if (v) keys.add(k);
+  });
+  if (keys.isNotEmpty) {
+    throw "These whitelisted symbols are not used:\n${keys.join('\n')}";
+  }
+}

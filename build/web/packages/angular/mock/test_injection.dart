@@ -16,7 +16,7 @@ class _SpecInjector {
 
   _SpecInjector() {
     var moduleModule = new Module()
-      ..factory(Module, (Injector injector) => addModule(new Module()));
+      ..bind(Module, toFactory: (Injector injector) => addModule(new Module()));
     moduleInjector = new DynamicInjector(modules: [moduleModule]);
   }
 
@@ -73,15 +73,18 @@ class _SpecInjector {
  *
  * NOTE: Calling inject creates an injector, which prevents any more calls to [module].
  *
+ * NOTE: [inject] will never return the result of [fn]. If you need to return a [Future]
+ * for unittest to consume, take a look at [async], [clockTick], and [microLeap] instead.
+ *
  * Typical usage:
  *
  *     test('wrap whole test', inject((TestBed tb) {
  *       tb.compile(...);
- *     });
+ *     }));
  *
  *     test('wrap part of a test', () {
  *       module((Module module) {
- *         module.type(Foo);
+ *         module.bind(Foo);
  *       });
  *       inject((TestBed tb) {
  *         tb.compile(...);
@@ -107,12 +110,12 @@ inject(Function fn) {
  * hence no more calls to [module] can be made.
  *
  *     setUp(module((Module model) {
- *       module.type(Foo);
+ *       module.bind(Foo);
  *     });
  *
  *     test('foo', () {
  *       module((Module module) {
- *         module.type(Foo);
+ *         module.bind(Foo);
  *       });
  *     });
  */
