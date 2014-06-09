@@ -1,13 +1,13 @@
-<div class="list-feed" ng-repeat="feed in cmp.feeds">
+<div class="list-feed">
   
   <header class="title-area">
-    <h1 class="feed-title">{{feed.title|sanitize}} ({{feed.unreadCounter}})</h1>
-    <div class="open-feed">
-      <a href="#/feed/{{feed.id}}" class="btn btn-primary btn-sm">Read all</a>
-    </div>
+    <h1 class="feed-title">{{cmp.feed.title|sanitize}} (<unread-counter feed="{{cmp.feed.id}}"></unread-counter>)</h1>
+    <!--div class="open-feed">
+      <a href="#/feed/{{cmp.feed.id}}" class="btn btn-primary btn-sm">Read all</a>
+    </div-->
   </header>
   
-  <article ng-class="{'unread':post.unread}" class="list-feed-post" ng-repeat="post in cmp.postsMap[feed.id] | postlist:cmp.listLength">
+  <article ng-class="{'unread':post.unread}" class="list-feed-post" ng-repeat="post in cmp.entries">
     <div class="content">
       <header>
         <h1 class="post-title"><a href="#/post/{{post.id}}">{{post.title}}</a></h1>

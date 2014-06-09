@@ -3,6 +3,7 @@ library rssapp.component.addfeedheader;
 import 'dart:html';
 
 import 'package:angular/angular.dart';
+import 'package:rss_app/service/events_observer.dart';
 
 import '../../service/query_service.dart';
 import '../../service/dbstructures.dart';
@@ -11,8 +12,11 @@ import '../../service/dbstructures.dart';
     selector: 'add-feed-header', 
     templateUrl: 'packages/rss_app/component/add_feed_header/add_feed_header.html', 
     publishAs: 'cmp',
-    useShadowDom: false)
-class AddFeedHeqaderComponent {
+    useShadowDom: false,
+    map: const {
+      'on-refresh-feeds': '&onRefreshFeeds'
+    })
+class AddFeedHeaderComponent {
   
   QueryService queryService;
   Router router;
@@ -26,6 +30,14 @@ class AddFeedHeqaderComponent {
   bool get addFeedDisabled => !(feedAddUrl.startsWith("http://") || feedAddUrl.startsWith("https://"));
   
   List<FeedEntry> get entries => queryService.currentPosts;
+  bool get hasUnread{
+    for(int i=0,len=entries.length; i<len; i++){
+      if(entries[i].unread == true){
+        return true;
+      }
+    }
+    return false;
+  }
   
   ///Get posts list current size.
   int get currentPostsLength => entries.length;
@@ -67,8 +79,10 @@ class AddFeedHeqaderComponent {
     }
     return true;
   }
-
-  AddFeedHeqaderComponent(QueryService this.queryService, Router this.router);
+  ///TODO: Add arrows support.
+  AppEvents appEvents;
+  
+  AddFeedHeaderComponent(QueryService this.queryService, Router this.router, AppEvents this.appEvents);
 
   void addFeed() {
 
@@ -109,6 +123,12 @@ class AddFeedHeqaderComponent {
     print('$dir post ID: $postId');
     if(postId == 0) return;
     router.gotoUrl('/post/$postId');
+  }
+  
+  dynamic onRefreshFeeds;
+  
+  void markAllAsRead(){
+    queryService.markCurrentAsRead();
   }
   
 }

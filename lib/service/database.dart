@@ -27,6 +27,7 @@ class RssDatabase {
   }
 
   void _initializeDatabase(VersionChangeEvent e) {
+    print('[DATASTORE] Initialize database. Upgrading to v: $DB_VERSION');
     Database db = (e.target as Request).result;
     
     if (db.objectStoreNames.contains(FEEDS_STORE)) {
@@ -51,6 +52,7 @@ class RssDatabase {
   Future<List<Feed>> getFeeds() => db == null ? _loaded.then((_) => _getFeeds()) : _getFeeds();
 
   Future<List<Feed>> _getFeeds() {
+    print('[DATASTORE] _getFeeds');
     var completer = new Completer();
     Transaction transaction = this.db.transaction([FEEDS_STORE], "readonly");
     ObjectStore objectStore = transaction.objectStore(FEEDS_STORE);
@@ -72,6 +74,7 @@ class RssDatabase {
    */
   Future addFeed(String url) => db == null ? _loaded.then((_) => _addFeed(url)) : _addFeed(url);
   Future<Feed> _addFeed(String url) {
+    print('[DATASTORE] _addFeed');
     var completer = new Completer();
     Transaction transaction = this.db.transaction([FEEDS_STORE], "readwrite");
     ObjectStore objectStore = transaction.objectStore(FEEDS_STORE);
@@ -104,6 +107,7 @@ class RssDatabase {
   Future<List<FeedEntry>> listAll() => db == null ? _loaded.then((_) => _listPosts()) : _listPosts();
   
   Future<List<FeedEntry>> _listPosts([String source = null]) {
+    print('[DATASTORE]  _listPosts(String $source)');
     var completer = new Completer<List<FeedEntry>>();
     Transaction transaction = this.db.transaction([POSTS_STORE], "readonly");
     ObjectStore objectStore = transaction.objectStore(POSTS_STORE);
@@ -133,7 +137,7 @@ class RssDatabase {
   
   Future<int> countUnread(int feedId) => db == null ? _loaded.then((_) => _countUnread(feedId)) : _countUnread(feedId);
   Future<int> _countUnread(int feedId) {
-    
+    print('[DATASTORE]  _countUnread(int $feedId)');
     Transaction transaction = this.db.transaction([POSTS_STORE], "readonly");
     ObjectStore objectStore = transaction.objectStore(POSTS_STORE);
     
@@ -152,6 +156,7 @@ class RssDatabase {
 
   Future<Map<int, int>> countPosts(List<int> feedIds) => db == null ? _loaded.then((_) => _countPosts(feedIds)) : _countPosts(feedIds);
   Future<Map<int, int>> _countPosts(List<int> feedIds) {
+    print('[DATASTORE]  _countPosts(List<int> $feedIds)');
     var completer = new Completer<Map<int, int>>();
     var ops = [];
     Map<int, int> result = new Map<int, int>();
@@ -175,6 +180,7 @@ class RssDatabase {
   Future<List<FeedEntry>> getPosts(int feedId) => db == null ? _loaded.then((_) => _getPostsForFeed(feedId)) : _getPostsForFeed(feedId);
   
   Future<List<FeedEntry>> _getPostsForFeed(int feedId) {
+    print('[DATASTORE]  _getPostsForFeed(int $feedId)');
     var completer = new Completer<List<FeedEntry>>();
     
     Transaction transaction = this.db.transaction([POSTS_STORE], "readonly");
@@ -197,6 +203,7 @@ class RssDatabase {
   }
   
   Future updateEntry(FeedEntry entry){
+    print('[DATASTORE]  updateEntry(...)');
     var completer = new Completer();
     Transaction transaction = this.db.transaction([POSTS_STORE], "readwrite");
     ObjectStore objectStore = transaction.objectStore(POSTS_STORE);
@@ -216,6 +223,7 @@ class RssDatabase {
   }
   
   Future<FeedEntry> getPost(int id){
+    print('[DATASTORE] getPost(int $id)');
     var completer = new Completer<FeedEntry>();
     
     Transaction transaction = this.db.transaction([POSTS_STORE], "readonly");

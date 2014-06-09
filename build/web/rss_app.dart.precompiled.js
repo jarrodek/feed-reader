@@ -66,7 +66,7 @@ $ = Isolate.$isolateProperties;
 var $$ = {};
 
 // Native classes
-init.mangledNames = {_queueAnimationFrame$0: "_queueAnimationFrame:0:0", _read$1: "_read:1:0", _update$1: "_update:1:0", addClass$1: "addClass:1:0", addClass$2: "addClass:2:0", alwaysAnimate$2: "alwaysAnimate:2:0", alwaysAnimateChildren$2: "alwaysAnimateChildren:2:0", animate$2: "animate:2:0", call$0: "call:0:0", call$1: "call:1:0", call$1$appRoot: "call:1:0:appRoot", call$1$autoAdvance: "call:1:0:autoAdvance", call$1$growable: "call:1:0:growable", call$1$specification: "call:1:0:specification", call$1$startingFrom: "call:1:0:startingFrom", call$2: "call:2:0", call$2$autoAdvance$direction: "call:2:0:autoAdvance:direction", call$2$cache: "call:2:0:cache", call$2$forceNewInstances: "call:2:0:forceNewInstances", call$2$insertAfter: "call:2:0:insertAfter", call$2$moveAfter: "call:2:0:moveAfter", call$2$name: "call:2:0:name", call$2$onError: "call:2:0:onError", call$2$orElse: "call:2:0:orElse", call$2$parameters$tail: "call:2:0:parameters:tail", call$2$runGuarded: "call:2:0:runGuarded", call$2$treeSanitizer: "call:2:0:treeSanitizer", call$2$validator: "call:2:0:validator", call$3: "call:3:0", call$3$addAtEnd: "call:3:0:addAtEnd", call$3$async: "call:3:0:async", call$3$autoAdvance$direction$range: "call:3:0:autoAdvance:direction:range", call$3$autoIncrement$keyPath: "call:3:0:autoIncrement:keyPath", call$3$canChangeModel: "call:3:0:canChangeModel", call$3$collection: "call:3:0:collection", call$3$formatters: "call:3:0:formatters", call$3$insertBefore: "call:3:0:insertBefore", call$3$onDone$onError: "call:3:0:onDone:onError", call$3$onUpgradeNeeded$version: "call:3:0:onUpgradeNeeded:version", call$3$removeAtEnd: "call:3:0:removeAtEnd", call$3$toFactory$visibility: "call:3:0:toFactory:visibility", call$3$treeSanitizer$validator: "call:3:0:treeSanitizer:validator", call$3$unique: "call:3:0:unique", call$4: "call:4:0", call$4$canChangeModel$collection: "call:4:0:canChangeModel:collection", call$4$canChangeModel$formatters: "call:4:0:canChangeModel:formatters", call$4$cancelOnError$onDone$onError: "call:4:0:cancelOnError:onDone:onError", call$4$collection$context$formatters: "call:4:0:collection:context:formatters", call$4$collection$formatters: "call:4:0:collection:formatters", call$4$context$formatters: "call:4:0:context:formatters", call$4$evalStopwatch$exceptionHandler$fieldStopwatch$processStopwatch: "call:4:0:evalStopwatch:exceptionHandler:fieldStopwatch:processStopwatch", call$4$forceNewInstances$name: "call:4:0:forceNewInstances:name", call$4$method$requestHeaders$sendData: "call:4:0:method:requestHeaders:sendData", call$4$replace$startingFrom: "call:4:0:replace:startingFrom", call$5: "call:5:0", call$5$changeLog$evalStopwatch$exceptionHandler$fieldStopwatch$processStopwatch: "call:5:0:changeLog:evalStopwatch:exceptionHandler:fieldStopwatch:processStopwatch", call$6: "call:6:0", call$7$defaultRoute$enter$leave$mount$name$path$preEnter: "call:7:0:defaultRoute:enter:leave:mount:name:path:preEnter", cancel$0: "cancel:0:0", detachAlwaysAnimateOptions$1: "detachAlwaysAnimateOptions:1:0", findExisting$2: "findExisting:2:0", forget$1: "forget:1:0", get$_active: "_active", get$_alwaysAnimate: "_alwaysAnimate", get$_alwaysAnimateChildren: "_alwaysAnimateChildren", get$_animate$_duration: "_duration", get$_animate$_element: "_element", get$_animate$_elements: "_elements", get$_animate$_zone: "_zone", get$_animationFrameQueued: "_animationFrameQueued", get$_animationMap: "_animationMap", get$_animations: "_animations", get$_collection$_element: "_element", get$_completer: "_completer", get$_duration: "_duration", get$_expando: "_expando", get$_frames: "_frames", get$_isDisplayNone: "_isDisplayNone", get$_noOp: "_noOp", get$_onCompleted: "_onCompleted", get$_optimizer: "_optimizer", get$_option: "_option", get$_profiler: "_profiler", get$_runner: "_runner", get$_startTime: "_startTime", get$_started: "_started", get$_wnd: "_wnd", get$_zone: "_zone", get$activeClass: "activeClass", get$addAtEnd: "addAtEnd", get$addAtStart: "addAtStart", get$animationFrame: "animationFrame", get$cssAnimations: "cssAnimations", get$element: "element", get$eventClass: "eventClass", get$nodes_1: "nodes_1", get$onCompleted: "onCompleted", get$option: "option", get$remove: "remove", get$removeAtEnd: "removeAtEnd", get$removeAtStart: "removeAtStart", get$this_0: "this_0", get$this_1: "this_1", insert$1: "insert:1:0", insert$2: "insert:2:0", insert$2$insertAfter: "insert:2:0:insertAfter", insert$3$insertBefore: "insert:3:0:insertBefore", move$2$moveAfter: "move:2:0:moveAfter", move$3$insertBefore: "move:3:0:insertBefore", play$1: "play:1:0", read$1: "read:1:0", remove$0: "remove:0:0", remove$1: "remove:1:0", removeClass$1: "removeClass:1:0", removeClass$2: "removeClass:2:0", set$_animationFrameQueued: "_animationFrameQueued=", set$option: "option=", shouldAnimate$1: "shouldAnimate:1:0", track$1: "track:1:0", track$2: "track:2:0", update$1: "update:1:0"};
+init.mangledNames = {_queueAnimationFrame$0: "_queueAnimationFrame:0:0", _read$1: "_read:1:0", _update$1: "_update:1:0", addClass$1: "addClass:1:0", addClass$2: "addClass:2:0", alwaysAnimate$2: "alwaysAnimate:2:0", alwaysAnimateChildren$2: "alwaysAnimateChildren:2:0", animate$2: "animate:2:0", call$0: "call:0:0", call$1: "call:1:0", call$1$appRoot: "call:1:0:appRoot", call$1$autoAdvance: "call:1:0:autoAdvance", call$1$growable: "call:1:0:growable", call$1$specification: "call:1:0:specification", call$1$startingFrom: "call:1:0:startingFrom", call$2: "call:2:0", call$2$autoAdvance$direction: "call:2:0:autoAdvance:direction", call$2$cache: "call:2:0:cache", call$2$forceNewInstances: "call:2:0:forceNewInstances", call$2$insertAfter: "call:2:0:insertAfter", call$2$moveAfter: "call:2:0:moveAfter", call$2$name: "call:2:0:name", call$2$onError: "call:2:0:onError", call$2$orElse: "call:2:0:orElse", call$2$parameters$tail: "call:2:0:parameters:tail", call$2$runGuarded: "call:2:0:runGuarded", call$2$treeSanitizer: "call:2:0:treeSanitizer", call$2$validator: "call:2:0:validator", call$3: "call:3:0", call$3$addAtEnd: "call:3:0:addAtEnd", call$3$async: "call:3:0:async", call$3$autoAdvance$direction$range: "call:3:0:autoAdvance:direction:range", call$3$autoIncrement$keyPath: "call:3:0:autoIncrement:keyPath", call$3$canChangeModel: "call:3:0:canChangeModel", call$3$collection: "call:3:0:collection", call$3$formatters: "call:3:0:formatters", call$3$insertBefore: "call:3:0:insertBefore", call$3$onDone$onError: "call:3:0:onDone:onError", call$3$onUpgradeNeeded$version: "call:3:0:onUpgradeNeeded:version", call$3$removeAtEnd: "call:3:0:removeAtEnd", call$3$toFactory$visibility: "call:3:0:toFactory:visibility", call$3$treeSanitizer$validator: "call:3:0:treeSanitizer:validator", call$3$unique: "call:3:0:unique", call$4: "call:4:0", call$4$canChangeModel$collection: "call:4:0:canChangeModel:collection", call$4$canChangeModel$formatters: "call:4:0:canChangeModel:formatters", call$4$cancelOnError$onDone$onError: "call:4:0:cancelOnError:onDone:onError", call$4$collection$context$formatters: "call:4:0:collection:context:formatters", call$4$collection$formatters: "call:4:0:collection:formatters", call$4$context$formatters: "call:4:0:context:formatters", call$4$evalStopwatch$exceptionHandler$fieldStopwatch$processStopwatch: "call:4:0:evalStopwatch:exceptionHandler:fieldStopwatch:processStopwatch", call$4$forceNewInstances$name: "call:4:0:forceNewInstances:name", call$4$method$requestHeaders$sendData: "call:4:0:method:requestHeaders:sendData", call$5: "call:5:0", call$5$changeLog$evalStopwatch$exceptionHandler$fieldStopwatch$processStopwatch: "call:5:0:changeLog:evalStopwatch:exceptionHandler:fieldStopwatch:processStopwatch", call$6: "call:6:0", call$7$defaultRoute$enter$leave$mount$name$path$preEnter: "call:7:0:defaultRoute:enter:leave:mount:name:path:preEnter", cancel$0: "cancel:0:0", detachAlwaysAnimateOptions$1: "detachAlwaysAnimateOptions:1:0", findExisting$2: "findExisting:2:0", forget$1: "forget:1:0", get$_active: "_active", get$_alwaysAnimate: "_alwaysAnimate", get$_alwaysAnimateChildren: "_alwaysAnimateChildren", get$_animate$_duration: "_duration", get$_animate$_element: "_element", get$_animate$_elements: "_elements", get$_animate$_zone: "_zone", get$_animationFrameQueued: "_animationFrameQueued", get$_animationMap: "_animationMap", get$_animations: "_animations", get$_collection$_element: "_element", get$_completer: "_completer", get$_duration: "_duration", get$_expando: "_expando", get$_frames: "_frames", get$_isDisplayNone: "_isDisplayNone", get$_noOp: "_noOp", get$_onCompleted: "_onCompleted", get$_optimizer: "_optimizer", get$_option: "_option", get$_profiler: "_profiler", get$_runner: "_runner", get$_startTime: "_startTime", get$_started: "_started", get$_wnd: "_wnd", get$_zone: "_zone", get$activeClass: "activeClass", get$addAtEnd: "addAtEnd", get$addAtStart: "addAtStart", get$animationFrame: "animationFrame", get$cssAnimations: "cssAnimations", get$element: "element", get$eventClass: "eventClass", get$nodes_1: "nodes_1", get$onCompleted: "onCompleted", get$option: "option", get$remove: "remove", get$removeAtEnd: "removeAtEnd", get$removeAtStart: "removeAtStart", get$this_0: "this_0", get$this_1: "this_1", insert$1: "insert:1:0", insert$2: "insert:2:0", insert$2$insertAfter: "insert:2:0:insertAfter", insert$3$insertBefore: "insert:3:0:insertBefore", move$2$moveAfter: "move:2:0:moveAfter", move$3$insertBefore: "move:3:0:insertBefore", play$1: "play:1:0", read$1: "read:1:0", remove$0: "remove:0:0", remove$1: "remove:1:0", removeClass$1: "removeClass:1:0", removeClass$2: "removeClass:2:0", set$_animationFrameQueued: "_animationFrameQueued=", set$option: "option=", shouldAnimate$1: "shouldAnimate:1:0", track$1: "track:1:0", track$2: "track:2:0", update$1: "update:1:0"};
 init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", CssAnimate_NG_ADD_POSTFIX: "NG_ADD_POSTFIX", CssAnimate_NG_ANIMATE: "NG_ANIMATE", CssAnimate_NG_INSERT: "NG_INSERT", CssAnimate_NG_MOVE: "NG_MOVE", CssAnimate_NG_REMOVE: "NG_REMOVE", CssAnimate_NG_REMOVE_POSTFIX: "NG_REMOVE_POSTFIX", CssAnimation_EXTRA_DURATION: "EXTRA_DURATION", _logger0: "_logger"};
 (function(reflectionData) {
   "use strict";
@@ -5071,10 +5071,6 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     "^": "Decorator;publishAs,selector,children,visibility,module,map,exportExpressionAttrs,exportExpressions",
     $isController: true
   },
-  DetachAware: {
-    "^": "Object;",
-    $isDetachAware: true
-  },
   Formatter: {
     "^": "Object;name>",
     get$hashCode: function(_) {
@@ -5152,10 +5148,13 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     return parts;
   },
   ComponentFactory__viewFuture: function(component, viewCache, directives) {
-    var t1;
-    component.template;
+    var t1 = component.template;
+    if (t1 != null)
+      return P._Future$immediate(viewCache.fromHtml$2(t1, directives), null);
     t1 = component.templateUrl;
-    return viewCache.fromUrl$2(t1, directives);
+    if (t1 != null)
+      return viewCache.fromUrl$2(t1, directives);
+    return;
   },
   ComponentFactory__setupOnShadowDomAttach: function(controller, templateLoader, shadowScope) {
   },
@@ -6051,7 +6050,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     $isHttpInterceptor: true,
     static: {"^": "DefaultTransformDataHttpInterceptor__JSON_START,DefaultTransformDataHttpInterceptor__JSON_END,DefaultTransformDataHttpInterceptor__PROTECTION_PREFIX"}
   },
-  closure372: {
+  closure385: {
     "^": "Closure:220;",
     call$1: function(config) {
       config.get$data(config);
@@ -6060,7 +6059,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     },
     $isFunction: true
   },
-  closure373: {
+  closure386: {
     "^": "Closure:222;",
     call$1: [function(r) {
       var t1, t2, d;
@@ -6262,7 +6261,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
       this._interceptors.constructChain$1(chain);
       if (interceptors != null) {
         if (!!J.getInterceptor(interceptors).$isHttpInterceptor) {
-          interceptors0 = new Y.HttpInterceptors([new Y.DefaultTransformDataHttpInterceptor(new Y.closure372(), new Y.closure373(), null, null)]);
+          interceptors0 = new Y.HttpInterceptors([new Y.DefaultTransformDataHttpInterceptor(new Y.closure385(), new Y.closure386(), null, null)]);
           interceptors0._interceptors = [interceptors];
           interceptors = interceptors0;
         }
@@ -11528,7 +11527,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
       this.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_m9K, null), X._DEFAULT_VALUE$closure(), null, null, null);
       this.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_ga7, null), X._DEFAULT_VALUE$closure(), null, null, null);
       this.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_0ww, null), new R.DecoratorFormatter_closure(), null, X._DEFAULT_VALUE$closure(), null);
-      this.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_omH0, null), X._DEFAULT_VALUE$closure(), null, null, null);
+      this.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_omH, null), X._DEFAULT_VALUE$closure(), null, null, null);
       this.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_uId, null), X._DEFAULT_VALUE$closure(), null, null, null);
       this.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_IGM, null), X._DEFAULT_VALUE$closure(), null, null, null);
       this.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_jZY, null), X._DEFAULT_VALUE$closure(), null, null, null);
@@ -12312,7 +12311,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
         return t4;
       }}
   },
-  closure246: {
+  closure256: {
     "^": "Closure:20;",
     call$1: [function(i) {
       return J.get$1$x(i, C.Type_k2a);
@@ -12565,7 +12564,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     },
     $isAttachAware: true
   },
-  closure370: {
+  closure383: {
     "^": "Closure:284;",
     call$2: function(_, __) {
       return;
@@ -12575,7 +12574,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     },
     $isFunction: true
   },
-  closure371: {
+  closure384: {
     "^": "Closure:20;",
     call$1: [function(value) {
       return;
@@ -13789,7 +13788,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     },
     static: {"^": "NgRepeat__SYNTAX,NgRepeat__LHS_SYNTAX"}
   },
-  closure369: {
+  closure382: {
     "^": "Closure:25;",
     call$3: [function(key, value, index) {
       return value;
@@ -15064,7 +15063,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
         return $.get$NgBindRoute__module();
       }, "call$0", "NgBindRoute_module$closure", 0, 0, 31]}
   },
-  closure244: {
+  closure254: {
     "^": "Closure:20;",
     call$1: [function(i) {
       return J.get$1$x(i, C.Type_RkP);
@@ -15136,7 +15135,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
         return $.get$NgView__module();
       }, "call$0", "NgView_module$closure", 0, 0, 31]}
   },
-  closure245: {
+  closure255: {
     "^": "Closure:20;",
     call$1: [function(i) {
       return J.get$1$x(i, C.Type_IFE);
@@ -15237,8 +15236,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
         t4 = t1.get$viewHtml();
         this.this_3.locationService._templates.$indexSet(0, T._routePath(e.get$route()), new T._View(t2, t4, t3));
       }
-      if (t1.get$enter() != null)
-        t1.enter$1(e);
+      t1.get$enter();
     }, "call$1", null, 2, 0, null, 1, "call"],
     $isFunction: true
   },
@@ -15271,9 +15269,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   RouteViewFactory__configure__closure0: {
     "^": "Closure:346;this_6,cfg_7",
     call$1: function(mountRoute) {
-      var t1 = this.cfg_7;
-      if (t1.get$mount() != null)
-        this.this_6._configure$2(mountRoute, t1.get$mount());
+      this.cfg_7.get$mount();
     },
     $isFunction: true
   },
@@ -15281,9 +15277,6 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     "^": "Object;path>,view>,viewHtml<,mount<,modules<,defaultRoute<,enter<,preEnter<,leave<",
     modules$0: function() {
       return this.modules.call$0();
-    },
-    enter$1: function(arg0) {
-      return this.enter.call$1(arg0);
     }
   },
   NgRoutingHelper: {
@@ -24772,10 +24765,6 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
       return this.noSuchMethod$1(this, H.createInvocationMirror("call", "call$4$method$requestHeaders$sendData", 0, [$0, $1, $2, $3], ["method", "requestHeaders", "sendData"]));
     },
     "+call:4:0:method:requestHeaders:sendData": 0,
-    call$4$replace$startingFrom: function($0, $1, $2, $3) {
-      return this.noSuchMethod$1(this, H.createInvocationMirror("call", "call$4$replace$startingFrom", 0, [$0, $1, $2, $3], ["replace", "startingFrom"]));
-    },
-    "+call:4:0:replace:startingFrom": 0,
     call$5: function($0, $1, $2, $3, $4) {
       return this.noSuchMethod$1(this, H.createInvocationMirror("call", "call$5", 0, [$0, $1, $2, $3, $4], []));
     },
@@ -24992,6 +24981,9 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
       return this.noSuchMethod$1(this, H.createInvocationMirror("element", "get$element", 1, [], []));
     },
     "+element": 2,
+    get$entries: function($receiver) {
+      return this.noSuchMethod$1(this, H.createInvocationMirror("entries", "get$entries", 1, [], []));
+    },
     get$error: function($receiver) {
       return this.noSuchMethod$1(this, H.createInvocationMirror("error", "get$error", 1, [], []));
     },
@@ -25428,9 +25420,6 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     getter$2: function($0, $1) {
       return this.noSuchMethod$1(this, H.createInvocationMirror("getter", "getter$2", 0, [$0, $1], []));
     },
-    go$4$replace$startingFrom: function($receiver, $0, $1, $2, $3) {
-      return this.noSuchMethod$1(this, H.createInvocationMirror("go", "go$4$replace$startingFrom", 0, [$0, $1, $2, $3], ["replace", "startingFrom"]));
-    },
     gotoUrl$1: function($0) {
       return this.noSuchMethod$1(this, H.createInvocationMirror("gotoUrl", "gotoUrl$1", 0, [$0], []));
     },
@@ -25569,9 +25558,6 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     removeEventListener$3: function($receiver, $0, $1, $2) {
       return this.noSuchMethod$1(this, H.createInvocationMirror("removeEventListener", "removeEventListener$3", 0, [$0, $1, $2], []));
     },
-    replace$1: function($receiver, $0) {
-      return this.noSuchMethod$1(this, H.createInvocationMirror("replace", "replace$1", 0, [$0], []));
-    },
     replace$2: function($receiver, $0, $1) {
       return this.noSuchMethod$1(this, H.createInvocationMirror("replace", "replace$2", 0, [$0, $1], []));
     },
@@ -25583,9 +25569,6 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     },
     replaceFirst$2: function($receiver, $0, $1) {
       return this.noSuchMethod$1(this, H.createInvocationMirror("replaceFirst", "replaceFirst$2", 0, [$0, $1], []));
-    },
-    replaceState$3: function($receiver, $0, $1, $2) {
-      return this.noSuchMethod$1(this, H.createInvocationMirror("replaceState", "replaceState$3", 0, [$0, $1, $2], []));
     },
     replaceWith$1: function($receiver, $0) {
       return this.noSuchMethod$1(this, H.createInvocationMirror("replaceWith", "replaceWith$1", 0, [$0], []));
@@ -25650,6 +25633,9 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     },
     set$display: function($receiver, $0) {
       return this.noSuchMethod$1(this, H.createInvocationMirror("display=", "set$display", 2, [$0], []));
+    },
+    set$entries: function($receiver, $0) {
+      return this.noSuchMethod$1(this, H.createInvocationMirror("entries=", "set$entries", 2, [$0], []));
     },
     set$href: function($receiver, $0) {
       return this.noSuchMethod$1(this, H.createInvocationMirror("href=", "set$href", 2, [$0], []));
@@ -27852,9 +27838,6 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     pushState$3: function(receiver, data, title, url) {
       return receiver.pushState(data, title, url);
     },
-    replaceState$3: function(receiver, data, title, url) {
-      return receiver.replaceState(data, title, url);
-    },
     "%": "History"
   },
   HtmlCollection: {
@@ -27969,7 +27952,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     "%": "HTMLImageElement"
   },
   InputElement: {
-    "^": "HtmlElement;checked%,disabled%,max%,min%,multiple%,name%,pattern%,required%,src%,type=,value%,valueAsNumber%",
+    "^": "HtmlElement;checked%,disabled%,max%,min%,multiple%,name%,pattern%,required%,src%,type=,value%,valueAsNumber%,entries:webkitEntries=",
     accept$1: function($receiver, arg0) {
       return $receiver.accept.call$1(arg0);
     },
@@ -28006,9 +27989,6 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     assign$1: [function(receiver, url) {
       return receiver.assign(url);
     }, "call$1", "get$assign", 2, 0, 61],
-    replace$1: function(receiver, url) {
-      return receiver.replace(url);
-    },
     toString$0: [function(receiver) {
       return receiver.toString();
     }, "call$0", "get$toString", 0, 0, 101],
@@ -30269,11 +30249,11 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     openCursor$4$autoAdvance$direction$key$range: function(receiver, autoAdvance, direction, key, range) {
       return P.ObjectStore__cursorStreamFromResult(direction == null ? receiver.openCursor(range) : receiver.openCursor(range, direction), autoAdvance);
     },
-    openCursor$1$autoAdvance: function($receiver, autoAdvance) {
-      return this.openCursor$4$autoAdvance$direction$key$range($receiver, autoAdvance, null, null, null);
-    },
     openCursor$3$autoAdvance$direction$range: function($receiver, autoAdvance, direction, range) {
       return this.openCursor$4$autoAdvance$direction$key$range($receiver, autoAdvance, direction, null, range);
+    },
+    openCursor$1$autoAdvance: function($receiver, autoAdvance) {
+      return this.openCursor$4$autoAdvance$direction$key$range($receiver, autoAdvance, null, null, null);
     },
     openCursor$2$autoAdvance$direction: function($receiver, autoAdvance, direction) {
       return this.openCursor$4$autoAdvance$direction$key$range($receiver, autoAdvance, direction, null, null);
@@ -30378,11 +30358,11 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     openCursor$4$autoAdvance$direction$key$range: function(receiver, autoAdvance, direction, key, range) {
       return P.ObjectStore__cursorStreamFromResult(direction == null ? receiver.openCursor(range) : receiver.openCursor(range, direction), autoAdvance);
     },
-    openCursor$1$autoAdvance: function($receiver, autoAdvance) {
-      return this.openCursor$4$autoAdvance$direction$key$range($receiver, autoAdvance, null, null, null);
-    },
     openCursor$3$autoAdvance$direction$range: function($receiver, autoAdvance, direction, range) {
       return this.openCursor$4$autoAdvance$direction$key$range($receiver, autoAdvance, direction, null, range);
+    },
+    openCursor$1$autoAdvance: function($receiver, autoAdvance) {
+      return this.openCursor$4$autoAdvance$direction$key$range($receiver, autoAdvance, null, null, null);
     },
     openCursor$2$autoAdvance$direction: function($receiver, autoAdvance, direction) {
       return this.openCursor$4$autoAdvance$direction$key$range($receiver, autoAdvance, direction, null, null);
@@ -35168,18 +35148,6 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
       } while (t1);
       return treePath;
     },
-    go$4$replace$startingFrom: function(_, routePath, parameters, replace, startingFrom) {
-      var queryParams, baseRoute, newTail, newUrl;
-      queryParams = P.LinkedHashMap_LinkedHashMap$_empty(null, null);
-      if (startingFrom == null)
-        baseRoute = this.root;
-      else
-        baseRoute = startingFrom;
-      newTail = baseRoute._getTailUrl$3(routePath, parameters, queryParams) + this._buildQuery$1(queryParams);
-      newUrl = baseRoute._getHead$2(newTail, queryParams);
-      $.get$_logger().finest$1("go " + newUrl);
-      return this.route$2$startingFrom(newTail, baseRoute).then$1(new D.Router_go_closure(this, replace, newUrl));
-    },
     url$3$parameters$startingFrom: [function(_, routePath, parameters, startingFrom) {
       var baseRoute, queryParams, tail, t1;
       if (startingFrom == null)
@@ -35263,23 +35231,6 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", "get$_normalizeHash", 2, 0, 11, 428],
     gotoUrl$1: function(url) {
       return this.route$1(url).then$1(new D.Router_gotoUrl_closure(this, url));
-    },
-    _go$3: function(path, title, replace) {
-      var t1;
-      if (this._useFragment) {
-        t1 = this._client$_window;
-        if (replace)
-          J.replace$1$x(J.get$location$x(t1), "#" + H.S(path));
-        else
-          J.assign$1$x(J.get$location$x(t1), "#" + H.S(path));
-      } else {
-        title = J.get$title$x(J.get$document$x(this._client$_window));
-        t1 = this._client$_window;
-        if (replace)
-          J.replaceState$3$x(J.get$history$x(t1), null, title, path);
-        else
-          J.pushState$3$x(J.get$history$x(t1), null, title, path);
-      }
     },
     get$activePath: function() {
       var res, route;
@@ -35409,15 +35360,6 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     },
     $isFunction: true
   },
-  Router_go_closure: {
-    "^": "Closure:20;this_0,replace_1,newUrl_2",
-    call$1: [function(success) {
-      if (success === true)
-        this.this_0._go$3(this.newUrl_2, null, this.replace_1);
-      return success;
-    }, "call$1", null, 2, 0, null, 350, "call"],
-    $isFunction: true
-  },
   Router__buildQuery_closure: {
     "^": "Closure:20;queryParams_0",
     call$1: [function(key) {
@@ -35495,8 +35437,17 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   Router_gotoUrl_closure: {
     "^": "Closure:20;this_0,url_1",
     call$1: [function(success) {
-      if (success === true)
-        this.this_0._go$3(this.url_1, null, false);
+      var t1, t2, title;
+      if (success === true) {
+        t1 = this.this_0;
+        t2 = this.url_1;
+        if (t1._useFragment)
+          J.assign$1$x(J.get$location$x(t1._client$_window), "#" + H.S(t2));
+        else {
+          title = J.get$title$x(J.get$document$x(t1._client$_window));
+          J.pushState$3$x(J.get$history$x(t1._client$_window), null, title, t2);
+        }
+      }
     }, "call$1", null, 2, 0, null, 350, "call"],
     $isFunction: true
   },
@@ -35666,14 +35617,17 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     rssModule.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_Ag1, null), X._DEFAULT_VALUE$closure(), null, X._DEFAULT_VALUE$closure(), null);
     rssModule.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_otF, null), X._DEFAULT_VALUE$closure(), null, X._DEFAULT_VALUE$closure(), null);
     rssModule.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_McW, null), X._DEFAULT_VALUE$closure(), null, X._DEFAULT_VALUE$closure(), null);
-    rssModule.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_omH, null), X._DEFAULT_VALUE$closure(), null, X._DEFAULT_VALUE$closure(), null);
+    rssModule.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_Y0l, null), X._DEFAULT_VALUE$closure(), null, X._DEFAULT_VALUE$closure(), null);
     rssModule.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_Sjs, null), X._DEFAULT_VALUE$closure(), null, X._DEFAULT_VALUE$closure(), null);
     rssModule.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_VMc, null), X._DEFAULT_VALUE$closure(), null, X._DEFAULT_VALUE$closure(), null);
     rssModule.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_K2k, null), X._DEFAULT_VALUE$closure(), null, X._DEFAULT_VALUE$closure(), null);
+    rssModule.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_yFE, null), X._DEFAULT_VALUE$closure(), null, X._DEFAULT_VALUE$closure(), null);
+    rssModule.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_S7q, null), X._DEFAULT_VALUE$closure(), null, X._DEFAULT_VALUE$closure(), null);
     rssModule.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_yra, null), X._DEFAULT_VALUE$closure(), null, X._DEFAULT_VALUE$closure(), null);
     rssModule.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_GA4, null), X._DEFAULT_VALUE$closure(), null, X._DEFAULT_VALUE$closure(), null);
     rssModule.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_K17, null), X._DEFAULT_VALUE$closure(), null, X._DEFAULT_VALUE$closure(), null);
     rssModule.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_pah, null), X._DEFAULT_VALUE$closure(), null, X._DEFAULT_VALUE$closure(), null);
+    rssModule.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_jtx, null), X._DEFAULT_VALUE$closure(), null, X._DEFAULT_VALUE$closure(), null);
     rssModule.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_0ww, null), X._DEFAULT_VALUE$closure(), null, new W.NodeValidatorBuilder(t1), null);
     t1 = $.get$factories();
     t2 = $.get$typeAnnotations();
@@ -35709,889 +35663,931 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
 1],
 ["rss_app.web.rss_app.generated_expressions", "rss_app_static_expressions.dart", , U, {
   "^": "",
-  closure117: {
+  closure121: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return o.get$urls();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure118: {
+  closure122: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$value$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure119: {
+  closure123: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return o.get$bind();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure120: {
+  closure124: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return o.get$valueExpression();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure121: {
+  closure125: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onAbort$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure122: {
+  closure126: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onBeforeCopy$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure123: {
+  closure127: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onBeforeCut$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure124: {
+  closure128: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onBeforePaste$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure125: {
+  closure129: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onBlur$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure126: {
+  closure130: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onChange$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure127: {
+  closure131: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onClick$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure128: {
+  closure132: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onContextMenu$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure129: {
+  closure133: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onCopy$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure130: {
+  closure134: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onCut$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure131: {
+  closure135: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onDoubleClick$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure132: {
+  closure136: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onDrag$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure133: {
+  closure137: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onDragEnd$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure134: {
+  closure138: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onDragEnter$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure135: {
+  closure139: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onDragLeave$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure136: {
+  closure140: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onDragOver$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure137: {
+  closure141: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onDragStart$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure138: {
+  closure142: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onDrop$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure139: {
+  closure143: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onError$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure140: {
+  closure144: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onFocus$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure141: {
+  closure145: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onFullscreenChange$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure142: {
+  closure146: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onFullscreenError$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure143: {
+  closure147: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onInput$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure144: {
+  closure148: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onInvalid$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure145: {
+  closure149: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onKeyDown$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure146: {
+  closure150: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onKeyPress$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure147: {
+  closure151: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onKeyUp$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure148: {
+  closure152: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onLoad$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure149: {
+  closure153: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onMouseDown$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure150: {
+  closure154: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onMouseEnter$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure151: {
+  closure155: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onMouseLeave$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure152: {
+  closure156: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onMouseMove$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure153: {
+  closure157: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onMouseOut$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure154: {
+  closure158: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onMouseOver$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure155: {
+  closure159: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onMouseUp$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure156: {
+  closure160: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onMouseWheel$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure157: {
+  closure161: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onPaste$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure158: {
+  closure162: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onReset$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure159: {
+  closure163: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onScroll$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure160: {
+  closure164: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onSearch$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure161: {
+  closure165: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onSelect$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure162: {
+  closure166: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onSelectStart$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure163: {
+  closure167: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onSubmit$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure164: {
+  closure168: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onTouchCancel$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure165: {
+  closure169: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onTouchEnd$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure166: {
+  closure170: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onTouchEnter$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure167: {
+  closure171: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onTouchLeave$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure168: {
+  closure172: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onTouchMove$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure169: {
+  closure173: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onTouchStart$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure170: {
+  closure174: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$onTransitionEnd$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure171: {
+  closure175: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return o.get$condition();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure172: {
+  closure176: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$url$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure173: {
+  closure177: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$name$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure174: {
+  closure178: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return o.get$model();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure175: {
+  closure179: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return o.get$idlAttrKind();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure176: {
+  closure180: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$count$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure177: {
+  closure181: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return o.get$expression();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure178: {
+  closure182: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return o.get$templateUrl();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure179: {
+  closure183: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return o.get$hide();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure180: {
+  closure184: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$show$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure181: {
+  closure185: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$checked$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure182: {
+  closure186: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$disabled$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure183: {
+  closure187: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$multiple$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure184: {
+  closure188: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$open$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure185: {
+  closure189: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return o.get$readonly();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure186: {
+  closure190: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$required$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure187: {
+  closure191: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$selected$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure188: {
+  closure192: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$href$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure189: {
+  closure193: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$src$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure190: {
+  closure194: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$srcset$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure191: {
+  closure195: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return o.get$styleExpression();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure192: {
+  closure196: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$max$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure193: {
+  closure197: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$min$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure194: {
+  closure198: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$pattern$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure195: {
+  closure199: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return o.get$minlength();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure196: {
+  closure200: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return o.get$maxlength();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure197: {
+  closure201: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return o.get$routeName();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure198: {
+  closure202: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return J.get$option$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure199: {
+  closure203: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return o.get$dataSource();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
-  closure200: {
-    "^": "Closure:20;",
-    call$1: [function(o) {
-      return o.get$feedId();
-    }, "call$1", null, 2, 0, null, 80, "call"],
-    $isFunction: true
-  },
-  closure201: {
-    "^": "Closure:20;",
-    call$1: [function(o) {
-      return o.get$datetime();
-    }, "call$1", null, 2, 0, null, 80, "call"],
-    $isFunction: true
-  },
-  closure202: {
-    "^": "Closure:20;",
-    call$1: [function(o) {
-      return o.get$feed();
-    }, "call$1", null, 2, 0, null, 80, "call"],
-    $isFunction: true
-  },
-  closure203: {
-    "^": "Closure:20;",
-    call$1: [function(o) {
-      return o.get$starred();
-    }, "call$1", null, 2, 0, null, 80, "call"],
-    $isFunction: true
-  },
   closure204: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return J.get$cmp$x(o);
+      return o.get$onRefreshFeeds();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure205: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$feeds();
+      return o.get$datetime();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure206: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return J.get$length$asx(o);
+      return o.get$feed();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure207: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return J.get$id$x(o);
+      return o.get$cssClass();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure208: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return J.get$display$x(o);
+      return o.get$hideEmpty();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure209: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return J.get$title$x(o);
+      return o.get$starred();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure210: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$unreadCounter();
+      return J.get$cmp$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure211: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$postsMap();
+      return o.get$feeds();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure212: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$listLength();
+      return J.get$id$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure213: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$post();
+      return J.get$title$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure214: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$unread();
+      return J.get$entries$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure215: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$published();
+      return o.get$listLength();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure216: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$fullDate();
+      return o.get$post();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure217: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$newitem();
+      return o.get$unread();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure218: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return J.get$content$x(o);
+      return o.get$published();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure219: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$showAddFeed();
+      return o.get$fullDate();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure220: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$addingFeed();
+      return o.get$newitem();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure221: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$feedAddUrl();
+      return J.get$content$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure222: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$addFeedDisabled();
+      return o.get$hasPostsInView();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure223: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$refreshingFeeds();
+      return J.get$length$asx(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure224: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$readingPost();
+      return J.get$display$x(o);
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure225: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$currentPostsIndex();
+      return o.get$showAddFeed();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure226: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$currentPostsLength();
+      return o.get$addingFeed();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure227: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$prevEntry();
+      return o.get$feedAddUrl();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure228: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$nextEntry();
+      return o.get$addFeedDisabled();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure229: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$entry();
+      return o.get$refreshingFeeds();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure230: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$imageUrl();
+      return o.get$readingPost();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure231: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$author();
+      return o.get$currentPostsIndex();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure232: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$image();
+      return o.get$currentPostsLength();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure233: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$elementId();
+      return o.get$hasPrevEntry();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure234: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$unreadCount();
+      return o.get$hasNextEntry();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure235: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return J.get$toString$(o);
+      return o.get$hasUnread();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure236: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$readPost();
+      return o.get$entry();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure237: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$onStarChange();
+      return o.get$imageUrl();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure238: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$addFeed();
+      return o.get$author();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure239: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$goToPost();
+      return o.get$image();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure240: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$frameLoad();
+      return o.get$elementId();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure241: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$starClass();
+      return o.get$isHideEmpty();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure242: {
     "^": "Closure:20;",
     call$1: [function(o) {
-      return o.get$handleClick();
+      return o.get$unreadCount();
     }, "call$1", null, 2, 0, null, 80, "call"],
     $isFunction: true
   },
   closure243: {
+    "^": "Closure:20;",
+    call$1: [function(o) {
+      return o.get$hasPosts();
+    }, "call$1", null, 2, 0, null, 80, "call"],
+    $isFunction: true
+  },
+  closure244: {
+    "^": "Closure:20;",
+    call$1: [function(o) {
+      return o.get$readPost();
+    }, "call$1", null, 2, 0, null, 80, "call"],
+    $isFunction: true
+  },
+  closure245: {
+    "^": "Closure:20;",
+    call$1: [function(o) {
+      return o.get$onStarChange();
+    }, "call$1", null, 2, 0, null, 80, "call"],
+    $isFunction: true
+  },
+  closure246: {
+    "^": "Closure:20;",
+    call$1: [function(o) {
+      return J.get$toString$(o);
+    }, "call$1", null, 2, 0, null, 80, "call"],
+    $isFunction: true
+  },
+  closure247: {
+    "^": "Closure:20;",
+    call$1: [function(o) {
+      return o.get$addFeed();
+    }, "call$1", null, 2, 0, null, 80, "call"],
+    $isFunction: true
+  },
+  closure248: {
+    "^": "Closure:20;",
+    call$1: [function(o) {
+      return o.get$goToPost();
+    }, "call$1", null, 2, 0, null, 80, "call"],
+    $isFunction: true
+  },
+  closure249: {
+    "^": "Closure:20;",
+    call$1: [function(o) {
+      return o.get$markAllAsRead();
+    }, "call$1", null, 2, 0, null, 80, "call"],
+    $isFunction: true
+  },
+  closure250: {
+    "^": "Closure:20;",
+    call$1: [function(o) {
+      return o.get$frameLoad();
+    }, "call$1", null, 2, 0, null, 80, "call"],
+    $isFunction: true
+  },
+  closure251: {
+    "^": "Closure:20;",
+    call$1: [function(o) {
+      return o.get$starClass();
+    }, "call$1", null, 2, 0, null, 80, "call"],
+    $isFunction: true
+  },
+  closure252: {
+    "^": "Closure:20;",
+    call$1: [function(o) {
+      return o.get$handleClick();
+    }, "call$1", null, 2, 0, null, 80, "call"],
+    $isFunction: true
+  },
+  closure253: {
     "^": "Closure:20;",
     call$1: [function(o) {
       return o.get$starChar();
@@ -37265,7 +37261,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure82: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$feedId(v);
+      o.set$onRefreshFeeds(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37289,7 +37285,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure85: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$starred(v);
+      o.set$cssClass(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37297,7 +37293,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure86: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      J.set$cmp$x(o, v);
+      o.set$hideEmpty(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37305,7 +37301,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure87: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$feeds(v);
+      o.set$starred(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37313,7 +37309,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure88: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      J.set$length$asx(o, v);
+      J.set$cmp$x(o, v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37321,7 +37317,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure89: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      J.set$id$x(o, v);
+      o.set$feeds(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37329,7 +37325,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure90: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      J.set$display$x(o, v);
+      J.set$id$x(o, v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37345,7 +37341,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure92: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$unreadCounter(v);
+      J.set$entries$x(o, v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37353,7 +37349,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure93: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$postsMap(v);
+      o.set$listLength(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37361,7 +37357,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure94: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$listLength(v);
+      o.set$post(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37369,7 +37365,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure95: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$post(v);
+      o.set$unread(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37377,7 +37373,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure96: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$unread(v);
+      o.set$published(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37385,7 +37381,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure97: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$published(v);
+      o.set$fullDate(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37393,7 +37389,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure98: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$fullDate(v);
+      o.set$newitem(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37401,7 +37397,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure99: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$newitem(v);
+      J.set$content$x(o, v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37409,7 +37405,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure100: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      J.set$content$x(o, v);
+      o.set$hasPostsInView(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37417,7 +37413,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure101: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$showAddFeed(v);
+      J.set$length$asx(o, v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37425,7 +37421,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure102: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$addingFeed(v);
+      J.set$display$x(o, v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37433,7 +37429,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure103: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$feedAddUrl(v);
+      o.set$showAddFeed(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37441,7 +37437,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure104: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$addFeedDisabled(v);
+      o.set$addingFeed(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37449,7 +37445,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure105: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$refreshingFeeds(v);
+      o.set$feedAddUrl(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37457,7 +37453,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure106: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$readingPost(v);
+      o.set$addFeedDisabled(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37465,7 +37461,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure107: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$currentPostsIndex(v);
+      o.set$refreshingFeeds(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37473,7 +37469,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure108: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$currentPostsLength(v);
+      o.set$readingPost(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37481,7 +37477,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure109: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$prevEntry(v);
+      o.set$currentPostsIndex(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37489,7 +37485,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure110: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$nextEntry(v);
+      o.set$currentPostsLength(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37497,7 +37493,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure111: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$entry(v);
+      o.set$hasPrevEntry(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37505,7 +37501,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure112: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$imageUrl(v);
+      o.set$hasNextEntry(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37513,7 +37509,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure113: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$author(v);
+      o.set$hasUnread(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37521,7 +37517,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure114: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$image(v);
+      o.set$entry(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
@@ -37529,12 +37525,44 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   closure115: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
-      o.set$elementId(v);
+      o.set$imageUrl(v);
       return v;
     }, "call$2", null, 4, 0, null, 80, 226, "call"],
     $isFunction: true
   },
   closure116: {
+    "^": "Closure:22;",
+    call$2: [function(o, v) {
+      o.set$author(v);
+      return v;
+    }, "call$2", null, 4, 0, null, 80, 226, "call"],
+    $isFunction: true
+  },
+  closure117: {
+    "^": "Closure:22;",
+    call$2: [function(o, v) {
+      o.set$image(v);
+      return v;
+    }, "call$2", null, 4, 0, null, 80, 226, "call"],
+    $isFunction: true
+  },
+  closure118: {
+    "^": "Closure:22;",
+    call$2: [function(o, v) {
+      o.set$elementId(v);
+      return v;
+    }, "call$2", null, 4, 0, null, 80, 226, "call"],
+    $isFunction: true
+  },
+  closure119: {
+    "^": "Closure:22;",
+    call$2: [function(o, v) {
+      o.set$isHideEmpty(v);
+      return v;
+    }, "call$2", null, 4, 0, null, 80, 226, "call"],
+    $isFunction: true
+  },
+  closure120: {
     "^": "Closure:22;",
     call$2: [function(o, v) {
       o.set$unreadCount(v);
@@ -37545,14 +37573,14 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
 }],
 ["rss_app.web.rss_app.generated_static_injector", "rss_app_static_injector.dart", , U, {
   "^": "",
-  closure247: {
+  closure257: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new L.ExceptionHandler();
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure248: {
+  closure258: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2, t3;
@@ -37564,70 +37592,70 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure249: {
+  closure259: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new L.Interpolate();
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure250: {
+  closure260: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new L.ScopeDigestTTL(5);
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure251: {
+  closure261: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new L.ScopeStats(new V.AvgStopwatch(0, 1000000, null, null), new V.AvgStopwatch(0, 1000000, null, null), new V.AvgStopwatch(0, 1000000, null, null), [], 0, 0, 0, f.call$1(C.Type_X3P), f.call$1(C.Type_Cf3));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure252: {
+  closure262: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new L.ScopeStatsEmitter(T.NumberFormat_NumberFormat("0.00", "en_US"), T.NumberFormat_NumberFormat("0", "en_US"));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure253: {
+  closure263: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return L.RootScope$(f.call$1(C.Type_HqF), f.call$1(C.Type_Xww), f.call$1(C.Type_kvD), f.call$1(C.Type_Me9), f.call$1(C.Type_Dbk), f.call$1(C.Type_Xzb), f.call$1(C.Type_Soe), f.call$1(C.Type_KSA), f.call$1(C.Type_gg9));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure254: {
+  closure264: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new F.DynamicParser(f.call$1(C.Type_iYS), f.call$1(C.Type_C34), P.LinkedHashMap_LinkedHashMap$_empty(null, null));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure255: {
+  closure265: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new F.DynamicParserBackend(f.call$1(C.Type_gg9));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure256: {
+  closure266: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new Z.Lexer();
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure257: {
+  closure267: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new Y.Animate();
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure258: {
+  closure268: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2, t3, t4, t5, t6;
@@ -37643,21 +37671,21 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure259: {
+  closure269: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return Y.BrowserCookies$(f.call$1(C.Type_Dbk));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure260: {
+  closure270: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new Y.Cookies(f.call$1(C.Type_d0f));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure261: {
+  closure271: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2, t3;
@@ -37669,72 +37697,72 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure262: {
+  closure272: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new Y.ElementBinderFactory(f.call$1(C.Type_Xww), f.call$1(C.Type_Db0), f.call$1(C.Type_23h), f.call$1(C.Type_E0Y), f.call$1(C.Type_blz), f.call$1(C.Type_EgC));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure263: {
+  closure273: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new Y.EventHandler(f.call$1(C.Type_LEl), f.call$1(C.Type_23h), f.call$1(C.Type_Dbk), P.LinkedHashMap_LinkedHashMap$_empty(P.String, P.Function));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure264: {
+  closure274: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new Y.ShadowRootEventHandler(f.call$1(C.Type_adc), f.call$1(C.Type_23h), f.call$1(C.Type_Dbk), P.LinkedHashMap_LinkedHashMap$_empty(P.String, P.Function));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure265: {
+  closure275: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new Y.UrlRewriter();
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure266: {
+  closure276: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new Y.HttpBackend();
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure267: {
+  closure277: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new Y.LocationWrapper();
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure268: {
+  closure278: {
     "^": "Closure:20;",
     call$1: [function(f) {
-      var t1 = new Y.HttpInterceptors([new Y.DefaultTransformDataHttpInterceptor(new Y.closure372(), new Y.closure373(), null, null)]);
-      t1._interceptors = [new Y.DefaultTransformDataHttpInterceptor(new Y.closure372(), new Y.closure373(), null, null)];
+      var t1 = new Y.HttpInterceptors([new Y.DefaultTransformDataHttpInterceptor(new Y.closure385(), new Y.closure386(), null, null)]);
+      t1._interceptors = [new Y.DefaultTransformDataHttpInterceptor(new Y.closure385(), new Y.closure386(), null, null)];
       return t1;
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure269: {
+  closure279: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new Y.HttpDefaultHeaders(P.LinkedHashMap_LinkedHashMap$_literal(["COMMON", P.LinkedHashMap_LinkedHashMap$_literal(["Accept", "application/json, text/plain, */*"], null, null), "POST", P.LinkedHashMap_LinkedHashMap$_literal(["Content-Type", $.HttpDefaultHeaders__defaultContentType], null, null), "PUT", P.LinkedHashMap_LinkedHashMap$_literal(["Content-Type", $.HttpDefaultHeaders__defaultContentType], null, null), "PATCH", P.LinkedHashMap_LinkedHashMap$_literal(["Content-Type", $.HttpDefaultHeaders__defaultContentType], null, null)], null, null));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure270: {
+  closure280: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new Y.HttpDefaults(f.call$1(C.Type_0af), null, "XSRF-TOKEN", "X-XSRF-TOKEN");
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure271: {
+  closure281: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2, t3, t4, t5, t6;
@@ -37748,7 +37776,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure272: {
+  closure282: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2, t3, t4, t5;
@@ -37763,105 +37791,105 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure273: {
+  closure283: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return Y.AttrMustache$(f.call$1(C.Type_XrP), f.call$1(C.Type_Ejg), f.call$1(C.Type_4Dj), f.call$1(C.Type_wu8), f.call$1(C.Type_Me9));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure274: {
+  closure284: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new Y.DirectiveSelectorFactory(f.call$1(C.Type_wdB));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure275: {
+  closure285: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new Y.ShadowDomComponentFactory(f.call$1(C.Type_23h), P.LinkedHashMap_LinkedHashMap$_empty(null, null));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure276: {
+  closure286: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new Y.TaggingCompiler(f.call$1(C.Type_Db0), f.call$1(C.Type_23h));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure277: {
+  closure287: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new Y.Content(f.call$1(C.Type_4CA), f.call$1(C.Type_4US), null);
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure278: {
+  closure288: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new Y.TranscludingComponentFactory(f.call$1(C.Type_23h));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure279: {
+  closure289: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new Y.NullTreeSanitizer();
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure280: {
+  closure290: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new Y.WalkingCompiler(f.call$1(C.Type_Db0), f.call$1(C.Type_23h));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure281: {
+  closure291: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new Y.NgElement(f.call$1(C.Type_4US), f.call$1(C.Type_wu8), f.call$1(C.Type_Nlt), P.LinkedHashMap_LinkedHashMap$_empty(P.String, P.bool), P.LinkedHashMap_LinkedHashMap$_empty(P.String, null), false);
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure282: {
+  closure292: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return R.AHref$(f.call$1(C.Type_4US), f.call$1(C.Type_Soe));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure283: {
+  closure293: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new R.NgBaseCss(C.List_empty);
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure284: {
+  closure294: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new R.NgBind(f.call$1(C.Type_4US));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure285: {
+  closure295: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new R.NgBindHtml(f.call$1(C.Type_4US), f.call$1(C.Type_0ww));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure286: {
+  closure296: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new R.NgBindTemplate(f.call$1(C.Type_4US));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure287: {
+  closure297: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2, t3, t4;
@@ -37874,7 +37902,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure288: {
+  closure298: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2, t3, t4;
@@ -37887,7 +37915,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure289: {
+  closure299: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2, t3, t4;
@@ -37900,7 +37928,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure290: {
+  closure300: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2;
@@ -37910,7 +37938,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure291: {
+  closure301: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2;
@@ -37922,28 +37950,28 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure292: {
+  closure302: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new R.NgIf(f.call$1(C.Type_tto), f.call$1(C.Type_AK0), f.call$1(C.Type_wu8), null, null);
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure293: {
+  closure303: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new R.NgUnless(f.call$1(C.Type_tto), f.call$1(C.Type_AK0), f.call$1(C.Type_wu8), null, null);
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure294: {
+  closure304: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new R.NgInclude(f.call$1(C.Type_4US), f.call$1(C.Type_wu8), f.call$1(C.Type_k64), f.call$1(C.Type_6m4), f.call$1(C.Type_8I8), null, null);
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure295: {
+  closure305: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2, t3, t4, t5, t6, t7, t8, t9, t10;
@@ -37957,76 +37985,76 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
       t8 = P.LinkedHashMap_LinkedHashMap(null, null, null, P.String, [P.List, R.NgControl]);
       t9 = P.LinkedHashMap_LinkedHashMap(null, null, null, P.String, [P.Set, R.NgControl]);
       t10 = P.LinkedHashMap_LinkedHashMap(null, null, null, P.String, [P.Set, R.NgControl]);
-      t10 = new R.NgModel(t1, new R.closure370(), null, null, null, null, null, false, new R.closure371(), t6, null, null, null, null, null, J.get$1$x(J.get$parent$x(t3), C.Type_NEK), t5, t2, t7, t8, t9, t10);
+      t10 = new R.NgModel(t1, new R.closure383(), null, null, null, null, null, false, new R.closure384(), t6, null, null, null, null, null, J.get$1$x(J.get$parent$x(t3), C.Type_NEK), t5, t2, t7, t8, t9, t10);
       t10.NgModel$5(t1, t2, t3, t4, t5);
       return t10;
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure296: {
+  closure306: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return R.InputCheckbox$(f.call$1(C.Type_4US), f.call$1(C.Type_yT8), f.call$1(C.Type_wu8), f.call$1(C.Type_cWU), f.call$1(C.Type_wnK));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure297: {
+  closure307: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return R.InputTextLike$(f.call$1(C.Type_4US), f.call$1(C.Type_yT8), f.call$1(C.Type_wu8));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure298: {
+  closure308: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return R.InputNumberLike$(f.call$1(C.Type_4US), f.call$1(C.Type_yT8), f.call$1(C.Type_wu8));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure299: {
+  closure309: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new R.NgBindTypeForDateLike(f.call$1(C.Type_4US), "date");
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure300: {
+  closure310: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return R.InputDateLike$(f.call$1(C.Type_4US), f.call$1(C.Type_yT8), f.call$1(C.Type_wu8), f.call$1(C.Type_wlp));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure301: {
+  closure311: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new R.NgValue(f.call$1(C.Type_4US), null);
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure302: {
+  closure312: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new R.NgTrueValue(f.call$1(C.Type_4US), true);
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure303: {
+  closure313: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new R.NgFalseValue(f.call$1(C.Type_4US), false);
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure304: {
+  closure314: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return R.InputRadio$(f.call$1(C.Type_4US), f.call$1(C.Type_yT8), f.call$1(C.Type_wu8), f.call$1(C.Type_P0q), f.call$1(C.Type_XrP));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure305: {
+  closure315: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2, t3, t4;
@@ -38039,70 +38067,70 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure306: {
+  closure316: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return R.NgPluralize$(f.call$1(C.Type_wu8), f.call$1(C.Type_4US), f.call$1(C.Type_4Dj), f.call$1(C.Type_Me9));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure307: {
+  closure317: {
     "^": "Closure:20;",
     call$1: [function(f) {
-      return new R.NgRepeat(f.call$1(C.Type_AK0), f.call$1(C.Type_tto), f.call$1(C.Type_wu8), f.call$1(C.Type_Xww), f.call$1(C.Type_Me9), null, null, null, null, null, new R.closure369(), null);
+      return new R.NgRepeat(f.call$1(C.Type_AK0), f.call$1(C.Type_tto), f.call$1(C.Type_wu8), f.call$1(C.Type_Xww), f.call$1(C.Type_Me9), null, null, null, null, null, new R.closure382(), null);
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure308: {
+  closure318: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new R.NgTemplate(f.call$1(C.Type_4US), f.call$1(C.Type_blc));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure309: {
+  closure319: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new R.NgHide(f.call$1(C.Type_4US), f.call$1(C.Type_Nlt));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure310: {
+  closure320: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new R.NgShow(f.call$1(C.Type_4US), f.call$1(C.Type_Nlt));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure311: {
+  closure321: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new R.NgBooleanAttribute(f.call$1(C.Type_EOY));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure312: {
+  closure322: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new R.NgSource(f.call$1(C.Type_EOY));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure313: {
+  closure323: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new R.NgAttribute(f.call$1(C.Type_XrP));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure314: {
+  closure324: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new R.NgStyle(f.call$1(C.Type_4US), f.call$1(C.Type_wu8), null, null);
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure315: {
+  closure325: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2, t3;
@@ -38114,14 +38142,14 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure316: {
+  closure326: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new R.NgSwitchWhen(f.call$1(C.Type_nHe), f.call$1(C.Type_AK0), f.call$1(C.Type_tto), f.call$1(C.Type_wu8));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure317: {
+  closure327: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2, t3;
@@ -38134,21 +38162,21 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure318: {
+  closure328: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new R.NgNonBindable();
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure319: {
+  closure329: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return R.InputSelect$(f.call$1(C.Type_4US), f.call$1(C.Type_XrP), f.call$1(C.Type_yT8), f.call$1(C.Type_wu8));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure320: {
+  closure330: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2, t3;
@@ -38161,14 +38189,14 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure321: {
+  closure331: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return R.NgForm$(f.call$1(C.Type_wu8), f.call$1(C.Type_EOY), f.call$1(C.Type_6m4), f.call$1(C.Type_Nlt));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure322: {
+  closure332: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2;
@@ -38179,7 +38207,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure323: {
+  closure333: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1 = new R.NgModelUrlValidator("ng-url");
@@ -38188,7 +38216,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure324: {
+  closure334: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1 = new R.NgModelEmailValidator("ng-email");
@@ -38197,7 +38225,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure325: {
+  closure335: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1 = new R.NgModelNumberValidator("ng-number");
@@ -38206,7 +38234,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure326: {
+  closure336: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2;
@@ -38217,7 +38245,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure327: {
+  closure337: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2;
@@ -38228,7 +38256,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure328: {
+  closure338: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2;
@@ -38239,7 +38267,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure329: {
+  closure339: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2;
@@ -38250,7 +38278,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure330: {
+  closure340: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2;
@@ -38261,98 +38289,98 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure331: {
+  closure341: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new L.Currency(P.LinkedHashMap_LinkedHashMap(null, null, null, P.String, T.NumberFormat));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure332: {
+  closure342: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new L.Date(P.LinkedHashMap_LinkedHashMap(null, null, null, P.String, [P.Map, P.String, T.DateFormat]));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure333: {
+  closure343: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new L.Filter(f.call$1(C.Type_Xww), null, null);
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure334: {
+  closure344: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new L.Json();
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure335: {
+  closure345: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new L.LimitTo(f.call$1(C.Type_6m4));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure336: {
+  closure346: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new L.Lowercase();
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure337: {
+  closure347: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new L.Arrayify();
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure338: {
+  closure348: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new L.Number(P.LinkedHashMap_LinkedHashMap(null, null, null, P.String, [P.Map, P.num, T.NumberFormat]));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure339: {
+  closure349: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new L.OrderBy(f.call$1(C.Type_Xww));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure340: {
+  closure350: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new L.Uppercase();
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure341: {
+  closure351: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new L.Stringify();
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure342: {
+  closure352: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new T.NgRoutingUsePushState(true);
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure343: {
+  closure353: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return T.NgRoutingHelper$(f.call$1(C.Type_yvB), f.call$1(C.Type_6m4), f.call$1(C.Type_4QF), f.call$1(C.Type_Gpc));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure344: {
+  closure354: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2, t3, t4, t5, t6;
@@ -38367,7 +38395,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure345: {
+  closure355: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2;
@@ -38378,21 +38406,21 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure346: {
+  closure356: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new K.AnimationLoop(f.call$1(C.Type_8eb), f.call$1(C.Type_Db0), [], f.call$1(C.Type_Soe), false);
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure347: {
+  closure357: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new K.AnimationFrame(f.call$1(C.Type_4AN));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure348: {
+  closure358: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1 = f.call$1(C.Type_23h);
@@ -38400,7 +38428,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure349: {
+  closure359: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1, t2;
@@ -38410,14 +38438,14 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure350: {
+  closure360: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new K.CssAnimationMap(P.LinkedHashMap_LinkedHashMap(null, null, null, W.Element, [P.Map, P.String, K.CssAnimation]));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure351: {
+  closure361: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1 = f.call$1(C.Type_4US);
@@ -38425,7 +38453,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure352: {
+  closure362: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1 = f.call$1(C.Type_4US);
@@ -38433,23 +38461,23 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure353: {
+  closure363: {
     "^": "Closure:20;",
     call$1: [function(f) {
-      return new D.RssController(f.call$1(C.Type_GA4));
+      return new D.RssController(f.call$1(C.Type_GA4), f.call$1(C.Type_jtx));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure354: {
+  closure364: {
     "^": "Closure:20;",
     call$1: [function(f) {
-      var t1 = new A.QueryService(f.call$1(C.Type_wTU), f.call$1(C.Type_pah), null, [], [], P.LinkedHashMap_LinkedHashMap(null, null, null, P.$int, P.$int), null, null);
+      var t1 = new A.QueryService(f.call$1(C.Type_wTU), f.call$1(C.Type_pah), null, [], [], P.LinkedHashMap_LinkedHashMap(null, null, null, P.$int, P.$int), null, 0, 0);
       t1._queryservice$_loaded = P.Future_wait([t1._loadFeeds$0(), t1._countUnreads$0()], false);
       return t1;
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure355: {
+  closure365: {
     "^": "Closure:20;",
     call$1: [function(f) {
       var t1 = new A.RssDatabase(null, null);
@@ -38458,97 +38486,118 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
-  closure356: {
-    "^": "Closure:20;",
-    call$1: [function(f) {
-      return new U.ImageService(f.call$1(C.Type_wTU));
-    }, "call$1", null, 2, 0, null, 51, "call"],
-    $isFunction: true
-  },
-  closure357: {
-    "^": "Closure:20;",
-    call$1: [function(f) {
-      return new Z.FeedListComponent(0, f.call$1(C.Type_GA4));
-    }, "call$1", null, 2, 0, null, 51, "call"],
-    $isFunction: true
-  },
-  closure358: {
-    "^": "Closure:20;",
-    call$1: [function(f) {
-      var t1 = f.call$1(C.Type_mdN);
-      return new B.PostsListComponent(null, null, f.call$1(C.Type_GA4), t1, f.call$1(C.Type_4QF), P.LinkedHashMap_LinkedHashMap(null, null, null, P.$int, [P.List, T.FeedEntry]), H.setRuntimeTypeInfo([], [T.Feed]));
-    }, "call$1", null, 2, 0, null, 51, "call"],
-    $isFunction: true
-  },
-  closure359: {
-    "^": "Closure:20;",
-    call$1: [function(f) {
-      var t1, t2;
-      t1 = f.call$1(C.Type_GA4);
-      t2 = f.call$1(C.Type_4QF);
-      t1 = new B.AddFeedHeqaderComponent(t1, t2, false, false, false, false, "", 0, null, 0);
-      t1.routerListener = t2.get$onRouteStart().listen$1(t1.get$_handleRouterChange());
-      return t1;
-    }, "call$1", null, 2, 0, null, 51, "call"],
-    $isFunction: true
-  },
-  closure360: {
-    "^": "Closure:20;",
-    call$1: [function(f) {
-      return K.PostComponent$(f.call$1(C.Type_mdN), f.call$1(C.Type_GA4), f.call$1(C.Type_K17));
-    }, "call$1", null, 2, 0, null, 51, "call"],
-    $isFunction: true
-  },
-  closure361: {
-    "^": "Closure:20;",
-    call$1: [function(f) {
-      return new U.PubdateComponent(null);
-    }, "call$1", null, 2, 0, null, 51, "call"],
-    $isFunction: true
-  },
-  closure362: {
-    "^": "Closure:20;",
-    call$1: [function(f) {
-      return new E.UnreadCounterComponent(null, f.call$1(C.Type_GA4));
-    }, "call$1", null, 2, 0, null, 51, "call"],
-    $isFunction: true
-  },
-  closure363: {
-    "^": "Closure:20;",
-    call$1: [function(f) {
-      return new U.TruncateFilter();
-    }, "call$1", null, 2, 0, null, 51, "call"],
-    $isFunction: true
-  },
-  closure364: {
-    "^": "Closure:20;",
-    call$1: [function(f) {
-      return new U.SanitizeFilter();
-    }, "call$1", null, 2, 0, null, 51, "call"],
-    $isFunction: true
-  },
-  closure365: {
-    "^": "Closure:20;",
-    call$1: [function(f) {
-      return new Y.RelativeDateFilter();
-    }, "call$1", null, 2, 0, null, 51, "call"],
-    $isFunction: true
-  },
   closure366: {
     "^": "Closure:20;",
     call$1: [function(f) {
-      return new S.PostsListFormatter();
+      return S.AppComm$();
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
   closure367: {
     "^": "Closure:20;",
     call$1: [function(f) {
-      return new Y.StarringComponent(null);
+      return new U.ImageService(f.call$1(C.Type_wTU));
     }, "call$1", null, 2, 0, null, 51, "call"],
     $isFunction: true
   },
   closure368: {
+    "^": "Closure:20;",
+    call$1: [function(f) {
+      return new Q.EntriesListComponent(null, f.call$1(C.Type_GA4), f.call$1(C.Type_4QF), 5, false);
+    }, "call$1", null, 2, 0, null, 51, "call"],
+    $isFunction: true
+  },
+  closure369: {
+    "^": "Closure:20;",
+    call$1: [function(f) {
+      return new Z.FeedListComponent(0, f.call$1(C.Type_GA4));
+    }, "call$1", null, 2, 0, null, 51, "call"],
+    $isFunction: true
+  },
+  closure370: {
+    "^": "Closure:20;",
+    call$1: [function(f) {
+      var t1 = f.call$1(C.Type_mdN);
+      return new B.FeedEntriesComponent(f.call$1(C.Type_GA4), t1, f.call$1(C.Type_4QF));
+    }, "call$1", null, 2, 0, null, 51, "call"],
+    $isFunction: true
+  },
+  closure371: {
+    "^": "Closure:20;",
+    call$1: [function(f) {
+      return new B.AddFeedHeqaderComponent(f.call$1(C.Type_GA4), f.call$1(C.Type_4QF), false, false, false, "", 0, null);
+    }, "call$1", null, 2, 0, null, 51, "call"],
+    $isFunction: true
+  },
+  closure372: {
+    "^": "Closure:20;",
+    call$1: [function(f) {
+      return K.PostComponent$(f.call$1(C.Type_mdN), f.call$1(C.Type_GA4), f.call$1(C.Type_K17));
+    }, "call$1", null, 2, 0, null, 51, "call"],
+    $isFunction: true
+  },
+  closure373: {
+    "^": "Closure:20;",
+    call$1: [function(f) {
+      return new U.PubdateComponent(null);
+    }, "call$1", null, 2, 0, null, 51, "call"],
+    $isFunction: true
+  },
+  closure374: {
+    "^": "Closure:20;",
+    call$1: [function(f) {
+      return new E.UnreadCounterComponent(null, null, null, f.call$1(C.Type_GA4));
+    }, "call$1", null, 2, 0, null, 51, "call"],
+    $isFunction: true
+  },
+  closure375: {
+    "^": "Closure:20;",
+    call$1: [function(f) {
+      var t1, t2;
+      t1 = f.call$1(C.Type_mdN);
+      t2 = f.call$1(C.Type_4QF);
+      t2 = new A.DataHandlerComponent(f.call$1(C.Type_GA4), t1, t2);
+      t2._getGenericSource$1("unread");
+      return t2;
+    }, "call$1", null, 2, 0, null, 51, "call"],
+    $isFunction: true
+  },
+  closure376: {
+    "^": "Closure:20;",
+    call$1: [function(f) {
+      return new U.TruncateFilter();
+    }, "call$1", null, 2, 0, null, 51, "call"],
+    $isFunction: true
+  },
+  closure377: {
+    "^": "Closure:20;",
+    call$1: [function(f) {
+      return new U.SanitizeFilter();
+    }, "call$1", null, 2, 0, null, 51, "call"],
+    $isFunction: true
+  },
+  closure378: {
+    "^": "Closure:20;",
+    call$1: [function(f) {
+      return new Y.RelativeDateFilter();
+    }, "call$1", null, 2, 0, null, 51, "call"],
+    $isFunction: true
+  },
+  closure379: {
+    "^": "Closure:20;",
+    call$1: [function(f) {
+      return new S.PostsListFormatter();
+    }, "call$1", null, 2, 0, null, 51, "call"],
+    $isFunction: true
+  },
+  closure380: {
+    "^": "Closure:20;",
+    call$1: [function(f) {
+      return new Y.StarringComponent(null);
+    }, "call$1", null, 2, 0, null, 51, "call"],
+    $isFunction: true
+  },
+  closure381: {
     "^": "Closure:20;",
     call$1: [function(f) {
       return new E.Profiler(new E.Counters(P.LinkedHashMap_LinkedHashMap$_empty(P.String, P.$int)));
@@ -38559,24 +38608,42 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
 ["rssapp.component.addfeedheader", "package:rss_app/component/add_feed_header/add_feed_header.dart", , B, {
   "^": "",
   AddFeedHeqaderComponent: {
-    "^": "DetachAware;queryService,router,showAddFeed@,addingFeed@,refreshingFeeds@,readingPost@,feedAddUrl@,currentPostId,routerListener,feedEntryPosition",
+    "^": "Object;queryService,router,showAddFeed@,addingFeed@,refreshingFeeds@,feedAddUrl@,feedEntryPosition,onRefreshFeeds@",
+    get$currentPostId: function() {
+      return this.queryService.get$currentPostId();
+    },
     get$addFeedDisabled: function() {
       return !(J.startsWith$1$s(this.feedAddUrl, "http://") || J.startsWith$1$s(this.feedAddUrl, "https://"));
+    },
+    get$entries: function(_) {
+      return this.queryService.get$currentPosts();
+    },
+    get$hasUnread: function() {
+      var t1, len, i;
+      t1 = this.queryService;
+      len = J.get$length$asx(t1.get$currentPosts());
+      if (typeof len !== "number")
+        return H.iae(len);
+      i = 0;
+      for (; i < len; ++i)
+        if (J.$eq(J.$index$asx(t1.get$currentPosts(), i).get$unread(), true))
+          return true;
+      return false;
     },
     get$currentPostsLength: function() {
       return J.get$length$asx(this.queryService.get$currentPosts());
     },
     get$currentPostsIndex: function() {
       var t1, len, found;
-      if (J.$eq(this.currentPostId, 0))
+      t1 = this.queryService;
+      if (J.$eq(t1.get$currentPostId(), 0))
         return 0;
       this.feedEntryPosition = 0;
-      t1 = this.queryService;
       len = J.get$length$asx(t1.get$currentPosts());
       if (typeof len !== "number")
         return H.iae(len);
       for (; found = false, this.feedEntryPosition < len; ++this.feedEntryPosition)
-        if (J.$eq(J.get$id$x(J.$index$asx(t1.get$currentPosts(), this.feedEntryPosition)), this.currentPostId)) {
+        if (J.$eq(J.get$id$x(J.$index$asx(t1.get$currentPosts(), this.feedEntryPosition)), t1.get$currentPostId())) {
           found = true;
           break;
         }
@@ -38584,16 +38651,18 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
         return 0;
       return this.feedEntryPosition + 1;
     },
-    get$nextEntry: function() {
-      var t1 = this.queryService;
-      if (J.$ge$n(J.$sub$n(J.get$length$asx(t1.get$currentPosts()), 1), this.feedEntryPosition + 1))
-        return J.$index$asx(t1.get$currentPosts(), this.feedEntryPosition + 1);
-      return;
+    get$readingPost: function() {
+      return J.$gt$n(this.queryService.get$currentPostId(), 0);
     },
-    get$prevEntry: function() {
+    get$hasNextEntry: function() {
+      if (J.$ge$n(J.$sub$n(J.get$length$asx(this.queryService.get$currentPosts()), 1), this.feedEntryPosition + 1))
+        return true;
+      return false;
+    },
+    get$hasPrevEntry: function() {
       if (this.feedEntryPosition === 0)
-        return;
-      return J.$index$asx(this.queryService.get$currentPosts(), this.feedEntryPosition - 1);
+        return false;
+      return true;
     },
     addFeed$0: [function() {
       if (this.get$addFeedDisabled())
@@ -38602,36 +38671,27 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
       this.addingFeed = true;
       this.queryService.addFeed$1(this.feedAddUrl).then$1(new B.AddFeedHeqaderComponent_addFeed_closure(this)).catchError$1(new B.AddFeedHeqaderComponent_addFeed_closure0(this));
     }, "call$0", "get$addFeed", 0, 0, 40],
-    _handleRouterChange$1: [function(e) {
-      var url, exception;
-      if (e == null || e.get$uri() == null)
-        return;
-      url = e.get$uri();
-      if (J.startsWith$1$s(url, "/post/")) {
-        this.readingPost = true;
-        try {
-          J.substring$1$s(url, 6);
-          this.currentPostId = H.Primitives_parseInt(J.substring$1$s(url, 6), null, null);
-        } catch (exception) {
-          H.unwrapException(exception);
-          this.currentPostId = 0;
-        }
-
-      } else
-        this.readingPost = false;
-    }, "call$1", "get$_handleRouterChange", 2, 0, 435, 1],
+    _nextEntryId$0: function() {
+      var t1 = this.queryService;
+      if (J.$ge$n(J.$sub$n(J.get$length$asx(t1.get$currentPosts()), 1), this.feedEntryPosition + 1))
+        return J.get$id$x(J.$index$asx(t1.get$currentPosts(), this.feedEntryPosition + 1));
+      return 0;
+    },
+    _prevEntryId$0: function() {
+      if (this.feedEntryPosition === 0)
+        return 0;
+      return J.get$id$x(J.$index$asx(this.queryService.get$currentPosts(), this.feedEntryPosition - 1));
+    },
     goToPost$1: [function(dir) {
-      var post = J.$eq(dir, "prev") ? this.get$prevEntry() : this.get$nextEntry();
-      if (post == null)
+      var postId = J.$eq(dir, "prev") ? this._prevEntryId$0() : this._nextEntryId$0();
+      P.print(H.S(dir) + " post ID: " + H.S(postId));
+      if (J.$eq(postId, 0))
         return;
-      this.router.gotoUrl$1("/post/" + H.S(J.get$id$x(post)));
-    }, "call$1", "get$goToPost", 2, 0, 61, 436],
-    detach$0: function(_) {
-      var t1 = this.routerListener;
-      if (t1 == null)
-        return;
-      t1.cancel$0();
-    }
+      this.router.gotoUrl$1("/post/" + H.S(postId));
+    }, "call$1", "get$goToPost", 2, 0, 61, 435],
+    markAllAsRead$0: [function() {
+      this.queryService.markCurrentAsRead$0();
+    }, "call$0", "get$markAllAsRead", 0, 0, 40]
   },
   AddFeedHeqaderComponent_addFeed_closure: {
     "^": "Closure:20;this_0",
@@ -38653,6 +38713,103 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     $isFunction: true
   }
 }],
+["rssapp.component.datahandler", "package:rss_app/component/data_handler/data_handler.dart", , A, {
+  "^": "",
+  DataHandlerComponent: {
+    "^": "Object;queryService,routeProvider,router",
+    attach$0: function() {
+      this.router.get$onRouteStart().listen$1(new A.DataHandlerComponent_attach_closure(this));
+    },
+    _getGenericSource$1: function(source) {
+      this.queryService.getPosts$1(source).then$1(new A.DataHandlerComponent__getGenericSource_closure());
+    },
+    _getFeedSource$1: function(_feedId) {
+      var feedId, e, exception, t1;
+      feedId = null;
+      try {
+        feedId = H.Primitives_parseInt(_feedId, null, null);
+      } catch (exception) {
+        t1 = H.unwrapException(exception);
+        e = t1;
+        window;
+        if (typeof console != "undefined")
+          console.error(e);
+        return;
+      }
+
+      t1 = this.queryService;
+      if (t1.getFeedById$1(feedId) == null) {
+        window;
+        if (typeof console != "undefined")
+          console.error("No feed in response.");
+        return;
+      }
+      t1.set$currentFeedId(feedId);
+      t1.getPosts$1(J.toString$0(feedId)).then$1(new A.DataHandlerComponent__getFeedSource_closure());
+    },
+    $isAttachAware: true
+  },
+  DataHandlerComponent_attach_closure: {
+    "^": "Closure:349;this_0",
+    call$1: [function(e) {
+      var uri, t1, exception;
+      uri = e.get$uri();
+      if (!J.startsWith$1$s(e.get$uri(), "/post")) {
+        t1 = this.this_0.queryService;
+        J.clear$0$ax(t1.get$currentPosts());
+        t1.set$currentFeedId(null);
+      } else
+        try {
+          J.substring$1$s(uri, 6);
+          this.this_0.queryService.set$currentPostId(H.Primitives_parseInt(J.substring$1$s(uri, 6), null, null));
+        } catch (exception) {
+          H.unwrapException(exception);
+          this.this_0.queryService.set$currentPostId(0);
+        }
+
+      J.get$completed$x(e).then$1(new A.DataHandlerComponent_attach__closure(this.this_0));
+    }, "call$1", null, 2, 0, null, 1, "call"],
+    $isFunction: true
+  },
+  DataHandlerComponent_attach__closure: {
+    "^": "Closure:20;this_1",
+    call$1: [function(_) {
+      var t1, t2;
+      t1 = this.this_1;
+      t2 = t1.routeProvider;
+      switch (t2.get$routeName()) {
+        case "unread":
+        case "starred":
+        case "all":
+          t1._getGenericSource$1(t2.get$routeName());
+          break;
+        case "feed":
+          if (J.$gt$n(J.get$length$asx(t1.queryService.get$currentPosts()), 0))
+            return;
+          t1._getFeedSource$1(t2.get$parameters().$index(0, "feedId"));
+          break;
+        case "post":
+          break;
+        default:
+          break;
+      }
+    }, "call$1", null, 2, 0, null, 82, "call"],
+    $isFunction: true
+  },
+  DataHandlerComponent__getGenericSource_closure: {
+    "^": "Closure:20;",
+    call$1: [function(_) {
+      P.print("[DataHandlerComponent] Posts loaded.");
+    }, "call$1", null, 2, 0, null, 82, "call"],
+    $isFunction: true
+  },
+  DataHandlerComponent__getFeedSource_closure: {
+    "^": "Closure:20;",
+    call$1: [function(_) {
+    }, "call$1", null, 2, 0, null, 82, "call"],
+    $isFunction: true
+  }
+}],
 ["rssapp.component.feedlist", "package:rss_app/component/feed_list/feed_list.dart", , Z, {
   "^": "",
   FeedListComponent: {
@@ -38663,6 +38820,56 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     get$selected: function(_) {
       return this.queryService.get$currentFeedId();
     }
+  }
+}],
+["rssapp.component.lists", "package:rss_app/component/lists/entries_lists.dart", , Q, {
+  "^": "",
+  EntriesListComponent: {
+    "^": "Object;dataSource@,queryService,router,listLength@,hasPostsInView@",
+    get$entries: function(_) {
+      return this.queryService.get$currentPosts();
+    },
+    get$feeds: function() {
+      return this.queryService.get$feeds();
+    },
+    hasPosts$1: [function(feedId) {
+      var t1, exception;
+      t1 = this.queryService;
+      if (t1.get$currentPosts() == null)
+        return false;
+      try {
+        J.firstWhere$1$ax(t1.get$currentPosts(), new Q.EntriesListComponent_hasPosts_closure(feedId));
+        this.hasPostsInView = true;
+        return true;
+      } catch (exception) {
+        H.unwrapException(exception);
+        return false;
+      }
+
+      return false;
+    }, "call$1", "get$hasPosts", 2, 0, 34, 436],
+    onStarChange$1: [function(entry) {
+      this.queryService.updateEntry$1(entry).catchError$1(new Q.EntriesListComponent_onStarChange_closure());
+    }, "call$1", "get$onStarChange", 2, 0, 437, 438],
+    readPost$1: [function(postId) {
+      this.router.gotoUrl$1("/post/" + H.S(postId));
+    }, "call$1", "get$readPost", 2, 0, 41, 439]
+  },
+  EntriesListComponent_hasPosts_closure: {
+    "^": "Closure:440;feedId_0",
+    call$1: function(entry) {
+      return J.$eq(entry.get$feedid(), this.feedId_0);
+    },
+    $isFunction: true
+  },
+  EntriesListComponent_onStarChange_closure: {
+    "^": "Closure:20;",
+    call$1: [function(e) {
+      window;
+      if (typeof console != "undefined")
+        console.error(e);
+    }, "call$1", null, 2, 0, null, 1, "call"],
+    $isFunction: true
   }
 }],
 ["rssapp.component.post", "package:rss_app/component/post/post.dart", , K, {
@@ -38742,131 +38949,44 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     $isFunction: true
   }
 }],
-["rssapp.component.postlist", "package:rss_app/component/posts_list/posts_list.dart", , B, {
+["rssapp.component.postlist", "package:rss_app/component/feed_entries/feed_entries.dart", , B, {
   "^": "",
-  PostsListComponent: {
-    "^": "Object;dataSource@,feedId@,queryService,routeProvider,router,postsMap@,feeds@",
-    get$listLength: function() {
-      var t1, res;
-      t1 = this.dataSource;
-      if (t1 != null && J.$eq(t1, "feed"))
-        res = J.get$first$ax(this.feeds) != null && this.postsMap.containsKey$1(J.get$id$x(J.get$first$ax(this.feeds))) === true ? J.get$length$asx(J.$index$asx(this.postsMap, J.get$id$x(J.get$first$ax(this.feeds)))) : 5;
-      else
-        res = 5;
-      return res;
+  FeedEntriesComponent: {
+    "^": "Object;queryService,routeProvider,router",
+    get$entries: function(_) {
+      return this.queryService.get$currentPosts();
+    },
+    get$feed: function() {
+      var t1, len, i;
+      t1 = this.queryService;
+      if (t1.get$currentFeedId() == null)
+        return;
+      len = J.get$length$asx(t1.get$feeds());
+      if (typeof len !== "number")
+        return H.iae(len);
+      i = 0;
+      for (; i < len; ++i)
+        if (J.$eq(J.get$id$x(J.$index$asx(t1.get$feeds(), i)), t1.get$currentFeedId()))
+          return J.$index$asx(t1.get$feeds(), i);
+      return;
     },
     attach$0: function() {
-      switch (this.dataSource) {
-        case "unread":
-          this._getGenericSource$1("unread");
-          break;
-        case "starred":
-          this._getGenericSource$1("starred");
-          break;
-        case "all":
-          this._getGenericSource$1("all");
-          break;
-        case "feed":
-          this._getFeedSource$1(this.routeProvider.get$parameters().$index(0, "feedId"));
-          break;
-        default:
-          P.print("Initialization in PostsListComponent?????");
-          break;
-      }
     },
     onStarChange$1: [function(entry) {
-      this.queryService.updateEntry$1(entry).catchError$1(new B.PostsListComponent_onStarChange_closure());
+      this.queryService.updateEntry$1(entry).catchError$1(new B.FeedEntriesComponent_onStarChange_closure());
     }, "call$1", "get$onStarChange", 2, 0, 437, 438],
-    _getFeedSource$1: function(feedId) {
-      var id, e, exception, t1, feed;
-      id = null;
-      try {
-        id = H.Primitives_parseInt(feedId, null, null);
-      } catch (exception) {
-        t1 = H.unwrapException(exception);
-        e = t1;
-        window;
-        if (typeof console != "undefined")
-          console.error(e);
-        return;
-      }
-
-      t1 = this.queryService;
-      feed = t1.getFeedById$1(id);
-      if (feed == null) {
-        window;
-        if (typeof console != "undefined")
-          console.error("No feed in response.");
-        return;
-      }
-      J.clear$0$ax(this.feeds);
-      J.add$1$ax(this.feeds, feed);
-      t1.getPosts$1(feedId).then$1(new B.PostsListComponent__getFeedSource_closure(this, feed));
-    },
-    _getGenericSource$1: function(source) {
-      this.queryService.getPosts$1(source).then$1(new B.PostsListComponent__getGenericSource_closure(this));
-    },
     readPost$1: [function(postId) {
       this.router.gotoUrl$1("/post/" + H.S(postId));
-      P.print(postId);
     }, "call$1", "get$readPost", 2, 0, 41, 439],
     $isAttachAware: true
   },
-  PostsListComponent_onStarChange_closure: {
+  FeedEntriesComponent_onStarChange_closure: {
     "^": "Closure:20;",
     call$1: [function(e) {
       window;
       if (typeof console != "undefined")
         console.error(e);
     }, "call$1", null, 2, 0, null, 1, "call"],
-    $isFunction: true
-  },
-  PostsListComponent__getFeedSource_closure: {
-    "^": "Closure:441;this_0,feed_1",
-    call$1: [function(posts) {
-      var t1, t2, t3;
-      t1 = this.this_0;
-      t2 = this.feed_1;
-      t3 = J.getInterceptor$x(t2);
-      J.$indexSet$ax(t1.postsMap, t3.get$id(t2), H.setRuntimeTypeInfo([], [T.FeedEntry]));
-      J.addAll$1$ax(J.$index$asx(t1.postsMap, t3.get$id(t2)), posts);
-    }, "call$1", null, 2, 0, null, 440, "call"],
-    $isFunction: true
-  },
-  PostsListComponent__getGenericSource_closure: {
-    "^": "Closure:441;this_0",
-    call$1: [function(posts) {
-      var _postsMap, t1;
-      _postsMap = P.LinkedHashMap_LinkedHashMap(null, null, null, P.$int, [P.List, T.FeedEntry]);
-      t1 = this.this_0;
-      J.forEach$1$ax(posts, new B.PostsListComponent__getGenericSource__closure(t1, _postsMap));
-      t1.postsMap = _postsMap;
-    }, "call$1", null, 2, 0, null, 440, "call"],
-    $isFunction: true
-  },
-  PostsListComponent__getGenericSource__closure: {
-    "^": "Closure:442;this_1,_postsMap_2",
-    call$1: [function(entry) {
-      var t1, feed, t2;
-      t1 = this.this_1;
-      feed = J.firstWhere$1$ax(t1.queryService.get$feeds(), new B.PostsListComponent__getGenericSource___closure(entry));
-      if (feed == null)
-        return;
-      if (J.contains$1$asx(t1.feeds, feed) !== true)
-        J.add$1$ax(t1.feeds, feed);
-      t1 = this._postsMap_2;
-      t2 = J.getInterceptor$x(feed);
-      if (!t1.containsKey$1(t2.get$id(feed)))
-        t1.$indexSet(0, t2.get$id(feed), H.setRuntimeTypeInfo([], [T.FeedEntry]));
-      J.add$1$ax(t1.$index(0, t2.get$id(feed)), entry);
-    }, "call$1", null, 2, 0, null, 438, "call"],
-    $isFunction: true
-  },
-  PostsListComponent__getGenericSource___closure: {
-    "^": "Closure:443;entry_3",
-    call$1: function(f) {
-      return J.$eq(J.get$id$x(f), this.entry_3.get$feedid());
-    },
     $isFunction: true
   }
 }],
@@ -38895,7 +39015,27 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
 ["rssapp.component.unreadcounter", "package:rss_app/component/unread_counter/unread_counter.dart", , E, {
   "^": "",
   UnreadCounterComponent: {
-    "^": "Object;feed@,queryService",
+    "^": "Object;feed@,_cssClass,_hideEmpty,queryService",
+    get$cssClass: function() {
+      var t1 = this._cssClass;
+      return t1 == null ? "unread-counter" : t1;
+    },
+    set$cssClass: function(css) {
+      this._cssClass = css;
+      return css;
+    },
+    set$hideEmpty: function(value) {
+      this._hideEmpty = value;
+      return value;
+    },
+    get$isHideEmpty: function() {
+      var t1 = this._hideEmpty;
+      if (t1 == null)
+        t1 = false;
+      else
+        t1 = J.$eq(t1, "true") && true;
+      return t1;
+    },
     get$unreadCount: function() {
       var id, t1, exception;
       t1 = this.feed;
@@ -38961,16 +39101,28 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
 ["rssapp.formatter.postslistformatter", "package:rss_app/formatter/posts_list_formatter.dart", , S, {
   "^": "",
   PostsListFormatter: {
-    "^": "Object:444;",
-    call$2: function(posts, max) {
-      var t1;
+    "^": "Object:441;",
+    call$3: function(posts, feedId, max) {
+      var t1, $length, feedEntries, len, i;
       if (posts == null)
         return;
       t1 = J.getInterceptor$asx(posts);
-      return t1.sublist$2(posts, 0, P.min(t1.get$length(posts), max));
+      $length = P.min(t1.get$length(posts), max);
+      feedEntries = [];
+      len = t1.get$length(posts);
+      if (typeof len !== "number")
+        return H.iae(len);
+      i = 0;
+      for (; i < len; ++i)
+        if (J.$eq(t1.$index(posts, i).get$feedid(), feedId)) {
+          feedEntries.push(t1.$index(posts, i));
+          if (feedEntries.length >= $length)
+            break;
+        }
+      return feedEntries;
     },
-    call$1: function(posts) {
-      return this.call$2(posts, 20);
+    call$2: function(posts, feedId) {
+      return this.call$3(posts, feedId, 20);
     },
     $isFunction: true
   }
@@ -38978,7 +39130,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
 ["rssapp.formatter.textformatter", "package:rss_app/formatter/text_formatter.dart", , U, {
   "^": "",
   TruncateFilter: {
-    "^": "Object:445;",
+    "^": "Object:442;",
     call$4: function(input, $length, cleanHTML, exact) {
       var truncate;
       if (input == null)
@@ -39015,21 +39167,34 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
 ["rssapp.routing.app_router", "package:rss_app/router/rss_router.dart", , N, {
   "^": "",
   rssAppRouteInitializer: [function(router, views) {
-    views.configure$1(P.LinkedHashMap_LinkedHashMap$_literal(["unread", new T.NgRouteCfg("/unread", "view/unread.html", null, null, null, true, null, null, null), "starred", new T.NgRouteCfg("/starred", "view/starred.html", null, null, null, false, null, null, null), "all", new T.NgRouteCfg("/all", "view/all.html", null, null, null, false, null, null, null), "feed", new T.NgRouteCfg("/feed/:feedId", null, null, P.LinkedHashMap_LinkedHashMap$_literal(["view", new T.NgRouteCfg("/view", "view/feed.html", null, null, null, false, null, null, null), "edit", new T.NgRouteCfg("/edit", "view/feed_settings.html", null, null, null, false, null, null, null), "feed_default", new T.NgRouteCfg(null, null, null, null, null, true, new N.rssAppRouteInitializer_closure(router), null, null)], null, null), null, false, null, null, null), "post", new T.NgRouteCfg("/post/:postId", "view/post.html", null, null, null, false, null, null, null)], null, null));
-  }, "call$2", "rssAppRouteInitializer$closure", 4, 0, 98, 99, 100],
-  rssAppRouteInitializer_closure: {
-    "^": "Closure:343;router_0",
-    call$1: function(e) {
-      var t1 = this.router_0;
-      return J.go$4$replace$startingFrom$x(t1, "view", P.LinkedHashMap_LinkedHashMap$_empty(null, null), true, t1.get$root().findRoute$1("feed"));
-    },
-    $isFunction: true
-  }
+    views.configure$1(P.LinkedHashMap_LinkedHashMap$_literal(["unread", new T.NgRouteCfg("/unread", "view/unread.html", null, null, null, true, null, null, null), "starred", new T.NgRouteCfg("/starred", "view/starred.html", null, null, null, false, null, null, null), "all", new T.NgRouteCfg("/all", "view/all.html", null, null, null, false, null, null, null), "feed", new T.NgRouteCfg("/feed/:feedId", "view/feed.html", null, null, null, false, null, null, null), "post", new T.NgRouteCfg("/post/:postId", "view/post.html", null, null, null, false, null, null, null)], null, null));
+  }, "call$2", "rssAppRouteInitializer$closure", 4, 0, 98, 99, 100]
 }],
 ["rssapp.rssapp_controller", "package:rss_app/rss_controller.dart", , D, {
   "^": "",
   RssController: {
-    "^": "Object;queryService"
+    "^": "Object;queryService,communication"
+  }
+}],
+["rssapp.service.communication", "package:rss_app/service/communication.dart", , S, {
+  "^": "",
+  AppComm: {
+    "^": "Object;",
+    AppComm$0: function() {
+      J.$indexSet$ax($.get$context(), "feedUpdated", new S.AppComm_closure());
+    },
+    static: {AppComm$: function() {
+        var t1 = new S.AppComm();
+        t1.AppComm$0();
+        return t1;
+      }}
+  },
+  AppComm_closure: {
+    "^": "Closure:20;",
+    call$1: [function(feedId) {
+      P.print("NNNNNNEEEWWWWWW FEEEEEEEEDDDDDD DATA. Feed has been updated in the event page. " + H.S(feedId));
+    }, "call$1", null, 2, 0, null, 436, "call"],
+    $isFunction: true
   }
 }],
 ["rssapp.service.database", "package:rss_app/service/database.dart", , A, {
@@ -39038,10 +39203,11 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     "^": "Object;db,_loaded",
     _loadDatabase$0: function() {
       var t1 = window;
-      return J.open$3$onUpgradeNeeded$version$x(t1.indexedDB || t1.webkitIndexedDB || t1.mozIndexedDB, "rss_feeds", this.get$_initializeDatabase(), 3).then$1(new A.RssDatabase__loadDatabase_closure(this));
+      return J.open$3$onUpgradeNeeded$version$x(t1.indexedDB || t1.webkitIndexedDB || t1.mozIndexedDB, "rss_feeds", this.get$_initializeDatabase(), 4).then$1(new A.RssDatabase__loadDatabase_closure(this));
     },
     _initializeDatabase$1: [function(e) {
       var db, t1, feedstore, poststore;
+      P.print("[DATASTORE] Initialize database. Upgrading to v: 4");
       db = P.convertNativeToDart_AcceptStructuredClone(H.interceptedTypeCast(J.get$target$x(e), "$isRequest").result, false);
       t1 = J.getInterceptor$x(db);
       if (t1.get$objectStoreNames(db).contains("feeds") === true)
@@ -39057,13 +39223,14 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
       C.ObjectStore_methods.createIndex$4$multiEntry$unique(poststore, "feedid", "feedid", false, false);
       C.ObjectStore_methods.createIndex$4$multiEntry$unique(poststore, "unread", "unread", false, false);
       C.ObjectStore_methods.createIndex$4$multiEntry$unique(poststore, "starred", "starred", false, false);
-      C.ObjectStore_methods.createIndex$3$unique(poststore, "unread, id", ["unread", "id"], false);
-    }, "call$1", "get$_initializeDatabase", 2, 0, 446, 1],
+      C.ObjectStore_methods.createIndex$3$unique(poststore, "unread, feedid", ["unread", "feedid"], false);
+    }, "call$1", "get$_initializeDatabase", 2, 0, 443, 1],
     getFeeds$0: function() {
       return this.db == null ? this._loaded.then$1(new A.RssDatabase_getFeeds_closure(this)) : this._getFeeds$0();
     },
     _getFeeds$0: function() {
       var completer, transaction, t1, entries;
+      P.print("[DATASTORE] _getFeeds");
       completer = H.setRuntimeTypeInfo(new P._AsyncCompleter(P._Future$(null)), [null]);
       transaction = J.transaction$2$x(this.db, ["feeds"], "readonly");
       t1 = J.getInterceptor$x(transaction);
@@ -39074,9 +39241,10 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     },
     addFeed$1: [function(url) {
       return this.db == null ? this._loaded.then$1(new A.RssDatabase_addFeed_closure(this, url)) : this._addFeed$1(url);
-    }, "call$1", "get$addFeed", 2, 0, 447, 107],
+    }, "call$1", "get$addFeed", 2, 0, 444, 107],
     _addFeed$1: function(url) {
       var feed, map, e, completer, transaction, t1, objectStore, exception;
+      P.print("[DATASTORE] _addFeed");
       completer = H.setRuntimeTypeInfo(new P._AsyncCompleter(P._Future$(null)), [null]);
       transaction = J.transaction$2$x(this.db, ["feeds"], "readwrite");
       t1 = J.getInterceptor$x(transaction);
@@ -39110,6 +39278,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     },
     _listPosts$1: function(source) {
       var t1, completer, transaction, objectStore, t2, cursors, entries;
+      P.print("[DATASTORE]  _listPosts(String " + H.S(source) + ")");
       t1 = [P.List, T.FeedEntry];
       completer = H.setRuntimeTypeInfo(new P._AsyncCompleter(P._Future$(t1)), [t1]);
       transaction = J.transaction$2$x(this.db, ["posts"], "readonly");
@@ -39129,17 +39298,25 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
       return this.db == null ? this._loaded.then$1(new A.RssDatabase_countUnread_closure(this, feedId)) : this._countUnread$1(feedId);
     },
     _countUnread$1: function(feedId) {
-      var t1, completer;
-      t1 = P.$int;
-      completer = H.setRuntimeTypeInfo(new P._AsyncCompleter(P._Future$(t1)), [t1]);
-      J.count$1$x(J.index$1$x(J.objectStore$1$x(J.transaction$2$x(this.db, ["posts"], "readonly"), "posts"), "unread"), P._KeyRangeFactoryProvider__class().only(0));
-      return completer.future;
+      var objectStore, t1, index, range;
+      P.print("[DATASTORE]  _countUnread(int " + H.S(feedId) + ")");
+      objectStore = J.objectStore$1$x(J.transaction$2$x(this.db, ["posts"], "readonly"), "posts");
+      t1 = J.getInterceptor$x(objectStore);
+      if (feedId == null) {
+        index = t1.index$1(objectStore, "unread");
+        range = P._KeyRangeFactoryProvider__class().only(1);
+      } else {
+        index = t1.index$1(objectStore, "unread, feedid");
+        range = P._KeyRangeFactoryProvider__class().only([1, feedId]);
+      }
+      return J.count$1$x(index, range);
     },
     getPosts$1: function(feedId) {
       return this.db == null ? this._loaded.then$1(new A.RssDatabase_getPosts_closure(this, feedId)) : this._getPostsForFeed$1(feedId);
     },
     _getPostsForFeed$1: function(feedId) {
       var t1, completer, transaction, index, range, entries;
+      P.print("[DATASTORE]  _getPostsForFeed(int " + H.S(feedId) + ")");
       t1 = [P.List, T.FeedEntry];
       completer = H.setRuntimeTypeInfo(new P._AsyncCompleter(P._Future$(t1)), [t1]);
       transaction = J.transaction$2$x(this.db, ["posts"], "readonly");
@@ -39153,6 +39330,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     },
     updateEntry$1: function(entry) {
       var completer, transaction, t1;
+      P.print("[DATASTORE]  updateEntry(...)");
       completer = H.setRuntimeTypeInfo(new P._AsyncCompleter(P._Future$(null)), [null]);
       transaction = J.transaction$2$x(this.db, ["posts"], "readwrite");
       t1 = J.getInterceptor$x(transaction);
@@ -39163,6 +39341,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     },
     getPost$1: function(id) {
       var t1, completer;
+      P.print("[DATASTORE] getPost(int " + H.S(id) + ")");
       t1 = T.FeedEntry;
       completer = H.setRuntimeTypeInfo(new P._AsyncCompleter(P._Future$(t1)), [t1]);
       J.getObject$1$x(J.objectStore$1$x(J.transaction$2$x(this.db, ["posts"], "readonly"), "posts"), id).then$1(new A.RssDatabase_getPost_closure(completer));
@@ -39171,11 +39350,11 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     static: {"^": "RssDatabase_DB_VERSION,RssDatabase_FEEDS_STORE,RssDatabase_POSTS_STORE"}
   },
   RssDatabase__loadDatabase_closure: {
-    "^": "Closure:449;this_0",
+    "^": "Closure:446;this_0",
     call$1: [function(db) {
       this.this_0.db = db;
       return db;
-    }, "call$1", null, 2, 0, null, 448, "call"],
+    }, "call$1", null, 2, 0, null, 445, "call"],
     $isFunction: true
   },
   RssDatabase_getFeeds_closure: {
@@ -39191,7 +39370,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
       var feed = new T.Feed(null, null, null, null, null, null, null, null, null, [], 0, 0);
       feed.Feed$fromDb$1(J.get$value$x(cursor));
       this.entries_0.push(feed);
-    }, "call$1", null, 2, 0, null, 450, "call"],
+    }, "call$1", null, 2, 0, null, 447, "call"],
     $isFunction: true
   },
   RssDatabase__getFeeds_closure0: {
@@ -39215,7 +39394,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     "^": "Closure:20;feed_0",
     call$1: [function(addedKey) {
       this.feed_0.id = addedKey;
-    }, "call$1", null, 2, 0, null, 451, "call"],
+    }, "call$1", null, 2, 0, null, 448, "call"],
     $isFunction: true
   },
   RssDatabase__addFeed_closure0: {
@@ -39271,7 +39450,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     "^": "Closure:20;entries_0",
     call$1: [function(cursor) {
       this.entries_0.push(T.FeedEntry$fromDb(J.get$value$x(cursor)));
-    }, "call$1", null, 2, 0, null, 450, "call"],
+    }, "call$1", null, 2, 0, null, 447, "call"],
     $isFunction: true
   },
   RssDatabase__listPosts_closure0: {
@@ -39302,7 +39481,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     "^": "Closure:20;entries_0",
     call$1: [function(cursor) {
       this.entries_0.push(T.FeedEntry$fromDb(J.get$value$x(cursor)));
-    }, "call$1", null, 2, 0, null, 450, "call"],
+    }, "call$1", null, 2, 0, null, 447, "call"],
     $isFunction: true
   },
   RssDatabase__getPostsForFeed_closure0: {
@@ -39355,7 +39534,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
       if (t1._state !== 0)
         H.throwExpression(P.StateError$("Future already completed"));
       t1._asyncComplete$1(entry);
-    }, "call$1", null, 2, 0, null, 452, "call"],
+    }, "call$1", null, 2, 0, null, 449, "call"],
     $isFunction: true
   }
 }],
@@ -39367,12 +39546,8 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
       var t1 = this.title;
       return t1 == null ? this.url : t1;
     },
-    get$unreadCounter: function() {
-      return this._unreadCounter;
-    },
-    set$unreadCounter: function(i) {
-      this._unreadCounter = i;
-      return i;
+    get$hasUnread: function() {
+      return this._unreadCounter > 0;
     },
     toJson$0: function() {
       var t1, t2, t3, t4, t5, t6, t7, t8, data;
@@ -39423,8 +39598,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
       if (data.containsKey$1("author") === true)
         if (t1.$index(data, "author") != null)
           this.author = T.FeedAuthor$fromDb(t1.$index(data, "author"));
-    },
-    $isFeed: true
+    }
   },
   FeedEntry: {
     "^": "Object;id*,feedid<,entryid,published@,updated,title*,content*,url*,author@,categories,newitem@,unread@,starred@",
@@ -39610,7 +39784,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     $isFunction: true
   },
   ImageService_getImage_closure0: {
-    "^": "Closure:453;this_1,completer_2",
+    "^": "Closure:450;this_1,completer_2",
     call$1: [function(e) {
       var url, t1;
       url = (self.URL || self.webkitURL).createObjectURL(W._convertNativeToDart_XHR_Response(H.interceptedTypeCast(J.get$target$x(e), "$isHttpRequest").response));
@@ -39625,27 +39799,25 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
 ["rssapp.service.queryservice", "package:rss_app/service/query_service.dart", , A, {
   "^": "",
   QueryService: {
-    "^": "Object;_queryservice$_http,db,_queryservice$_loaded,feeds@,currentPosts<,unreadMap,_currentFeedId,_unreadCount",
-    get$currentFeedId: function() {
-      return this._currentFeedId;
-    },
-    get$unreadCount: function() {
-      var t1 = this._unreadCount;
-      if (t1 == null)
-        return 0;
-      return t1;
-    },
+    "^": "Object;_queryservice$_http,db,_queryservice$_loaded,feeds@,currentPosts<,unreadMap,currentFeedId@,currentPostId@,unreadCount@",
     _loadFeeds$0: function() {
       return this.db.getFeeds$0().then$1(new A.QueryService__loadFeeds_closure(this));
     },
     _countUnreads$0: function() {
-      return this.db.countUnread$1(null).then$1(new A.QueryService__countUnreads_closure(this));
+      return this.db.countUnread$1(null).then$1(new A.QueryService__countUnreads_closure(this)).catchError$1(new A.QueryService__countUnreads_closure0());
     },
     countUnread$1: function(feedId) {
       var t1 = this.unreadMap;
       if (t1.containsKey$1(feedId))
         return t1.$index(0, feedId);
-      this.db.countUnread$1(feedId).then$1(new A.QueryService_countUnread_closure(this, feedId));
+      else {
+        t1.$indexSet(0, feedId, 0);
+        this.db.countUnread$1(feedId).then$1(new A.QueryService_countUnread_closure(this, feedId));
+      }
+      return 0;
+    },
+    _revalideteUnread$1: function(feedId) {
+      this.db.countUnread$1(feedId).then$1(new A.QueryService__revalideteUnread_closure(this, feedId));
     },
     getPosts$1: function(feedId) {
       var t1 = this.db;
@@ -39662,7 +39834,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
     },
     addFeed$1: [function(url) {
       return this.db.addFeed$1(url).then$1(new A.QueryService_addFeed_closure(this));
-    }, "call$1", "get$addFeed", 2, 0, 447, 107],
+    }, "call$1", "get$addFeed", 2, 0, 444, 107],
     updateEntry$1: function(entry) {
       return this.db.updateEntry$1(entry).then$1(new A.QueryService_updateEntry_closure());
     },
@@ -39672,7 +39844,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
         return P._Future$immediate(entry, null);
       entry.set$unread(false);
       t1.result_0 = null;
-      return this.db.updateEntry$1(entry).then$1(new A.QueryService_setEntryRead_closure(t1)).then$1(new A.QueryService_setEntryRead_closure0(this)).then$1(new A.QueryService_setEntryRead_closure1(t1));
+      return this.db.updateEntry$1(entry).then$1(new A.QueryService_setEntryRead_closure(t1)).then$1(new A.QueryService_setEntryRead_closure0(this)).then$1(new A.QueryService_setEntryRead_closure1(t1, this, entry));
     },
     getFeedById$1: function(id) {
       var t1, exception;
@@ -39700,66 +39872,86 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
           return t2;
         }
       return this.db.getPost$1(id).then$1(new A.QueryService_getPost_closure(this));
+    },
+    markCurrentAsRead$0: function() {
+      var tasks = [];
+      J.forEach$1$ax(this.currentPosts, new A.QueryService_markCurrentAsRead_closure(this, tasks));
+      P.Future_wait(tasks, false).then$1(new A.QueryService_markCurrentAsRead_closure0(this)).then$1(new A.QueryService_markCurrentAsRead_closure1(this));
     }
   },
   QueryService__loadFeeds_closure: {
-    "^": "Closure:455;this_0",
+    "^": "Closure:452;this_0",
     call$1: [function(feeds) {
       this.this_0.feeds = feeds;
       return feeds;
-    }, "call$1", null, 2, 0, null, 454, "call"],
+    }, "call$1", null, 2, 0, null, 451, "call"],
     $isFunction: true
   },
   QueryService__countUnreads_closure: {
     "^": "Closure:418;this_0",
     call$1: [function(cnt) {
-      this.this_0._unreadCount = cnt;
-      return cnt;
-    }, "call$1", null, 2, 0, null, 456, "call"],
+      var t1 = cnt == null ? 0 : cnt;
+      this.this_0.unreadCount = t1;
+      return t1;
+    }, "call$1", null, 2, 0, null, 453, "call"],
+    $isFunction: true
+  },
+  QueryService__countUnreads_closure0: {
+    "^": "Closure:20;",
+    call$1: [function(e) {
+      window;
+      return typeof console != "undefined" ? console.error(e) : null;
+    }, "call$1", null, 2, 0, null, 1, "call"],
     $isFunction: true
   },
   QueryService_countUnread_closure: {
     "^": "Closure:418;this_0,feedId_1",
     call$1: [function(cnt) {
       this.this_0.unreadMap.$indexSet(0, this.feedId_1, cnt);
-      return cnt;
-    }, "call$1", null, 2, 0, null, 456, "call"],
+    }, "call$1", null, 2, 0, null, 453, "call"],
+    $isFunction: true
+  },
+  QueryService__revalideteUnread_closure: {
+    "^": "Closure:418;this_0,feedId_1",
+    call$1: [function(cnt) {
+      this.this_0.unreadMap.$indexSet(0, this.feedId_1, cnt);
+    }, "call$1", null, 2, 0, null, 453, "call"],
     $isFunction: true
   },
   QueryService_getPosts_closure: {
-    "^": "Closure:441;this_0",
+    "^": "Closure:455;this_0",
     call$1: [function(posts) {
       this.this_0.currentPosts = posts;
       return posts;
-    }, "call$1", null, 2, 0, null, 440, "call"],
+    }, "call$1", null, 2, 0, null, 454, "call"],
     $isFunction: true
   },
   QueryService_getPosts_closure0: {
-    "^": "Closure:441;this_1",
+    "^": "Closure:455;this_1",
     call$1: [function(posts) {
       this.this_1.currentPosts = posts;
       return posts;
-    }, "call$1", null, 2, 0, null, 440, "call"],
+    }, "call$1", null, 2, 0, null, 454, "call"],
     $isFunction: true
   },
   QueryService_getPosts_closure1: {
-    "^": "Closure:441;this_2",
+    "^": "Closure:455;this_2",
     call$1: [function(posts) {
       this.this_2.currentPosts = posts;
       return posts;
-    }, "call$1", null, 2, 0, null, 440, "call"],
+    }, "call$1", null, 2, 0, null, 454, "call"],
     $isFunction: true
   },
   QueryService_getPosts_closure2: {
-    "^": "Closure:441;this_3",
+    "^": "Closure:455;this_3",
     call$1: [function(posts) {
       this.this_3.currentPosts = posts;
       return posts;
-    }, "call$1", null, 2, 0, null, 440, "call"],
+    }, "call$1", null, 2, 0, null, 454, "call"],
     $isFunction: true
   },
   QueryService_addFeed_closure: {
-    "^": "Closure:443;this_0",
+    "^": "Closure:457;this_0",
     call$1: [function(feed) {
       var t1, t2;
       t1 = this.this_0;
@@ -39771,7 +39963,7 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
       } else
         t1 = t2;
       J.add$1$ax(t1, feed);
-    }, "call$1", null, 2, 0, null, 457, "call"],
+    }, "call$1", null, 2, 0, null, 456, "call"],
     $isFunction: true
   },
   QueryService_updateEntry_closure: {
@@ -39791,29 +39983,60 @@ init.mangledGlobalNames = {CssAnimate_NG_ACTIVE_POSTFIX: "NG_ACTIVE_POSTFIX", Cs
   QueryService_setEntryRead_closure0: {
     "^": "Closure:20;this_1",
     call$1: [function(_) {
-      return this.this_1.db.listUnread$0();
+      return this.this_1._countUnreads$0();
     }, "call$1", null, 2, 0, null, 82, "call"],
     $isFunction: true
   },
   QueryService_setEntryRead_closure1: {
-    "^": "Closure:20;box_0",
+    "^": "Closure:20;box_0,this_2,entry_3",
     call$1: [function(_) {
+      this.this_2._revalideteUnread$1(this.entry_3.get$feedid());
       return this.box_0.result_0;
     }, "call$1", null, 2, 0, null, 82, "call"],
     $isFunction: true
   },
   QueryService_getFeedById_closure: {
-    "^": "Closure:443;id_0",
+    "^": "Closure:457;id_0",
     call$1: function(f) {
       return J.$eq(J.get$id$x(f), this.id_0);
     },
     $isFunction: true
   },
   QueryService_getPost_closure: {
-    "^": "Closure:442;this_0",
+    "^": "Closure:440;this_0",
     call$1: [function(entry) {
       return J.add$1$ax(this.this_0.currentPosts, entry);
     }, "call$1", null, 2, 0, null, 438, "call"],
+    $isFunction: true
+  },
+  QueryService_markCurrentAsRead_closure: {
+    "^": "Closure:440;this_0,tasks_1",
+    call$1: [function(entry) {
+      if (entry.get$unread() !== true)
+        return;
+      entry.set$unread(false);
+      this.tasks_1.push(this.this_0.db.updateEntry$1(entry));
+    }, "call$1", null, 2, 0, null, 438, "call"],
+    $isFunction: true
+  },
+  QueryService_markCurrentAsRead_closure0: {
+    "^": "Closure:20;this_2",
+    call$1: [function(_) {
+      return this.this_2._countUnreads$0();
+    }, "call$1", null, 2, 0, null, 82, "call"],
+    $isFunction: true
+  },
+  QueryService_markCurrentAsRead_closure1: {
+    "^": "Closure:20;this_3",
+    call$1: [function(_) {
+      var t1, t2;
+      t1 = this.this_3;
+      t2 = t1.currentFeedId;
+      if (t2 != null && !J.$eq(t2, 0))
+        return t1._revalideteUnread$1(t1.currentFeedId);
+      else
+        return P._Future$immediate(null, null);
+    }, "call$1", null, 2, 0, null, 82, "call"],
     $isFunction: true
   }
 }],
@@ -40093,8 +40316,6 @@ W.KeyboardEvent.$isEvent = true;
 W.KeyboardEvent.$isObject = true;
 P.Type.$isType = true;
 P.Type.$isObject = true;
-T.Feed.$isFeed = true;
-T.Feed.$isObject = true;
 T.FeedEntry.$isFeedEntry = true;
 T.FeedEntry.$isObject = true;
 P.Database.$isDatabase = true;
@@ -40193,6 +40414,8 @@ P.EventSink.$isEventSink = true;
 P.EventSink.$isObject = true;
 X.Injector.$isInjector = true;
 X.Injector.$isObject = true;
+T.Feed.$isFeed = true;
+T.Feed.$isObject = true;
 L._KeyValue.$is_KeyValue = true;
 L._KeyValue.$isObject = true;
 V.MapKeyValue.$isMapKeyValue = true;
@@ -40635,6 +40858,9 @@ J.get$display$x = function(receiver) {
 J.get$document$x = function(receiver) {
   return J.getInterceptor$x(receiver).get$document(receiver);
 };
+J.get$entries$x = function(receiver) {
+  return J.getInterceptor$x(receiver).get$entries(receiver);
+};
 J.get$error$x = function(receiver) {
   return J.getInterceptor$x(receiver).get$error(receiver);
 };
@@ -40995,9 +41221,6 @@ J.getObject$1$x = function(receiver, a0) {
 J.getPropertyValue$1$x = function(receiver, a0) {
   return J.getInterceptor$x(receiver).getPropertyValue$1(receiver, a0);
 };
-J.go$4$replace$startingFrom$x = function(receiver, a0, a1, a2, a3) {
-  return J.getInterceptor$x(receiver).go$4$replace$startingFrom(receiver, a0, a1, a2, a3);
-};
 J.index$1$x = function(receiver, a0) {
   return J.getInterceptor$x(receiver).index$1(receiver, a0);
 };
@@ -41097,9 +41320,6 @@ J.removeAt$1$ax = function(receiver, a0) {
 J.removeEventListener$3$x = function(receiver, a0, a1, a2) {
   return J.getInterceptor$x(receiver).removeEventListener$3(receiver, a0, a1, a2);
 };
-J.replace$1$x = function(receiver, a0) {
-  return J.getInterceptor$x(receiver).replace$1(receiver, a0);
-};
 J.replaceAll$2$s = function(receiver, a0, a1) {
   return J.getInterceptor$s(receiver).replaceAll$2(receiver, a0, a1);
 };
@@ -41108,9 +41328,6 @@ J.replaceAllMapped$2$s = function(receiver, a0, a1) {
 };
 J.replaceFirst$2$s = function(receiver, a0, a1) {
   return J.getInterceptor$s(receiver).replaceFirst$2(receiver, a0, a1);
-};
-J.replaceState$3$x = function(receiver, a0, a1, a2) {
-  return J.getInterceptor$x(receiver).replaceState$3(receiver, a0, a1, a2);
 };
 J.replaceWith$1$x = function(receiver, a0) {
   return J.getInterceptor$x(receiver).replaceWith$1(receiver, a0);
@@ -41147,6 +41364,9 @@ J.set$disabled$x = function(receiver, value) {
 };
 J.set$display$x = function(receiver, value) {
   return J.getInterceptor$x(receiver).set$display(receiver, value);
+};
+J.set$entries$x = function(receiver, value) {
+  return J.getInterceptor$x(receiver).set$entries(receiver, value);
 };
 J.set$href$x = function(receiver, value) {
   return J.getInterceptor$x(receiver).set$href(receiver, value);
@@ -41750,6 +41970,10 @@ C.List_3QP = Isolate.makeConstantList(["\u0434\u043f", "\u043f\u043f"]);
 C.List_3Re = Isolate.makeConstantList(["\u05d9\u05e0\u05d5\u05d0\u05e8", "\u05e4\u05d1\u05e8\u05d5\u05d0\u05e8", "\u05de\u05e8\u05e5", "\u05d0\u05e4\u05e8\u05d9\u05dc", "\u05de\u05d0\u05d9", "\u05d9\u05d5\u05e0\u05d9", "\u05d9\u05d5\u05dc\u05d9", "\u05d0\u05d5\u05d2\u05d5\u05e1\u05d8", "\u05e1\u05e4\u05d8\u05de\u05d1\u05e8", "\u05d0\u05d5\u05e7\u05d8\u05d5\u05d1\u05e8", "\u05e0\u05d5\u05d1\u05de\u05d1\u05e8", "\u05d3\u05e6\u05de\u05d1\u05e8"]);
 C.List_3US = Isolate.makeConstantList(["S", "M", "T", "W", "T", "F", "S"]);
 C.List_3VO = Isolate.makeConstantList(["\u1303\u1295\u12e9\u12c8\u122a", "\u134c\u1265\u1229\u12c8\u122a", "\u121b\u122d\u127d", "\u12a4\u1355\u1228\u120d", "\u121c\u12ed", "\u1301\u1295", "\u1301\u120b\u12ed", "\u12a6\u1308\u1235\u1275", "\u1234\u1355\u1274\u121d\u1260\u122d", "\u12a6\u12ad\u1270\u12cd\u1260\u122d", "\u1296\u126c\u121d\u1260\u122d", "\u12f2\u1234\u121d\u1260\u122d"]);
+C.List_Ayb = Isolate.makeConstantList(["feed", "data-class", "data-hide-empty"]);
+C.Map_AyL6o = new H.ConstantStringMap(3, {feed: "@feed", "data-class": "@cssClass", "data-hide-empty": "@hideEmpty"}, C.List_Ayb);
+C.Component_ZzX = new F.Component(null, "packages/rss_app/component/unread_counter/unread_counter.html", null, null, null, "cmp", false, "unread-counter", "compile", null, null, C.Map_AyL6o, null, null);
+C.List_3Zi = Isolate.makeConstantList([C.Component_ZzX]);
 C.List_3_4 = Isolate.makeConstantList([3, 4]);
 C.List_3wE = Isolate.makeConstantList(["janvier", "f\u00e9vrier", "mars", "avril", "mai", "juin", "juillet", "ao\u00fbt", "septembre", "octobre", "novembre", "d\u00e9cembre"]);
 C.List_42w = Isolate.makeConstantList(["D", "S", "T", "Q", "Q", "S", "S"]);
@@ -41757,10 +41981,6 @@ C.List_435 = Isolate.makeConstantList(["\u00eenainte de Hristos", "dup\u0103 Hri
 C.List_43h = Isolate.makeConstantList(["EEEE d MMMM 'de' y", "d MMMM 'de' y", "dd/MM/yyyy", "dd/MM/yy"]);
 C.List_43h0 = Isolate.makeConstantList(["\u0e21.\u0e04.", "\u0e01.\u0e1e.", "\u0e21\u0e35.\u0e04.", "\u0e40\u0e21.\u0e22.", "\u0e1e.\u0e04.", "\u0e21\u0e34.\u0e22", "\u0e01.\u0e04.", "\u0e2a.\u0e04.", "\u0e01.\u0e22.", "\u0e15.\u0e04.", "\u0e1e.\u0e22.", "\u0e18.\u0e04."]);
 C.List_43h1 = Isolate.makeConstantList(["Januwari", "Februwari", "Mashi", "Apreli", "Meyi", "Juni", "Julayi", "Agasti", "Septhemba", "Okthoba", "Novemba", "Disemba"]);
-C.List_feed = Isolate.makeConstantList(["feed"]);
-C.Map_alQBw = new H.ConstantStringMap(1, {feed: "@feed"}, C.List_feed);
-C.Component_Fb0 = new F.Component(null, "packages/rss_app/component/unread_counter/unread_counter.html", null, null, null, "cmp", false, "unread-counter", "compile", null, null, C.Map_alQBw, null, null);
-C.List_46y = Isolate.makeConstantList([C.Component_Fb0]);
 C.List_47R = Isolate.makeConstantList(["\u0434\u043e \u043d.\u044d.", "\u043d.\u044d."]);
 C.List_497 = Isolate.makeConstantList(["\u05e8\u05d1\u05e2\u05d5\u05df 1", "\u05e8\u05d1\u05e2\u05d5\u05df 2", "\u05e8\u05d1\u05e2\u05d5\u05df 3", "\u05e8\u05d1\u05e2\u05d5\u05df 4"]);
 C.List_4AN = Isolate.makeConstantList(["sunnudagur", "m\u00e1nudagur", "\u00feri\u00f0judagur", "mi\u00f0vikudagur", "fimmtudagur", "f\u00f6studagur", "laugardagur"]);
@@ -41827,6 +42047,10 @@ C.List_6v8 = Isolate.makeConstantList(["S", "M", "D", "M", "D", "F", "S"]);
 C.List_6x6 = Isolate.makeConstantList(["sije\u010dnja", "velja\u010de", "o\u017eujka", "travnja", "svibnja", "lipnja", "srpnja", "kolovoza", "rujna", "listopada", "studenoga", "prosinca"]);
 C.List_6xs = Isolate.makeConstantList(["Before Christ", "Anno Domini"]);
 C.List_6yO = Isolate.makeConstantList(["\u043f\u0440. \u043d. \u0435.", "\u043e\u0442 \u043d. \u0435."]);
+C.List_gg40 = Isolate.makeConstantList(["on-refresh-feeds"]);
+C.Map_ggsew = new H.ConstantStringMap(1, {"on-refresh-feeds": "&onRefreshFeeds"}, C.List_gg40);
+C.Component_oCX = new F.Component(null, "packages/rss_app/component/add_feed_header/add_feed_header.html", null, null, null, "cmp", false, "add-feed-header", "compile", null, null, C.Map_ggsew, null, null);
+C.List_79P = Isolate.makeConstantList([C.Component_oCX]);
 C.List_7Fi = Isolate.makeConstantList(["dopoludnia", "popoludn\u00ed"]);
 C.List_7TW = Isolate.makeConstantList(["\uc81c 1/4\ubd84\uae30", "\uc81c 2/4\ubd84\uae30", "\uc81c 3/4\ubd84\uae30", "\uc81c 4/4\ubd84\uae30"]);
 C.List_count = Isolate.makeConstantList(["count"]);
@@ -41951,6 +42175,8 @@ C.List_EIc = Isolate.makeConstantList(["y 'm'. MMMM d 'd'., EEEE", "y 'm'. MMMM 
 C.List_EK0 = Isolate.makeConstantList(["stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca", "sierpnia", "wrze\u015bnia", "pa\u017adziernika", "listopada", "grudnia"]);
 C.List_EKW = Isolate.makeConstantList(["CN", "Th 2", "Th 3", "Th 4", "Th 5", "Th 6", "Th 7"]);
 C.List_EKj = Isolate.makeConstantList(["Suku 1", "Suku Ke-2", "Suku Ke-3", "Suku Ke-4"]);
+C.Component_uDg = new F.Component("<!-- data handler ready -->", null, null, null, null, "cmp", false, "data-handler", "compile", null, null, null, null, null);
+C.List_EN9 = Isolate.makeConstantList([C.Component_uDg]);
 C.List_EO3 = Isolate.makeConstantList(["domenica", "luned\u00ec", "marted\u00ec", "mercoled\u00ec", "gioved\u00ec", "venerd\u00ec", "sabato"]);
 C.List_EOY = Isolate.makeConstantList(["EEEE d MMMM y", "d MMMM y", "d MMM y", "d/M/yyyy"]);
 C.List_EUq = Isolate.makeConstantList(["2", "3", "4", "5", "A", "I", "1"]);
@@ -42056,10 +42282,6 @@ C.List_KK_BK = Isolate.makeConstantList(["KK", "BK"]);
 C.List_KYU = Isolate.makeConstantList(["D", "L", "M", "M", "X", "V", "S"]);
 C.List_Khy = Isolate.makeConstantList(["\u12a5\u1211\u12f5", "\u1230\u129e", "\u121b\u12ad\u1230", "\u1228\u1261\u12d5", "\u1210\u1219\u1235", "\u12d3\u122d\u1265", "\u1245\u12f3\u121c"]);
 C.List_Kpb = Isolate.makeConstantList(["enne meie aega", "meie aja j\u00e4rgi"]);
-C.List_0CB = Isolate.makeConstantList(["data-source", "data-feed"]);
-C.Map_0CeAf = new H.ConstantStringMap(2, {"data-source": "@dataSource", "data-feed": "@feedId"}, C.List_0CB);
-C.Component_fPs = new F.Component(null, "packages/rss_app/component/posts_list/posts_list.html", null, null, null, "cmp", false, "posts-list", "compile", null, null, C.Map_0CeAf, null, null);
-C.List_Kr4 = Isolate.makeConstantList([C.Component_fPs]);
 C.List_Kvb = Isolate.makeConstantList(["\u092a\u094d\u0930\u0925\u092e \u0924\u093f\u092e\u093e\u0939\u0940", "\u0926\u094d\u0935\u093f\u0924\u0940\u092f \u0924\u093f\u092e\u093e\u0939\u0940", "\u0924\u0943\u0924\u0940\u092f \u0924\u093f\u092e\u093e\u0939\u0940", "\u091a\u0924\u0941\u0930\u094d\u0925 \u0924\u093f\u092e\u093e\u0939\u0940"]);
 C.List_L17 = Isolate.makeConstantList(["\u65e5", "\u4e00", "\u4e8c", "\u4e09", "\u56db", "\u4e94", "\u516d"]);
 C.List_LB9 = Isolate.makeConstantList(["1. nelj\u00e4nnes", "2. nelj\u00e4nnes", "3. nelj\u00e4nnes", "4. nelj\u00e4nnes"]);
@@ -42122,8 +42344,6 @@ C.List_P5r = Isolate.makeConstantList(["\u5348\u524d", "\u5348\u5f8c"]);
 C.List_P92 = Isolate.makeConstantList(["\u0633\u200c\u0645\u06f1", "\u0633\u200c\u0645\u06f2", "\u0633\u200c\u0645\u06f3", "\u0633\u200c\u0645\u06f4"]);
 C.List_PD_MD = Isolate.makeConstantList(["PD", "MD"]);
 C.List_PG_PTG = Isolate.makeConstantList(["PG", "PTG"]);
-C.Component_kfn = new F.Component(null, "packages/rss_app/component/add_feed_header/add_feed_header.html", null, null, null, "cmp", false, "add-feed-header", "compile", null, null, null, null, null);
-C.List_POV = Isolate.makeConstantList([C.Component_kfn]);
 C.List_Pbh = Isolate.makeConstantList(["\u044f\u043d.", "\u0444\u0435\u0432\u0440.", "\u043c\u0430\u0440\u0442", "\u0430\u043f\u0440.", "\u043c\u0430\u0439", "\u044e\u043d\u0438", "\u044e\u043b\u0438", "\u0430\u0432\u0433.", "\u0441\u0435\u043f\u0442.", "\u043e\u043a\u0442.", "\u043d\u043e\u0435\u043c.", "\u0434\u0435\u043a."]);
 C.List_PjR = Isolate.makeConstantList(["\u0b1c\u0b3e", "\u0b2b\u0b47", "\u0b2e\u0b3e", "\u0b05", "\u0b2e\u0b47", "\u0b1c\u0b41", "\u0b1c\u0b41", "\u0b05", "\u0b38\u0b47", "\u0b05", "\u0b28", "\u0b21\u0b3f"]);
 C.List_PnF = Isolate.makeConstantList(["\u039a\u03c5\u03c1", "\u0394\u03b5\u03c5", "\u03a4\u03c1\u03af", "\u03a4\u03b5\u03c4", "\u03a0\u03ad\u03bc", "\u03a0\u03b1\u03c1", "\u03a3\u03ac\u03b2"]);
@@ -42215,8 +42435,8 @@ C.Decorator_pN6 = new F.Decorator("[ng-keyup]", "compile", null, null, C.Map_e9W
 C.List_Au4 = Isolate.makeConstantList(["ng-load"]);
 C.Map_AuVcG = new H.ConstantStringMap(1, {"ng-load": "&onLoad"}, C.List_Au4);
 C.Decorator_G7M = new F.Decorator("[ng-load]", "compile", null, null, C.Map_AuVcG, null, null);
-C.List_gg40 = Isolate.makeConstantList(["ng-mousedown"]);
-C.Map_ggx8d = new H.ConstantStringMap(1, {"ng-mousedown": "&onMouseDown"}, C.List_gg40);
+C.List_gg41 = Isolate.makeConstantList(["ng-mousedown"]);
+C.Map_ggx8d = new H.ConstantStringMap(1, {"ng-mousedown": "&onMouseDown"}, C.List_gg41);
 C.Decorator_wIq0 = new F.Decorator("[ng-mousedown]", "compile", null, null, C.Map_ggx8d, null, null);
 C.List_yT8 = Isolate.makeConstantList(["ng-mouseenter"]);
 C.Map_yTi5H = new H.ConstantStringMap(1, {"ng-mouseenter": "&onMouseEnter"}, C.List_yT8);
@@ -42286,6 +42506,8 @@ C.List_QAb = Isolate.makeConstantList(["de gener", "de febrer", "de mar\u00e7", 
 C.List_QHC = Isolate.makeConstantList(["enne keskp\u00e4eva", "p\u00e4rast keskp\u00e4eva"]);
 C.List_QK_WK = Isolate.makeConstantList(["QK", "WK"]);
 C.List_QN_WN = Isolate.makeConstantList(["QN", "WN"]);
+C.Component_q39 = new F.Component(null, "packages/rss_app/component/feed_entries/feed_entries.html", null, null, null, "cmp", false, "feed-entries", "compile", null, null, null, null, null);
+C.List_QOR = Isolate.makeConstantList([C.Component_q39]);
 C.List_QWS = Isolate.makeConstantList(["1. ceturksnis", "2. ceturksnis", "3. ceturksnis", "4. ceturksnis"]);
 C.List_QZE = Isolate.makeConstantList(["\u0b30\u0b2c\u0b3f", "\u0b38\u0b4b\u0b2e", "\u0b2e\u0b19\u0b4d\u0b17\u0b33", "\u0b2c\u0b41\u0b27", "\u0b17\u0b41\u0b30\u0b41", "\u0b36\u0b41\u0b15\u0b4d\u0b30", "\u0b36\u0b28\u0b3f"]);
 C.Decorator_aRS = new F.Decorator("[ng-non-bindable]", "ignore", null, null, null, null, null);
@@ -42438,6 +42660,10 @@ C.List_bAc = Isolate.makeConstantList(["zzzzah\u6642mm\u5206ss\u79d2", "zah\u664
 C.List_bFE = Isolate.makeConstantList(["I", "M", "A", "A", "A", "O", "I"]);
 C.List_bHP = Isolate.makeConstantList(["\u1321\u12cb\u1275", "\u12a8\u1233\u12d3\u1275"]);
 C.List_bJC = Isolate.makeConstantList(["\u1303\u1295\u12e9", "\u134c\u1265\u1229", "\u121b\u122d\u127d", "\u12a4\u1355\u1228", "\u121c\u12ed", "\u1301\u1295", "\u1301\u120b\u12ed", "\u12a6\u1308\u1235", "\u1234\u1355\u1274", "\u12a6\u12ad\u1270", "\u1296\u126c\u121d", "\u12f2\u1234\u121d"]);
+C.List_PT80 = Isolate.makeConstantList(["data-source"]);
+C.Map_PTe0c = new H.ConstantStringMap(1, {"data-source": "@dataSource"}, C.List_PT80);
+C.Component_YGN = new F.Component(null, "packages/rss_app/component/lists/entries_lists.html", null, null, null, "cmp", false, "entries-lists", "compile", null, null, C.Map_PTe0c, null, null);
+C.List_bJC0 = Isolate.makeConstantList([C.Component_YGN]);
 C.List_bJM = Isolate.makeConstantList(["1st quarter", "2nd quarter", "3rd quarter", "4th quarter"]);
 C.List_bh0 = Isolate.makeConstantList(["EEEE, y MMMM dd", "y MMMM d", "y MMM d", "yyyy-MM-dd"]);
 C.List_bh5 = Isolate.makeConstantList(["s\u00e1nz\u00e1 ya yambo", "s\u00e1nz\u00e1 ya m\u00edbal\u00e9", "s\u00e1nz\u00e1 ya m\u00eds\u00e1to", "s\u00e1nz\u00e1 ya m\u00ednei", "s\u00e1nz\u00e1 ya m\u00edt\u00e1no", "s\u00e1nz\u00e1 ya mot\u00f3b\u00e1", "s\u00e1nz\u00e1 ya nsambo", "s\u00e1nz\u00e1 ya mwambe", "s\u00e1nz\u00e1 ya libwa", "s\u00e1nz\u00e1 ya z\u00f3mi", "s\u00e1nz\u00e1 ya z\u00f3mi na m\u0254\u030ck\u0254\u0301", "s\u00e1nz\u00e1 ya z\u00f3mi na m\u00edbal\u00e9"]);
@@ -43045,6 +43271,7 @@ C.Type_OhV = H.createRuntimeType('NgModelRequiredValidator');
 C.Type_P0q = H.createRuntimeType('NgValue');
 C.Type_Q0t = H.createRuntimeType('AHref');
 C.Type_RkP = H.createRuntimeType('NgBindRoute');
+C.Type_S7q = H.createRuntimeType('DataHandlerComponent');
 C.Type_Sjs = H.createRuntimeType('PostComponent');
 C.Type_Soe = H.createRuntimeType('VmTurnZone');
 C.Type_U44 = H.createRuntimeType('NgSwitchWhen');
@@ -43058,6 +43285,7 @@ C.Type_X3P = H.createRuntimeType('ScopeStatsEmitter');
 C.Type_XrP = H.createRuntimeType('NodeAttrs');
 C.Type_Xww = H.createRuntimeType('Parser');
 C.Type_Xzb = H.createRuntimeType('ScopeDigestTTL');
+C.Type_Y0l = H.createRuntimeType('FeedEntriesComponent');
 C.Type_YeZ = H.createRuntimeType('UrlRewriter');
 C.Type_Yy0 = H.createRuntimeType('HttpDefaults');
 C.Type_ZiE = H.createRuntimeType('NgNonBindable');
@@ -43086,6 +43314,7 @@ C.Type_ijl0 = H.createRuntimeType('HttpBackend');
 C.Type_izR = H.createRuntimeType('NgTemplate');
 C.Type_j3h = H.createRuntimeType('AnimationLoop');
 C.Type_jZY = H.createRuntimeType('NgCloak');
+C.Type_jtx = H.createRuntimeType('AppComm');
 C.Type_k2a = H.createRuntimeType('NgForm');
 C.Type_k64 = H.createRuntimeType('ViewCache');
 C.Type_kGa = H.createRuntimeType('RootScope');
@@ -43097,8 +43326,7 @@ C.Type_mJQ = H.createRuntimeType('Uppercase');
 C.Type_mdN = H.createRuntimeType('RouteProvider');
 C.Type_nHe = H.createRuntimeType('NgSwitch');
 C.Type_o8I = H.createRuntimeType('TaggingCompiler');
-C.Type_omH = H.createRuntimeType('PostsListComponent');
-C.Type_omH0 = H.createRuntimeType('NgClass');
+C.Type_omH = H.createRuntimeType('NgClass');
 C.Type_otF = H.createRuntimeType('StarringComponent');
 C.Type_pah = H.createRuntimeType('RssDatabase');
 C.Type_qFM = H.createRuntimeType('ContentEditable');
@@ -43127,6 +43355,7 @@ C.Type_wu2 = H.createRuntimeType('NgPluralize');
 C.Type_wu8 = H.createRuntimeType('Scope');
 C.Type_xhX = H.createRuntimeType('DirectiveSelectorFactory');
 C.Type_xw8 = H.createRuntimeType('NgModelNumberValidator');
+C.Type_yFE = H.createRuntimeType('EntriesListComponent');
 C.Type_yT8 = H.createRuntimeType('NgModel');
 C.Type_yra = H.createRuntimeType('RssController');
 C.Type_yvB = H.createRuntimeType('RouteInitializer');
@@ -43304,7 +43533,7 @@ Isolate.$lazy($, "scopeContextRef", "ExpressionVisitor_scopeContextRef", "get$Ex
 });
 Isolate.$lazy($, "_module", "NgForm__module", "get$NgForm__module", function() {
   var t1 = new X.Module(P.LinkedHashMap_LinkedHashMap$_empty(P.$int, L.Provider), H.setRuntimeTypeInfo([], [X.Module]), P.LinkedHashMap_LinkedHashMap$_empty(null, null), null);
-  t1.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_NEK, null), new R.closure246(), null, X._DEFAULT_VALUE$closure(), null);
+  t1.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_NEK, null), new R.closure256(), null, X._DEFAULT_VALUE$closure(), null);
   return t1;
 });
 Isolate.$lazy($, "CHAR_0", "_UidCounter_CHAR_0", "get$_UidCounter_CHAR_0", function() {
@@ -43348,12 +43577,12 @@ Isolate.$lazy($, "elementExpando", "elementExpando", "get$elementExpando", funct
 });
 Isolate.$lazy($, "_module", "NgBindRoute__module", "get$NgBindRoute__module", function() {
   var t1 = new X.Module(P.LinkedHashMap_LinkedHashMap$_empty(P.$int, L.Provider), H.setRuntimeTypeInfo([], [X.Module]), P.LinkedHashMap_LinkedHashMap$_empty(null, null), null);
-  t1.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_mdN, null), new T.closure244(), null, X._DEFAULT_VALUE$closure(), null);
+  t1.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_mdN, null), new T.closure254(), null, X._DEFAULT_VALUE$closure(), null);
   return t1;
 });
 Isolate.$lazy($, "_module", "NgView__module", "get$NgView__module", function() {
   var t1 = new X.Module(P.LinkedHashMap_LinkedHashMap$_empty(P.$int, L.Provider), H.setRuntimeTypeInfo([], [X.Module]), P.LinkedHashMap_LinkedHashMap$_empty(null, null), null);
-  t1.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_mdN, null), new T.closure245(), null, X._DEFAULT_VALUE$closure(), null);
+  t1.bindByKey$5$toFactory$toImplementation$toValue$visibility(Z.Key_Key(C.Type_mdN, null), new T.closure255(), null, X._DEFAULT_VALUE$closure(), null);
   return t1;
 });
 Isolate.$lazy($, "RESERVED_WORDS", "RESERVED_WORDS", "get$RESERVED_WORDS", function() {
@@ -43428,19 +43657,19 @@ Isolate.$lazy($, "_logger", "_logger", "get$_logger", function() {
   return N.Logger_Logger("route");
 });
 Isolate.$lazy($, "getters", "getters", "get$getters", function() {
-  return P.LinkedHashMap_LinkedHashMap$_literal(["urls", new U.closure117(), "value", new U.closure118(), "bind", new U.closure119(), "valueExpression", new U.closure120(), "onAbort", new U.closure121(), "onBeforeCopy", new U.closure122(), "onBeforeCut", new U.closure123(), "onBeforePaste", new U.closure124(), "onBlur", new U.closure125(), "onChange", new U.closure126(), "onClick", new U.closure127(), "onContextMenu", new U.closure128(), "onCopy", new U.closure129(), "onCut", new U.closure130(), "onDoubleClick", new U.closure131(), "onDrag", new U.closure132(), "onDragEnd", new U.closure133(), "onDragEnter", new U.closure134(), "onDragLeave", new U.closure135(), "onDragOver", new U.closure136(), "onDragStart", new U.closure137(), "onDrop", new U.closure138(), "onError", new U.closure139(), "onFocus", new U.closure140(), "onFullscreenChange", new U.closure141(), "onFullscreenError", new U.closure142(), "onInput", new U.closure143(), "onInvalid", new U.closure144(), "onKeyDown", new U.closure145(), "onKeyPress", new U.closure146(), "onKeyUp", new U.closure147(), "onLoad", new U.closure148(), "onMouseDown", new U.closure149(), "onMouseEnter", new U.closure150(), "onMouseLeave", new U.closure151(), "onMouseMove", new U.closure152(), "onMouseOut", new U.closure153(), "onMouseOver", new U.closure154(), "onMouseUp", new U.closure155(), "onMouseWheel", new U.closure156(), "onPaste", new U.closure157(), "onReset", new U.closure158(), "onScroll", new U.closure159(), "onSearch", new U.closure160(), "onSelect", new U.closure161(), "onSelectStart", new U.closure162(), "onSubmit", new U.closure163(), "onTouchCancel", new U.closure164(), "onTouchEnd", new U.closure165(), "onTouchEnter", new U.closure166(), "onTouchLeave", new U.closure167(), "onTouchMove", new U.closure168(), "onTouchStart", new U.closure169(), "onTransitionEnd", new U.closure170(), "condition", new U.closure171(), "url", new U.closure172(), "name", new U.closure173(), "model", new U.closure174(), "idlAttrKind", new U.closure175(), "count", new U.closure176(), "expression", new U.closure177(), "templateUrl", new U.closure178(), "hide", new U.closure179(), "show", new U.closure180(), "checked", new U.closure181(), "disabled", new U.closure182(), "multiple", new U.closure183(), "open", new U.closure184(), "readonly", new U.closure185(), "required", new U.closure186(), "selected", new U.closure187(), "href", new U.closure188(), "src", new U.closure189(), "srcset", new U.closure190(), "styleExpression", new U.closure191(), "max", new U.closure192(), "min", new U.closure193(), "pattern", new U.closure194(), "minlength", new U.closure195(), "maxlength", new U.closure196(), "routeName", new U.closure197(), "option", new U.closure198(), "dataSource", new U.closure199(), "feedId", new U.closure200(), "datetime", new U.closure201(), "feed", new U.closure202(), "starred", new U.closure203(), "cmp", new U.closure204(), "feeds", new U.closure205(), "length", new U.closure206(), "id", new U.closure207(), "display", new U.closure208(), "title", new U.closure209(), "unreadCounter", new U.closure210(), "postsMap", new U.closure211(), "listLength", new U.closure212(), "post", new U.closure213(), "unread", new U.closure214(), "published", new U.closure215(), "fullDate", new U.closure216(), "newitem", new U.closure217(), "content", new U.closure218(), "showAddFeed", new U.closure219(), "addingFeed", new U.closure220(), "feedAddUrl", new U.closure221(), "addFeedDisabled", new U.closure222(), "refreshingFeeds", new U.closure223(), "readingPost", new U.closure224(), "currentPostsIndex", new U.closure225(), "currentPostsLength", new U.closure226(), "prevEntry", new U.closure227(), "nextEntry", new U.closure228(), "entry", new U.closure229(), "imageUrl", new U.closure230(), "author", new U.closure231(), "image", new U.closure232(), "elementId", new U.closure233(), "unreadCount", new U.closure234(), "toString", new U.closure235(), "readPost", new U.closure236(), "onStarChange", new U.closure237(), "addFeed", new U.closure238(), "goToPost", new U.closure239(), "frameLoad", new U.closure240(), "starClass", new U.closure241(), "handleClick", new U.closure242(), "starChar", new U.closure243()], null, null);
+  return P.LinkedHashMap_LinkedHashMap$_literal(["urls", new U.closure121(), "value", new U.closure122(), "bind", new U.closure123(), "valueExpression", new U.closure124(), "onAbort", new U.closure125(), "onBeforeCopy", new U.closure126(), "onBeforeCut", new U.closure127(), "onBeforePaste", new U.closure128(), "onBlur", new U.closure129(), "onChange", new U.closure130(), "onClick", new U.closure131(), "onContextMenu", new U.closure132(), "onCopy", new U.closure133(), "onCut", new U.closure134(), "onDoubleClick", new U.closure135(), "onDrag", new U.closure136(), "onDragEnd", new U.closure137(), "onDragEnter", new U.closure138(), "onDragLeave", new U.closure139(), "onDragOver", new U.closure140(), "onDragStart", new U.closure141(), "onDrop", new U.closure142(), "onError", new U.closure143(), "onFocus", new U.closure144(), "onFullscreenChange", new U.closure145(), "onFullscreenError", new U.closure146(), "onInput", new U.closure147(), "onInvalid", new U.closure148(), "onKeyDown", new U.closure149(), "onKeyPress", new U.closure150(), "onKeyUp", new U.closure151(), "onLoad", new U.closure152(), "onMouseDown", new U.closure153(), "onMouseEnter", new U.closure154(), "onMouseLeave", new U.closure155(), "onMouseMove", new U.closure156(), "onMouseOut", new U.closure157(), "onMouseOver", new U.closure158(), "onMouseUp", new U.closure159(), "onMouseWheel", new U.closure160(), "onPaste", new U.closure161(), "onReset", new U.closure162(), "onScroll", new U.closure163(), "onSearch", new U.closure164(), "onSelect", new U.closure165(), "onSelectStart", new U.closure166(), "onSubmit", new U.closure167(), "onTouchCancel", new U.closure168(), "onTouchEnd", new U.closure169(), "onTouchEnter", new U.closure170(), "onTouchLeave", new U.closure171(), "onTouchMove", new U.closure172(), "onTouchStart", new U.closure173(), "onTransitionEnd", new U.closure174(), "condition", new U.closure175(), "url", new U.closure176(), "name", new U.closure177(), "model", new U.closure178(), "idlAttrKind", new U.closure179(), "count", new U.closure180(), "expression", new U.closure181(), "templateUrl", new U.closure182(), "hide", new U.closure183(), "show", new U.closure184(), "checked", new U.closure185(), "disabled", new U.closure186(), "multiple", new U.closure187(), "open", new U.closure188(), "readonly", new U.closure189(), "required", new U.closure190(), "selected", new U.closure191(), "href", new U.closure192(), "src", new U.closure193(), "srcset", new U.closure194(), "styleExpression", new U.closure195(), "max", new U.closure196(), "min", new U.closure197(), "pattern", new U.closure198(), "minlength", new U.closure199(), "maxlength", new U.closure200(), "routeName", new U.closure201(), "option", new U.closure202(), "dataSource", new U.closure203(), "onRefreshFeeds", new U.closure204(), "datetime", new U.closure205(), "feed", new U.closure206(), "cssClass", new U.closure207(), "hideEmpty", new U.closure208(), "starred", new U.closure209(), "cmp", new U.closure210(), "feeds", new U.closure211(), "id", new U.closure212(), "title", new U.closure213(), "entries", new U.closure214(), "listLength", new U.closure215(), "post", new U.closure216(), "unread", new U.closure217(), "published", new U.closure218(), "fullDate", new U.closure219(), "newitem", new U.closure220(), "content", new U.closure221(), "hasPostsInView", new U.closure222(), "length", new U.closure223(), "display", new U.closure224(), "showAddFeed", new U.closure225(), "addingFeed", new U.closure226(), "feedAddUrl", new U.closure227(), "addFeedDisabled", new U.closure228(), "refreshingFeeds", new U.closure229(), "readingPost", new U.closure230(), "currentPostsIndex", new U.closure231(), "currentPostsLength", new U.closure232(), "hasPrevEntry", new U.closure233(), "hasNextEntry", new U.closure234(), "hasUnread", new U.closure235(), "entry", new U.closure236(), "imageUrl", new U.closure237(), "author", new U.closure238(), "image", new U.closure239(), "elementId", new U.closure240(), "isHideEmpty", new U.closure241(), "unreadCount", new U.closure242(), "hasPosts", new U.closure243(), "readPost", new U.closure244(), "onStarChange", new U.closure245(), "toString", new U.closure246(), "addFeed", new U.closure247(), "goToPost", new U.closure248(), "markAllAsRead", new U.closure249(), "frameLoad", new U.closure250(), "starClass", new U.closure251(), "handleClick", new U.closure252(), "starChar", new U.closure253()], null, null);
 });
 Isolate.$lazy($, "setters", "setters", "get$setters", function() {
-  return P.LinkedHashMap_LinkedHashMap$_literal(["urls", new U.closure(), "value", new U.closure0(), "bind", new U.closure1(), "valueExpression", new U.closure2(), "onAbort", new U.closure3(), "onBeforeCopy", new U.closure4(), "onBeforeCut", new U.closure5(), "onBeforePaste", new U.closure6(), "onBlur", new U.closure7(), "onChange", new U.closure8(), "onClick", new U.closure9(), "onContextMenu", new U.closure10(), "onCopy", new U.closure11(), "onCut", new U.closure12(), "onDoubleClick", new U.closure13(), "onDrag", new U.closure14(), "onDragEnd", new U.closure15(), "onDragEnter", new U.closure16(), "onDragLeave", new U.closure17(), "onDragOver", new U.closure18(), "onDragStart", new U.closure19(), "onDrop", new U.closure20(), "onError", new U.closure21(), "onFocus", new U.closure22(), "onFullscreenChange", new U.closure23(), "onFullscreenError", new U.closure24(), "onInput", new U.closure25(), "onInvalid", new U.closure26(), "onKeyDown", new U.closure27(), "onKeyPress", new U.closure28(), "onKeyUp", new U.closure29(), "onLoad", new U.closure30(), "onMouseDown", new U.closure31(), "onMouseEnter", new U.closure32(), "onMouseLeave", new U.closure33(), "onMouseMove", new U.closure34(), "onMouseOut", new U.closure35(), "onMouseOver", new U.closure36(), "onMouseUp", new U.closure37(), "onMouseWheel", new U.closure38(), "onPaste", new U.closure39(), "onReset", new U.closure40(), "onScroll", new U.closure41(), "onSearch", new U.closure42(), "onSelect", new U.closure43(), "onSelectStart", new U.closure44(), "onSubmit", new U.closure45(), "onTouchCancel", new U.closure46(), "onTouchEnd", new U.closure47(), "onTouchEnter", new U.closure48(), "onTouchLeave", new U.closure49(), "onTouchMove", new U.closure50(), "onTouchStart", new U.closure51(), "onTransitionEnd", new U.closure52(), "condition", new U.closure53(), "url", new U.closure54(), "name", new U.closure55(), "model", new U.closure56(), "idlAttrKind", new U.closure57(), "count", new U.closure58(), "expression", new U.closure59(), "templateUrl", new U.closure60(), "hide", new U.closure61(), "show", new U.closure62(), "checked", new U.closure63(), "disabled", new U.closure64(), "multiple", new U.closure65(), "open", new U.closure66(), "readonly", new U.closure67(), "required", new U.closure68(), "selected", new U.closure69(), "href", new U.closure70(), "src", new U.closure71(), "srcset", new U.closure72(), "styleExpression", new U.closure73(), "max", new U.closure74(), "min", new U.closure75(), "pattern", new U.closure76(), "minlength", new U.closure77(), "maxlength", new U.closure78(), "routeName", new U.closure79(), "option", new U.closure80(), "dataSource", new U.closure81(), "feedId", new U.closure82(), "datetime", new U.closure83(), "feed", new U.closure84(), "starred", new U.closure85(), "cmp", new U.closure86(), "feeds", new U.closure87(), "length", new U.closure88(), "id", new U.closure89(), "display", new U.closure90(), "title", new U.closure91(), "unreadCounter", new U.closure92(), "postsMap", new U.closure93(), "listLength", new U.closure94(), "post", new U.closure95(), "unread", new U.closure96(), "published", new U.closure97(), "fullDate", new U.closure98(), "newitem", new U.closure99(), "content", new U.closure100(), "showAddFeed", new U.closure101(), "addingFeed", new U.closure102(), "feedAddUrl", new U.closure103(), "addFeedDisabled", new U.closure104(), "refreshingFeeds", new U.closure105(), "readingPost", new U.closure106(), "currentPostsIndex", new U.closure107(), "currentPostsLength", new U.closure108(), "prevEntry", new U.closure109(), "nextEntry", new U.closure110(), "entry", new U.closure111(), "imageUrl", new U.closure112(), "author", new U.closure113(), "image", new U.closure114(), "elementId", new U.closure115(), "unreadCount", new U.closure116()], null, null);
+  return P.LinkedHashMap_LinkedHashMap$_literal(["urls", new U.closure(), "value", new U.closure0(), "bind", new U.closure1(), "valueExpression", new U.closure2(), "onAbort", new U.closure3(), "onBeforeCopy", new U.closure4(), "onBeforeCut", new U.closure5(), "onBeforePaste", new U.closure6(), "onBlur", new U.closure7(), "onChange", new U.closure8(), "onClick", new U.closure9(), "onContextMenu", new U.closure10(), "onCopy", new U.closure11(), "onCut", new U.closure12(), "onDoubleClick", new U.closure13(), "onDrag", new U.closure14(), "onDragEnd", new U.closure15(), "onDragEnter", new U.closure16(), "onDragLeave", new U.closure17(), "onDragOver", new U.closure18(), "onDragStart", new U.closure19(), "onDrop", new U.closure20(), "onError", new U.closure21(), "onFocus", new U.closure22(), "onFullscreenChange", new U.closure23(), "onFullscreenError", new U.closure24(), "onInput", new U.closure25(), "onInvalid", new U.closure26(), "onKeyDown", new U.closure27(), "onKeyPress", new U.closure28(), "onKeyUp", new U.closure29(), "onLoad", new U.closure30(), "onMouseDown", new U.closure31(), "onMouseEnter", new U.closure32(), "onMouseLeave", new U.closure33(), "onMouseMove", new U.closure34(), "onMouseOut", new U.closure35(), "onMouseOver", new U.closure36(), "onMouseUp", new U.closure37(), "onMouseWheel", new U.closure38(), "onPaste", new U.closure39(), "onReset", new U.closure40(), "onScroll", new U.closure41(), "onSearch", new U.closure42(), "onSelect", new U.closure43(), "onSelectStart", new U.closure44(), "onSubmit", new U.closure45(), "onTouchCancel", new U.closure46(), "onTouchEnd", new U.closure47(), "onTouchEnter", new U.closure48(), "onTouchLeave", new U.closure49(), "onTouchMove", new U.closure50(), "onTouchStart", new U.closure51(), "onTransitionEnd", new U.closure52(), "condition", new U.closure53(), "url", new U.closure54(), "name", new U.closure55(), "model", new U.closure56(), "idlAttrKind", new U.closure57(), "count", new U.closure58(), "expression", new U.closure59(), "templateUrl", new U.closure60(), "hide", new U.closure61(), "show", new U.closure62(), "checked", new U.closure63(), "disabled", new U.closure64(), "multiple", new U.closure65(), "open", new U.closure66(), "readonly", new U.closure67(), "required", new U.closure68(), "selected", new U.closure69(), "href", new U.closure70(), "src", new U.closure71(), "srcset", new U.closure72(), "styleExpression", new U.closure73(), "max", new U.closure74(), "min", new U.closure75(), "pattern", new U.closure76(), "minlength", new U.closure77(), "maxlength", new U.closure78(), "routeName", new U.closure79(), "option", new U.closure80(), "dataSource", new U.closure81(), "onRefreshFeeds", new U.closure82(), "datetime", new U.closure83(), "feed", new U.closure84(), "cssClass", new U.closure85(), "hideEmpty", new U.closure86(), "starred", new U.closure87(), "cmp", new U.closure88(), "feeds", new U.closure89(), "id", new U.closure90(), "title", new U.closure91(), "entries", new U.closure92(), "listLength", new U.closure93(), "post", new U.closure94(), "unread", new U.closure95(), "published", new U.closure96(), "fullDate", new U.closure97(), "newitem", new U.closure98(), "content", new U.closure99(), "hasPostsInView", new U.closure100(), "length", new U.closure101(), "display", new U.closure102(), "showAddFeed", new U.closure103(), "addingFeed", new U.closure104(), "feedAddUrl", new U.closure105(), "addFeedDisabled", new U.closure106(), "refreshingFeeds", new U.closure107(), "readingPost", new U.closure108(), "currentPostsIndex", new U.closure109(), "currentPostsLength", new U.closure110(), "hasPrevEntry", new U.closure111(), "hasNextEntry", new U.closure112(), "hasUnread", new U.closure113(), "entry", new U.closure114(), "imageUrl", new U.closure115(), "author", new U.closure116(), "image", new U.closure117(), "elementId", new U.closure118(), "isHideEmpty", new U.closure119(), "unreadCount", new U.closure120()], null, null);
 });
 Isolate.$lazy($, "symbols", "symbols", "get$symbols", function() {
   return P.LinkedHashMap_LinkedHashMap$_empty(null, null);
 });
 Isolate.$lazy($, "typeAnnotations", "typeAnnotations", "get$typeAnnotations", function() {
-  return P.LinkedHashMap_LinkedHashMap$_literal([C.Type_cg9, C.List_HZS, C.Type_hWd, C.List_CvL, C.Type_Npb, C.List_07, C.Type_Q0t, C.List_q4Q, C.Type_C9d, C.List_BCG, C.Type_Jk7, C.List_chs0, C.Type_ga7, C.List_dEZ, C.Type_m9K, C.List_4uW, C.Type_omH0, C.List_knt1, C.Type_uId, C.List_IQb, C.Type_IGM, C.List_tJC, C.Type_EkK, C.List_Q5U0, C.Type_jZY, C.List_wwi, C.Type_NsM, C.List_sId, C.Type_U5x, C.List_8aB1, C.Type_ADx, C.List_bnV, C.Type_yT8, C.List_6hp, C.Type_ifx, C.List_ceN, C.Type_aHv, C.List_gkc2, C.Type_MMT, C.List_ko8, C.Type_wlp, C.List_aRh, C.Type_GNx, C.List_UHu, C.Type_P0q, C.List_jMA, C.Type_cWU, C.List_muE, C.Type_wnK, C.List_LRl, C.Type_00, C.List_weg, C.Type_qFM, C.List_8G3, C.Type_wu2, C.List_7XU, C.Type_E3Y, C.List_LJp0, C.Type_izR, C.List_OdR, C.Type_5i6, C.List_4YL, C.Type_AgZ, C.List_yHP, C.Type_gG6, C.List_V0W, C.Type_ifn, C.List_Dno, C.Type_89o, C.List_oad, C.Type_CrX, C.List_NIe, C.Type_nHe, C.List_k6K1, C.Type_U44, C.List_kea, C.Type_sVp, C.List_ybB, C.Type_ZiE, C.List_Qw7, C.Type_w4e, C.List_65v, C.Type_KpI, C.List_mOS, C.Type_k2a, C.List_brz, C.Type_OhV, C.List_w11, C.Type_2Vk, C.List_8GF, C.Type_6YB, C.List_eVV, C.Type_xw8, C.List_ko8, C.Type_tOS, C.List_2nP, C.Type_4m4, C.List_Xhs, C.Type_sr6, C.List_kqe, C.Type_wEo, C.List_1My, C.Type_IJC, C.List_gdD, C.Type_5MZ, C.List_Formatter_currency, C.Type_Aec, C.List_Formatter_date, C.Type_2GN, C.List_Formatter_filter, C.Type_s6i, C.List_Formatter_json, C.Type_rzW, C.List_Formatter_limitTo, C.Type_O9i, C.List_Formatter_lowercase, C.Type_fw1, C.List_Formatter_arrayify, C.Type_ihV, C.List_Formatter_number, C.Type_0, C.List_Formatter_orderBy, C.Type_mJQ, C.List_Formatter_uppercase, C.Type_c4R, C.List_Formatter_stringify, C.Type_IFE, C.List_kGu, C.Type_RkP, C.List_eAf, C.Type_rXF, C.List_8D4, C.Type_sQd, C.List_ZsD, C.Type_yra, C.List_iDT, C.Type_McW, C.List_d0h, C.Type_omH, C.List_Kr4, C.Type_Ag1, C.List_POV, C.Type_Sjs, C.List_Grn, C.Type_VMc, C.List_iXl, C.Type_K2k, C.List_46y, C.Type_Au4, C.List_Formatter_truncate, C.Type_i54, C.List_Formatter_sanitize, C.Type_WfU, C.List_Formatter_relativedate, C.Type_sAl, C.List_Formatter_postlist, C.Type_otF, C.List_kyy0], null, null);
+  return P.LinkedHashMap_LinkedHashMap$_literal([C.Type_cg9, C.List_HZS, C.Type_hWd, C.List_CvL, C.Type_Npb, C.List_07, C.Type_Q0t, C.List_q4Q, C.Type_C9d, C.List_BCG, C.Type_Jk7, C.List_chs0, C.Type_ga7, C.List_dEZ, C.Type_m9K, C.List_4uW, C.Type_omH, C.List_knt1, C.Type_uId, C.List_IQb, C.Type_IGM, C.List_tJC, C.Type_EkK, C.List_Q5U0, C.Type_jZY, C.List_wwi, C.Type_NsM, C.List_sId, C.Type_U5x, C.List_8aB1, C.Type_ADx, C.List_bnV, C.Type_yT8, C.List_6hp, C.Type_ifx, C.List_ceN, C.Type_aHv, C.List_gkc2, C.Type_MMT, C.List_ko8, C.Type_wlp, C.List_aRh, C.Type_GNx, C.List_UHu, C.Type_P0q, C.List_jMA, C.Type_cWU, C.List_muE, C.Type_wnK, C.List_LRl, C.Type_00, C.List_weg, C.Type_qFM, C.List_8G3, C.Type_wu2, C.List_7XU, C.Type_E3Y, C.List_LJp0, C.Type_izR, C.List_OdR, C.Type_5i6, C.List_4YL, C.Type_AgZ, C.List_yHP, C.Type_gG6, C.List_V0W, C.Type_ifn, C.List_Dno, C.Type_89o, C.List_oad, C.Type_CrX, C.List_NIe, C.Type_nHe, C.List_k6K1, C.Type_U44, C.List_kea, C.Type_sVp, C.List_ybB, C.Type_ZiE, C.List_Qw7, C.Type_w4e, C.List_65v, C.Type_KpI, C.List_mOS, C.Type_k2a, C.List_brz, C.Type_OhV, C.List_w11, C.Type_2Vk, C.List_8GF, C.Type_6YB, C.List_eVV, C.Type_xw8, C.List_ko8, C.Type_tOS, C.List_2nP, C.Type_4m4, C.List_Xhs, C.Type_sr6, C.List_kqe, C.Type_wEo, C.List_1My, C.Type_IJC, C.List_gdD, C.Type_5MZ, C.List_Formatter_currency, C.Type_Aec, C.List_Formatter_date, C.Type_2GN, C.List_Formatter_filter, C.Type_s6i, C.List_Formatter_json, C.Type_rzW, C.List_Formatter_limitTo, C.Type_O9i, C.List_Formatter_lowercase, C.Type_fw1, C.List_Formatter_arrayify, C.Type_ihV, C.List_Formatter_number, C.Type_0, C.List_Formatter_orderBy, C.Type_mJQ, C.List_Formatter_uppercase, C.Type_c4R, C.List_Formatter_stringify, C.Type_IFE, C.List_kGu, C.Type_RkP, C.List_eAf, C.Type_rXF, C.List_8D4, C.Type_sQd, C.List_ZsD, C.Type_yra, C.List_iDT, C.Type_yFE, C.List_bJC0, C.Type_McW, C.List_d0h, C.Type_Y0l, C.List_QOR, C.Type_Ag1, C.List_79P, C.Type_Sjs, C.List_Grn, C.Type_VMc, C.List_iXl, C.Type_K2k, C.List_3Zi, C.Type_S7q, C.List_EN9, C.Type_Au4, C.List_Formatter_truncate, C.Type_i54, C.List_Formatter_sanitize, C.Type_WfU, C.List_Formatter_relativedate, C.Type_sAl, C.List_Formatter_postlist, C.Type_otF, C.List_kyy0], null, null);
 });
 Isolate.$lazy($, "factories", "factories", "get$factories", function() {
-  return P.LinkedHashMap_LinkedHashMap$_literal([C.Type_Dbk, new U.closure247(), C.Type_Me9, new U.closure248(), C.Type_4Dj, new U.closure249(), C.Type_Xzb, new U.closure250(), C.Type_KSA, new U.closure251(), C.Type_X3P, new U.closure252(), C.Type_kGa, new U.closure253(), C.Type_U8S, new U.closure254(), C.Type_s8I, new U.closure255(), C.Type_iYS, new U.closure256(), C.Type_Nlt, new U.closure257(), C.Type_k64, new U.closure258(), C.Type_d0f, new U.closure259(), C.Type_s6k, new U.closure260(), C.Type_8I8, new U.closure261(), C.Type_wdB, new U.closure262(), C.Type_Cxl, new U.closure263(), C.Type_ON8, new U.closure264(), C.Type_YeZ, new U.closure265(), C.Type_ijl0, new U.closure266(), C.Type_zTx, new U.closure267(), C.Type_KeE, new U.closure268(), C.Type_0af, new U.closure269(), C.Type_Yy0, new U.closure270(), C.Type_wTU, new U.closure271(), C.Type_cg9, new U.closure272(), C.Type_hWd, new U.closure273(), C.Type_xhX, new U.closure274(), C.Type_EgC, new U.closure275(), C.Type_o8I, new U.closure276(), C.Type_Npb, new U.closure277(), C.Type_blz, new U.closure278(), C.Type_gMT, new U.closure279(), C.Type_kuk, new U.closure280(), C.Type_EOY, new U.closure281(), C.Type_Q0t, new U.closure282(), C.Type_C9d, new U.closure283(), C.Type_Jk7, new U.closure284(), C.Type_ga7, new U.closure285(), C.Type_m9K, new U.closure286(), C.Type_omH0, new U.closure287(), C.Type_uId, new U.closure288(), C.Type_IGM, new U.closure289(), C.Type_EkK, new U.closure290(), C.Type_jZY, new U.closure291(), C.Type_NsM, new U.closure292(), C.Type_U5x, new U.closure293(), C.Type_ADx, new U.closure294(), C.Type_yT8, new U.closure295(), C.Type_ifx, new U.closure296(), C.Type_aHv, new U.closure297(), C.Type_MMT, new U.closure298(), C.Type_wlp, new U.closure299(), C.Type_GNx, new U.closure300(), C.Type_P0q, new U.closure301(), C.Type_cWU, new U.closure302(), C.Type_wnK, new U.closure303(), C.Type_00, new U.closure304(), C.Type_qFM, new U.closure305(), C.Type_wu2, new U.closure306(), C.Type_E3Y, new U.closure307(), C.Type_izR, new U.closure308(), C.Type_5i6, new U.closure309(), C.Type_AgZ, new U.closure310(), C.Type_gG6, new U.closure311(), C.Type_ifn, new U.closure312(), C.Type_89o, new U.closure313(), C.Type_CrX, new U.closure314(), C.Type_nHe, new U.closure315(), C.Type_U44, new U.closure316(), C.Type_sVp, new U.closure317(), C.Type_ZiE, new U.closure318(), C.Type_w4e, new U.closure319(), C.Type_KpI, new U.closure320(), C.Type_k2a, new U.closure321(), C.Type_OhV, new U.closure322(), C.Type_2Vk, new U.closure323(), C.Type_6YB, new U.closure324(), C.Type_xw8, new U.closure325(), C.Type_tOS, new U.closure326(), C.Type_4m4, new U.closure327(), C.Type_sr6, new U.closure328(), C.Type_wEo, new U.closure329(), C.Type_IJC, new U.closure330(), C.Type_5MZ, new U.closure331(), C.Type_Aec, new U.closure332(), C.Type_2GN, new U.closure333(), C.Type_s6i, new U.closure334(), C.Type_rzW, new U.closure335(), C.Type_O9i, new U.closure336(), C.Type_fw1, new U.closure337(), C.Type_ihV, new U.closure338(), C.Type_0, new U.closure339(), C.Type_mJQ, new U.closure340(), C.Type_c4R, new U.closure341(), C.Type_kXN, new U.closure342(), C.Type_skV, new U.closure343(), C.Type_IFE, new U.closure344(), C.Type_RkP, new U.closure345(), C.Type_j3h, new U.closure346(), C.Type_8eb, new U.closure347(), C.Type_6FR, new U.closure348(), C.Type_uZX, new U.closure349(), C.Type_vlL, new U.closure350(), C.Type_rXF, new U.closure351(), C.Type_sQd, new U.closure352(), C.Type_yra, new U.closure353(), C.Type_GA4, new U.closure354(), C.Type_pah, new U.closure355(), C.Type_K17, new U.closure356(), C.Type_McW, new U.closure357(), C.Type_omH, new U.closure358(), C.Type_Ag1, new U.closure359(), C.Type_Sjs, new U.closure360(), C.Type_VMc, new U.closure361(), C.Type_K2k, new U.closure362(), C.Type_Au4, new U.closure363(), C.Type_i54, new U.closure364(), C.Type_WfU, new U.closure365(), C.Type_sAl, new U.closure366(), C.Type_otF, new U.closure367(), C.Type_Db0, new U.closure368()], P.Type, {func: "Object__dynamic__Type_Type", ret: P.Object, args: [{func: "dynamic__Type_Type", args: [P.Type, P.Type]}]});
+  return P.LinkedHashMap_LinkedHashMap$_literal([C.Type_Dbk, new U.closure257(), C.Type_Me9, new U.closure258(), C.Type_4Dj, new U.closure259(), C.Type_Xzb, new U.closure260(), C.Type_KSA, new U.closure261(), C.Type_X3P, new U.closure262(), C.Type_kGa, new U.closure263(), C.Type_U8S, new U.closure264(), C.Type_s8I, new U.closure265(), C.Type_iYS, new U.closure266(), C.Type_Nlt, new U.closure267(), C.Type_k64, new U.closure268(), C.Type_d0f, new U.closure269(), C.Type_s6k, new U.closure270(), C.Type_8I8, new U.closure271(), C.Type_wdB, new U.closure272(), C.Type_Cxl, new U.closure273(), C.Type_ON8, new U.closure274(), C.Type_YeZ, new U.closure275(), C.Type_ijl0, new U.closure276(), C.Type_zTx, new U.closure277(), C.Type_KeE, new U.closure278(), C.Type_0af, new U.closure279(), C.Type_Yy0, new U.closure280(), C.Type_wTU, new U.closure281(), C.Type_cg9, new U.closure282(), C.Type_hWd, new U.closure283(), C.Type_xhX, new U.closure284(), C.Type_EgC, new U.closure285(), C.Type_o8I, new U.closure286(), C.Type_Npb, new U.closure287(), C.Type_blz, new U.closure288(), C.Type_gMT, new U.closure289(), C.Type_kuk, new U.closure290(), C.Type_EOY, new U.closure291(), C.Type_Q0t, new U.closure292(), C.Type_C9d, new U.closure293(), C.Type_Jk7, new U.closure294(), C.Type_ga7, new U.closure295(), C.Type_m9K, new U.closure296(), C.Type_omH, new U.closure297(), C.Type_uId, new U.closure298(), C.Type_IGM, new U.closure299(), C.Type_EkK, new U.closure300(), C.Type_jZY, new U.closure301(), C.Type_NsM, new U.closure302(), C.Type_U5x, new U.closure303(), C.Type_ADx, new U.closure304(), C.Type_yT8, new U.closure305(), C.Type_ifx, new U.closure306(), C.Type_aHv, new U.closure307(), C.Type_MMT, new U.closure308(), C.Type_wlp, new U.closure309(), C.Type_GNx, new U.closure310(), C.Type_P0q, new U.closure311(), C.Type_cWU, new U.closure312(), C.Type_wnK, new U.closure313(), C.Type_00, new U.closure314(), C.Type_qFM, new U.closure315(), C.Type_wu2, new U.closure316(), C.Type_E3Y, new U.closure317(), C.Type_izR, new U.closure318(), C.Type_5i6, new U.closure319(), C.Type_AgZ, new U.closure320(), C.Type_gG6, new U.closure321(), C.Type_ifn, new U.closure322(), C.Type_89o, new U.closure323(), C.Type_CrX, new U.closure324(), C.Type_nHe, new U.closure325(), C.Type_U44, new U.closure326(), C.Type_sVp, new U.closure327(), C.Type_ZiE, new U.closure328(), C.Type_w4e, new U.closure329(), C.Type_KpI, new U.closure330(), C.Type_k2a, new U.closure331(), C.Type_OhV, new U.closure332(), C.Type_2Vk, new U.closure333(), C.Type_6YB, new U.closure334(), C.Type_xw8, new U.closure335(), C.Type_tOS, new U.closure336(), C.Type_4m4, new U.closure337(), C.Type_sr6, new U.closure338(), C.Type_wEo, new U.closure339(), C.Type_IJC, new U.closure340(), C.Type_5MZ, new U.closure341(), C.Type_Aec, new U.closure342(), C.Type_2GN, new U.closure343(), C.Type_s6i, new U.closure344(), C.Type_rzW, new U.closure345(), C.Type_O9i, new U.closure346(), C.Type_fw1, new U.closure347(), C.Type_ihV, new U.closure348(), C.Type_0, new U.closure349(), C.Type_mJQ, new U.closure350(), C.Type_c4R, new U.closure351(), C.Type_kXN, new U.closure352(), C.Type_skV, new U.closure353(), C.Type_IFE, new U.closure354(), C.Type_RkP, new U.closure355(), C.Type_j3h, new U.closure356(), C.Type_8eb, new U.closure357(), C.Type_6FR, new U.closure358(), C.Type_uZX, new U.closure359(), C.Type_vlL, new U.closure360(), C.Type_rXF, new U.closure361(), C.Type_sQd, new U.closure362(), C.Type_yra, new U.closure363(), C.Type_GA4, new U.closure364(), C.Type_pah, new U.closure365(), C.Type_jtx, new U.closure366(), C.Type_K17, new U.closure367(), C.Type_yFE, new U.closure368(), C.Type_McW, new U.closure369(), C.Type_Y0l, new U.closure370(), C.Type_Ag1, new U.closure371(), C.Type_Sjs, new U.closure372(), C.Type_VMc, new U.closure373(), C.Type_K2k, new U.closure374(), C.Type_S7q, new U.closure375(), C.Type_Au4, new U.closure376(), C.Type_i54, new U.closure377(), C.Type_WfU, new U.closure378(), C.Type_sAl, new U.closure379(), C.Type_otF, new U.closure380(), C.Type_Db0, new U.closure381()], P.Type, {func: "Object__dynamic__Type_Type", ret: P.Object, args: [{func: "dynamic__Type_Type", args: [P.Type, P.Type]}]});
 });
 Isolate.$lazy($, "_specialChars", "_specialChars", "get$_specialChars", function() {
   return new H.JSSyntaxRegExp("[\\\\()$^.+[\\]{}|]", H.JSSyntaxRegExp_makeNative("[\\\\()$^.+[\\]{}|]", false, true, false), null, null);
@@ -43884,16 +44113,13 @@ X._DEFAULT_VALUE$closure(),
 {func: "dynamic__MouseEvent", args: [W.MouseEvent]},
 {func: "dynamic__RouteHandle", args: [D.RouteHandle]},
 {func: "dynamic__LogRecord", args: [N.LogRecord]},
-{func: "void__RouteStartEvent", void: true, args: [D.RouteStartEvent]},
 "dir",
+"feedId",
 {func: "void__FeedEntry", void: true, args: [T.FeedEntry]},
 "entry",
 "postId",
-"posts",
-{func: "dynamic__List2", args: [[P.List, T.FeedEntry]]},
 {func: "dynamic__FeedEntry", args: [T.FeedEntry]},
-{func: "dynamic__Feed", args: [T.Feed]},
-{func: "List__List__int", ret: P.List, args: [P.List], opt: [P.$int]},
+{func: "List__List_int__int", ret: P.List, args: [[P.List, T.FeedEntry], P.$int], opt: [P.$int]},
 {func: "String__String__int_bool_bool", ret: P.String, args: [P.String], opt: [P.$int, P.bool, P.bool]},
 {func: "void__VersionChangeEvent", void: true, args: [P.VersionChangeEvent]},
 {func: "Future__String", ret: P.Future, args: [P.String]},
@@ -43904,9 +44130,12 @@ X._DEFAULT_VALUE$closure(),
 "post",
 {func: "dynamic__ProgressEvent", args: [W.ProgressEvent]},
 "feeds",
-{func: "dynamic__List3", args: [[P.List, T.Feed]]},
+{func: "dynamic__List2", args: [[P.List, T.Feed]]},
 "cnt",
+"posts",
+{func: "dynamic__List3", args: [[P.List, T.FeedEntry]]},
 "feed",
+{func: "dynamic__Feed", args: [T.Feed]},
 {func: "UrlMatch__String", ret: D.UrlMatch, args: [P.String]},
 {func: "dynamic__Map", args: [P.Map]},
 "c",
@@ -44208,8 +44437,8 @@ function init() {
         }
       }
     }
-    var objectClassObject = collectedClasses.Object, shortNames = "run$1,run$2,attr$1,bind$2,bind$3,emit$4,eval$1,eval$2,init$2,then$1,_fire$1,_show$3,check$0,dirty$0,enter$1,get$day,get$end,get$ttl,get$uri,match$1,toRti$0,toUtc$0,watch$2,write$1,_close$0,finest$1,get$ERAS,get$_key,get$bind,get$emit,get$eval,get$feed,get$hide,get$hour,get$keys,get$node,get$post,get$root,get$tail,get$urls,get$year,invoke$0,listen$1,lookup$1,modify$1,module$0,resume$0,set$bind,set$emit,set$feed,set$hide,set$post,set$urls,toJson$0,unwrap$2,addCase$3,addFeed$1,builder$0,destroy$0,discard$0,fromUrl$2,get$AMPMS,get$_name,get$_next,get$apply,get$cache,get$depth,get$enter,get$entry,get$feeds,get$image,get$isUtc,get$leave,get$level,get$match,get$model,get$month,get$mount,get$route,get$scope,get$types,isValid$1,isValue$1,listAll$0,modules$0,observe$2,perform$1,process$0,set$entry,set$feeds,set$image,set$level,set$model,warning$1,_getHead$2,_getHost$1,_publish$1,_reverse$1,addError$2,callback$0,cycleEnd$0,flushEnd$0,get$MONTHS,get$_error,get$_route,get$_value,get$anchor,get$author,get$binder,get$config,get$feedId,get$feedid,get$future,get$minute,get$module,get$params,get$second,get$unread,hasMatch$1,newChain$1,runUnary$2,runUnary$3,set$_value,set$author,set$feedId,set$render,set$unread,toNumber$0,validate$0,writeAll$2,_addError$2,_setError$2,_setValue$1,configure$1,digestEnd$0,findRoute$1,get$_routes,get$addFeed,get$context,get$destroy,get$expando,get$handler,get$isDirty,get$modules,get$newitem,get$ngValue,get$onLeave,get$starred,get$varData,get$weekday,matchText$1,newAssign$2,newHandle$0,runBinary$3,set$newitem,set$starred,set$varData,_getStream$0,addControl$1,allowEnter$1,digestLoop$1,domReadEnd$0,flushStart$0,get$ERANAMES,get$QUARTERS,get$WEEKDAYS,get$_headers,get$_isDirty,get$_nextDup,get$_onError,get$_onValue,get$_prevDup,get$_streams,get$attrName,get$bindings,get$datetime,get$fullDate,get$fullName,get$goToPost,get$imageUrl,get$injector,get$isNumber,get$isPaused,get$isString,get$mappings,get$onRecord,get$postsMap,get$preEnter,get$readPost,get$readonly,get$selector,get$starChar,get$subtrees,get$template,get$urlMatch,get$viewHtml,isOperator$1,listUnread$0,runGuarded$1,set$_nextDup,set$_prevDup,set$datetime,set$fullDate,set$imageUrl,set$postsMap,set$readonly,_addPending$1,_getTailUrl$3,containsKey$1,countUnread$1,createChild$1,createTimer$2,digestStart$0,domWriteEnd$0,fullPattern$0,get$_contents,get$_hasError,get$_hasValue,get$_isClosed,get$_isFiring,get$_previous,get$broadcast,get$condition,get$elementId,get$frameLoad,get$isKeyword,get$maxlength,get$minlength,get$nextEntry,get$prevEntry,get$published,get$ratePerMs,get$rootScope,get$routeName,get$starClass,get$uriPolicy,get$viewValue,isCharacter$1,listStarred$0,putIfAbsent$2,readClasses$0,set$condition,set$elementId,set$maxlength,set$minlength,set$nextEntry,set$prevEntry,set$published,set$routeName,set$viewValue,updateEntry$1,viewFactory$1,addDirective$2,addInfoState$2,addValidator$1,completeTask$1,domReadStart$0,get$_childTail,get$_errorTest,get$_errorZone,get$_lastEvent,get$_nextAdded,get$_nextMoved,get$activePath,get$addingFeed,get$annotation,get$dataSource,get$directives,get$expression,get$feedAddUrl,get$groupCount,get$infoStates,get$isAttached,get$listLength,get$memberName,get$parameters,get$stackTrace,isAssignable$1,lookupGetter$1,lookupSetter$1,lookupSymbol$1,matchComment$1,matchElement$1,newCallScope$2,newFormatter$3,newPrefixNot$1,registerTask$0,removeStates$1,set$_isChained,set$_lastEvent,set$_nextMoved,set$addingFeed,set$dataSource,set$expression,set$feedAddUrl,set$listLength,set$onTurnDone,_expectsEvent$1,addErrorState$2,allowsElement$1,detachContent$1,domWriteStart$0,forEachChange$1,get$SHORTMONTHS,get$_eventState,get$_isComplete,get$_nextChange,get$_nextRecord,get$_recordTail,get$_watchGroup,get$controlPort,get$handleClick,get$idlAttrKind,get$isCompleted,get$isDestroyed,get$millisecond,get$readingPost,get$showAddFeed,get$templateUrl,get$unreadCount,hasErrorState$1,markAsTouched$0,newBinaryPlus$2,newCallMember$3,newInstanceOf$4,newPrefixPlus$1,registerEvent$1,removeControl$1,set$_eventState,set$_nextChange,set$idlAttrKind,set$readingPost,set$showAddFeed,set$templateUrl,set$unreadCount,validateLater$0,_addDirtyWatch$1,_completeError$2,_toggleEventId$0,cancelSchedule$0,constructChain$1,forEachRemoval$1,get$NARROWMONTHS,get$_async$_next,get$_nextChanged,get$_nextRemoved,get$_prevRemoved,get$_removeCount,get$currentIndex,get$currentPosts,get$currentValue,get$defaultRoute,get$isAssignable,get$isIdentifier,get$onRouteStart,get$onStarChange,get$requestError,get$templateHtml,get$usePushState,lookupFunction$2,newAccessKeyed$2,newAccessScope$1,newBinaryEqual$2,newBinaryMinus$2,newConditional$3,newLiteralNull$0,newPrefixMinus$1,set$_async$_next,set$_nextChanged,set$_nextRemoved,set$_prevRemoved,set$_removeCount,set$currentIndex,_registerPortal$1,allowsAttribute$3,forEachAddition$1,get$SHORTQUARTERS,get$SHORTWEEKDAYS,get$_async$_value,get$_currentRoute,get$_currentValue,get$_defaultRoute,get$_nextListener,get$_nextPrevious,get$currentFeedId,get$delayedEvents,get$dstExpression,get$evalStopwatch,get$isKeywordNull,get$isKeywordTrue,get$originalValue,get$parentControl,get$previousIndex,get$previousValue,get$responseError,get$typeFactories,get$unreadCounter,inSameErrorZone$1,newAccessMember$2,newBinaryDivide$2,newBinaryModulo$2,newCallFunction$2,newLiteralArray$1,removeAttribute$1,removeInfoState$2,runUnaryGuarded$2,set$_currentRoute,set$_currentValue,set$_nextListener,set$_nextPrevious,set$previousIndex,set$unreadCounter,_removeListeners$0,get$_isInputPaused,get$_nextEvalWatch,get$_previousValue,get$fieldStopwatch,get$inMilliseconds,get$isKeywordFalse,get$isolateStatics,get$namedArguments,get$xsrfCookieName,get$xsrfHeaderName,newLiteralNumber$1,newLiteralObject$2,newLiteralString$1,registerCallback$1,removeErrorState$2,runBinaryGuarded$3,set$_previousValue,_maybeReloadViews$0,_unregisterPortal$1,get$_nextDirtyWatch,get$_routing$_route,get$addFeedDisabled,get$inputTypedValue,get$refreshingFeeds,get$styleExpression,get$valueExpression,newBinaryLessThan$2,newBinaryMultiply$2,newBinaryNotEqual$2,newLiteralBoolean$1,runOutsideAngular$1,set$_nextDirtyWatch,set$addFeedDisabled,set$inputTypedValue,set$refreshingFeeds,set$styleExpression,set$valueExpression,set$watchCollection,urlParameterNames$0,_completeWithValue$1,get$STANDALONEMONTHS,get$_async$_previous,get$processStopwatch,newBinaryLogicalOr$2,set$_async$_previous,get$currentPostsIndex,handleUncaughtError$2,newBinaryLogicalAnd$2,set$currentPostsIndex,get$STANDALONEWEEKDAYS,get$_onEnterController,get$_onLeaveController,get$_removeAfterFiring,get$currentPostsLength,get$isKeywordUndefined,handleControlMessage$1,newBinaryGreaterThan$2,set$currentPostsLength,_setRemoveAfterFiring$0,get$_whenCompleteAction,get$elapsedMicroseconds,get$isInsideInvokeDirty,get$positionalArguments,listenObserverChanges$2,registerUnaryCallback$1,_core_internal$_onData$1,_revertToPreviousState$0,get$__isolate_helper$_id,newBinaryLessThanEqual$2,registerBinaryCallback$1,__isolate_helper$_close$0,get$STANDALONESHORTMONTHS,get$_onPreEnterController,get$_onPreLeaveController,get$STANDALONENARROWMONTHS,get$millisecondsSinceEpoch,get$STANDALONESHORTWEEKDAYS,get$dontLeaveOnParamChanges,newBinaryGreaterThanEqual$2,newBinaryTruncatingDivide$2,get$STANDALONENARROWWEEKDAYS,get$_watch_group$_fieldGetterFactory,get$_dirty_checking_change_detector$_next,get$_dirty_checking_change_detector$_prev,set$_dirty_checking_change_detector$_next,set$_dirty_checking_change_detector$_prev,get$_dirty_checking_change_detector$_childTail".split(",");
-    var longNames = "run,run,attr,bind,bind,emit,eval,eval,init,then,_fire,_show,check,dirty,enter,day,end,ttl,uri,match,toRti,toUtc,watch,write,_close,finest,ERAS,_key,bind,emit,eval,feed,hide,hour,keys,node,post,root,tail,urls,year,invoke,listen,lookup,modify,module,resume,bind=,emit=,feed=,hide=,post=,urls=,toJson,unwrap,addCase,addFeed,builder,destroy,discard,fromUrl,AMPMS,_name,_next,apply,cache,depth,enter,entry,feeds,image,isUtc,leave,level,match,model,month,mount,route,scope,types,isValid,isValue,listAll,modules,observe,perform,process,entry=,feeds=,image=,level=,model=,warning,_getHead,_getHost,_publish,_reverse,addError,callback,cycleEnd,flushEnd,MONTHS,_error,_route,_value,anchor,author,binder,config,feedId,feedid,future,minute,module,params,second,unread,hasMatch,newChain,runUnary,runUnary,_value=,author=,feedId=,render=,unread=,toNumber,validate,writeAll,_addError,_setError,_setValue,configure,digestEnd,findRoute,_routes,addFeed,context,destroy,expando,handler,isDirty,modules,newitem,ngValue,onLeave,starred,varData,weekday,matchText,newAssign,newHandle,runBinary,newitem=,starred=,varData=,_getStream,addControl,allowEnter,digestLoop,domReadEnd,flushStart,ERANAMES,QUARTERS,WEEKDAYS,_headers,_isDirty,_nextDup,_onError,_onValue,_prevDup,_streams,attrName,bindings,datetime,fullDate,fullName,goToPost,imageUrl,injector,isNumber,isPaused,isString,mappings,onRecord,postsMap,preEnter,readPost,readonly,selector,starChar,subtrees,template,urlMatch,viewHtml,isOperator,listUnread,runGuarded,_nextDup=,_prevDup=,datetime=,fullDate=,imageUrl=,postsMap=,readonly=,_addPending,_getTailUrl,containsKey,countUnread,createChild,createTimer,digestStart,domWriteEnd,fullPattern,_contents,_hasError,_hasValue,_isClosed,_isFiring,_previous,broadcast,condition,elementId,frameLoad,isKeyword,maxlength,minlength,nextEntry,prevEntry,published,ratePerMs,rootScope,routeName,starClass,uriPolicy,viewValue,isCharacter,listStarred,putIfAbsent,readClasses,condition=,elementId=,maxlength=,minlength=,nextEntry=,prevEntry=,published=,routeName=,viewValue=,updateEntry,viewFactory,addDirective,addInfoState,addValidator,completeTask,domReadStart,_childTail,_errorTest,_errorZone,_lastEvent,_nextAdded,_nextMoved,activePath,addingFeed,annotation,dataSource,directives,expression,feedAddUrl,groupCount,infoStates,isAttached,listLength,memberName,parameters,stackTrace,isAssignable,lookupGetter,lookupSetter,lookupSymbol,matchComment,matchElement,newCallScope,newFormatter,newPrefixNot,registerTask,removeStates,_isChained=,_lastEvent=,_nextMoved=,addingFeed=,dataSource=,expression=,feedAddUrl=,listLength=,onTurnDone=,_expectsEvent,addErrorState,allowsElement,detachContent,domWriteStart,forEachChange,SHORTMONTHS,_eventState,_isComplete,_nextChange,_nextRecord,_recordTail,_watchGroup,controlPort,handleClick,idlAttrKind,isCompleted,isDestroyed,millisecond,readingPost,showAddFeed,templateUrl,unreadCount,hasErrorState,markAsTouched,newBinaryPlus,newCallMember,newInstanceOf,newPrefixPlus,registerEvent,removeControl,_eventState=,_nextChange=,idlAttrKind=,readingPost=,showAddFeed=,templateUrl=,unreadCount=,validateLater,_addDirtyWatch,_completeError,_toggleEventId,cancelSchedule,constructChain,forEachRemoval,NARROWMONTHS,_next,_nextChanged,_nextRemoved,_prevRemoved,_removeCount,currentIndex,currentPosts,currentValue,defaultRoute,isAssignable,isIdentifier,onRouteStart,onStarChange,requestError,templateHtml,usePushState,lookupFunction,newAccessKeyed,newAccessScope,newBinaryEqual,newBinaryMinus,newConditional,newLiteralNull,newPrefixMinus,_next=,_nextChanged=,_nextRemoved=,_prevRemoved=,_removeCount=,currentIndex=,_registerPortal,allowsAttribute,forEachAddition,SHORTQUARTERS,SHORTWEEKDAYS,_value,_currentRoute,_currentValue,_defaultRoute,_nextListener,_nextPrevious,currentFeedId,delayedEvents,dstExpression,evalStopwatch,isKeywordNull,isKeywordTrue,originalValue,parentControl,previousIndex,previousValue,responseError,typeFactories,unreadCounter,inSameErrorZone,newAccessMember,newBinaryDivide,newBinaryModulo,newCallFunction,newLiteralArray,removeAttribute,removeInfoState,runUnaryGuarded,_currentRoute=,_currentValue=,_nextListener=,_nextPrevious=,previousIndex=,unreadCounter=,_removeListeners,_isInputPaused,_nextEvalWatch,_previousValue,fieldStopwatch,inMilliseconds,isKeywordFalse,isolateStatics,namedArguments,xsrfCookieName,xsrfHeaderName,newLiteralNumber,newLiteralObject,newLiteralString,registerCallback,removeErrorState,runBinaryGuarded,_previousValue=,_maybeReloadViews,_unregisterPortal,_nextDirtyWatch,_route,addFeedDisabled,inputTypedValue,refreshingFeeds,styleExpression,valueExpression,newBinaryLessThan,newBinaryMultiply,newBinaryNotEqual,newLiteralBoolean,runOutsideAngular,_nextDirtyWatch=,addFeedDisabled=,inputTypedValue=,refreshingFeeds=,styleExpression=,valueExpression=,watchCollection=,urlParameterNames,_completeWithValue,STANDALONEMONTHS,_previous,processStopwatch,newBinaryLogicalOr,_previous=,currentPostsIndex,handleUncaughtError,newBinaryLogicalAnd,currentPostsIndex=,STANDALONEWEEKDAYS,_onEnterController,_onLeaveController,_removeAfterFiring,currentPostsLength,isKeywordUndefined,handleControlMessage,newBinaryGreaterThan,currentPostsLength=,_setRemoveAfterFiring,_whenCompleteAction,elapsedMicroseconds,isInsideInvokeDirty,positionalArguments,listenObserverChanges,registerUnaryCallback,_onData,_revertToPreviousState,_id,newBinaryLessThanEqual,registerBinaryCallback,_close,STANDALONESHORTMONTHS,_onPreEnterController,_onPreLeaveController,STANDALONENARROWMONTHS,millisecondsSinceEpoch,STANDALONESHORTWEEKDAYS,dontLeaveOnParamChanges,newBinaryGreaterThanEqual,newBinaryTruncatingDivide,STANDALONENARROWWEEKDAYS,_fieldGetterFactory,_next,_prev,_next=,_prev=,_childTail".split(",");
+    var objectClassObject = collectedClasses.Object, shortNames = "run$1,run$2,attr$1,bind$2,bind$3,emit$4,eval$1,eval$2,init$2,then$1,_fire$1,_show$3,check$0,dirty$0,get$day,get$end,get$ttl,get$uri,match$1,toRti$0,toUtc$0,watch$2,write$1,_close$0,finest$1,get$ERAS,get$_key,get$bind,get$emit,get$eval,get$feed,get$hide,get$hour,get$keys,get$node,get$post,get$root,get$tail,get$urls,get$year,invoke$0,listen$1,lookup$1,modify$1,module$0,resume$0,set$bind,set$emit,set$feed,set$hide,set$post,set$urls,toJson$0,unwrap$2,addCase$3,addFeed$1,builder$0,destroy$0,discard$0,fromUrl$2,get$AMPMS,get$_name,get$_next,get$apply,get$cache,get$depth,get$enter,get$entry,get$feeds,get$image,get$isUtc,get$leave,get$level,get$match,get$model,get$month,get$mount,get$route,get$scope,get$types,isValid$1,isValue$1,listAll$0,modules$0,observe$2,perform$1,process$0,set$entry,set$feeds,set$image,set$level,set$model,warning$1,_getHead$2,_getHost$1,_publish$1,_reverse$1,addError$2,callback$0,cycleEnd$0,flushEnd$0,fromHtml$2,get$MONTHS,get$_error,get$_route,get$_value,get$anchor,get$author,get$binder,get$config,get$feedid,get$future,get$minute,get$module,get$params,get$second,get$unread,hasMatch$1,newChain$1,runUnary$2,runUnary$3,set$_value,set$author,set$render,set$unread,toNumber$0,validate$0,writeAll$2,_addError$2,_setError$2,_setValue$1,configure$1,digestEnd$0,get$_routes,get$addFeed,get$context,get$destroy,get$expando,get$handler,get$isDirty,get$modules,get$newitem,get$ngValue,get$onLeave,get$starred,get$varData,get$weekday,matchText$1,newAssign$2,newHandle$0,runBinary$3,set$newitem,set$starred,set$varData,_getStream$0,addControl$1,allowEnter$1,digestLoop$1,domReadEnd$0,flushStart$0,get$ERANAMES,get$QUARTERS,get$WEEKDAYS,get$_headers,get$_isDirty,get$_nextDup,get$_onError,get$_onValue,get$_prevDup,get$_streams,get$attrName,get$bindings,get$cssClass,get$datetime,get$fullDate,get$fullName,get$goToPost,get$hasPosts,get$imageUrl,get$injector,get$isNumber,get$isPaused,get$isString,get$mappings,get$onRecord,get$preEnter,get$readPost,get$readonly,get$selector,get$starChar,get$subtrees,get$template,get$urlMatch,get$viewHtml,isOperator$1,listUnread$0,runGuarded$1,set$_nextDup,set$_prevDup,set$cssClass,set$datetime,set$fullDate,set$imageUrl,set$readonly,_addPending$1,_getTailUrl$3,containsKey$1,countUnread$1,createChild$1,createTimer$2,digestStart$0,domWriteEnd$0,fullPattern$0,get$_contents,get$_hasError,get$_hasValue,get$_isClosed,get$_isFiring,get$_previous,get$broadcast,get$condition,get$elementId,get$frameLoad,get$hasUnread,get$hideEmpty,get$isKeyword,get$maxlength,get$minlength,get$published,get$ratePerMs,get$rootScope,get$routeName,get$starClass,get$uriPolicy,get$viewValue,isCharacter$1,listStarred$0,putIfAbsent$2,readClasses$0,set$condition,set$elementId,set$hasUnread,set$hideEmpty,set$maxlength,set$minlength,set$published,set$routeName,set$viewValue,updateEntry$1,viewFactory$1,addDirective$2,addInfoState$2,addValidator$1,completeTask$1,domReadStart$0,get$_childTail,get$_errorTest,get$_errorZone,get$_lastEvent,get$_nextAdded,get$_nextMoved,get$activePath,get$addingFeed,get$annotation,get$dataSource,get$directives,get$expression,get$feedAddUrl,get$groupCount,get$infoStates,get$isAttached,get$listLength,get$memberName,get$parameters,get$stackTrace,isAssignable$1,lookupGetter$1,lookupSetter$1,lookupSymbol$1,matchComment$1,matchElement$1,newCallScope$2,newFormatter$3,newPrefixNot$1,registerTask$0,removeStates$1,set$_isChained,set$_lastEvent,set$_nextMoved,set$addingFeed,set$dataSource,set$expression,set$feedAddUrl,set$listLength,set$onTurnDone,_expectsEvent$1,addErrorState$2,allowsElement$1,detachContent$1,domWriteStart$0,forEachChange$1,get$SHORTMONTHS,get$_eventState,get$_isComplete,get$_nextChange,get$_nextRecord,get$_recordTail,get$_watchGroup,get$controlPort,get$handleClick,get$idlAttrKind,get$isCompleted,get$isDestroyed,get$isHideEmpty,get$millisecond,get$readingPost,get$showAddFeed,get$templateUrl,get$unreadCount,hasErrorState$1,markAsTouched$0,newBinaryPlus$2,newCallMember$3,newInstanceOf$4,newPrefixPlus$1,registerEvent$1,removeControl$1,set$_eventState,set$_nextChange,set$idlAttrKind,set$isHideEmpty,set$readingPost,set$showAddFeed,set$templateUrl,set$unreadCount,validateLater$0,_addDirtyWatch$1,_completeError$2,_toggleEventId$0,cancelSchedule$0,constructChain$1,forEachRemoval$1,get$NARROWMONTHS,get$_async$_next,get$_nextChanged,get$_nextRemoved,get$_prevRemoved,get$_removeCount,get$currentIndex,get$currentPosts,get$currentValue,get$defaultRoute,get$hasNextEntry,get$hasPrevEntry,get$isAssignable,get$isIdentifier,get$onRouteStart,get$onStarChange,get$requestError,get$templateHtml,get$usePushState,lookupFunction$2,newAccessKeyed$2,newAccessScope$1,newBinaryEqual$2,newBinaryMinus$2,newConditional$3,newLiteralNull$0,newPrefixMinus$1,set$_async$_next,set$_nextChanged,set$_nextRemoved,set$_prevRemoved,set$_removeCount,set$currentIndex,set$hasNextEntry,set$hasPrevEntry,_registerPortal$1,allowsAttribute$3,forEachAddition$1,get$SHORTQUARTERS,get$SHORTWEEKDAYS,get$_async$_value,get$_currentRoute,get$_currentValue,get$_defaultRoute,get$_nextListener,get$_nextPrevious,get$currentFeedId,get$currentPostId,get$delayedEvents,get$dstExpression,get$evalStopwatch,get$isKeywordNull,get$isKeywordTrue,get$markAllAsRead,get$originalValue,get$parentControl,get$previousIndex,get$previousValue,get$responseError,get$typeFactories,inSameErrorZone$1,newAccessMember$2,newBinaryDivide$2,newBinaryModulo$2,newCallFunction$2,newLiteralArray$1,removeAttribute$1,removeInfoState$2,runUnaryGuarded$2,set$_currentRoute,set$_currentValue,set$_nextListener,set$_nextPrevious,set$currentFeedId,set$currentPostId,set$previousIndex,_removeListeners$0,get$_isInputPaused,get$_nextEvalWatch,get$_previousValue,get$fieldStopwatch,get$hasPostsInView,get$inMilliseconds,get$isKeywordFalse,get$isolateStatics,get$namedArguments,get$onRefreshFeeds,get$xsrfCookieName,get$xsrfHeaderName,newLiteralNumber$1,newLiteralObject$2,newLiteralString$1,registerCallback$1,removeErrorState$2,runBinaryGuarded$3,set$_previousValue,set$hasPostsInView,set$onRefreshFeeds,_maybeReloadViews$0,_unregisterPortal$1,get$_nextDirtyWatch,get$_routing$_route,get$addFeedDisabled,get$inputTypedValue,get$refreshingFeeds,get$styleExpression,get$valueExpression,markCurrentAsRead$0,newBinaryLessThan$2,newBinaryMultiply$2,newBinaryNotEqual$2,newLiteralBoolean$1,runOutsideAngular$1,set$_nextDirtyWatch,set$addFeedDisabled,set$inputTypedValue,set$refreshingFeeds,set$styleExpression,set$valueExpression,set$watchCollection,urlParameterNames$0,_completeWithValue$1,get$STANDALONEMONTHS,get$_async$_previous,get$processStopwatch,newBinaryLogicalOr$2,set$_async$_previous,get$currentPostsIndex,handleUncaughtError$2,newBinaryLogicalAnd$2,set$currentPostsIndex,get$STANDALONEWEEKDAYS,get$_onEnterController,get$_onLeaveController,get$_removeAfterFiring,get$currentPostsLength,get$isKeywordUndefined,handleControlMessage$1,newBinaryGreaterThan$2,set$currentPostsLength,_setRemoveAfterFiring$0,get$_whenCompleteAction,get$elapsedMicroseconds,get$isInsideInvokeDirty,get$positionalArguments,listenObserverChanges$2,registerUnaryCallback$1,_core_internal$_onData$1,_revertToPreviousState$0,get$__isolate_helper$_id,newBinaryLessThanEqual$2,registerBinaryCallback$1,__isolate_helper$_close$0,get$STANDALONESHORTMONTHS,get$_onPreEnterController,get$_onPreLeaveController,get$STANDALONENARROWMONTHS,get$millisecondsSinceEpoch,get$STANDALONESHORTWEEKDAYS,get$dontLeaveOnParamChanges,newBinaryGreaterThanEqual$2,newBinaryTruncatingDivide$2,get$STANDALONENARROWWEEKDAYS,get$_watch_group$_fieldGetterFactory,get$_dirty_checking_change_detector$_next,get$_dirty_checking_change_detector$_prev,set$_dirty_checking_change_detector$_next,set$_dirty_checking_change_detector$_prev,get$_dirty_checking_change_detector$_childTail".split(",");
+    var longNames = "run,run,attr,bind,bind,emit,eval,eval,init,then,_fire,_show,check,dirty,day,end,ttl,uri,match,toRti,toUtc,watch,write,_close,finest,ERAS,_key,bind,emit,eval,feed,hide,hour,keys,node,post,root,tail,urls,year,invoke,listen,lookup,modify,module,resume,bind=,emit=,feed=,hide=,post=,urls=,toJson,unwrap,addCase,addFeed,builder,destroy,discard,fromUrl,AMPMS,_name,_next,apply,cache,depth,enter,entry,feeds,image,isUtc,leave,level,match,model,month,mount,route,scope,types,isValid,isValue,listAll,modules,observe,perform,process,entry=,feeds=,image=,level=,model=,warning,_getHead,_getHost,_publish,_reverse,addError,callback,cycleEnd,flushEnd,fromHtml,MONTHS,_error,_route,_value,anchor,author,binder,config,feedid,future,minute,module,params,second,unread,hasMatch,newChain,runUnary,runUnary,_value=,author=,render=,unread=,toNumber,validate,writeAll,_addError,_setError,_setValue,configure,digestEnd,_routes,addFeed,context,destroy,expando,handler,isDirty,modules,newitem,ngValue,onLeave,starred,varData,weekday,matchText,newAssign,newHandle,runBinary,newitem=,starred=,varData=,_getStream,addControl,allowEnter,digestLoop,domReadEnd,flushStart,ERANAMES,QUARTERS,WEEKDAYS,_headers,_isDirty,_nextDup,_onError,_onValue,_prevDup,_streams,attrName,bindings,cssClass,datetime,fullDate,fullName,goToPost,hasPosts,imageUrl,injector,isNumber,isPaused,isString,mappings,onRecord,preEnter,readPost,readonly,selector,starChar,subtrees,template,urlMatch,viewHtml,isOperator,listUnread,runGuarded,_nextDup=,_prevDup=,cssClass=,datetime=,fullDate=,imageUrl=,readonly=,_addPending,_getTailUrl,containsKey,countUnread,createChild,createTimer,digestStart,domWriteEnd,fullPattern,_contents,_hasError,_hasValue,_isClosed,_isFiring,_previous,broadcast,condition,elementId,frameLoad,hasUnread,hideEmpty,isKeyword,maxlength,minlength,published,ratePerMs,rootScope,routeName,starClass,uriPolicy,viewValue,isCharacter,listStarred,putIfAbsent,readClasses,condition=,elementId=,hasUnread=,hideEmpty=,maxlength=,minlength=,published=,routeName=,viewValue=,updateEntry,viewFactory,addDirective,addInfoState,addValidator,completeTask,domReadStart,_childTail,_errorTest,_errorZone,_lastEvent,_nextAdded,_nextMoved,activePath,addingFeed,annotation,dataSource,directives,expression,feedAddUrl,groupCount,infoStates,isAttached,listLength,memberName,parameters,stackTrace,isAssignable,lookupGetter,lookupSetter,lookupSymbol,matchComment,matchElement,newCallScope,newFormatter,newPrefixNot,registerTask,removeStates,_isChained=,_lastEvent=,_nextMoved=,addingFeed=,dataSource=,expression=,feedAddUrl=,listLength=,onTurnDone=,_expectsEvent,addErrorState,allowsElement,detachContent,domWriteStart,forEachChange,SHORTMONTHS,_eventState,_isComplete,_nextChange,_nextRecord,_recordTail,_watchGroup,controlPort,handleClick,idlAttrKind,isCompleted,isDestroyed,isHideEmpty,millisecond,readingPost,showAddFeed,templateUrl,unreadCount,hasErrorState,markAsTouched,newBinaryPlus,newCallMember,newInstanceOf,newPrefixPlus,registerEvent,removeControl,_eventState=,_nextChange=,idlAttrKind=,isHideEmpty=,readingPost=,showAddFeed=,templateUrl=,unreadCount=,validateLater,_addDirtyWatch,_completeError,_toggleEventId,cancelSchedule,constructChain,forEachRemoval,NARROWMONTHS,_next,_nextChanged,_nextRemoved,_prevRemoved,_removeCount,currentIndex,currentPosts,currentValue,defaultRoute,hasNextEntry,hasPrevEntry,isAssignable,isIdentifier,onRouteStart,onStarChange,requestError,templateHtml,usePushState,lookupFunction,newAccessKeyed,newAccessScope,newBinaryEqual,newBinaryMinus,newConditional,newLiteralNull,newPrefixMinus,_next=,_nextChanged=,_nextRemoved=,_prevRemoved=,_removeCount=,currentIndex=,hasNextEntry=,hasPrevEntry=,_registerPortal,allowsAttribute,forEachAddition,SHORTQUARTERS,SHORTWEEKDAYS,_value,_currentRoute,_currentValue,_defaultRoute,_nextListener,_nextPrevious,currentFeedId,currentPostId,delayedEvents,dstExpression,evalStopwatch,isKeywordNull,isKeywordTrue,markAllAsRead,originalValue,parentControl,previousIndex,previousValue,responseError,typeFactories,inSameErrorZone,newAccessMember,newBinaryDivide,newBinaryModulo,newCallFunction,newLiteralArray,removeAttribute,removeInfoState,runUnaryGuarded,_currentRoute=,_currentValue=,_nextListener=,_nextPrevious=,currentFeedId=,currentPostId=,previousIndex=,_removeListeners,_isInputPaused,_nextEvalWatch,_previousValue,fieldStopwatch,hasPostsInView,inMilliseconds,isKeywordFalse,isolateStatics,namedArguments,onRefreshFeeds,xsrfCookieName,xsrfHeaderName,newLiteralNumber,newLiteralObject,newLiteralString,registerCallback,removeErrorState,runBinaryGuarded,_previousValue=,hasPostsInView=,onRefreshFeeds=,_maybeReloadViews,_unregisterPortal,_nextDirtyWatch,_route,addFeedDisabled,inputTypedValue,refreshingFeeds,styleExpression,valueExpression,markCurrentAsRead,newBinaryLessThan,newBinaryMultiply,newBinaryNotEqual,newLiteralBoolean,runOutsideAngular,_nextDirtyWatch=,addFeedDisabled=,inputTypedValue=,refreshingFeeds=,styleExpression=,valueExpression=,watchCollection=,urlParameterNames,_completeWithValue,STANDALONEMONTHS,_previous,processStopwatch,newBinaryLogicalOr,_previous=,currentPostsIndex,handleUncaughtError,newBinaryLogicalAnd,currentPostsIndex=,STANDALONEWEEKDAYS,_onEnterController,_onLeaveController,_removeAfterFiring,currentPostsLength,isKeywordUndefined,handleControlMessage,newBinaryGreaterThan,currentPostsLength=,_setRemoveAfterFiring,_whenCompleteAction,elapsedMicroseconds,isInsideInvokeDirty,positionalArguments,listenObserverChanges,registerUnaryCallback,_onData,_revertToPreviousState,_id,newBinaryLessThanEqual,registerBinaryCallback,_close,STANDALONESHORTMONTHS,_onPreEnterController,_onPreLeaveController,STANDALONENARROWMONTHS,millisecondsSinceEpoch,STANDALONESHORTWEEKDAYS,dontLeaveOnParamChanges,newBinaryGreaterThanEqual,newBinaryTruncatingDivide,STANDALONENARROWWEEKDAYS,_fieldGetterFactory,_next,_prev,_next=,_prev=,_childTail".split(",");
     if (objectClassObject instanceof Array)
       objectClassObject = objectClassObject[1];
     if (objectClassObject) {
@@ -45184,6 +45413,9 @@ function dart_precompiled($collectedClasses) {
   };
   InputElement.prototype.set$valueAsNumber = function(receiver, v) {
     return receiver.valueAsNumber = v;
+  };
+  InputElement.prototype.get$entries = function(receiver) {
+    return receiver.webkitEntries;
   };
   function InstallEvent() {
   }
@@ -49389,15 +49621,6 @@ function dart_precompiled($collectedClasses) {
   if ($desc instanceof Array)
     $desc = $desc[1];
   Controller.prototype = $desc;
-  function DetachAware() {
-  }
-  DetachAware.builtin$cls = "DetachAware";
-  if (!"name" in DetachAware)
-    DetachAware.name = "DetachAware";
-  $desc = $collectedClasses.DetachAware;
-  if ($desc instanceof Array)
-    $desc = $desc[1];
-  DetachAware.prototype = $desc;
   function Formatter(name) {
     this.name = name;
   }
@@ -50172,24 +50395,24 @@ function dart_precompiled($collectedClasses) {
   DefaultTransformDataHttpInterceptor.prototype.get$responseError = function() {
     return this.responseError;
   };
-  function closure372() {
+  function closure385() {
   }
-  closure372.builtin$cls = "closure372";
-  if (!"name" in closure372)
-    closure372.name = "closure372";
-  $desc = $collectedClasses.closure372;
+  closure385.builtin$cls = "closure385";
+  if (!"name" in closure385)
+    closure385.name = "closure385";
+  $desc = $collectedClasses.closure385;
   if ($desc instanceof Array)
     $desc = $desc[1];
-  closure372.prototype = $desc;
-  function closure373() {
+  closure385.prototype = $desc;
+  function closure386() {
   }
-  closure373.builtin$cls = "closure373";
-  if (!"name" in closure373)
-    closure373.name = "closure373";
-  $desc = $collectedClasses.closure373;
+  closure386.builtin$cls = "closure386";
+  if (!"name" in closure386)
+    closure386.name = "closure386";
+  $desc = $collectedClasses.closure386;
   if ($desc instanceof Array)
     $desc = $desc[1];
-  closure373.prototype = $desc;
+  closure386.prototype = $desc;
   function HttpInterceptors(_interceptors) {
     this._interceptors = _interceptors;
   }
@@ -53329,15 +53552,15 @@ function dart_precompiled($collectedClasses) {
   if ($desc instanceof Array)
     $desc = $desc[1];
   NgForm.prototype = $desc;
-  function closure246() {
+  function closure256() {
   }
-  closure246.builtin$cls = "closure246";
-  if (!"name" in closure246)
-    closure246.name = "closure246";
-  $desc = $collectedClasses.closure246;
+  closure256.builtin$cls = "closure256";
+  if (!"name" in closure256)
+    closure256.name = "closure256";
+  $desc = $collectedClasses.closure256;
   if ($desc instanceof Array)
     $desc = $desc[1];
-  closure246.prototype = $desc;
+  closure256.prototype = $desc;
   function NgForm_closure(this_0) {
     this.this_0 = this_0;
   }
@@ -53536,24 +53759,24 @@ function dart_precompiled($collectedClasses) {
   NgModel.prototype.set$render = function(v) {
     return this.render = v;
   };
-  function closure370() {
+  function closure383() {
   }
-  closure370.builtin$cls = "closure370";
-  if (!"name" in closure370)
-    closure370.name = "closure370";
-  $desc = $collectedClasses.closure370;
+  closure383.builtin$cls = "closure383";
+  if (!"name" in closure383)
+    closure383.name = "closure383";
+  $desc = $collectedClasses.closure383;
   if ($desc instanceof Array)
     $desc = $desc[1];
-  closure370.prototype = $desc;
-  function closure371() {
+  closure383.prototype = $desc;
+  function closure384() {
   }
-  closure371.builtin$cls = "closure371";
-  if (!"name" in closure371)
-    closure371.name = "closure371";
-  $desc = $collectedClasses.closure371;
+  closure384.builtin$cls = "closure384";
+  if (!"name" in closure384)
+    closure384.name = "closure384";
+  $desc = $collectedClasses.closure384;
   if ($desc instanceof Array)
     $desc = $desc[1];
-  closure371.prototype = $desc;
+  closure384.prototype = $desc;
   function NgModel__processViewValue_closure(this_0) {
     this.this_0 = this_0;
   }
@@ -54450,15 +54673,15 @@ function dart_precompiled($collectedClasses) {
   if ($desc instanceof Array)
     $desc = $desc[1];
   NgRepeat.prototype = $desc;
-  function closure369() {
+  function closure382() {
   }
-  closure369.builtin$cls = "closure369";
-  if (!"name" in closure369)
-    closure369.name = "closure369";
-  $desc = $collectedClasses.closure369;
+  closure382.builtin$cls = "closure382";
+  if (!"name" in closure382)
+    closure382.name = "closure382";
+  $desc = $collectedClasses.closure382;
   if ($desc instanceof Array)
     $desc = $desc[1];
-  closure369.prototype = $desc;
+  closure382.prototype = $desc;
   function NgRepeat_expression_closure(this_0, trackBy_1) {
     this.this_0 = this_0;
     this.trackBy_1 = trackBy_1;
@@ -55371,15 +55594,15 @@ function dart_precompiled($collectedClasses) {
   NgBindRoute.prototype.set$routeName = function(v) {
     return this.routeName = v;
   };
-  function closure244() {
+  function closure254() {
   }
-  closure244.builtin$cls = "closure244";
-  if (!"name" in closure244)
-    closure244.name = "closure244";
-  $desc = $collectedClasses.closure244;
+  closure254.builtin$cls = "closure254";
+  if (!"name" in closure254)
+    closure254.name = "closure254";
+  $desc = $collectedClasses.closure254;
   if ($desc instanceof Array)
     $desc = $desc[1];
-  closure244.prototype = $desc;
+  closure254.prototype = $desc;
   function NgView(locationService, viewCache, injector, element, scope, _routing$_route, _view, _routing$_scope, _viewRoute) {
     this.locationService = locationService;
     this.viewCache = viewCache;
@@ -55410,15 +55633,15 @@ function dart_precompiled($collectedClasses) {
   NgView.prototype.get$_routing$_route = function() {
     return this._routing$_route;
   };
-  function closure245() {
+  function closure255() {
   }
-  closure245.builtin$cls = "closure245";
-  if (!"name" in closure245)
-    closure245.name = "closure245";
-  $desc = $collectedClasses.closure245;
+  closure255.builtin$cls = "closure255";
+  if (!"name" in closure255)
+    closure255.name = "closure255";
+  $desc = $collectedClasses.closure255;
   if ($desc instanceof Array)
     $desc = $desc[1];
-  closure245.prototype = $desc;
+  closure255.prototype = $desc;
   function NgView__show_closure(box_0, this_1) {
     this.box_0 = box_0;
     this.this_1 = this_1;
@@ -61909,18 +62132,6 @@ function dart_precompiled($collectedClasses) {
   if ($desc instanceof Array)
     $desc = $desc[1];
   Router__matchingRoutes_closure0.prototype = $desc;
-  function Router_go_closure(this_0, replace_1, newUrl_2) {
-    this.this_0 = this_0;
-    this.replace_1 = replace_1;
-    this.newUrl_2 = newUrl_2;
-  }
-  Router_go_closure.builtin$cls = "Router_go_closure";
-  if (!"name" in Router_go_closure)
-    Router_go_closure.name = "Router_go_closure";
-  $desc = $collectedClasses.Router_go_closure;
-  if ($desc instanceof Array)
-    $desc = $desc[1];
-  Router_go_closure.prototype = $desc;
   function Router__buildQuery_closure(queryParams_0) {
     this.queryParams_0 = queryParams_0;
   }
@@ -62114,42 +62325,6 @@ function dart_precompiled($collectedClasses) {
   if ($desc instanceof Array)
     $desc = $desc[1];
   main_closure0.prototype = $desc;
-  function closure117() {
-  }
-  closure117.builtin$cls = "closure117";
-  if (!"name" in closure117)
-    closure117.name = "closure117";
-  $desc = $collectedClasses.closure117;
-  if ($desc instanceof Array)
-    $desc = $desc[1];
-  closure117.prototype = $desc;
-  function closure118() {
-  }
-  closure118.builtin$cls = "closure118";
-  if (!"name" in closure118)
-    closure118.name = "closure118";
-  $desc = $collectedClasses.closure118;
-  if ($desc instanceof Array)
-    $desc = $desc[1];
-  closure118.prototype = $desc;
-  function closure119() {
-  }
-  closure119.builtin$cls = "closure119";
-  if (!"name" in closure119)
-    closure119.name = "closure119";
-  $desc = $collectedClasses.closure119;
-  if ($desc instanceof Array)
-    $desc = $desc[1];
-  closure119.prototype = $desc;
-  function closure120() {
-  }
-  closure120.builtin$cls = "closure120";
-  if (!"name" in closure120)
-    closure120.name = "closure120";
-  $desc = $collectedClasses.closure120;
-  if ($desc instanceof Array)
-    $desc = $desc[1];
-  closure120.prototype = $desc;
   function closure121() {
   }
   closure121.builtin$cls = "closure121";
@@ -63257,6 +63432,96 @@ function dart_precompiled($collectedClasses) {
   if ($desc instanceof Array)
     $desc = $desc[1];
   closure243.prototype = $desc;
+  function closure244() {
+  }
+  closure244.builtin$cls = "closure244";
+  if (!"name" in closure244)
+    closure244.name = "closure244";
+  $desc = $collectedClasses.closure244;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  closure244.prototype = $desc;
+  function closure245() {
+  }
+  closure245.builtin$cls = "closure245";
+  if (!"name" in closure245)
+    closure245.name = "closure245";
+  $desc = $collectedClasses.closure245;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  closure245.prototype = $desc;
+  function closure246() {
+  }
+  closure246.builtin$cls = "closure246";
+  if (!"name" in closure246)
+    closure246.name = "closure246";
+  $desc = $collectedClasses.closure246;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  closure246.prototype = $desc;
+  function closure247() {
+  }
+  closure247.builtin$cls = "closure247";
+  if (!"name" in closure247)
+    closure247.name = "closure247";
+  $desc = $collectedClasses.closure247;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  closure247.prototype = $desc;
+  function closure248() {
+  }
+  closure248.builtin$cls = "closure248";
+  if (!"name" in closure248)
+    closure248.name = "closure248";
+  $desc = $collectedClasses.closure248;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  closure248.prototype = $desc;
+  function closure249() {
+  }
+  closure249.builtin$cls = "closure249";
+  if (!"name" in closure249)
+    closure249.name = "closure249";
+  $desc = $collectedClasses.closure249;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  closure249.prototype = $desc;
+  function closure250() {
+  }
+  closure250.builtin$cls = "closure250";
+  if (!"name" in closure250)
+    closure250.name = "closure250";
+  $desc = $collectedClasses.closure250;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  closure250.prototype = $desc;
+  function closure251() {
+  }
+  closure251.builtin$cls = "closure251";
+  if (!"name" in closure251)
+    closure251.name = "closure251";
+  $desc = $collectedClasses.closure251;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  closure251.prototype = $desc;
+  function closure252() {
+  }
+  closure252.builtin$cls = "closure252";
+  if (!"name" in closure252)
+    closure252.name = "closure252";
+  $desc = $collectedClasses.closure252;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  closure252.prototype = $desc;
+  function closure253() {
+  }
+  closure253.builtin$cls = "closure253";
+  if (!"name" in closure253)
+    closure253.name = "closure253";
+  $desc = $collectedClasses.closure253;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  closure253.prototype = $desc;
   function closure() {
   }
   closure.builtin$cls = "closure";
@@ -64319,96 +64584,42 @@ function dart_precompiled($collectedClasses) {
   if ($desc instanceof Array)
     $desc = $desc[1];
   closure116.prototype = $desc;
-  function closure247() {
+  function closure117() {
   }
-  closure247.builtin$cls = "closure247";
-  if (!"name" in closure247)
-    closure247.name = "closure247";
-  $desc = $collectedClasses.closure247;
+  closure117.builtin$cls = "closure117";
+  if (!"name" in closure117)
+    closure117.name = "closure117";
+  $desc = $collectedClasses.closure117;
   if ($desc instanceof Array)
     $desc = $desc[1];
-  closure247.prototype = $desc;
-  function closure248() {
+  closure117.prototype = $desc;
+  function closure118() {
   }
-  closure248.builtin$cls = "closure248";
-  if (!"name" in closure248)
-    closure248.name = "closure248";
-  $desc = $collectedClasses.closure248;
+  closure118.builtin$cls = "closure118";
+  if (!"name" in closure118)
+    closure118.name = "closure118";
+  $desc = $collectedClasses.closure118;
   if ($desc instanceof Array)
     $desc = $desc[1];
-  closure248.prototype = $desc;
-  function closure249() {
+  closure118.prototype = $desc;
+  function closure119() {
   }
-  closure249.builtin$cls = "closure249";
-  if (!"name" in closure249)
-    closure249.name = "closure249";
-  $desc = $collectedClasses.closure249;
+  closure119.builtin$cls = "closure119";
+  if (!"name" in closure119)
+    closure119.name = "closure119";
+  $desc = $collectedClasses.closure119;
   if ($desc instanceof Array)
     $desc = $desc[1];
-  closure249.prototype = $desc;
-  function closure250() {
+  closure119.prototype = $desc;
+  function closure120() {
   }
-  closure250.builtin$cls = "closure250";
-  if (!"name" in closure250)
-    closure250.name = "closure250";
-  $desc = $collectedClasses.closure250;
+  closure120.builtin$cls = "closure120";
+  if (!"name" in closure120)
+    closure120.name = "closure120";
+  $desc = $collectedClasses.closure120;
   if ($desc instanceof Array)
     $desc = $desc[1];
-  closure250.prototype = $desc;
-  function closure251() {
-  }
-  closure251.builtin$cls = "closure251";
-  if (!"name" in closure251)
-    closure251.name = "closure251";
-  $desc = $collectedClasses.closure251;
-  if ($desc instanceof Array)
-    $desc = $desc[1];
-  closure251.prototype = $desc;
-  function closure252() {
-  }
-  closure252.builtin$cls = "closure252";
-  if (!"name" in closure252)
-    closure252.name = "closure252";
-  $desc = $collectedClasses.closure252;
-  if ($desc instanceof Array)
-    $desc = $desc[1];
-  closure252.prototype = $desc;
-  function closure253() {
-  }
-  closure253.builtin$cls = "closure253";
-  if (!"name" in closure253)
-    closure253.name = "closure253";
-  $desc = $collectedClasses.closure253;
-  if ($desc instanceof Array)
-    $desc = $desc[1];
-  closure253.prototype = $desc;
-  function closure254() {
-  }
-  closure254.builtin$cls = "closure254";
-  if (!"name" in closure254)
-    closure254.name = "closure254";
-  $desc = $collectedClasses.closure254;
-  if ($desc instanceof Array)
-    $desc = $desc[1];
-  closure254.prototype = $desc;
-  function closure255() {
-  }
-  closure255.builtin$cls = "closure255";
-  if (!"name" in closure255)
-    closure255.name = "closure255";
-  $desc = $collectedClasses.closure255;
-  if ($desc instanceof Array)
-    $desc = $desc[1];
-  closure255.prototype = $desc;
-  function closure256() {
-  }
-  closure256.builtin$cls = "closure256";
-  if (!"name" in closure256)
-    closure256.name = "closure256";
-  $desc = $collectedClasses.closure256;
-  if ($desc instanceof Array)
-    $desc = $desc[1];
-  closure256.prototype = $desc;
+  closure120.prototype = $desc;
   function closure257() {
   }
   closure257.builtin$cls = "closure257";
@@ -65417,17 +65628,132 @@ function dart_precompiled($collectedClasses) {
   if ($desc instanceof Array)
     $desc = $desc[1];
   closure368.prototype = $desc;
-  function AddFeedHeqaderComponent(queryService, router, showAddFeed, addingFeed, refreshingFeeds, readingPost, feedAddUrl, currentPostId, routerListener, feedEntryPosition) {
+  function closure369() {
+  }
+  closure369.builtin$cls = "closure369";
+  if (!"name" in closure369)
+    closure369.name = "closure369";
+  $desc = $collectedClasses.closure369;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  closure369.prototype = $desc;
+  function closure370() {
+  }
+  closure370.builtin$cls = "closure370";
+  if (!"name" in closure370)
+    closure370.name = "closure370";
+  $desc = $collectedClasses.closure370;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  closure370.prototype = $desc;
+  function closure371() {
+  }
+  closure371.builtin$cls = "closure371";
+  if (!"name" in closure371)
+    closure371.name = "closure371";
+  $desc = $collectedClasses.closure371;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  closure371.prototype = $desc;
+  function closure372() {
+  }
+  closure372.builtin$cls = "closure372";
+  if (!"name" in closure372)
+    closure372.name = "closure372";
+  $desc = $collectedClasses.closure372;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  closure372.prototype = $desc;
+  function closure373() {
+  }
+  closure373.builtin$cls = "closure373";
+  if (!"name" in closure373)
+    closure373.name = "closure373";
+  $desc = $collectedClasses.closure373;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  closure373.prototype = $desc;
+  function closure374() {
+  }
+  closure374.builtin$cls = "closure374";
+  if (!"name" in closure374)
+    closure374.name = "closure374";
+  $desc = $collectedClasses.closure374;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  closure374.prototype = $desc;
+  function closure375() {
+  }
+  closure375.builtin$cls = "closure375";
+  if (!"name" in closure375)
+    closure375.name = "closure375";
+  $desc = $collectedClasses.closure375;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  closure375.prototype = $desc;
+  function closure376() {
+  }
+  closure376.builtin$cls = "closure376";
+  if (!"name" in closure376)
+    closure376.name = "closure376";
+  $desc = $collectedClasses.closure376;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  closure376.prototype = $desc;
+  function closure377() {
+  }
+  closure377.builtin$cls = "closure377";
+  if (!"name" in closure377)
+    closure377.name = "closure377";
+  $desc = $collectedClasses.closure377;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  closure377.prototype = $desc;
+  function closure378() {
+  }
+  closure378.builtin$cls = "closure378";
+  if (!"name" in closure378)
+    closure378.name = "closure378";
+  $desc = $collectedClasses.closure378;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  closure378.prototype = $desc;
+  function closure379() {
+  }
+  closure379.builtin$cls = "closure379";
+  if (!"name" in closure379)
+    closure379.name = "closure379";
+  $desc = $collectedClasses.closure379;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  closure379.prototype = $desc;
+  function closure380() {
+  }
+  closure380.builtin$cls = "closure380";
+  if (!"name" in closure380)
+    closure380.name = "closure380";
+  $desc = $collectedClasses.closure380;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  closure380.prototype = $desc;
+  function closure381() {
+  }
+  closure381.builtin$cls = "closure381";
+  if (!"name" in closure381)
+    closure381.name = "closure381";
+  $desc = $collectedClasses.closure381;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  closure381.prototype = $desc;
+  function AddFeedHeqaderComponent(queryService, router, showAddFeed, addingFeed, refreshingFeeds, feedAddUrl, feedEntryPosition, onRefreshFeeds) {
     this.queryService = queryService;
     this.router = router;
     this.showAddFeed = showAddFeed;
     this.addingFeed = addingFeed;
     this.refreshingFeeds = refreshingFeeds;
-    this.readingPost = readingPost;
     this.feedAddUrl = feedAddUrl;
-    this.currentPostId = currentPostId;
-    this.routerListener = routerListener;
     this.feedEntryPosition = feedEntryPosition;
+    this.onRefreshFeeds = onRefreshFeeds;
   }
   AddFeedHeqaderComponent.builtin$cls = "AddFeedHeqaderComponent";
   if (!"name" in AddFeedHeqaderComponent)
@@ -65454,17 +65780,17 @@ function dart_precompiled($collectedClasses) {
   AddFeedHeqaderComponent.prototype.set$refreshingFeeds = function(v) {
     return this.refreshingFeeds = v;
   };
-  AddFeedHeqaderComponent.prototype.get$readingPost = function() {
-    return this.readingPost;
-  };
-  AddFeedHeqaderComponent.prototype.set$readingPost = function(v) {
-    return this.readingPost = v;
-  };
   AddFeedHeqaderComponent.prototype.get$feedAddUrl = function() {
     return this.feedAddUrl;
   };
   AddFeedHeqaderComponent.prototype.set$feedAddUrl = function(v) {
     return this.feedAddUrl = v;
+  };
+  AddFeedHeqaderComponent.prototype.get$onRefreshFeeds = function() {
+    return this.onRefreshFeeds;
+  };
+  AddFeedHeqaderComponent.prototype.set$onRefreshFeeds = function(v) {
+    return this.onRefreshFeeds = v;
   };
   function AddFeedHeqaderComponent_addFeed_closure(this_0) {
     this.this_0 = this_0;
@@ -65486,6 +65812,56 @@ function dart_precompiled($collectedClasses) {
   if ($desc instanceof Array)
     $desc = $desc[1];
   AddFeedHeqaderComponent_addFeed_closure0.prototype = $desc;
+  function DataHandlerComponent(queryService, routeProvider, router) {
+    this.queryService = queryService;
+    this.routeProvider = routeProvider;
+    this.router = router;
+  }
+  DataHandlerComponent.builtin$cls = "DataHandlerComponent";
+  if (!"name" in DataHandlerComponent)
+    DataHandlerComponent.name = "DataHandlerComponent";
+  $desc = $collectedClasses.DataHandlerComponent;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  DataHandlerComponent.prototype = $desc;
+  function DataHandlerComponent_attach_closure(this_0) {
+    this.this_0 = this_0;
+  }
+  DataHandlerComponent_attach_closure.builtin$cls = "DataHandlerComponent_attach_closure";
+  if (!"name" in DataHandlerComponent_attach_closure)
+    DataHandlerComponent_attach_closure.name = "DataHandlerComponent_attach_closure";
+  $desc = $collectedClasses.DataHandlerComponent_attach_closure;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  DataHandlerComponent_attach_closure.prototype = $desc;
+  function DataHandlerComponent_attach__closure(this_1) {
+    this.this_1 = this_1;
+  }
+  DataHandlerComponent_attach__closure.builtin$cls = "DataHandlerComponent_attach__closure";
+  if (!"name" in DataHandlerComponent_attach__closure)
+    DataHandlerComponent_attach__closure.name = "DataHandlerComponent_attach__closure";
+  $desc = $collectedClasses.DataHandlerComponent_attach__closure;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  DataHandlerComponent_attach__closure.prototype = $desc;
+  function DataHandlerComponent__getGenericSource_closure() {
+  }
+  DataHandlerComponent__getGenericSource_closure.builtin$cls = "DataHandlerComponent__getGenericSource_closure";
+  if (!"name" in DataHandlerComponent__getGenericSource_closure)
+    DataHandlerComponent__getGenericSource_closure.name = "DataHandlerComponent__getGenericSource_closure";
+  $desc = $collectedClasses.DataHandlerComponent__getGenericSource_closure;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  DataHandlerComponent__getGenericSource_closure.prototype = $desc;
+  function DataHandlerComponent__getFeedSource_closure() {
+  }
+  DataHandlerComponent__getFeedSource_closure.builtin$cls = "DataHandlerComponent__getFeedSource_closure";
+  if (!"name" in DataHandlerComponent__getFeedSource_closure)
+    DataHandlerComponent__getFeedSource_closure.name = "DataHandlerComponent__getFeedSource_closure";
+  $desc = $collectedClasses.DataHandlerComponent__getFeedSource_closure;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  DataHandlerComponent__getFeedSource_closure.prototype = $desc;
   function FeedListComponent(unreadCount, queryService) {
     this.unreadCount = unreadCount;
     this.queryService = queryService;
@@ -65503,6 +65879,57 @@ function dart_precompiled($collectedClasses) {
   FeedListComponent.prototype.set$unreadCount = function(v) {
     return this.unreadCount = v;
   };
+  function EntriesListComponent(dataSource, queryService, router, listLength, hasPostsInView) {
+    this.dataSource = dataSource;
+    this.queryService = queryService;
+    this.router = router;
+    this.listLength = listLength;
+    this.hasPostsInView = hasPostsInView;
+  }
+  EntriesListComponent.builtin$cls = "EntriesListComponent";
+  if (!"name" in EntriesListComponent)
+    EntriesListComponent.name = "EntriesListComponent";
+  $desc = $collectedClasses.EntriesListComponent;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  EntriesListComponent.prototype = $desc;
+  EntriesListComponent.prototype.get$dataSource = function() {
+    return this.dataSource;
+  };
+  EntriesListComponent.prototype.set$dataSource = function(v) {
+    return this.dataSource = v;
+  };
+  EntriesListComponent.prototype.get$listLength = function() {
+    return this.listLength;
+  };
+  EntriesListComponent.prototype.set$listLength = function(v) {
+    return this.listLength = v;
+  };
+  EntriesListComponent.prototype.get$hasPostsInView = function() {
+    return this.hasPostsInView;
+  };
+  EntriesListComponent.prototype.set$hasPostsInView = function(v) {
+    return this.hasPostsInView = v;
+  };
+  function EntriesListComponent_hasPosts_closure(feedId_0) {
+    this.feedId_0 = feedId_0;
+  }
+  EntriesListComponent_hasPosts_closure.builtin$cls = "EntriesListComponent_hasPosts_closure";
+  if (!"name" in EntriesListComponent_hasPosts_closure)
+    EntriesListComponent_hasPosts_closure.name = "EntriesListComponent_hasPosts_closure";
+  $desc = $collectedClasses.EntriesListComponent_hasPosts_closure;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  EntriesListComponent_hasPosts_closure.prototype = $desc;
+  function EntriesListComponent_onStarChange_closure() {
+  }
+  EntriesListComponent_onStarChange_closure.builtin$cls = "EntriesListComponent_onStarChange_closure";
+  if (!"name" in EntriesListComponent_onStarChange_closure)
+    EntriesListComponent_onStarChange_closure.name = "EntriesListComponent_onStarChange_closure";
+  $desc = $collectedClasses.EntriesListComponent_onStarChange_closure;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  EntriesListComponent_onStarChange_closure.prototype = $desc;
   function PostComponent(entry, elementId, queryService, routeProvider, imageService, imageUrl) {
     this.entry = entry;
     this.elementId = elementId;
@@ -65566,97 +65993,27 @@ function dart_precompiled($collectedClasses) {
   if ($desc instanceof Array)
     $desc = $desc[1];
   PostComponent_onStarChange_closure.prototype = $desc;
-  function PostsListComponent(dataSource, feedId, queryService, routeProvider, router, postsMap, feeds) {
-    this.dataSource = dataSource;
-    this.feedId = feedId;
+  function FeedEntriesComponent(queryService, routeProvider, router) {
     this.queryService = queryService;
     this.routeProvider = routeProvider;
     this.router = router;
-    this.postsMap = postsMap;
-    this.feeds = feeds;
   }
-  PostsListComponent.builtin$cls = "PostsListComponent";
-  if (!"name" in PostsListComponent)
-    PostsListComponent.name = "PostsListComponent";
-  $desc = $collectedClasses.PostsListComponent;
+  FeedEntriesComponent.builtin$cls = "FeedEntriesComponent";
+  if (!"name" in FeedEntriesComponent)
+    FeedEntriesComponent.name = "FeedEntriesComponent";
+  $desc = $collectedClasses.FeedEntriesComponent;
   if ($desc instanceof Array)
     $desc = $desc[1];
-  PostsListComponent.prototype = $desc;
-  PostsListComponent.prototype.get$dataSource = function() {
-    return this.dataSource;
-  };
-  PostsListComponent.prototype.set$dataSource = function(v) {
-    return this.dataSource = v;
-  };
-  PostsListComponent.prototype.get$feedId = function() {
-    return this.feedId;
-  };
-  PostsListComponent.prototype.set$feedId = function(v) {
-    return this.feedId = v;
-  };
-  PostsListComponent.prototype.get$postsMap = function() {
-    return this.postsMap;
-  };
-  PostsListComponent.prototype.set$postsMap = function(v) {
-    return this.postsMap = v;
-  };
-  PostsListComponent.prototype.get$feeds = function() {
-    return this.feeds;
-  };
-  PostsListComponent.prototype.set$feeds = function(v) {
-    return this.feeds = v;
-  };
-  function PostsListComponent_onStarChange_closure() {
+  FeedEntriesComponent.prototype = $desc;
+  function FeedEntriesComponent_onStarChange_closure() {
   }
-  PostsListComponent_onStarChange_closure.builtin$cls = "PostsListComponent_onStarChange_closure";
-  if (!"name" in PostsListComponent_onStarChange_closure)
-    PostsListComponent_onStarChange_closure.name = "PostsListComponent_onStarChange_closure";
-  $desc = $collectedClasses.PostsListComponent_onStarChange_closure;
+  FeedEntriesComponent_onStarChange_closure.builtin$cls = "FeedEntriesComponent_onStarChange_closure";
+  if (!"name" in FeedEntriesComponent_onStarChange_closure)
+    FeedEntriesComponent_onStarChange_closure.name = "FeedEntriesComponent_onStarChange_closure";
+  $desc = $collectedClasses.FeedEntriesComponent_onStarChange_closure;
   if ($desc instanceof Array)
     $desc = $desc[1];
-  PostsListComponent_onStarChange_closure.prototype = $desc;
-  function PostsListComponent__getFeedSource_closure(this_0, feed_1) {
-    this.this_0 = this_0;
-    this.feed_1 = feed_1;
-  }
-  PostsListComponent__getFeedSource_closure.builtin$cls = "PostsListComponent__getFeedSource_closure";
-  if (!"name" in PostsListComponent__getFeedSource_closure)
-    PostsListComponent__getFeedSource_closure.name = "PostsListComponent__getFeedSource_closure";
-  $desc = $collectedClasses.PostsListComponent__getFeedSource_closure;
-  if ($desc instanceof Array)
-    $desc = $desc[1];
-  PostsListComponent__getFeedSource_closure.prototype = $desc;
-  function PostsListComponent__getGenericSource_closure(this_0) {
-    this.this_0 = this_0;
-  }
-  PostsListComponent__getGenericSource_closure.builtin$cls = "PostsListComponent__getGenericSource_closure";
-  if (!"name" in PostsListComponent__getGenericSource_closure)
-    PostsListComponent__getGenericSource_closure.name = "PostsListComponent__getGenericSource_closure";
-  $desc = $collectedClasses.PostsListComponent__getGenericSource_closure;
-  if ($desc instanceof Array)
-    $desc = $desc[1];
-  PostsListComponent__getGenericSource_closure.prototype = $desc;
-  function PostsListComponent__getGenericSource__closure(this_1, _postsMap_2) {
-    this.this_1 = this_1;
-    this._postsMap_2 = _postsMap_2;
-  }
-  PostsListComponent__getGenericSource__closure.builtin$cls = "PostsListComponent__getGenericSource__closure";
-  if (!"name" in PostsListComponent__getGenericSource__closure)
-    PostsListComponent__getGenericSource__closure.name = "PostsListComponent__getGenericSource__closure";
-  $desc = $collectedClasses.PostsListComponent__getGenericSource__closure;
-  if ($desc instanceof Array)
-    $desc = $desc[1];
-  PostsListComponent__getGenericSource__closure.prototype = $desc;
-  function PostsListComponent__getGenericSource___closure(entry_3) {
-    this.entry_3 = entry_3;
-  }
-  PostsListComponent__getGenericSource___closure.builtin$cls = "PostsListComponent__getGenericSource___closure";
-  if (!"name" in PostsListComponent__getGenericSource___closure)
-    PostsListComponent__getGenericSource___closure.name = "PostsListComponent__getGenericSource___closure";
-  $desc = $collectedClasses.PostsListComponent__getGenericSource___closure;
-  if ($desc instanceof Array)
-    $desc = $desc[1];
-  PostsListComponent__getGenericSource___closure.prototype = $desc;
+  FeedEntriesComponent_onStarChange_closure.prototype = $desc;
   function PubdateComponent(datetime) {
     this.datetime = datetime;
   }
@@ -65689,8 +66046,10 @@ function dart_precompiled($collectedClasses) {
   StarringComponent.prototype.set$starred = function(v) {
     return this.starred = v;
   };
-  function UnreadCounterComponent(feed, queryService) {
+  function UnreadCounterComponent(feed, _cssClass, _hideEmpty, queryService) {
     this.feed = feed;
+    this._cssClass = _cssClass;
+    this._hideEmpty = _hideEmpty;
     this.queryService = queryService;
   }
   UnreadCounterComponent.builtin$cls = "UnreadCounterComponent";
@@ -65742,18 +66101,9 @@ function dart_precompiled($collectedClasses) {
   if ($desc instanceof Array)
     $desc = $desc[1];
   SanitizeFilter.prototype = $desc;
-  function rssAppRouteInitializer_closure(router_0) {
-    this.router_0 = router_0;
-  }
-  rssAppRouteInitializer_closure.builtin$cls = "rssAppRouteInitializer_closure";
-  if (!"name" in rssAppRouteInitializer_closure)
-    rssAppRouteInitializer_closure.name = "rssAppRouteInitializer_closure";
-  $desc = $collectedClasses.rssAppRouteInitializer_closure;
-  if ($desc instanceof Array)
-    $desc = $desc[1];
-  rssAppRouteInitializer_closure.prototype = $desc;
-  function RssController(queryService) {
+  function RssController(queryService, communication) {
     this.queryService = queryService;
+    this.communication = communication;
   }
   RssController.builtin$cls = "RssController";
   if (!"name" in RssController)
@@ -65762,6 +66112,24 @@ function dart_precompiled($collectedClasses) {
   if ($desc instanceof Array)
     $desc = $desc[1];
   RssController.prototype = $desc;
+  function AppComm() {
+  }
+  AppComm.builtin$cls = "AppComm";
+  if (!"name" in AppComm)
+    AppComm.name = "AppComm";
+  $desc = $collectedClasses.AppComm;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  AppComm.prototype = $desc;
+  function AppComm_closure() {
+  }
+  AppComm_closure.builtin$cls = "AppComm_closure";
+  if (!"name" in AppComm_closure)
+    AppComm_closure.name = "AppComm_closure";
+  $desc = $collectedClasses.AppComm_closure;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  AppComm_closure.prototype = $desc;
   function RssDatabase(db, _loaded) {
     this.db = db;
     this._loaded = _loaded;
@@ -66206,15 +66574,16 @@ function dart_precompiled($collectedClasses) {
   if ($desc instanceof Array)
     $desc = $desc[1];
   ImageService_getImage_closure0.prototype = $desc;
-  function QueryService(_queryservice$_http, db, _queryservice$_loaded, feeds, currentPosts, unreadMap, _currentFeedId, _unreadCount) {
+  function QueryService(_queryservice$_http, db, _queryservice$_loaded, feeds, currentPosts, unreadMap, currentFeedId, currentPostId, unreadCount) {
     this._queryservice$_http = _queryservice$_http;
     this.db = db;
     this._queryservice$_loaded = _queryservice$_loaded;
     this.feeds = feeds;
     this.currentPosts = currentPosts;
     this.unreadMap = unreadMap;
-    this._currentFeedId = _currentFeedId;
-    this._unreadCount = _unreadCount;
+    this.currentFeedId = currentFeedId;
+    this.currentPostId = currentPostId;
+    this.unreadCount = unreadCount;
   }
   QueryService.builtin$cls = "QueryService";
   if (!"name" in QueryService)
@@ -66231,6 +66600,24 @@ function dart_precompiled($collectedClasses) {
   };
   QueryService.prototype.get$currentPosts = function() {
     return this.currentPosts;
+  };
+  QueryService.prototype.get$currentFeedId = function() {
+    return this.currentFeedId;
+  };
+  QueryService.prototype.set$currentFeedId = function(v) {
+    return this.currentFeedId = v;
+  };
+  QueryService.prototype.get$currentPostId = function() {
+    return this.currentPostId;
+  };
+  QueryService.prototype.set$currentPostId = function(v) {
+    return this.currentPostId = v;
+  };
+  QueryService.prototype.get$unreadCount = function() {
+    return this.unreadCount;
+  };
+  QueryService.prototype.set$unreadCount = function(v) {
+    return this.unreadCount = v;
   };
   function QueryService__loadFeeds_closure(this_0) {
     this.this_0 = this_0;
@@ -66252,6 +66639,15 @@ function dart_precompiled($collectedClasses) {
   if ($desc instanceof Array)
     $desc = $desc[1];
   QueryService__countUnreads_closure.prototype = $desc;
+  function QueryService__countUnreads_closure0() {
+  }
+  QueryService__countUnreads_closure0.builtin$cls = "QueryService__countUnreads_closure0";
+  if (!"name" in QueryService__countUnreads_closure0)
+    QueryService__countUnreads_closure0.name = "QueryService__countUnreads_closure0";
+  $desc = $collectedClasses.QueryService__countUnreads_closure0;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  QueryService__countUnreads_closure0.prototype = $desc;
   function QueryService_countUnread_closure(this_0, feedId_1) {
     this.this_0 = this_0;
     this.feedId_1 = feedId_1;
@@ -66263,6 +66659,17 @@ function dart_precompiled($collectedClasses) {
   if ($desc instanceof Array)
     $desc = $desc[1];
   QueryService_countUnread_closure.prototype = $desc;
+  function QueryService__revalideteUnread_closure(this_0, feedId_1) {
+    this.this_0 = this_0;
+    this.feedId_1 = feedId_1;
+  }
+  QueryService__revalideteUnread_closure.builtin$cls = "QueryService__revalideteUnread_closure";
+  if (!"name" in QueryService__revalideteUnread_closure)
+    QueryService__revalideteUnread_closure.name = "QueryService__revalideteUnread_closure";
+  $desc = $collectedClasses.QueryService__revalideteUnread_closure;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  QueryService__revalideteUnread_closure.prototype = $desc;
   function QueryService_getPosts_closure(this_0) {
     this.this_0 = this_0;
   }
@@ -66342,8 +66749,10 @@ function dart_precompiled($collectedClasses) {
   if ($desc instanceof Array)
     $desc = $desc[1];
   QueryService_setEntryRead_closure0.prototype = $desc;
-  function QueryService_setEntryRead_closure1(box_0) {
+  function QueryService_setEntryRead_closure1(box_0, this_2, entry_3) {
     this.box_0 = box_0;
+    this.this_2 = this_2;
+    this.entry_3 = entry_3;
   }
   QueryService_setEntryRead_closure1.builtin$cls = "QueryService_setEntryRead_closure1";
   if (!"name" in QueryService_setEntryRead_closure1)
@@ -66372,6 +66781,37 @@ function dart_precompiled($collectedClasses) {
   if ($desc instanceof Array)
     $desc = $desc[1];
   QueryService_getPost_closure.prototype = $desc;
+  function QueryService_markCurrentAsRead_closure(this_0, tasks_1) {
+    this.this_0 = this_0;
+    this.tasks_1 = tasks_1;
+  }
+  QueryService_markCurrentAsRead_closure.builtin$cls = "QueryService_markCurrentAsRead_closure";
+  if (!"name" in QueryService_markCurrentAsRead_closure)
+    QueryService_markCurrentAsRead_closure.name = "QueryService_markCurrentAsRead_closure";
+  $desc = $collectedClasses.QueryService_markCurrentAsRead_closure;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  QueryService_markCurrentAsRead_closure.prototype = $desc;
+  function QueryService_markCurrentAsRead_closure0(this_2) {
+    this.this_2 = this_2;
+  }
+  QueryService_markCurrentAsRead_closure0.builtin$cls = "QueryService_markCurrentAsRead_closure0";
+  if (!"name" in QueryService_markCurrentAsRead_closure0)
+    QueryService_markCurrentAsRead_closure0.name = "QueryService_markCurrentAsRead_closure0";
+  $desc = $collectedClasses.QueryService_markCurrentAsRead_closure0;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  QueryService_markCurrentAsRead_closure0.prototype = $desc;
+  function QueryService_markCurrentAsRead_closure1(this_3) {
+    this.this_3 = this_3;
+  }
+  QueryService_markCurrentAsRead_closure1.builtin$cls = "QueryService_markCurrentAsRead_closure1";
+  if (!"name" in QueryService_markCurrentAsRead_closure1)
+    QueryService_markCurrentAsRead_closure1.name = "QueryService_markCurrentAsRead_closure1";
+  $desc = $collectedClasses.QueryService_markCurrentAsRead_closure1;
+  if ($desc instanceof Array)
+    $desc = $desc[1];
+  QueryService_markCurrentAsRead_closure1.prototype = $desc;
   function UrlMatcher() {
   }
   UrlMatcher.builtin$cls = "UrlMatcher";
@@ -66456,5 +66896,5 @@ function dart_precompiled($collectedClasses) {
   if ($desc instanceof Array)
     $desc = $desc[1];
   UrlTemplate_reverse_closure.prototype = $desc;
-  return [HtmlElement, _EntryArray, AnchorElement, Animation0, AnimationEvent, AreaElement, AudioElement, AutocompleteErrorEvent, BRElement, BaseElement, BeforeLoadEvent, BeforeUnloadEvent, Blob, BodyElement, ButtonElement, CDataSection, CanvasElement, CharacterData, CloseEvent, Comment, CompositionEvent, ContentElement, CssFontFaceLoadEvent, CssStyleDeclaration, CustomEvent, DListElement, DataListElement, DetailsElement, DeviceMotionEvent, DeviceOrientationEvent, DialogElement, DivElement, Document, DocumentFragment, DomError, DomException, DomImplementation, DomStringList, Element, EmbedElement, ErrorEvent, Event, EventTarget, FieldSetElement, File, FileError, FocusEvent, FormElement, HRElement, HashChangeEvent, HeadElement, HeadingElement, History, HtmlCollection, HtmlDocument, HtmlFormControlsCollection, HtmlHtmlElement, HtmlOptionsCollection, HttpRequest, HttpRequestEventTarget, IFrameElement, ImageData, ImageElement, InputElement, InstallEvent, InstallPhaseEvent, KeyboardEvent, KeygenElement, LIElement, LabelElement, LegendElement, LinkElement, Location, MapElement, MediaController, MediaElement, MediaError, MediaKeyError, MediaKeyEvent, MediaKeyMessageEvent, MediaKeyNeededEvent, MediaStream, MediaStreamEvent, MediaStreamTrack, MediaStreamTrackEvent, MenuElement, MessageEvent, MetaElement, MeterElement, MidiConnectionEvent, MidiInput, MidiMessageEvent, MidiOutput, MidiPort, ModElement, MouseEvent, Navigator, NavigatorUserMediaError, Node, NodeList, OListElement, ObjectElement, OptGroupElement, OptionElement, OutputElement, OverflowEvent, PageTransitionEvent, ParagraphElement, ParamElement, PopStateEvent, PositionError, PreElement, ProcessingInstruction, ProgressElement, ProgressEvent, QuoteElement, Range, ResourceProgressEvent, RtcDataChannelEvent, RtcDtmfToneChangeEvent, RtcIceCandidateEvent, ScriptElement0, SecurityPolicyViolationEvent, SelectElement, ShadowElement, ShadowRoot, SourceElement, SpanElement, SpeechInputEvent, SpeechRecognitionError, SpeechRecognitionEvent, SpeechSynthesisEvent, StorageEvent, StyleElement, TableCaptionElement, TableCellElement, TableColElement, TableElement, TableRowElement, TableSectionElement, TemplateElement, Text, TextAreaElement, TextEvent, TextTrack, TimedItem, TitleElement, TouchEvent, TrackElement, TrackEvent, TransitionEvent, UIEvent, UListElement, UnknownElement, VideoElement, WheelEvent, Window, XmlDocument, _Attr, _DocumentType, _HTMLAppletElement, _HTMLDirectoryElement, _HTMLFontElement, _HTMLFrameElement, _HTMLFrameSetElement, _HTMLMarqueeElement, _MutationEvent, _NamedNodeMap, _Notation, _XMLHttpRequestProgressEvent, Cursor, CursorWithValue, Database, IdbFactory, Index, KeyRange, ObjectStore, OpenDBRequest, Request, Transaction, VersionChangeEvent, AElement, AltGlyphElement, AnimateElement, AnimateMotionElement, AnimateTransformElement, AnimatedEnumeration, AnimatedLength, AnimatedNumber, AnimatedNumberList, AnimatedString, AnimationElement, CircleElement, ClipPathElement, DefsElement, DescElement, DiscardElement, EllipseElement, FEBlendElement, FEColorMatrixElement, FEComponentTransferElement, FECompositeElement, FEConvolveMatrixElement, FEDiffuseLightingElement, FEDisplacementMapElement, FEDistantLightElement, FEFloodElement, FEFuncAElement, FEFuncBElement, FEFuncGElement, FEFuncRElement, FEGaussianBlurElement, FEImageElement, FEMergeElement, FEMergeNodeElement, FEMorphologyElement, FEOffsetElement, FEPointLightElement, FESpecularLightingElement, FESpotLightElement, FETileElement, FETurbulenceElement, FilterElement, ForeignObjectElement, GElement, GeometryElement, GraphicsElement, ImageElement0, LineElement, LinearGradientElement, MarkerElement, MaskElement, MetadataElement, PathElement, PatternElement, PolygonElement, PolylineElement, RadialGradientElement, RectElement, ScriptElement, SetElement, StopElement, StyleElement0, SvgElement, SvgSvgElement, SwitchElement, SymbolElement, TSpanElement, TextContentElement, TextElement, TextPathElement, TextPositioningElement, TitleElement0, UseElement, ViewElement, ZoomEvent, _GradientElement, _SVGAltGlyphDefElement, _SVGAltGlyphItemElement, _SVGComponentTransferFunctionElement, _SVGCursorElement, _SVGFEDropShadowElement, _SVGFontElement, _SVGFontFaceElement, _SVGFontFaceFormatElement, _SVGFontFaceNameElement, _SVGFontFaceSrcElement, _SVGFontFaceUriElement, _SVGGlyphElement, _SVGGlyphRefElement, _SVGHKernElement, _SVGMPathElement, _SVGMissingGlyphElement, _SVGVKernElement, AudioProcessingEvent, OfflineAudioCompletionEvent, ContextEvent, SqlError, NativeByteBuffer, NativeTypedData, NativeByteData, NativeFloat32List, NativeFloat64List, NativeInt16List, NativeInt32List, NativeInt8List, NativeUint16List, NativeUint32List, NativeUint8ClampedList, NativeUint8List, JS_CONST, Interceptor, JSBool, JSNull, JavaScriptObject, PlainJavaScriptObject, UnknownJavaScriptObject, JSArray, JSNumber, JSInt, JSDouble, JSString, _CodeUnits, startRootIsolate_closure, startRootIsolate_closure0, _Manager, _IsolateContext, _IsolateContext_handlePing_respond, _EventLoop, _EventLoop__runHelper_next, _IsolateEvent, _MainManagerStub, IsolateNatives__processWorkerMessage_closure, IsolateNatives__startIsolate_runStartFunction, _BaseSendPort, _NativeJsSendPort, _NativeJsSendPort_send_closure, _WorkerSendPort, RawReceivePortImpl, _JsSerializer, _JsCopier, _JsDeserializer, _JsVisitedMap, _MessageTraverserVisitedMap, _MessageTraverser, _Copier, _Copier_visitMap_closure, _Serializer, _Deserializer, TimerImpl, TimerImpl_internalCallback, TimerImpl_internalCallback0, CapabilityImpl, ConstantMap, ConstantStringMap, ConstantStringMap_values_closure, _ConstantMapKeyIterable, JSInvocationMirror, ReflectionInfo, ReflectionInfo_sortedIndex_closure, Primitives_functionNoSuchMethod_closure, Primitives_applyFunction_closure, TypeErrorDecoder, NullError, JsNoSuchMethodError, UnknownJsTypeError, unwrapException_saveStackTrace, _StackTrace, invokeClosure_closure, invokeClosure_closure0, invokeClosure_closure1, invokeClosure_closure2, invokeClosure_closure3, Closure, TearOffClosure, BoundClosure, TypeErrorImplementation, CastErrorImplementation, RuntimeError, RuntimeType, RuntimeFunctionType, DynamicRuntimeType, RuntimeTypePlain, RuntimeTypeGeneric, FunctionTypeInfoDecoderRing, TypeImpl, initHooks_closure, initHooks_closure0, initHooks_closure1, JSSyntaxRegExp, _MatchImplementation, _AllMatchesIterable, _AllMatchesIterator, StringMatch, AnimationLoop, AnimationLoop__queueAnimationFrame_closure, AnimationLoop__queueAnimationFrame__closure, AnimationLoop__queueAnimationFrame__closure0, AnimationFrame, AnimationOptimizer, AnimationOptimizer_track_closure, LoopedAnimation, AnimationList, AnimationList_onCompleted_closure, AnimationList_onCompleted_closure0, CssAnimate, CssAnimate_insert_closure, CssAnimate_insert_closure0, CssAnimate_remove_closure, CssAnimate_remove_closure0, CssAnimate_remove__closure, CssAnimate_move_closure, CssAnimate_move_closure0, CssAnimationMap, CssAnimationMap_track_closure, CssAnimation, AnimationModule, NgAnimate, NgAnimateChildren, AbstractNgAnimate, AngularModule, Application, Application_closure, Application_run_closure, Application_run__closure, _StaticApplication, Directive, Component, Decorator, Controller, DetachAware, Formatter, Animate, Animation, NoOpAnimation, AnimationResult, cloneElements_closure, MappingParts, DirectiveRef, forceNewDirectivesAndFormatters_closure, BrowserCookies, BrowserCookies__updateLastCookies_closure, Cookies, NodeAttrs, NodeAttrs_operator$indexSet_closure, NodeAttrs_observe_closure, TemplateLoader, _MustacheAttr, DirectiveMap, TemplateElementBinder, TemplateElementBinder__registerViewFactory_closure, TemplateElementBinder__registerViewFactory_closure0, ElementBinder, ElementBinder__bindTwoWay_closure, ElementBinder__bindTwoWay__closure0, ElementBinder__bindTwoWay_closure0, ElementBinder__bindTwoWay__closure, ElementBinder__bindOneWay_closure, ElementBinder__createAttrMappings_closure, ElementBinder__createAttrMappings__closure, ElementBinder__createAttrMappings__closure0, ElementBinder__link_closure, ElementBinder__link__closure, ElementBinder__link__closure0, ElementBinder__link__closure1, ElementBinder__createDirectiveFactories_closure, ElementBinder__createDirectiveFactories_closure0, ElementBinder_bind_closure, ElementBinder_bind_closure0, ElementBinder_bind_closure1, _TaskList, _TaskList_completeTask_closure, ElementBinderTreeRef, ElementBinderTree, TaggedTextBinder, TaggedElementBinder, ElementBinderFactory, ElementBinderBuilder, ElementBinderBuilder_addDirective_closure, EventHandler, EventHandler_register_closure, EventHandler_eventNameToAttrName_closure, EventHandler_attrNameToEventName_closure, ShadowRootEventHandler, UrlRewriter, HttpBackend, LocationWrapper, HttpInterceptor, DefaultTransformDataHttpInterceptor, closure372, closure373, HttpInterceptors, HttpInterceptors_constructChain_closure, HttpInterceptors_constructChain__closure0, HttpInterceptors_constructChain__closure, HttpResponseConfig, HttpResponse, HttpDefaultHeaders, HttpDefaultHeaders__applyHeaders_closure, HttpDefaultHeaders_setHeaders_closure, HttpDefaults, Http, Http_call_closure, Http_call_closure0, Http_call__closure, Http_call__closure0, Http_call__closure1, Http_call__closure2, Http_call_closure1, Http_parseHeaders_closure, Http__buildUrl_closure, Http__buildUrl__closure, CoreDomModule, CoreDomModule_closure, TextMustache, AttrMustache, AttrMustache_closure, NgElement, NgElement__scheduleDomWrite_closure, NgElement__writeToDom_closure, NgElement__writeToDom_closure0, NodeCursor, DirectiveSelector, DirectiveSelector_closure, DirectiveSelector_matchElement_closure, DirectiveSelector_matchElement__closure1, DirectiveSelector_matchElement_closure0, DirectiveSelector_matchElement__closure, DirectiveSelector_matchElement__closure0, DirectiveSelector_matchText_closure, DirectiveSelectorFactory, _Directive, _ContainsSelector, _SelectorPart, _addRefs_closure, _ElementSelector, _ElementSelector_addDirective_closure, _ElementSelector_addDirective_closure0, _ElementSelector_addDirective_closure1, _ElementSelector_addDirective_closure2, _ElementSelector_addDirective_closure3, _ElementSelector_addDirective_closure4, _ElementSelector_addDirective_closure5, _ElementSelector_addDirective_closure6, _ElementSelector__matchingKey_closure, _ElementSelector__matchingKey__closure, _ElementSelector__matchingKey_closure0, ComponentFactory__setupOnShadowDomAttach_closure, ShadowDomComponentFactory, ShadowDomComponentFactory_call_closure, _ComponentFactory, _ComponentFactory_call_closure, _ComponentFactory_call__closure2, _ComponentFactory_call___closure, _ComponentFactory_call___closure0, _ComponentFactory_call___closure1, _ComponentFactory_call_closure0, _ComponentFactory_call__closure, _ComponentFactory_call__closure0, _ComponentFactory_call__closure1, _ComponentFactory_createShadowInjector_closure, ShadowlessShadowRoot, TaggingCompiler, TaggingViewFactory, TemplateCache, Content, ContentPort, TranscludingComponentFactory, TranscludingComponentFactory_call_closure, TranscludingComponentFactory_call__closure, TranscludingComponentFactory_call__closure0, TranscludingComponentFactory_call__closure1, NullTreeSanitizer, View, ViewPort, BoundViewFactory, ViewFactory, WalkingViewFactory, ViewCache, ViewCache_fromUrl_closure, _AnchorAttrs, ElementProbe, WalkingCompiler, ParserBackend, ClosureMap, DynamicParser, DynamicParser_call_closure, DynamicExpression, DynamicParserBackend, DynamicParserBackend_newAccessScope_closure, DynamicParserImpl, Chain, Formatter1, Assign, Conditional, PrefixNot, Binary, LiteralPrimitive, LiteralString, LiteralArray, LiteralArray_eval_closure, LiteralObject, LiteralObject_eval_closure, AccessScopeFast, AccessScope_AccessFast, AccessMemberFast, AccessMember_AccessFast, AccessKeyed, AccessFast, CallScope, CallScope_eval_closure, CallMember, CallMember_eval_closure, CallFunction, CallFunction_eval_closure, Lexer, Scanner, Scanner_scanString_closure, Token, CharacterToken, IdentifierToken, OperatorToken, NumberToken, StringToken, Visitor, Expression, BoundExpression, Chain0, Formatter0, Assign0, Conditional0, AccessScope, AccessMember, AccessKeyed0, CallArguments, CallScope0, CallFunction0, CallMember0, Binary0, Prefix, Literal, LiteralPrimitive0, LiteralString0, LiteralArray0, LiteralObject0, _DefaultFormatterMap, Unparser, Unparser_writeArguments_closure, EvalError, StaticClosureMap, StaticClosureMap_lookupFunction_closure, StaticClosureMap_lookupFunction__closure, AnnotationMap, AnnotationMap_closure, AnnotationMap__closure, AnnotationMap__closure0, AnnotationsMap, AnnotationsMap_closure, AnnotationsMap__closure, AnnotationsMap__closure0, AnnotationsMap___closure, AnnotationsMap_forEach_closure, AnnotationsMap_forEach__closure, MetadataExtractor, Cache, LruCache, ExceptionHandler, FormatterMap, Interpolate, CoreModule, CoreModule_closure, CoreModule_closure0, CoreModule_closure1, ScopeEvent, ScopeDigestTTL, ScopeLocals, Scope, Scope_watch_closure, Scope_watch_closure0, ScopeStats, ScopeStatsEmitter, ScopeStatsConfig, RootScope, RootScope_closure, RootScope_digest_closure, _Streams, _Streams_destroy_closure, _Streams__get_closure, ScopeStream, ScopeStream_listen_closure, ScopeStream__remove_closure, ScopeStreamSubscription, _FunctionChain, _AstParser, ExpressionVisitor, ExpressionVisitor__toAstMap_closure, ExpressionVisitor_visitFormatter_closure, ArrayFn, MapFn, _FormatterWrapper, LongStackTrace, VmTurnZone, VmTurnZone__onRun_closure, VmTurnZone__onRunUnary_closure, VmTurnZone__onScheduleMicrotask_closure, StaticMetadataExtractor, AHref, AHref_closure, AHref__closure, DecoratorFormatter, DecoratorFormatter_closure, NgBaseCss, NgBind, NgBindHtml, NgBindTemplate, NgClass, NgClassOdd, NgClassEven, _NgClassBase, _NgClassBase_closure, _NgClassBase_valueExpression_closure, _NgClassBase_valueExpression_closure0, _NgClassBase_valueExpression__closure, _NgClassBase_valueExpression__closure0, _NgClassBase__computeCollectionChanges_closure, _NgClassBase__computeCollectionChanges_closure0, _NgClassBase__computeCollectionChanges_closure1, _NgClassBase__computeMapChanges_closure, _NgClassBase__computeMapChanges_closure0, _NgClassBase__computeMapChanges_closure1, _NgClassBase__computeMapChanges_closure2, _NgClassBase__applyChanges_closure, _NgClassBase__applyChanges_closure0, _NgClassBase__applyChanges_closure1, _NgClassBase__applyChanges_closure2, NgCloak, NgControl, NgControl_reset_closure, NgControl_onSubmit_closure, NgControl_addControl_closure, NgControl_removeStates_closure, NgControl_removeStates_closure0, NgControl_addErrorState_closure, NgControl_removeErrorState_closure, NgControl_addInfoState_closure, NgControl_removeInfoState_closure, NgNullControl, NgEvent, NgEvent_initListener_closure, NgForm, closure246, NgForm_closure, NgNullForm, _NgUnlessIfAttrDirectiveBase, _NgUnlessIfAttrDirectiveBase__ensureViewExists_closure, _NgUnlessIfAttrDirectiveBase__ensureViewDestroyed_closure, NgIf, NgUnless, NgInclude, NgInclude__cleanUp_closure, NgInclude__updateContent_closure, NgModelConverter, _NoopModelConverter, NgModel, closure370, closure371, NgModel__processViewValue_closure, NgModel_validateLater_closure, NgModel_watchCollection_closure, NgModel_watchCollection_closure0, NgModel_model_closure, NgModel_validate_closure, InputCheckbox, InputCheckbox_closure, InputCheckbox__closure, InputCheckbox_closure0, InputCheckbox_closure1, InputTextLike, InputTextLike_closure, InputTextLike__closure, InputTextLike_closure0, InputNumberLike, InputNumberLike_typedValue_closure, InputNumberLike_closure, InputNumberLike__closure, InputNumberLike_closure0, InputNumberLike_processValue_closure, NgBindTypeForDateLike, InputDateLike, InputDateLike_moduleFactory_closure, InputDateLike_closure, InputDateLike__closure, InputDateLike_closure0, InputDateLike_processValue_closure, _UidCounter, NgValue, NgTrueValue, NgFalseValue, InputRadio, InputRadio_closure, InputRadio__closure, InputRadio_closure0, InputRadio_closure1, ContentEditable, InputSelect, InputSelect_closure, InputSelect_closure0, InputSelect_attach_closure, InputSelect_attach_closure0, InputSelect_attach_closure1, InputSelect_attach__closure, InputSelect_attach___closure, InputSelect_dirty_closure, InputSelect_dirty__closure, OptionValue, _SelectMode, _SingleSelectMode, _SingleSelectMode_onViewChange_closure, _SingleSelectMode_onModelChange_closure, _MultipleSelectionMode, _MultipleSelectionMode_onViewChange_closure, _MultipleSelectionMode_onModelChange_closure, _MultipleSelectionMode_onModelChange_closure0, NgValidator, NgModelRequiredValidator, NgModelUrlValidator, NgModelEmailValidator, NgModelNumberValidator, NgModelMaxNumberValidator, NgModelMinNumberValidator, NgModelPatternValidator, NgModelMinLengthValidator, NgModelMaxLengthValidator, NgNonBindable, NgPluralize, NgPluralize_closure, NgPluralize_closure0, NgPluralize_closure1, NgPluralize__setAndWatch_closure, NgRepeat, closure369, NgRepeat_expression_closure, NgRepeat_expression__closure, NgRepeat_expression_closure0, NgRepeat__onChange_closure, NgRepeat__onChange_closure0, NgRepeat__onChange_closure1, NgRepeat__onChange_closure2, NgRepeat__onChange_closure3, NgRepeat__onChange__closure0, NgRepeat__onChange_closure4, NgRepeat__onChange__closure, _Row, NgHide, NgShow, NgBooleanAttribute, NgSource, NgAttribute, NgAttribute_attach_closure, NgAttribute_attach__closure, NgStyle, NgStyle__onStyleChange_fn, NgSwitch, NgSwitch_addCase_closure, NgSwitch_value_closure, NgSwitch_value_closure0, _ViewScopePair, _Case, NgSwitchWhen, NgSwitchDefault, NgTemplate, getElements_closure, domMove_closure, _parseIterationCounts_closure, _parseDurationList_closure, Arrayify, Arrayify_call_closure, _KeyValue, Currency, Date, Date_call_closure, Filter, Filter__configureComparator_closure, Filter__search_closure, Filter__search_closure0, Filter__search_closure1, Filter__toPredicate_closure, Filter__toPredicate_closure0, Filter__toPredicate_closure1, Json, LimitTo, Lowercase, FormatterModule, Number, Number_call_closure, OrderBy, OrderBy__compareLists_closure, OrderBy__sorted_mapper, OrderBy__sorted_mapper_closure, OrderBy__sorted_comparator, OrderBy__sorted_closure, OrderBy__sorted_closure0, OrderBy_call_closure, Stringify, Uppercase, ngQuery_closure, ngQuery_closure0, publishToJavaScript_closure, publishToJavaScript_closure0, publishToJavaScript_closure1, publishToJavaScript_closure2, _jsProbe_closure, _jsScope_closure, _jsScope_closure0, _jsScope_closure1, _jsScope_closure2, PerfModule, RoutingModule, RoutingModule_closure, NgRoutingUsePushState, NgBindRoute, closure244, NgView, closure245, NgView__show_closure, NgView__show_closure0, NgView__show__closure, NgView__cleanUp_closure, RouteViewFactory, RouteViewFactory_call_closure, RouteViewFactory__configure_closure, RouteViewFactory__configure__closure, RouteViewFactory__configure__closure1, RouteViewFactory__configure___closure, RouteViewFactory__configure__closure0, NgRouteCfg, NgRoutingHelper, NgRoutingHelper_closure, NgRoutingHelper__closure, NgRoutingHelper___closure, NgRoutingHelper__reloadViews_closure, NgRoutingHelper__reloadViews_closure0, _View, relaxFnArgs_closure, relaxFnArgs_closure0, relaxFnArgs_closure1, relaxFnArgs_closure2, relaxFnArgs_closure3, relaxFnArgs_closure4, relaxFnArgs_closure5, AST, ContextReferenceAST, ConstantAST, FieldReadAST, PureFunctionAST, ClosureAST, MethodAST, CollectionAST, _ConstantWatchRecord, PrototypeMap, FunctionApply, WatchGroup, WatchGroup_watch_closure, WatchGroup_addFieldWatch_closure, WatchGroup_addCollectionWatch_closure, WatchGroup__addEvalWatch_closure, WatchGroup__addEvalWatch_closure0, WatchGroup__addEvalWatch__closure0, WatchGroup__addEvalWatch_closure1, WatchGroup__addEvalWatch_closure2, WatchGroup__addEvalWatch__closure, RootWatchGroup, Watch, _Handler, _ConstantHandler, _FieldHandler, _CollectionHandler, _ArgHandler, _PositionalArgHandler, _NamedArgHandler, _InvokeHandler, _EvalWatchRecord, Record, WatchRecord, MapChangeRecord, MapKeyValue, CollectionChangeRecord, CollectionChangeItem, AvgStopwatch, ListIterable, SubListIterable, ListIterator, MappedIterable, EfficientLengthMappedIterable, MappedIterator, MappedListIterable, WhereIterable, WhereIterator, ExpandIterable, ExpandIterator, EmptyIterable, EmptyIterator, FixedLengthListMixin, UnmodifiableListMixin, UnmodifiableListBase, ReversedListIterable, Symbol, _AsyncRun__scheduleImmediateJsOverride_internalCallback, _AsyncError, _BroadcastStream, _BroadcastSubscription, _BroadcastStreamController, _SyncBroadcastStreamController, _SyncBroadcastStreamController__sendData_closure, _SyncBroadcastStreamController__sendError_closure, _SyncBroadcastStreamController__sendDone_closure, _AsyncBroadcastStreamController, _AsBroadcastStreamController, Future, Future_Future$microtask_closure, Future_wait_handleError, Future_wait_closure, _Completer, _AsyncCompleter, _SyncCompleter, _Future, _Future__addListener_closure, _Future__chainForeignFuture_closure, _Future__chainForeignFuture_closure0, _Future__asyncComplete_closure, _Future__asyncComplete_closure0, _Future__asyncCompleteError_closure, _Future__propagateToListeners_handleValueCallback, _Future__propagateToListeners_handleError, _Future__propagateToListeners_handleWhenCompleteCallback, _Future__propagateToListeners_handleWhenCompleteCallback_closure, _Future__propagateToListeners_handleWhenCompleteCallback_closure0, _AsyncCallbackEntry, Stream, Stream_join_closure, Stream_join_closure1, Stream_join_closure0, Stream_contains_closure, Stream_contains__closure, Stream_contains__closure0, Stream_contains_closure0, Stream_forEach_closure, Stream_forEach__closure, Stream_forEach__closure0, Stream_forEach_closure0, Stream_any_closure, Stream_any__closure, Stream_any__closure0, Stream_any_closure0, Stream_length_closure, Stream_length_closure0, Stream_isEmpty_closure, Stream_isEmpty_closure0, Stream_toList_closure, Stream_toList_closure0, Stream_first_closure, Stream_first_closure0, Stream_last_closure, Stream_last_closure0, Stream_firstWhere_closure, Stream_firstWhere__closure, Stream_firstWhere__closure0, Stream_firstWhere_closure0, Stream_elementAt_closure, Stream_elementAt_closure0, StreamSubscription, EventSink, _StreamController, _StreamController__subscribe_closure, _StreamController__recordCancel_complete, _SyncStreamControllerDispatch, _AsyncStreamControllerDispatch, _NoCallbacks, _NoCallbackAsyncStreamController, _StreamController__AsyncStreamControllerDispatch, _NoCallbackSyncStreamController, _StreamController__SyncStreamControllerDispatch, _ControllerStream, _ControllerSubscription, _EventSink, _BufferingStreamSubscription, _BufferingStreamSubscription__sendError_sendError, _BufferingStreamSubscription__sendDone_sendDone, _StreamImpl, _DelayedEvent, _DelayedData, _DelayedError, _DelayedDone, _PendingEvents, _PendingEvents_schedule_closure, _StreamImplEvents, _DummyStreamSubscription, _DummyStreamSubscription_pause_closure, _AsBroadcastStream, _BroadcastSubscriptionWrapper, _cancelAndError_closure, _cancelAndErrorClosure_closure, _cancelAndValue_closure, _ForwardingStream, _ForwardingStreamSubscription, _WhereStream, _MapStream, _EventSinkWrapper, _SinkTransformerStreamSubscription, _BoundSinkStream, Timer, ZoneSpecification, _ZoneSpecification, ZoneDelegate, Zone, _ZoneDelegate, _BaseZone, _BaseZone_bindCallback_closure, _BaseZone_bindCallback_closure0, _BaseZone_bindUnaryCallback_closure, _BaseZone_bindUnaryCallback_closure0, _CustomizedZone, _rootHandleUncaughtError_closure, _rootHandleUncaughtError__closure, _rootFork_closure, _RootZoneSpecification, _RootZone, _HashMap, _HashMap_values_closure, _HashMap_addAll_closure, _IdentityHashMap, HashMapKeyIterable, HashMapKeyIterator, _LinkedHashMap, _LinkedHashMap_values_closure, _LinkedHashMap_addAll_closure, LinkedHashMapCell, LinkedHashMapKeyIterable, LinkedHashMapKeyIterator, _HashSet, _IdentityHashSet, HashSetIterator, _LinkedHashSet, LinkedHashSetCell, LinkedHashSetIterator, UnmodifiableListView, _HashSetBase, IterableBase, ListBase, ListMixin, Maps_mapToString_closure, ListQueue, _ListQueueIterator, _convertJsonToDart_closure, _convertJsonToDart_walk, ByteConversionSink, ByteConversionSinkBase, _ByteAdapterSink, ChunkedConversionSink, _ConverterStreamEventSink, Codec, Converter, Converter_bind_closure, Encoding, JsonUnsupportedObjectError, JsonCyclicError, JsonCodec, JsonEncoder, _JsonEncoderSink, JsonDecoder, _JsonDecoderSink, _JsonStringifier, _StringConversionSinkAsStringSinkAdapter, StringConversionSinkBase, StringConversionSinkMixin, _StringSinkConversionSink, _StringAdapterSink, _Utf8ConversionSink, Utf8Codec, Utf8Encoder, _Utf8Encoder, _Utf8EncoderSink, _Utf8Encoder_StringConversionSinkMixin, Utf8Decoder, _Utf8Decoder, _Utf8Decoder_convert_addSingleBytes, Function__toMangledNames_closure, NoSuchMethodError_toString_closure, bool, Comparable, DateTime, DateTime_parse_parseIntOrZero, DateTime_parse_parseDoubleOrZero, $double, Duration, Duration_toString_sixDigits, Duration_toString_twoDigits, Error, NullThrownError, ArgumentError, RangeError, NoSuchMethodError, UnsupportedError, UnimplementedError, StateError, ConcurrentModificationError, OutOfMemoryError, StackOverflowError, CyclicInitializationError, _ExceptionImplementation, FormatException, IntegerDivisionByZeroException, Expando, Function, $int, Iterable, _GeneratorIterable, _GeneratorIterator, Iterator, List, Map, Null, num, Object, Match, RegExp, Set, StackTrace, Stopwatch, String, StringBuffer, Symbol0, Type, Uri, Uri_parse_isRegName, Uri_parse_ipV6Address, Uri__makeScheme_isSchemeLowerCharacter, Uri__makePath_closure, Uri__makeQuery_closure, Uri__normalize_isNormalizedHexDigit, Uri__normalize_isLowerCaseHexDigit, Uri__normalize_isUnreserved, Uri__normalize_normalizeHexDigit, Uri__normalize_decodeHexDigitPair, Uri__normalize_fillResult, Uri_hashCode_combine, Uri_parseIPv4Address_error, Uri_parseIPv4Address_closure, Uri_parseIPv6Address_error, Uri_parseIPv6Address_parseHex, Uri_parseIPv6Address_closure, Uri__uriEncode_byteToHex, Interceptor_CssStyleDeclarationBase, _CssStyleDeclarationSet, Object_CssStyleDeclarationBase, _CssStyleDeclarationSet_closure, _CssStyleDeclarationSet_setProperty_closure, CssStyleDeclarationBase, Interceptor_ListMixin, Interceptor_ListMixin_ImmutableListMixin, _ChildrenElementList, _FrozenElementList, _FrozenElementList$_wrap_closure, Element_Element$html_closure, Entry, Events, ElementEvents, Interceptor_ListMixin0, Interceptor_ListMixin_ImmutableListMixin0, HttpRequest_request_closure, HttpRequest_request_closure0, _ChildNodeListLazy, Interceptor_ListMixin1, Interceptor_ListMixin_ImmutableListMixin1, Window_animationFrame_closure, Interceptor_ListMixin2, Interceptor_ListMixin_ImmutableListMixin2, _AttributeMap, _AttributeMap_addAll_closure, _ElementAttributeMap, WindowBase, _MultiElementCssClassSet, _MultiElementCssClassSet_closure, _MultiElementCssClassSet_readClasses_closure, _MultiElementCssClassSet_modify_closure, _MultiElementCssClassSet_remove_closure, _MultiElementCssClassSet__modifyWithReturnValue_closure, _ElementCssClassSet, EventStreamProvider, _EventStream, _ElementEventStreamImpl, _ElementListEventStreamImpl, _EventStreamSubscription, _StreamPool, _StreamPool_add_closure, _CustomEventStreamProvider, _Html5NodeValidator, ImmutableListMixin, NodeValidatorBuilder, NodeValidatorBuilder_allowsElement_closure, NodeValidatorBuilder_allowsAttribute_closure, _SimpleNodeValidator, _TemplatingNodeValidator, _TemplatingNodeValidator_closure, _SvgNodeValidator, FixedSizeListIterator, _DOMWindowCrossFrame, _LocationCrossFrame, _HistoryCrossFrame, NodeValidator, _SameOriginUriPolicy, _ValidatingTreeSanitizer, _ValidatingTreeSanitizer_sanitizeTree_walk, _completeRequest_closure, ObjectStore__cursorStreamFromResult_closure, Transaction_completed_closure, Transaction_completed_closure0, Transaction_completed_closure1, _AttributeClassSet, Capability, JsObject, JsObject__convertDataTree__convert, JsFunction, JsArray, JsObject_ListMixin, _convertToJS_closure, _convertToJS_closure0, _wrapToDart_closure, _wrapToDart_closure0, _wrapToDart_closure1, UnmodifiableMapView, DelegatingMap_UnmodifiableMapMixin, UnmodifiableMapMixin, DelegatingMap, NativeTypedArray, NativeTypedArrayOfDouble, NativeTypedArray_ListMixin, NativeTypedArray_ListMixin_FixedLengthListMixin, NativeTypedArrayOfInt, NativeTypedArray_ListMixin0, NativeTypedArray_ListMixin_FixedLengthListMixin0, DateSymbols, NoProviderError, CircularDependencyError, Injector, Module, Module_typeFactories_closure, Module_bindings_closure, Module__isDirty_closure, BaseInjector, BaseInjector__types_closure, BaseInjector__types_closure0, BaseInjector$fromParent_closure, BaseInjector$fromParent__closure, BaseInjector_createChildWithResolvingHistory_closure, BaseInjector_createChildWithResolvingHistory__closure, _ProviderWithDefiningInjector, ResolutionContext, InjectorDelagate, Key, Key_Key_closure, ObjectFactory, Provider, ValueProvider, TypeProvider, FactoryProvider, StaticInjector, StaticInjector_newInstanceOf_closure, _extractTypeFactories_closure, DirtyCheckingChangeDetectorGroup, DirtyCheckingChangeDetector, _ChangeIterator, DirtyCheckingRecord, _MapChangeRecord, _MapChangeRecord__check_closure, KeyValueRecord, _CollectionChangeRecord, ItemRecord, _DuplicateItemRecordList, DuplicateMap, DuplicateMap_put_closure, StaticFieldGetterFactory, convertDartToNative_Dictionary_closure, _convertDartToNative_PrepareForStructuredClone_findSlot, _convertDartToNative_PrepareForStructuredClone_readSlot, _convertDartToNative_PrepareForStructuredClone_writeSlot, _convertDartToNative_PrepareForStructuredClone_cleanupSlots, _convertDartToNative_PrepareForStructuredClone_walk, _convertDartToNative_PrepareForStructuredClone_walk_closure, convertNativeToDart_AcceptStructuredClone_findSlot, convertNativeToDart_AcceptStructuredClone_readSlot, convertNativeToDart_AcceptStructuredClone_writeSlot, convertNativeToDart_AcceptStructuredClone_walk, CssClassSetImpl, CssClassSetImpl_add_closure, CssClassSetImpl_addAll_closure, CssClassSetImpl_clear_closure, FilteredElementList, FilteredElementList__filtered_closure, FilteredElementList_removeRange_closure, DateFormat, DateFormat_format_closure, DateFormat__fieldConstructors_closure, DateFormat__fieldConstructors_closure0, DateFormat__fieldConstructors_closure1, NumberFormat, NumberFormat_NumberFormat_closure, _NumberFormatParser, _StringIterable, _StringIterator, _DateFormatField, _DateFormatLiteralField, _DateFormatQuotedField, _DateFormatPatternField, UninitializedLocaleData, LocaleDataException, DefaultWindowClickHandler, DefaultRouterLinkMatcher, Logger, Logger_Logger_closure, Level, LogRecord, NumberSymbols, Profiler, Counters, Route, RouteImpl, RouteImpl__populateQueryParams_closure, RouteEvent, RoutePreEnterEvent, RouteEnterEvent, RouteLeaveEvent, RoutePreLeaveEvent, RouteStartEvent, Router, Router__preLeave_closure, Router__preLeave_closure0, Router__preLeave__closure, Router__leave_closure, Router__preEnter_closure, Router__preEnter_closure0, Router__preEnter__closure, Router__enter_closure, Router__matchingRoutes_closure, Router__matchingRoutes_closure0, Router_go_closure, Router__buildQuery_closure, Router__parseQuery_closure, Router_listen_closure, Router_listen__closure0, Router_listen_getPath, Router_listen_closure0, Router_listen__closure, Router_listen_closure1, Router_gotoUrl_closure, _Match, RouteHandle, RouteHandle_discard_closure, RouteHandle_findRoute_closure, mapsShallowEqual_closure, main_closure, main_closure0, closure117, closure118, closure119, closure120, closure121, closure122, closure123, closure124, closure125, closure126, closure127, closure128, closure129, closure130, closure131, closure132, closure133, closure134, closure135, closure136, closure137, closure138, closure139, closure140, closure141, closure142, closure143, closure144, closure145, closure146, closure147, closure148, closure149, closure150, closure151, closure152, closure153, closure154, closure155, closure156, closure157, closure158, closure159, closure160, closure161, closure162, closure163, closure164, closure165, closure166, closure167, closure168, closure169, closure170, closure171, closure172, closure173, closure174, closure175, closure176, closure177, closure178, closure179, closure180, closure181, closure182, closure183, closure184, closure185, closure186, closure187, closure188, closure189, closure190, closure191, closure192, closure193, closure194, closure195, closure196, closure197, closure198, closure199, closure200, closure201, closure202, closure203, closure204, closure205, closure206, closure207, closure208, closure209, closure210, closure211, closure212, closure213, closure214, closure215, closure216, closure217, closure218, closure219, closure220, closure221, closure222, closure223, closure224, closure225, closure226, closure227, closure228, closure229, closure230, closure231, closure232, closure233, closure234, closure235, closure236, closure237, closure238, closure239, closure240, closure241, closure242, closure243, closure, closure0, closure1, closure2, closure3, closure4, closure5, closure6, closure7, closure8, closure9, closure10, closure11, closure12, closure13, closure14, closure15, closure16, closure17, closure18, closure19, closure20, closure21, closure22, closure23, closure24, closure25, closure26, closure27, closure28, closure29, closure30, closure31, closure32, closure33, closure34, closure35, closure36, closure37, closure38, closure39, closure40, closure41, closure42, closure43, closure44, closure45, closure46, closure47, closure48, closure49, closure50, closure51, closure52, closure53, closure54, closure55, closure56, closure57, closure58, closure59, closure60, closure61, closure62, closure63, closure64, closure65, closure66, closure67, closure68, closure69, closure70, closure71, closure72, closure73, closure74, closure75, closure76, closure77, closure78, closure79, closure80, closure81, closure82, closure83, closure84, closure85, closure86, closure87, closure88, closure89, closure90, closure91, closure92, closure93, closure94, closure95, closure96, closure97, closure98, closure99, closure100, closure101, closure102, closure103, closure104, closure105, closure106, closure107, closure108, closure109, closure110, closure111, closure112, closure113, closure114, closure115, closure116, closure247, closure248, closure249, closure250, closure251, closure252, closure253, closure254, closure255, closure256, closure257, closure258, closure259, closure260, closure261, closure262, closure263, closure264, closure265, closure266, closure267, closure268, closure269, closure270, closure271, closure272, closure273, closure274, closure275, closure276, closure277, closure278, closure279, closure280, closure281, closure282, closure283, closure284, closure285, closure286, closure287, closure288, closure289, closure290, closure291, closure292, closure293, closure294, closure295, closure296, closure297, closure298, closure299, closure300, closure301, closure302, closure303, closure304, closure305, closure306, closure307, closure308, closure309, closure310, closure311, closure312, closure313, closure314, closure315, closure316, closure317, closure318, closure319, closure320, closure321, closure322, closure323, closure324, closure325, closure326, closure327, closure328, closure329, closure330, closure331, closure332, closure333, closure334, closure335, closure336, closure337, closure338, closure339, closure340, closure341, closure342, closure343, closure344, closure345, closure346, closure347, closure348, closure349, closure350, closure351, closure352, closure353, closure354, closure355, closure356, closure357, closure358, closure359, closure360, closure361, closure362, closure363, closure364, closure365, closure366, closure367, closure368, AddFeedHeqaderComponent, AddFeedHeqaderComponent_addFeed_closure, AddFeedHeqaderComponent_addFeed_closure0, FeedListComponent, PostComponent, PostComponent__handleEntry_closure, PostComponent__handleAuthorImage_closure, PostComponent_onStarChange_closure, PostsListComponent, PostsListComponent_onStarChange_closure, PostsListComponent__getFeedSource_closure, PostsListComponent__getGenericSource_closure, PostsListComponent__getGenericSource__closure, PostsListComponent__getGenericSource___closure, PubdateComponent, StarringComponent, UnreadCounterComponent, RelativeDateFilter, PostsListFormatter, TruncateFilter, SanitizeFilter, rssAppRouteInitializer_closure, RssController, RssDatabase, RssDatabase__loadDatabase_closure, RssDatabase_getFeeds_closure, RssDatabase__getFeeds_closure, RssDatabase__getFeeds_closure0, RssDatabase_addFeed_closure, RssDatabase__addFeed_closure, RssDatabase__addFeed_closure0, RssDatabase__addFeed_closure1, RssDatabase__addFeed_closure2, RssDatabase_listUnread_closure, RssDatabase_listStarred_closure, RssDatabase_listAll_closure, RssDatabase__listPosts_closure, RssDatabase__listPosts_closure0, RssDatabase_countUnread_closure, RssDatabase_getPosts_closure, RssDatabase__getPostsForFeed_closure, RssDatabase__getPostsForFeed_closure0, RssDatabase_updateEntry_closure, RssDatabase_updateEntry_closure0, RssDatabase_updateEntry_closure1, RssDatabase_getPost_closure, Feed, FeedEntry, FeedAuthor, FeedAuthorImage, ImageService, ImageService_getImage_closure, ImageService_getImage_closure0, QueryService, QueryService__loadFeeds_closure, QueryService__countUnreads_closure, QueryService_countUnread_closure, QueryService_getPosts_closure, QueryService_getPosts_closure0, QueryService_getPosts_closure1, QueryService_getPosts_closure2, QueryService_addFeed_closure, QueryService_updateEntry_closure, QueryService_setEntryRead_closure, QueryService_setEntryRead_closure0, QueryService_setEntryRead_closure1, QueryService_getFeedById_closure, QueryService_getPost_closure, UrlMatcher, UrlMatch, UrlTemplate, UrlTemplate__compileTemplate_closure, UrlTemplate__compileTemplate_closure0, UrlTemplate__compileTemplate__closure, UrlTemplate_reverse_closure];
+  return [HtmlElement, _EntryArray, AnchorElement, Animation0, AnimationEvent, AreaElement, AudioElement, AutocompleteErrorEvent, BRElement, BaseElement, BeforeLoadEvent, BeforeUnloadEvent, Blob, BodyElement, ButtonElement, CDataSection, CanvasElement, CharacterData, CloseEvent, Comment, CompositionEvent, ContentElement, CssFontFaceLoadEvent, CssStyleDeclaration, CustomEvent, DListElement, DataListElement, DetailsElement, DeviceMotionEvent, DeviceOrientationEvent, DialogElement, DivElement, Document, DocumentFragment, DomError, DomException, DomImplementation, DomStringList, Element, EmbedElement, ErrorEvent, Event, EventTarget, FieldSetElement, File, FileError, FocusEvent, FormElement, HRElement, HashChangeEvent, HeadElement, HeadingElement, History, HtmlCollection, HtmlDocument, HtmlFormControlsCollection, HtmlHtmlElement, HtmlOptionsCollection, HttpRequest, HttpRequestEventTarget, IFrameElement, ImageData, ImageElement, InputElement, InstallEvent, InstallPhaseEvent, KeyboardEvent, KeygenElement, LIElement, LabelElement, LegendElement, LinkElement, Location, MapElement, MediaController, MediaElement, MediaError, MediaKeyError, MediaKeyEvent, MediaKeyMessageEvent, MediaKeyNeededEvent, MediaStream, MediaStreamEvent, MediaStreamTrack, MediaStreamTrackEvent, MenuElement, MessageEvent, MetaElement, MeterElement, MidiConnectionEvent, MidiInput, MidiMessageEvent, MidiOutput, MidiPort, ModElement, MouseEvent, Navigator, NavigatorUserMediaError, Node, NodeList, OListElement, ObjectElement, OptGroupElement, OptionElement, OutputElement, OverflowEvent, PageTransitionEvent, ParagraphElement, ParamElement, PopStateEvent, PositionError, PreElement, ProcessingInstruction, ProgressElement, ProgressEvent, QuoteElement, Range, ResourceProgressEvent, RtcDataChannelEvent, RtcDtmfToneChangeEvent, RtcIceCandidateEvent, ScriptElement0, SecurityPolicyViolationEvent, SelectElement, ShadowElement, ShadowRoot, SourceElement, SpanElement, SpeechInputEvent, SpeechRecognitionError, SpeechRecognitionEvent, SpeechSynthesisEvent, StorageEvent, StyleElement, TableCaptionElement, TableCellElement, TableColElement, TableElement, TableRowElement, TableSectionElement, TemplateElement, Text, TextAreaElement, TextEvent, TextTrack, TimedItem, TitleElement, TouchEvent, TrackElement, TrackEvent, TransitionEvent, UIEvent, UListElement, UnknownElement, VideoElement, WheelEvent, Window, XmlDocument, _Attr, _DocumentType, _HTMLAppletElement, _HTMLDirectoryElement, _HTMLFontElement, _HTMLFrameElement, _HTMLFrameSetElement, _HTMLMarqueeElement, _MutationEvent, _NamedNodeMap, _Notation, _XMLHttpRequestProgressEvent, Cursor, CursorWithValue, Database, IdbFactory, Index, KeyRange, ObjectStore, OpenDBRequest, Request, Transaction, VersionChangeEvent, AElement, AltGlyphElement, AnimateElement, AnimateMotionElement, AnimateTransformElement, AnimatedEnumeration, AnimatedLength, AnimatedNumber, AnimatedNumberList, AnimatedString, AnimationElement, CircleElement, ClipPathElement, DefsElement, DescElement, DiscardElement, EllipseElement, FEBlendElement, FEColorMatrixElement, FEComponentTransferElement, FECompositeElement, FEConvolveMatrixElement, FEDiffuseLightingElement, FEDisplacementMapElement, FEDistantLightElement, FEFloodElement, FEFuncAElement, FEFuncBElement, FEFuncGElement, FEFuncRElement, FEGaussianBlurElement, FEImageElement, FEMergeElement, FEMergeNodeElement, FEMorphologyElement, FEOffsetElement, FEPointLightElement, FESpecularLightingElement, FESpotLightElement, FETileElement, FETurbulenceElement, FilterElement, ForeignObjectElement, GElement, GeometryElement, GraphicsElement, ImageElement0, LineElement, LinearGradientElement, MarkerElement, MaskElement, MetadataElement, PathElement, PatternElement, PolygonElement, PolylineElement, RadialGradientElement, RectElement, ScriptElement, SetElement, StopElement, StyleElement0, SvgElement, SvgSvgElement, SwitchElement, SymbolElement, TSpanElement, TextContentElement, TextElement, TextPathElement, TextPositioningElement, TitleElement0, UseElement, ViewElement, ZoomEvent, _GradientElement, _SVGAltGlyphDefElement, _SVGAltGlyphItemElement, _SVGComponentTransferFunctionElement, _SVGCursorElement, _SVGFEDropShadowElement, _SVGFontElement, _SVGFontFaceElement, _SVGFontFaceFormatElement, _SVGFontFaceNameElement, _SVGFontFaceSrcElement, _SVGFontFaceUriElement, _SVGGlyphElement, _SVGGlyphRefElement, _SVGHKernElement, _SVGMPathElement, _SVGMissingGlyphElement, _SVGVKernElement, AudioProcessingEvent, OfflineAudioCompletionEvent, ContextEvent, SqlError, NativeByteBuffer, NativeTypedData, NativeByteData, NativeFloat32List, NativeFloat64List, NativeInt16List, NativeInt32List, NativeInt8List, NativeUint16List, NativeUint32List, NativeUint8ClampedList, NativeUint8List, JS_CONST, Interceptor, JSBool, JSNull, JavaScriptObject, PlainJavaScriptObject, UnknownJavaScriptObject, JSArray, JSNumber, JSInt, JSDouble, JSString, _CodeUnits, startRootIsolate_closure, startRootIsolate_closure0, _Manager, _IsolateContext, _IsolateContext_handlePing_respond, _EventLoop, _EventLoop__runHelper_next, _IsolateEvent, _MainManagerStub, IsolateNatives__processWorkerMessage_closure, IsolateNatives__startIsolate_runStartFunction, _BaseSendPort, _NativeJsSendPort, _NativeJsSendPort_send_closure, _WorkerSendPort, RawReceivePortImpl, _JsSerializer, _JsCopier, _JsDeserializer, _JsVisitedMap, _MessageTraverserVisitedMap, _MessageTraverser, _Copier, _Copier_visitMap_closure, _Serializer, _Deserializer, TimerImpl, TimerImpl_internalCallback, TimerImpl_internalCallback0, CapabilityImpl, ConstantMap, ConstantStringMap, ConstantStringMap_values_closure, _ConstantMapKeyIterable, JSInvocationMirror, ReflectionInfo, ReflectionInfo_sortedIndex_closure, Primitives_functionNoSuchMethod_closure, Primitives_applyFunction_closure, TypeErrorDecoder, NullError, JsNoSuchMethodError, UnknownJsTypeError, unwrapException_saveStackTrace, _StackTrace, invokeClosure_closure, invokeClosure_closure0, invokeClosure_closure1, invokeClosure_closure2, invokeClosure_closure3, Closure, TearOffClosure, BoundClosure, TypeErrorImplementation, CastErrorImplementation, RuntimeError, RuntimeType, RuntimeFunctionType, DynamicRuntimeType, RuntimeTypePlain, RuntimeTypeGeneric, FunctionTypeInfoDecoderRing, TypeImpl, initHooks_closure, initHooks_closure0, initHooks_closure1, JSSyntaxRegExp, _MatchImplementation, _AllMatchesIterable, _AllMatchesIterator, StringMatch, AnimationLoop, AnimationLoop__queueAnimationFrame_closure, AnimationLoop__queueAnimationFrame__closure, AnimationLoop__queueAnimationFrame__closure0, AnimationFrame, AnimationOptimizer, AnimationOptimizer_track_closure, LoopedAnimation, AnimationList, AnimationList_onCompleted_closure, AnimationList_onCompleted_closure0, CssAnimate, CssAnimate_insert_closure, CssAnimate_insert_closure0, CssAnimate_remove_closure, CssAnimate_remove_closure0, CssAnimate_remove__closure, CssAnimate_move_closure, CssAnimate_move_closure0, CssAnimationMap, CssAnimationMap_track_closure, CssAnimation, AnimationModule, NgAnimate, NgAnimateChildren, AbstractNgAnimate, AngularModule, Application, Application_closure, Application_run_closure, Application_run__closure, _StaticApplication, Directive, Component, Decorator, Controller, Formatter, Animate, Animation, NoOpAnimation, AnimationResult, cloneElements_closure, MappingParts, DirectiveRef, forceNewDirectivesAndFormatters_closure, BrowserCookies, BrowserCookies__updateLastCookies_closure, Cookies, NodeAttrs, NodeAttrs_operator$indexSet_closure, NodeAttrs_observe_closure, TemplateLoader, _MustacheAttr, DirectiveMap, TemplateElementBinder, TemplateElementBinder__registerViewFactory_closure, TemplateElementBinder__registerViewFactory_closure0, ElementBinder, ElementBinder__bindTwoWay_closure, ElementBinder__bindTwoWay__closure0, ElementBinder__bindTwoWay_closure0, ElementBinder__bindTwoWay__closure, ElementBinder__bindOneWay_closure, ElementBinder__createAttrMappings_closure, ElementBinder__createAttrMappings__closure, ElementBinder__createAttrMappings__closure0, ElementBinder__link_closure, ElementBinder__link__closure, ElementBinder__link__closure0, ElementBinder__link__closure1, ElementBinder__createDirectiveFactories_closure, ElementBinder__createDirectiveFactories_closure0, ElementBinder_bind_closure, ElementBinder_bind_closure0, ElementBinder_bind_closure1, _TaskList, _TaskList_completeTask_closure, ElementBinderTreeRef, ElementBinderTree, TaggedTextBinder, TaggedElementBinder, ElementBinderFactory, ElementBinderBuilder, ElementBinderBuilder_addDirective_closure, EventHandler, EventHandler_register_closure, EventHandler_eventNameToAttrName_closure, EventHandler_attrNameToEventName_closure, ShadowRootEventHandler, UrlRewriter, HttpBackend, LocationWrapper, HttpInterceptor, DefaultTransformDataHttpInterceptor, closure385, closure386, HttpInterceptors, HttpInterceptors_constructChain_closure, HttpInterceptors_constructChain__closure0, HttpInterceptors_constructChain__closure, HttpResponseConfig, HttpResponse, HttpDefaultHeaders, HttpDefaultHeaders__applyHeaders_closure, HttpDefaultHeaders_setHeaders_closure, HttpDefaults, Http, Http_call_closure, Http_call_closure0, Http_call__closure, Http_call__closure0, Http_call__closure1, Http_call__closure2, Http_call_closure1, Http_parseHeaders_closure, Http__buildUrl_closure, Http__buildUrl__closure, CoreDomModule, CoreDomModule_closure, TextMustache, AttrMustache, AttrMustache_closure, NgElement, NgElement__scheduleDomWrite_closure, NgElement__writeToDom_closure, NgElement__writeToDom_closure0, NodeCursor, DirectiveSelector, DirectiveSelector_closure, DirectiveSelector_matchElement_closure, DirectiveSelector_matchElement__closure1, DirectiveSelector_matchElement_closure0, DirectiveSelector_matchElement__closure, DirectiveSelector_matchElement__closure0, DirectiveSelector_matchText_closure, DirectiveSelectorFactory, _Directive, _ContainsSelector, _SelectorPart, _addRefs_closure, _ElementSelector, _ElementSelector_addDirective_closure, _ElementSelector_addDirective_closure0, _ElementSelector_addDirective_closure1, _ElementSelector_addDirective_closure2, _ElementSelector_addDirective_closure3, _ElementSelector_addDirective_closure4, _ElementSelector_addDirective_closure5, _ElementSelector_addDirective_closure6, _ElementSelector__matchingKey_closure, _ElementSelector__matchingKey__closure, _ElementSelector__matchingKey_closure0, ComponentFactory__setupOnShadowDomAttach_closure, ShadowDomComponentFactory, ShadowDomComponentFactory_call_closure, _ComponentFactory, _ComponentFactory_call_closure, _ComponentFactory_call__closure2, _ComponentFactory_call___closure, _ComponentFactory_call___closure0, _ComponentFactory_call___closure1, _ComponentFactory_call_closure0, _ComponentFactory_call__closure, _ComponentFactory_call__closure0, _ComponentFactory_call__closure1, _ComponentFactory_createShadowInjector_closure, ShadowlessShadowRoot, TaggingCompiler, TaggingViewFactory, TemplateCache, Content, ContentPort, TranscludingComponentFactory, TranscludingComponentFactory_call_closure, TranscludingComponentFactory_call__closure, TranscludingComponentFactory_call__closure0, TranscludingComponentFactory_call__closure1, NullTreeSanitizer, View, ViewPort, BoundViewFactory, ViewFactory, WalkingViewFactory, ViewCache, ViewCache_fromUrl_closure, _AnchorAttrs, ElementProbe, WalkingCompiler, ParserBackend, ClosureMap, DynamicParser, DynamicParser_call_closure, DynamicExpression, DynamicParserBackend, DynamicParserBackend_newAccessScope_closure, DynamicParserImpl, Chain, Formatter1, Assign, Conditional, PrefixNot, Binary, LiteralPrimitive, LiteralString, LiteralArray, LiteralArray_eval_closure, LiteralObject, LiteralObject_eval_closure, AccessScopeFast, AccessScope_AccessFast, AccessMemberFast, AccessMember_AccessFast, AccessKeyed, AccessFast, CallScope, CallScope_eval_closure, CallMember, CallMember_eval_closure, CallFunction, CallFunction_eval_closure, Lexer, Scanner, Scanner_scanString_closure, Token, CharacterToken, IdentifierToken, OperatorToken, NumberToken, StringToken, Visitor, Expression, BoundExpression, Chain0, Formatter0, Assign0, Conditional0, AccessScope, AccessMember, AccessKeyed0, CallArguments, CallScope0, CallFunction0, CallMember0, Binary0, Prefix, Literal, LiteralPrimitive0, LiteralString0, LiteralArray0, LiteralObject0, _DefaultFormatterMap, Unparser, Unparser_writeArguments_closure, EvalError, StaticClosureMap, StaticClosureMap_lookupFunction_closure, StaticClosureMap_lookupFunction__closure, AnnotationMap, AnnotationMap_closure, AnnotationMap__closure, AnnotationMap__closure0, AnnotationsMap, AnnotationsMap_closure, AnnotationsMap__closure, AnnotationsMap__closure0, AnnotationsMap___closure, AnnotationsMap_forEach_closure, AnnotationsMap_forEach__closure, MetadataExtractor, Cache, LruCache, ExceptionHandler, FormatterMap, Interpolate, CoreModule, CoreModule_closure, CoreModule_closure0, CoreModule_closure1, ScopeEvent, ScopeDigestTTL, ScopeLocals, Scope, Scope_watch_closure, Scope_watch_closure0, ScopeStats, ScopeStatsEmitter, ScopeStatsConfig, RootScope, RootScope_closure, RootScope_digest_closure, _Streams, _Streams_destroy_closure, _Streams__get_closure, ScopeStream, ScopeStream_listen_closure, ScopeStream__remove_closure, ScopeStreamSubscription, _FunctionChain, _AstParser, ExpressionVisitor, ExpressionVisitor__toAstMap_closure, ExpressionVisitor_visitFormatter_closure, ArrayFn, MapFn, _FormatterWrapper, LongStackTrace, VmTurnZone, VmTurnZone__onRun_closure, VmTurnZone__onRunUnary_closure, VmTurnZone__onScheduleMicrotask_closure, StaticMetadataExtractor, AHref, AHref_closure, AHref__closure, DecoratorFormatter, DecoratorFormatter_closure, NgBaseCss, NgBind, NgBindHtml, NgBindTemplate, NgClass, NgClassOdd, NgClassEven, _NgClassBase, _NgClassBase_closure, _NgClassBase_valueExpression_closure, _NgClassBase_valueExpression_closure0, _NgClassBase_valueExpression__closure, _NgClassBase_valueExpression__closure0, _NgClassBase__computeCollectionChanges_closure, _NgClassBase__computeCollectionChanges_closure0, _NgClassBase__computeCollectionChanges_closure1, _NgClassBase__computeMapChanges_closure, _NgClassBase__computeMapChanges_closure0, _NgClassBase__computeMapChanges_closure1, _NgClassBase__computeMapChanges_closure2, _NgClassBase__applyChanges_closure, _NgClassBase__applyChanges_closure0, _NgClassBase__applyChanges_closure1, _NgClassBase__applyChanges_closure2, NgCloak, NgControl, NgControl_reset_closure, NgControl_onSubmit_closure, NgControl_addControl_closure, NgControl_removeStates_closure, NgControl_removeStates_closure0, NgControl_addErrorState_closure, NgControl_removeErrorState_closure, NgControl_addInfoState_closure, NgControl_removeInfoState_closure, NgNullControl, NgEvent, NgEvent_initListener_closure, NgForm, closure256, NgForm_closure, NgNullForm, _NgUnlessIfAttrDirectiveBase, _NgUnlessIfAttrDirectiveBase__ensureViewExists_closure, _NgUnlessIfAttrDirectiveBase__ensureViewDestroyed_closure, NgIf, NgUnless, NgInclude, NgInclude__cleanUp_closure, NgInclude__updateContent_closure, NgModelConverter, _NoopModelConverter, NgModel, closure383, closure384, NgModel__processViewValue_closure, NgModel_validateLater_closure, NgModel_watchCollection_closure, NgModel_watchCollection_closure0, NgModel_model_closure, NgModel_validate_closure, InputCheckbox, InputCheckbox_closure, InputCheckbox__closure, InputCheckbox_closure0, InputCheckbox_closure1, InputTextLike, InputTextLike_closure, InputTextLike__closure, InputTextLike_closure0, InputNumberLike, InputNumberLike_typedValue_closure, InputNumberLike_closure, InputNumberLike__closure, InputNumberLike_closure0, InputNumberLike_processValue_closure, NgBindTypeForDateLike, InputDateLike, InputDateLike_moduleFactory_closure, InputDateLike_closure, InputDateLike__closure, InputDateLike_closure0, InputDateLike_processValue_closure, _UidCounter, NgValue, NgTrueValue, NgFalseValue, InputRadio, InputRadio_closure, InputRadio__closure, InputRadio_closure0, InputRadio_closure1, ContentEditable, InputSelect, InputSelect_closure, InputSelect_closure0, InputSelect_attach_closure, InputSelect_attach_closure0, InputSelect_attach_closure1, InputSelect_attach__closure, InputSelect_attach___closure, InputSelect_dirty_closure, InputSelect_dirty__closure, OptionValue, _SelectMode, _SingleSelectMode, _SingleSelectMode_onViewChange_closure, _SingleSelectMode_onModelChange_closure, _MultipleSelectionMode, _MultipleSelectionMode_onViewChange_closure, _MultipleSelectionMode_onModelChange_closure, _MultipleSelectionMode_onModelChange_closure0, NgValidator, NgModelRequiredValidator, NgModelUrlValidator, NgModelEmailValidator, NgModelNumberValidator, NgModelMaxNumberValidator, NgModelMinNumberValidator, NgModelPatternValidator, NgModelMinLengthValidator, NgModelMaxLengthValidator, NgNonBindable, NgPluralize, NgPluralize_closure, NgPluralize_closure0, NgPluralize_closure1, NgPluralize__setAndWatch_closure, NgRepeat, closure382, NgRepeat_expression_closure, NgRepeat_expression__closure, NgRepeat_expression_closure0, NgRepeat__onChange_closure, NgRepeat__onChange_closure0, NgRepeat__onChange_closure1, NgRepeat__onChange_closure2, NgRepeat__onChange_closure3, NgRepeat__onChange__closure0, NgRepeat__onChange_closure4, NgRepeat__onChange__closure, _Row, NgHide, NgShow, NgBooleanAttribute, NgSource, NgAttribute, NgAttribute_attach_closure, NgAttribute_attach__closure, NgStyle, NgStyle__onStyleChange_fn, NgSwitch, NgSwitch_addCase_closure, NgSwitch_value_closure, NgSwitch_value_closure0, _ViewScopePair, _Case, NgSwitchWhen, NgSwitchDefault, NgTemplate, getElements_closure, domMove_closure, _parseIterationCounts_closure, _parseDurationList_closure, Arrayify, Arrayify_call_closure, _KeyValue, Currency, Date, Date_call_closure, Filter, Filter__configureComparator_closure, Filter__search_closure, Filter__search_closure0, Filter__search_closure1, Filter__toPredicate_closure, Filter__toPredicate_closure0, Filter__toPredicate_closure1, Json, LimitTo, Lowercase, FormatterModule, Number, Number_call_closure, OrderBy, OrderBy__compareLists_closure, OrderBy__sorted_mapper, OrderBy__sorted_mapper_closure, OrderBy__sorted_comparator, OrderBy__sorted_closure, OrderBy__sorted_closure0, OrderBy_call_closure, Stringify, Uppercase, ngQuery_closure, ngQuery_closure0, publishToJavaScript_closure, publishToJavaScript_closure0, publishToJavaScript_closure1, publishToJavaScript_closure2, _jsProbe_closure, _jsScope_closure, _jsScope_closure0, _jsScope_closure1, _jsScope_closure2, PerfModule, RoutingModule, RoutingModule_closure, NgRoutingUsePushState, NgBindRoute, closure254, NgView, closure255, NgView__show_closure, NgView__show_closure0, NgView__show__closure, NgView__cleanUp_closure, RouteViewFactory, RouteViewFactory_call_closure, RouteViewFactory__configure_closure, RouteViewFactory__configure__closure, RouteViewFactory__configure__closure1, RouteViewFactory__configure___closure, RouteViewFactory__configure__closure0, NgRouteCfg, NgRoutingHelper, NgRoutingHelper_closure, NgRoutingHelper__closure, NgRoutingHelper___closure, NgRoutingHelper__reloadViews_closure, NgRoutingHelper__reloadViews_closure0, _View, relaxFnArgs_closure, relaxFnArgs_closure0, relaxFnArgs_closure1, relaxFnArgs_closure2, relaxFnArgs_closure3, relaxFnArgs_closure4, relaxFnArgs_closure5, AST, ContextReferenceAST, ConstantAST, FieldReadAST, PureFunctionAST, ClosureAST, MethodAST, CollectionAST, _ConstantWatchRecord, PrototypeMap, FunctionApply, WatchGroup, WatchGroup_watch_closure, WatchGroup_addFieldWatch_closure, WatchGroup_addCollectionWatch_closure, WatchGroup__addEvalWatch_closure, WatchGroup__addEvalWatch_closure0, WatchGroup__addEvalWatch__closure0, WatchGroup__addEvalWatch_closure1, WatchGroup__addEvalWatch_closure2, WatchGroup__addEvalWatch__closure, RootWatchGroup, Watch, _Handler, _ConstantHandler, _FieldHandler, _CollectionHandler, _ArgHandler, _PositionalArgHandler, _NamedArgHandler, _InvokeHandler, _EvalWatchRecord, Record, WatchRecord, MapChangeRecord, MapKeyValue, CollectionChangeRecord, CollectionChangeItem, AvgStopwatch, ListIterable, SubListIterable, ListIterator, MappedIterable, EfficientLengthMappedIterable, MappedIterator, MappedListIterable, WhereIterable, WhereIterator, ExpandIterable, ExpandIterator, EmptyIterable, EmptyIterator, FixedLengthListMixin, UnmodifiableListMixin, UnmodifiableListBase, ReversedListIterable, Symbol, _AsyncRun__scheduleImmediateJsOverride_internalCallback, _AsyncError, _BroadcastStream, _BroadcastSubscription, _BroadcastStreamController, _SyncBroadcastStreamController, _SyncBroadcastStreamController__sendData_closure, _SyncBroadcastStreamController__sendError_closure, _SyncBroadcastStreamController__sendDone_closure, _AsyncBroadcastStreamController, _AsBroadcastStreamController, Future, Future_Future$microtask_closure, Future_wait_handleError, Future_wait_closure, _Completer, _AsyncCompleter, _SyncCompleter, _Future, _Future__addListener_closure, _Future__chainForeignFuture_closure, _Future__chainForeignFuture_closure0, _Future__asyncComplete_closure, _Future__asyncComplete_closure0, _Future__asyncCompleteError_closure, _Future__propagateToListeners_handleValueCallback, _Future__propagateToListeners_handleError, _Future__propagateToListeners_handleWhenCompleteCallback, _Future__propagateToListeners_handleWhenCompleteCallback_closure, _Future__propagateToListeners_handleWhenCompleteCallback_closure0, _AsyncCallbackEntry, Stream, Stream_join_closure, Stream_join_closure1, Stream_join_closure0, Stream_contains_closure, Stream_contains__closure, Stream_contains__closure0, Stream_contains_closure0, Stream_forEach_closure, Stream_forEach__closure, Stream_forEach__closure0, Stream_forEach_closure0, Stream_any_closure, Stream_any__closure, Stream_any__closure0, Stream_any_closure0, Stream_length_closure, Stream_length_closure0, Stream_isEmpty_closure, Stream_isEmpty_closure0, Stream_toList_closure, Stream_toList_closure0, Stream_first_closure, Stream_first_closure0, Stream_last_closure, Stream_last_closure0, Stream_firstWhere_closure, Stream_firstWhere__closure, Stream_firstWhere__closure0, Stream_firstWhere_closure0, Stream_elementAt_closure, Stream_elementAt_closure0, StreamSubscription, EventSink, _StreamController, _StreamController__subscribe_closure, _StreamController__recordCancel_complete, _SyncStreamControllerDispatch, _AsyncStreamControllerDispatch, _NoCallbacks, _NoCallbackAsyncStreamController, _StreamController__AsyncStreamControllerDispatch, _NoCallbackSyncStreamController, _StreamController__SyncStreamControllerDispatch, _ControllerStream, _ControllerSubscription, _EventSink, _BufferingStreamSubscription, _BufferingStreamSubscription__sendError_sendError, _BufferingStreamSubscription__sendDone_sendDone, _StreamImpl, _DelayedEvent, _DelayedData, _DelayedError, _DelayedDone, _PendingEvents, _PendingEvents_schedule_closure, _StreamImplEvents, _DummyStreamSubscription, _DummyStreamSubscription_pause_closure, _AsBroadcastStream, _BroadcastSubscriptionWrapper, _cancelAndError_closure, _cancelAndErrorClosure_closure, _cancelAndValue_closure, _ForwardingStream, _ForwardingStreamSubscription, _WhereStream, _MapStream, _EventSinkWrapper, _SinkTransformerStreamSubscription, _BoundSinkStream, Timer, ZoneSpecification, _ZoneSpecification, ZoneDelegate, Zone, _ZoneDelegate, _BaseZone, _BaseZone_bindCallback_closure, _BaseZone_bindCallback_closure0, _BaseZone_bindUnaryCallback_closure, _BaseZone_bindUnaryCallback_closure0, _CustomizedZone, _rootHandleUncaughtError_closure, _rootHandleUncaughtError__closure, _rootFork_closure, _RootZoneSpecification, _RootZone, _HashMap, _HashMap_values_closure, _HashMap_addAll_closure, _IdentityHashMap, HashMapKeyIterable, HashMapKeyIterator, _LinkedHashMap, _LinkedHashMap_values_closure, _LinkedHashMap_addAll_closure, LinkedHashMapCell, LinkedHashMapKeyIterable, LinkedHashMapKeyIterator, _HashSet, _IdentityHashSet, HashSetIterator, _LinkedHashSet, LinkedHashSetCell, LinkedHashSetIterator, UnmodifiableListView, _HashSetBase, IterableBase, ListBase, ListMixin, Maps_mapToString_closure, ListQueue, _ListQueueIterator, _convertJsonToDart_closure, _convertJsonToDart_walk, ByteConversionSink, ByteConversionSinkBase, _ByteAdapterSink, ChunkedConversionSink, _ConverterStreamEventSink, Codec, Converter, Converter_bind_closure, Encoding, JsonUnsupportedObjectError, JsonCyclicError, JsonCodec, JsonEncoder, _JsonEncoderSink, JsonDecoder, _JsonDecoderSink, _JsonStringifier, _StringConversionSinkAsStringSinkAdapter, StringConversionSinkBase, StringConversionSinkMixin, _StringSinkConversionSink, _StringAdapterSink, _Utf8ConversionSink, Utf8Codec, Utf8Encoder, _Utf8Encoder, _Utf8EncoderSink, _Utf8Encoder_StringConversionSinkMixin, Utf8Decoder, _Utf8Decoder, _Utf8Decoder_convert_addSingleBytes, Function__toMangledNames_closure, NoSuchMethodError_toString_closure, bool, Comparable, DateTime, DateTime_parse_parseIntOrZero, DateTime_parse_parseDoubleOrZero, $double, Duration, Duration_toString_sixDigits, Duration_toString_twoDigits, Error, NullThrownError, ArgumentError, RangeError, NoSuchMethodError, UnsupportedError, UnimplementedError, StateError, ConcurrentModificationError, OutOfMemoryError, StackOverflowError, CyclicInitializationError, _ExceptionImplementation, FormatException, IntegerDivisionByZeroException, Expando, Function, $int, Iterable, _GeneratorIterable, _GeneratorIterator, Iterator, List, Map, Null, num, Object, Match, RegExp, Set, StackTrace, Stopwatch, String, StringBuffer, Symbol0, Type, Uri, Uri_parse_isRegName, Uri_parse_ipV6Address, Uri__makeScheme_isSchemeLowerCharacter, Uri__makePath_closure, Uri__makeQuery_closure, Uri__normalize_isNormalizedHexDigit, Uri__normalize_isLowerCaseHexDigit, Uri__normalize_isUnreserved, Uri__normalize_normalizeHexDigit, Uri__normalize_decodeHexDigitPair, Uri__normalize_fillResult, Uri_hashCode_combine, Uri_parseIPv4Address_error, Uri_parseIPv4Address_closure, Uri_parseIPv6Address_error, Uri_parseIPv6Address_parseHex, Uri_parseIPv6Address_closure, Uri__uriEncode_byteToHex, Interceptor_CssStyleDeclarationBase, _CssStyleDeclarationSet, Object_CssStyleDeclarationBase, _CssStyleDeclarationSet_closure, _CssStyleDeclarationSet_setProperty_closure, CssStyleDeclarationBase, Interceptor_ListMixin, Interceptor_ListMixin_ImmutableListMixin, _ChildrenElementList, _FrozenElementList, _FrozenElementList$_wrap_closure, Element_Element$html_closure, Entry, Events, ElementEvents, Interceptor_ListMixin0, Interceptor_ListMixin_ImmutableListMixin0, HttpRequest_request_closure, HttpRequest_request_closure0, _ChildNodeListLazy, Interceptor_ListMixin1, Interceptor_ListMixin_ImmutableListMixin1, Window_animationFrame_closure, Interceptor_ListMixin2, Interceptor_ListMixin_ImmutableListMixin2, _AttributeMap, _AttributeMap_addAll_closure, _ElementAttributeMap, WindowBase, _MultiElementCssClassSet, _MultiElementCssClassSet_closure, _MultiElementCssClassSet_readClasses_closure, _MultiElementCssClassSet_modify_closure, _MultiElementCssClassSet_remove_closure, _MultiElementCssClassSet__modifyWithReturnValue_closure, _ElementCssClassSet, EventStreamProvider, _EventStream, _ElementEventStreamImpl, _ElementListEventStreamImpl, _EventStreamSubscription, _StreamPool, _StreamPool_add_closure, _CustomEventStreamProvider, _Html5NodeValidator, ImmutableListMixin, NodeValidatorBuilder, NodeValidatorBuilder_allowsElement_closure, NodeValidatorBuilder_allowsAttribute_closure, _SimpleNodeValidator, _TemplatingNodeValidator, _TemplatingNodeValidator_closure, _SvgNodeValidator, FixedSizeListIterator, _DOMWindowCrossFrame, _LocationCrossFrame, _HistoryCrossFrame, NodeValidator, _SameOriginUriPolicy, _ValidatingTreeSanitizer, _ValidatingTreeSanitizer_sanitizeTree_walk, _completeRequest_closure, ObjectStore__cursorStreamFromResult_closure, Transaction_completed_closure, Transaction_completed_closure0, Transaction_completed_closure1, _AttributeClassSet, Capability, JsObject, JsObject__convertDataTree__convert, JsFunction, JsArray, JsObject_ListMixin, _convertToJS_closure, _convertToJS_closure0, _wrapToDart_closure, _wrapToDart_closure0, _wrapToDart_closure1, UnmodifiableMapView, DelegatingMap_UnmodifiableMapMixin, UnmodifiableMapMixin, DelegatingMap, NativeTypedArray, NativeTypedArrayOfDouble, NativeTypedArray_ListMixin, NativeTypedArray_ListMixin_FixedLengthListMixin, NativeTypedArrayOfInt, NativeTypedArray_ListMixin0, NativeTypedArray_ListMixin_FixedLengthListMixin0, DateSymbols, NoProviderError, CircularDependencyError, Injector, Module, Module_typeFactories_closure, Module_bindings_closure, Module__isDirty_closure, BaseInjector, BaseInjector__types_closure, BaseInjector__types_closure0, BaseInjector$fromParent_closure, BaseInjector$fromParent__closure, BaseInjector_createChildWithResolvingHistory_closure, BaseInjector_createChildWithResolvingHistory__closure, _ProviderWithDefiningInjector, ResolutionContext, InjectorDelagate, Key, Key_Key_closure, ObjectFactory, Provider, ValueProvider, TypeProvider, FactoryProvider, StaticInjector, StaticInjector_newInstanceOf_closure, _extractTypeFactories_closure, DirtyCheckingChangeDetectorGroup, DirtyCheckingChangeDetector, _ChangeIterator, DirtyCheckingRecord, _MapChangeRecord, _MapChangeRecord__check_closure, KeyValueRecord, _CollectionChangeRecord, ItemRecord, _DuplicateItemRecordList, DuplicateMap, DuplicateMap_put_closure, StaticFieldGetterFactory, convertDartToNative_Dictionary_closure, _convertDartToNative_PrepareForStructuredClone_findSlot, _convertDartToNative_PrepareForStructuredClone_readSlot, _convertDartToNative_PrepareForStructuredClone_writeSlot, _convertDartToNative_PrepareForStructuredClone_cleanupSlots, _convertDartToNative_PrepareForStructuredClone_walk, _convertDartToNative_PrepareForStructuredClone_walk_closure, convertNativeToDart_AcceptStructuredClone_findSlot, convertNativeToDart_AcceptStructuredClone_readSlot, convertNativeToDart_AcceptStructuredClone_writeSlot, convertNativeToDart_AcceptStructuredClone_walk, CssClassSetImpl, CssClassSetImpl_add_closure, CssClassSetImpl_addAll_closure, CssClassSetImpl_clear_closure, FilteredElementList, FilteredElementList__filtered_closure, FilteredElementList_removeRange_closure, DateFormat, DateFormat_format_closure, DateFormat__fieldConstructors_closure, DateFormat__fieldConstructors_closure0, DateFormat__fieldConstructors_closure1, NumberFormat, NumberFormat_NumberFormat_closure, _NumberFormatParser, _StringIterable, _StringIterator, _DateFormatField, _DateFormatLiteralField, _DateFormatQuotedField, _DateFormatPatternField, UninitializedLocaleData, LocaleDataException, DefaultWindowClickHandler, DefaultRouterLinkMatcher, Logger, Logger_Logger_closure, Level, LogRecord, NumberSymbols, Profiler, Counters, Route, RouteImpl, RouteImpl__populateQueryParams_closure, RouteEvent, RoutePreEnterEvent, RouteEnterEvent, RouteLeaveEvent, RoutePreLeaveEvent, RouteStartEvent, Router, Router__preLeave_closure, Router__preLeave_closure0, Router__preLeave__closure, Router__leave_closure, Router__preEnter_closure, Router__preEnter_closure0, Router__preEnter__closure, Router__enter_closure, Router__matchingRoutes_closure, Router__matchingRoutes_closure0, Router__buildQuery_closure, Router__parseQuery_closure, Router_listen_closure, Router_listen__closure0, Router_listen_getPath, Router_listen_closure0, Router_listen__closure, Router_listen_closure1, Router_gotoUrl_closure, _Match, RouteHandle, RouteHandle_discard_closure, RouteHandle_findRoute_closure, mapsShallowEqual_closure, main_closure, main_closure0, closure121, closure122, closure123, closure124, closure125, closure126, closure127, closure128, closure129, closure130, closure131, closure132, closure133, closure134, closure135, closure136, closure137, closure138, closure139, closure140, closure141, closure142, closure143, closure144, closure145, closure146, closure147, closure148, closure149, closure150, closure151, closure152, closure153, closure154, closure155, closure156, closure157, closure158, closure159, closure160, closure161, closure162, closure163, closure164, closure165, closure166, closure167, closure168, closure169, closure170, closure171, closure172, closure173, closure174, closure175, closure176, closure177, closure178, closure179, closure180, closure181, closure182, closure183, closure184, closure185, closure186, closure187, closure188, closure189, closure190, closure191, closure192, closure193, closure194, closure195, closure196, closure197, closure198, closure199, closure200, closure201, closure202, closure203, closure204, closure205, closure206, closure207, closure208, closure209, closure210, closure211, closure212, closure213, closure214, closure215, closure216, closure217, closure218, closure219, closure220, closure221, closure222, closure223, closure224, closure225, closure226, closure227, closure228, closure229, closure230, closure231, closure232, closure233, closure234, closure235, closure236, closure237, closure238, closure239, closure240, closure241, closure242, closure243, closure244, closure245, closure246, closure247, closure248, closure249, closure250, closure251, closure252, closure253, closure, closure0, closure1, closure2, closure3, closure4, closure5, closure6, closure7, closure8, closure9, closure10, closure11, closure12, closure13, closure14, closure15, closure16, closure17, closure18, closure19, closure20, closure21, closure22, closure23, closure24, closure25, closure26, closure27, closure28, closure29, closure30, closure31, closure32, closure33, closure34, closure35, closure36, closure37, closure38, closure39, closure40, closure41, closure42, closure43, closure44, closure45, closure46, closure47, closure48, closure49, closure50, closure51, closure52, closure53, closure54, closure55, closure56, closure57, closure58, closure59, closure60, closure61, closure62, closure63, closure64, closure65, closure66, closure67, closure68, closure69, closure70, closure71, closure72, closure73, closure74, closure75, closure76, closure77, closure78, closure79, closure80, closure81, closure82, closure83, closure84, closure85, closure86, closure87, closure88, closure89, closure90, closure91, closure92, closure93, closure94, closure95, closure96, closure97, closure98, closure99, closure100, closure101, closure102, closure103, closure104, closure105, closure106, closure107, closure108, closure109, closure110, closure111, closure112, closure113, closure114, closure115, closure116, closure117, closure118, closure119, closure120, closure257, closure258, closure259, closure260, closure261, closure262, closure263, closure264, closure265, closure266, closure267, closure268, closure269, closure270, closure271, closure272, closure273, closure274, closure275, closure276, closure277, closure278, closure279, closure280, closure281, closure282, closure283, closure284, closure285, closure286, closure287, closure288, closure289, closure290, closure291, closure292, closure293, closure294, closure295, closure296, closure297, closure298, closure299, closure300, closure301, closure302, closure303, closure304, closure305, closure306, closure307, closure308, closure309, closure310, closure311, closure312, closure313, closure314, closure315, closure316, closure317, closure318, closure319, closure320, closure321, closure322, closure323, closure324, closure325, closure326, closure327, closure328, closure329, closure330, closure331, closure332, closure333, closure334, closure335, closure336, closure337, closure338, closure339, closure340, closure341, closure342, closure343, closure344, closure345, closure346, closure347, closure348, closure349, closure350, closure351, closure352, closure353, closure354, closure355, closure356, closure357, closure358, closure359, closure360, closure361, closure362, closure363, closure364, closure365, closure366, closure367, closure368, closure369, closure370, closure371, closure372, closure373, closure374, closure375, closure376, closure377, closure378, closure379, closure380, closure381, AddFeedHeqaderComponent, AddFeedHeqaderComponent_addFeed_closure, AddFeedHeqaderComponent_addFeed_closure0, DataHandlerComponent, DataHandlerComponent_attach_closure, DataHandlerComponent_attach__closure, DataHandlerComponent__getGenericSource_closure, DataHandlerComponent__getFeedSource_closure, FeedListComponent, EntriesListComponent, EntriesListComponent_hasPosts_closure, EntriesListComponent_onStarChange_closure, PostComponent, PostComponent__handleEntry_closure, PostComponent__handleAuthorImage_closure, PostComponent_onStarChange_closure, FeedEntriesComponent, FeedEntriesComponent_onStarChange_closure, PubdateComponent, StarringComponent, UnreadCounterComponent, RelativeDateFilter, PostsListFormatter, TruncateFilter, SanitizeFilter, RssController, AppComm, AppComm_closure, RssDatabase, RssDatabase__loadDatabase_closure, RssDatabase_getFeeds_closure, RssDatabase__getFeeds_closure, RssDatabase__getFeeds_closure0, RssDatabase_addFeed_closure, RssDatabase__addFeed_closure, RssDatabase__addFeed_closure0, RssDatabase__addFeed_closure1, RssDatabase__addFeed_closure2, RssDatabase_listUnread_closure, RssDatabase_listStarred_closure, RssDatabase_listAll_closure, RssDatabase__listPosts_closure, RssDatabase__listPosts_closure0, RssDatabase_countUnread_closure, RssDatabase_getPosts_closure, RssDatabase__getPostsForFeed_closure, RssDatabase__getPostsForFeed_closure0, RssDatabase_updateEntry_closure, RssDatabase_updateEntry_closure0, RssDatabase_updateEntry_closure1, RssDatabase_getPost_closure, Feed, FeedEntry, FeedAuthor, FeedAuthorImage, ImageService, ImageService_getImage_closure, ImageService_getImage_closure0, QueryService, QueryService__loadFeeds_closure, QueryService__countUnreads_closure, QueryService__countUnreads_closure0, QueryService_countUnread_closure, QueryService__revalideteUnread_closure, QueryService_getPosts_closure, QueryService_getPosts_closure0, QueryService_getPosts_closure1, QueryService_getPosts_closure2, QueryService_addFeed_closure, QueryService_updateEntry_closure, QueryService_setEntryRead_closure, QueryService_setEntryRead_closure0, QueryService_setEntryRead_closure1, QueryService_getFeedById_closure, QueryService_getPost_closure, QueryService_markCurrentAsRead_closure, QueryService_markCurrentAsRead_closure0, QueryService_markCurrentAsRead_closure1, UrlMatcher, UrlMatch, UrlTemplate, UrlTemplate__compileTemplate_closure, UrlTemplate__compileTemplate_closure0, UrlTemplate__compileTemplate__closure, UrlTemplate_reverse_closure];
 }

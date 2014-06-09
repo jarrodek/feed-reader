@@ -11,7 +11,13 @@
     </li>
     <li class="title-divider">Subscriptions</li>
     <li ng-repeat="feed in cmp.feeds" class="subscription-feed" ng-class="{'selected':cmp.selected == feed.id.toString()}">
-      <a href="#/feed/{{feed.id}}"><span class="feed-title">{{feed.display}} <span class="label label-default"><unread-counter feed="{{feed.id}}"></unread-counter></span></span><span class="feed-icon star inactive"></span></a>
+      <a href="#/feed/{{feed.id}}">
+        <span class="feed-title">
+          {{feed.display}} <unread-counter data-class="label label-default" data-hide-empty="true" feed="{{feed.id}}"></unread-counter>
+        </span>
+        <star starred="post.starred" class="star-action" ng-click="cmp.onStarChange(feed.id)"></star>
+        <!--span class="feed-icon star inactive"></span-->
+      </a>
     </li>
   </ul>
   <div classs="" ng-if="cmp.feeds == null || cmp.feeds.length == 0">

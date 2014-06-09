@@ -9,17 +9,16 @@
     <link rel="stylesheet" href="css/bootstrap.css">
   </head>
   <body rss-app ng-cloak>
-    
     <header class="top-header">
-      <add-feed-header></add-feed-header>
+      <add-feed-header on-refresh-feeds="ctrl.refreshFeeds()"></add-feed-header>
     </header>
     <div id="app-container">
       <feed-list></feed-list>
       <div class="main-content">
-        <ng-view autoscroll="true" class="view-animate"></ng-view>
+        <ng-view autoscroll="true" class="view-animate"><data-handler></data-handler></ng-view>
       </div>
     </div>
-    <script src="rss_app.dart" type="application/dart"></script>   
+    <script src="rss_app.dart.precompiled.js"></script>   
     <script type="text/javascript" src="packages/browser/dart.js"></script> 
   </body>
 </html>

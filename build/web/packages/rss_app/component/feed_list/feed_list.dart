@@ -12,7 +12,7 @@ import '../../service/dbstructures.dart';
 class FeedListComponent {
   
   List<Feed> get feeds => queryService.feeds;
-  String get selected => queryService.currentFeedId;
+  int get selected => queryService.currentFeedId;
   int unreadCount = 0;
   
   QueryService queryService;

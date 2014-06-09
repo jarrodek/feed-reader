@@ -2,8 +2,10 @@ name: rss_app
 description: A sample Chrome packaged application
 dependencies:
   angular: any
+  chrome: any
   web_components: any
 transformers:
+- chrome
 - angular:
     csp: true
 - $dart2js:
@@ -14,4 +16,3 @@ transformers:
     suppressWarnings: false
     suppressHints: false
     terse: false
-    

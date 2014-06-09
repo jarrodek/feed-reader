@@ -157,11 +157,11 @@ var syncPosts = {
         if(inserts.length > 0 || updates.length > 0){
             rss_app.indexedDB.insertPosts(inserts, updates, function(){
                 rss_app.indexedDB.close();
-                self.postMessage({'inserted':inserts.length});
+                self.postMessage({'inserted':inserts.length, feedid:syncPosts.currentFeed.id});
             });
         } else {
             rss_app.indexedDB.close();
-            self.postMessage({'inserted':0});
+            self.postMessage({'inserted':0, feedid:syncPosts.currentFeed.id});
         }
     }
 };

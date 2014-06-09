@@ -10,7 +10,7 @@
   </head>
   <body rss-app ng-cloak>
     <header class="top-header">
-      <add-feed-header></add-feed-header>
+      <add-feed-header on-refresh-feeds="ctrl.refreshFeeds()"></add-feed-header>
     </header>
     <div id="app-container">
       <feed-list></feed-list>

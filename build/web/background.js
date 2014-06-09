@@ -16,8 +16,6 @@ var appConfig = {
     }
 };
 
-window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
-
 var feed = {
     _queue: [],
     'appopened': false,
@@ -31,7 +29,7 @@ var feed = {
         console.log('Now getting feeds list.');
         rss_app.indexedDB.onerror = function(e){
           console.error('Unable read feeds list.', e);
-        }
+        };
         rss_app.indexedDB.getFeeds(function(feeds) {
             rss_app.indexedDB.close();
             clb(feeds);
@@ -107,7 +105,7 @@ var feed = {
             
             var inserted = event.data.inserted;
             if(inserted){
-                feed.notify(newFeed.url,newFeed.title,inserted);
+                feed.notify(event.data.feedid,newFeed.title,inserted);
             }
         };
         worker.postMessage({
@@ -116,12 +114,12 @@ var feed = {
         });
     },
     
-    'notify': function(feedUrl, feedTitle, itemsCount){
+    'notify': function(feedId, feedTitle, itemsCount){
         if(feed.appopened){
            var windows = chrome.app.window.getAll();
            if(windows.length === 0) return;
            windows.forEach(function(wnd){
-               try{wnd.feedUpdated(feedUrl, feedTitle, itemsCount);}catch(e){};
+               try{wnd.feedUpdated(feedId, feedTitle, itemsCount);}catch(e){};
            });
            return; 
         }
@@ -129,10 +127,10 @@ var feed = {
             type: "basic",
             title: "You have new items in RSS reader",
             message: itemsCount + ' new items in ' + feedTitle,
-            iconUrl: "arc_icon_128.png"
+            iconUrl: chrome.runtime.getURL('/img/notification.png')
         };
         chrome.notifications.create("", options, function(id){
-            feed.notifications[id] = feedUrl;
+            feed.notifications[id] = feedId;
         });
     }
 };
@@ -140,7 +138,7 @@ var feed = {
 function createAppWindow(initialFeed){
     var url = 'rss_app.html';
     if(initialFeed){
-        url += '?initialFeedUrl='+initialFeed;
+        url += '#/feed/'+initialFeed;
     }
     chrome.app.window.create(url, {
         'id': '_mainWindow', 'bounds': {'width': 800, 'height': 600}
@@ -156,9 +154,9 @@ function onInit() {
     feed.update();
     chrome.notifications.onClicked.addListener(function(notificationId){
         if(!(notificationId in feed.notifications)) return;
-        var feedUrl = feed.notifications[notificationId];
+        var feedId = feed.notifications[notificationId];
         delete feed.notifications[notificationId];
-        createAppWindow(feedUrl);
+        createAppWindow(feedId);
     });
 }
 function onAlarm(alarm) {

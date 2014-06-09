@@ -1,7 +1,6 @@
 library rssapp.component.addfeedheader;
 
 import 'dart:html';
-import 'dart:async';
 
 import 'package:angular/angular.dart';
 
@@ -12,8 +11,11 @@ import '../../service/dbstructures.dart';
     selector: 'add-feed-header', 
     templateUrl: 'packages/rss_app/component/add_feed_header/add_feed_header.html', 
     publishAs: 'cmp',
-    useShadowDom: false)
-class AddFeedHeqaderComponent extends DetachAware {
+    useShadowDom: false,
+    map: const {
+      'on-refresh-feeds': '&onRefreshFeeds'
+    })
+class AddFeedHeqaderComponent {
   
   QueryService queryService;
   Router router;
@@ -21,16 +23,20 @@ class AddFeedHeqaderComponent extends DetachAware {
   bool showAddFeed = false;
   bool addingFeed = false;
   bool refreshingFeeds = false;
-  bool readingPost = false;
   String feedAddUrl = "";
-  int currentPostId = 0;
-  
-  
-  StreamSubscription<RouteStartEvent> routerListener;
+  int get currentPostId => queryService.currentPostId;
   
   bool get addFeedDisabled => !(feedAddUrl.startsWith("http://") || feedAddUrl.startsWith("https://"));
   
   List<FeedEntry> get entries => queryService.currentPosts;
+  bool get hasUnread{
+    for(int i=0,len=entries.length; i<len; i++){
+      if(entries[i].unread == true){
+        return true;
+      }
+    }
+    return false;
+  }
   
   ///Get posts list current size.
   int get currentPostsLength => entries.length;
@@ -38,9 +44,11 @@ class AddFeedHeqaderComponent extends DetachAware {
   int feedEntryPosition = 0;
   ///Result currently selected feed entry 1-based position in the list.
   int get currentPostsIndex{
+    
     if(currentPostId == 0){
       return 0;
     }
+    
     bool found = false;
     feedEntryPosition = 0;
     for(int len = currentPostsLength; feedEntryPosition<len; feedEntryPosition++){
@@ -52,26 +60,26 @@ class AddFeedHeqaderComponent extends DetachAware {
     if(!found){
       return 0;
     }
-    return feedEntryPosition + 1;
+    return (feedEntryPosition + 1);
   }
   
-  FeedEntry get nextEntry{
+  bool get readingPost => queryService.currentPostId > 0;
+  
+  bool get hasNextEntry{
     if(currentPostsLength-1 >= feedEntryPosition+1){
-      return entries[feedEntryPosition+1];
+      return true;
     }
-    return null;
+    return false;
   }
   
-  FeedEntry get prevEntry{
+  bool get hasPrevEntry{
     if(feedEntryPosition == 0){
-      return null;
+      return false;
     }
-    return entries[feedEntryPosition-1];
+    return true;
   }
 
-  AddFeedHeqaderComponent(QueryService this.queryService, Router this.router){
-    routerListener = router.onRouteStart.listen(_handleRouterChange);
-  }
+  AddFeedHeqaderComponent(QueryService this.queryService, Router this.router);
 
   void addFeed() {
 
@@ -93,32 +101,31 @@ class AddFeedHeqaderComponent extends DetachAware {
     });
   }
   
-  void _handleRouterChange(RouteStartEvent e){
-    if(e == null || e.uri == null) return;
-    var url = e.uri;
-    
-    if(url.startsWith('/post/')){
-      readingPost = true;
-      try{
-        var postId = url.substring(6);
-        currentPostId = int.parse(url.substring(6));
-      } catch(e){
-        currentPostId = 0;
-      }
-    } else {
-      readingPost = false;
+  
+  int _nextEntryId(){
+    if(currentPostsLength-1 >= feedEntryPosition+1){
+      return entries[feedEntryPosition+1].id;
     }
-    
+    return 0;
+  }
+  int _prevEntryId(){
+    if(feedEntryPosition == 0){
+      return 0;
+    }
+    return entries[feedEntryPosition-1].id;
   }
   
   void goToPost(String dir){
-    FeedEntry post = dir == 'prev' ? prevEntry : nextEntry;
-    if(post == null) return;
-    router.gotoUrl('/post/${post.id}');
+    int postId = dir == 'prev' ? _prevEntryId() : _nextEntryId();
+    print('$dir post ID: $postId');
+    if(postId == 0) return;
+    router.gotoUrl('/post/$postId');
   }
   
-  void detach(){
-    if(routerListener == null) return;
-    routerListener.cancel();
+  dynamic onRefreshFeeds;
+  
+  void markAllAsRead(){
+    queryService.markCurrentAsRead();
   }
+  
 }

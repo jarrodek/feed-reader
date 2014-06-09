@@ -68,7 +68,7 @@ body {
 }
 .feed-content,
 .post-content{
-  border-right: 1px #757575 solid;
+  border-right: 1px #e5e5e5 solid;
 }
 .post-content{
   display: flex;
@@ -141,6 +141,9 @@ article.list-feed-post .post-summary{
 }
 
 .list-feed-post header h1 a,
+.list-feed-post header time,
+.list-feed-post .post-summary,
+.list-feed-post.unread header h1 a,
 .list-feed-post.unread header time,
 .list-feed-post.unread .post-summary{
   transition: color 1s;
@@ -169,10 +172,10 @@ header h1 a {
 }
 .list-feed .feed-title{
   color: #333;
-  font-size: 14px;
+  font-size: 24px;
   margin: 0;
   padding: 0;
-  margin-left: 10px;
+  margin-left: 1em;
   margin-bottom: 10px;
   margin-top: 5px;
 }
@@ -332,4 +335,8 @@ input.loading{
   animation-duration: 5s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
+}
+
+[rss-app] .jumbotron{
+  background-color: #fff;
 }

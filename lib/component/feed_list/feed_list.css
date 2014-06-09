@@ -30,15 +30,7 @@
   vertical-align: middle;
   word-break: break-all;
 }
-.feed-icon.star{
-  background-image: url('/packages/rss_app/component/star-active.png');
-  background-size: 16px;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-.feed-icon.star.inactive{
-  background-image: url('/packages/rss_app/component/star.png');
-}
+
 #feed-list .feed-list-display li {
   margin: 0;
   padding: 0;
@@ -67,6 +59,11 @@
 }
 #feed-list .feed-list-display li.subscription-feed .feed-title{
   flex: 1;
+  transition: color 0.6s;
+  color: rgba(51, 51, 51, 0.68);
+}
+#feed-list .feed-list-display li.subscription-feed .feed-title:hover{
+  color: rgba(51, 51, 51, 1);
 }
 #feed-list .feed-list-display li.subscription-feed .feed-icon.star{
   margin-left: 7px;

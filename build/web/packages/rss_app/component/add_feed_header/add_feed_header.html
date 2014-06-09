@@ -14,17 +14,21 @@
       </div>
     </div>
     
-    <button type="button" class="btn btn-default">
+    <button type="button" class="btn btn-default" ng-click="cmp.onRefreshFeeds()">
       <span ng-class="{'glyphicon glyphicon-refresh': !cmp.refreshingFeeds, 'loading inline': cmp.refreshingFeeds}"></span> Refresh
     </button>
-    
   </div>
   <div class="page-action-buttons">
-    <div ng-show="cmp.readingPost" class="post-pagination">
+    <div ng-if="cmp.readingPost && cmp.entries.length > 0" class="post-pagination">
       <b>{{cmp.currentPostsIndex}}</b> of <b>{{cmp.currentPostsLength}}</b> 
       <div class="btn-group">
-        <button type="button" class="btn btn-default" title="Previous post" ng-disabled="cmp.prevEntry == null" ng-click="cmp.goToPost('prev')"><span class="glyphicon glyphicon-chevron-left"></span></button>
-        <button type="button" class="btn btn-default" title="Next post" ng-disabled="cmp.nextEntry == null" ng-click="cmp.goToPost('next')"><span class="glyphicon glyphicon-chevron-right"></span></button>
+        <button type="button" class="btn btn-default" title="Previous post" ng-disabled="!cmp.hasPrevEntry" ng-click="cmp.goToPost('prev')"><span class="glyphicon glyphicon-chevron-left"></span></button>
+        <button type="button" class="btn btn-default" title="Next post" ng-disabled="!cmp.hasNextEntry" ng-click="cmp.goToPost('next')"><span class="glyphicon glyphicon-chevron-right"></span></button>
+      </div>
+    </div>
+    <div ng-if="cmp.hasUnread">
+      <div class="btn-group">
+        <button type="button" class="btn btn-default" title="Mark all pasts as read" ng-click="cmp.markAllAsRead()">Mark all as read</button>
       </div>
     </div>
   </div>

@@ -10,6 +10,8 @@ import 'package:rss_app/rss_controller.dart';
 import 'package:rss_app/service/query_service.dart';
 import 'package:rss_app/service/database.dart';
 import 'package:rss_app/service/image_service.dart';
+import 'package:rss_app/service/communication.dart';
+import 'package:rss_app/service/events_observer.dart';
 import 'package:rss_app/component/lists/entries_lists.dart';
 import 'package:rss_app/component/feed_list/feed_list.dart';
 import 'package:rss_app/component/feed_entries/feed_entries.dart';
@@ -49,7 +51,7 @@ void main() {
      ..bind(RelativeDateFilter)
      ..bind(PostsListFormatter)
      
-     ..bind(AddFeedHeqaderComponent)
+     ..bind(AddFeedHeaderComponent)
      ..bind(StarringComponent)
      ..bind(FeedListComponent)
      ..bind(FeedEntriesComponent)
@@ -64,6 +66,8 @@ void main() {
      ..bind(QueryService)
      ..bind(ImageService)
      ..bind(RssDatabase)
+     ..bind(AppComm)
+     ..bind(AppEvents)
      
      ..bind(NodeValidator, toValue: myValidator);
   

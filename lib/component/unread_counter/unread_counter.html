@@ -1,1 +1,1 @@
-<span class="unread-counter">{{cmp.unreadCount}}</span>
+<span class="{{cmp.cssClass}}" ng-if="!cmp.isHideEmpty || cmp.isHideEmpty && cmp.unreadCount > 0">{{cmp.unreadCount}}</span>

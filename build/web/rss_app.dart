@@ -10,12 +10,15 @@ import 'package:rss_app/rss_controller.dart';
 import 'package:rss_app/service/query_service.dart';
 import 'package:rss_app/service/database.dart';
 import 'package:rss_app/service/image_service.dart';
+import 'package:rss_app/service/communication.dart';
+import 'package:rss_app/component/lists/entries_lists.dart';
 import 'package:rss_app/component/feed_list/feed_list.dart';
-import 'package:rss_app/component/posts_list/posts_list.dart';
+import 'package:rss_app/component/feed_entries/feed_entries.dart';
 import 'package:rss_app/component/add_feed_header/add_feed_header.dart';
 import 'package:rss_app/component/post/post.dart';
 import 'package:rss_app/component/pubdate/pubdate.dart';
 import 'package:rss_app/component/unread_counter/unread_counter.dart';
+import 'package:rss_app/component/data_handler/data_handler.dart';
 import 'package:rss_app/router/rss_router.dart';
 import 'package:rss_app/formatter/text_formatter.dart';
 import 'package:rss_app/formatter/date_formatter.dart';
@@ -53,39 +56,21 @@ void main() {
      ..bind(AddFeedHeqaderComponent)
      ..bind(StarringComponent)
      ..bind(FeedListComponent)
-     ..bind(PostsListComponent)
+     ..bind(FeedEntriesComponent)
      ..bind(PostComponent)
      ..bind(PubdateComponent)
      ..bind(UnreadCounterComponent)
+     ..bind(EntriesListComponent)
+     ..bind(DataHandlerComponent)
      
      ..bind(RssController)
      
      ..bind(QueryService)
      ..bind(ImageService)
      ..bind(RssDatabase)
+     ..bind(AppComm)
      
      ..bind(NodeValidator, toValue: myValidator);
-     
-//  Point p1 = new Point(1,1);
-//  Point p2 = new Point(2,2);
-//  //p1 = p1+p2;
-//  p1+p2;
-//  print(p1);
   
   staticApplicationFactory(generated_static_injector.factories, generated_static_metadata.typeAnnotations, generated_static_expressions.getters, generated_static_expressions.setters, generated_static_expressions.symbols).addModule(rssModule).run();
-}
-
-
-class Point {
-  int x;
-  int y;
-  Point(this.x, this.y);
-  Point operator +(Point other){
-    this.x = x + other.x;
-    this.y = y + other.y;
-    return this;
-  }
-  String toString(){
-    return "Point: x: $x, y: $y";
-  }
 }

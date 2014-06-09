@@ -21,18 +21,21 @@ import 'package:angular/application.dart' as import_15;
 import 'package:angular/animate/module.dart' as import_16;
 import 'package:rss_app/rss_controller.dart' as import_17;
 import 'package:rss_app/service/query_service.dart' as import_18;
-import 'package:rss_app/service/database.dart' as import_19;
-import 'package:rss_app/service/image_service.dart' as import_20;
-import 'package:rss_app/component/feed_list/feed_list.dart' as import_21;
-import 'package:rss_app/component/posts_list/posts_list.dart' as import_22;
-import 'package:rss_app/component/add_feed_header/add_feed_header.dart' as import_23;
-import 'package:rss_app/component/post/post.dart' as import_24;
-import 'package:rss_app/component/pubdate/pubdate.dart' as import_25;
-import 'package:rss_app/component/unread_counter/unread_counter.dart' as import_26;
-import 'package:rss_app/formatter/text_formatter.dart' as import_27;
-import 'package:rss_app/formatter/date_formatter.dart' as import_28;
-import 'package:rss_app/formatter/posts_list_formatter.dart' as import_29;
-import 'package:rss_app/component/star/star.dart' as import_30;
+import 'package:rss_app/service/communication.dart' as import_19;
+import 'package:rss_app/service/database.dart' as import_20;
+import 'package:rss_app/service/image_service.dart' as import_21;
+import 'package:rss_app/component/lists/entries_lists.dart' as import_22;
+import 'package:rss_app/component/feed_list/feed_list.dart' as import_23;
+import 'package:rss_app/component/feed_entries/feed_entries.dart' as import_24;
+import 'package:rss_app/component/add_feed_header/add_feed_header.dart' as import_25;
+import 'package:rss_app/component/post/post.dart' as import_26;
+import 'package:rss_app/component/pubdate/pubdate.dart' as import_27;
+import 'package:rss_app/component/unread_counter/unread_counter.dart' as import_28;
+import 'package:rss_app/component/data_handler/data_handler.dart' as import_29;
+import 'package:rss_app/formatter/text_formatter.dart' as import_30;
+import 'package:rss_app/formatter/date_formatter.dart' as import_31;
+import 'package:rss_app/formatter/posts_list_formatter.dart' as import_32;
+import 'package:rss_app/component/star/star.dart' as import_33;
 Injector createStaticInjector({List<Module> modules, String name,
     bool allowImplicitInjection: false}) =>
   new StaticInjector(modules: modules, name: name,
@@ -146,20 +149,23 @@ final Map<Type, TypeFactory> factories = <Type, TypeFactory>{
   import_16.CssAnimationMap: (f) => new import_16.CssAnimationMap(),
   import_16.NgAnimate: (f) => new import_16.NgAnimate(f(import_9.Element), f(import_16.AnimationOptimizer)),
   import_16.NgAnimateChildren: (f) => new import_16.NgAnimateChildren(f(import_9.Element), f(import_16.AnimationOptimizer)),
-  import_17.RssController: (f) => new import_17.RssController(f(import_18.QueryService)),
-  import_18.QueryService: (f) => new import_18.QueryService(f(import_8.Http), f(import_19.RssDatabase)),
-  import_19.RssDatabase: (f) => new import_19.RssDatabase(),
-  import_20.ImageService: (f) => new import_20.ImageService(f(import_8.Http)),
-  import_21.FeedListComponent: (f) => new import_21.FeedListComponent(f(import_18.QueryService)),
-  import_22.PostsListComponent: (f) => new import_22.PostsListComponent(f(import_13.RouteProvider), f(import_18.QueryService), f(import_14.Router)),
-  import_23.AddFeedHeqaderComponent: (f) => new import_23.AddFeedHeqaderComponent(f(import_18.QueryService), f(import_14.Router)),
-  import_24.PostComponent: (f) => new import_24.PostComponent(f(import_13.RouteProvider), f(import_18.QueryService), f(import_20.ImageService)),
-  import_25.PubdateComponent: (f) => new import_25.PubdateComponent(),
-  import_26.UnreadCounterComponent: (f) => new import_26.UnreadCounterComponent(f(import_18.QueryService)),
-  import_27.TruncateFilter: (f) => new import_27.TruncateFilter(),
-  import_27.SanitizeFilter: (f) => new import_27.SanitizeFilter(),
-  import_28.RelativeDateFilter: (f) => new import_28.RelativeDateFilter(),
-  import_29.PostsListFormatter: (f) => new import_29.PostsListFormatter(),
-  import_30.StarringComponent: (f) => new import_30.StarringComponent(),
+  import_17.RssController: (f) => new import_17.RssController(f(import_18.QueryService), f(import_19.AppComm)),
+  import_18.QueryService: (f) => new import_18.QueryService(f(import_8.Http), f(import_20.RssDatabase)),
+  import_20.RssDatabase: (f) => new import_20.RssDatabase(),
+  import_19.AppComm: (f) => new import_19.AppComm(),
+  import_21.ImageService: (f) => new import_21.ImageService(f(import_8.Http)),
+  import_22.EntriesListComponent: (f) => new import_22.EntriesListComponent(f(import_18.QueryService), f(import_14.Router)),
+  import_23.FeedListComponent: (f) => new import_23.FeedListComponent(f(import_18.QueryService)),
+  import_24.FeedEntriesComponent: (f) => new import_24.FeedEntriesComponent(f(import_13.RouteProvider), f(import_18.QueryService), f(import_14.Router)),
+  import_25.AddFeedHeqaderComponent: (f) => new import_25.AddFeedHeqaderComponent(f(import_18.QueryService), f(import_14.Router)),
+  import_26.PostComponent: (f) => new import_26.PostComponent(f(import_13.RouteProvider), f(import_18.QueryService), f(import_21.ImageService)),
+  import_27.PubdateComponent: (f) => new import_27.PubdateComponent(),
+  import_28.UnreadCounterComponent: (f) => new import_28.UnreadCounterComponent(f(import_18.QueryService)),
+  import_29.DataHandlerComponent: (f) => new import_29.DataHandlerComponent(f(import_13.RouteProvider), f(import_14.Router), f(import_18.QueryService)),
+  import_30.TruncateFilter: (f) => new import_30.TruncateFilter(),
+  import_30.SanitizeFilter: (f) => new import_30.SanitizeFilter(),
+  import_31.RelativeDateFilter: (f) => new import_31.RelativeDateFilter(),
+  import_32.PostsListFormatter: (f) => new import_32.PostsListFormatter(),
+  import_33.StarringComponent: (f) => new import_33.StarringComponent(),
   import_10.Profiler: (f) => new import_10.Profiler(),
 };

@@ -1,10 +1,10 @@
 <div class="list-feed" ng-repeat="feed in cmp.feeds">
-  <div class="feed-list-object" ng-if="cmp.hasPosts(feed.id)">
+  <div class="feed-list-object" ng-if="cmp.hasPosts(feed.id)" ng-if="cmp.hasPostsInView">
   
     <header class="title-area">
       <h1 class="feed-title">{{feed.title|sanitize}} (<unread-counter feed="{{feed.id}}"></unread-counter>)</h1>
       <div class="open-feed">
-        <a href="#/feed/{{feed.id}}" class="btn btn-primary btn-sm">Read all</a>
+        <a href="#/feed/{{feed.id}}" class="btn btn-primary">Read all</a>
       </div>
     </header>
     
@@ -20,5 +20,14 @@
         <star starred="post.starred" class="star-action" ng-click="cmp.onStarChange(post)"></star>
       </div>
     </article>
+  </div>
+</div>
+<div class="list-feed empty" ng-if="!cmp.hasPostsInView">
+
+  <div class="jumbotron">
+      <div class="container">
+          <h1>Hands up!</h1>
+          <p id="WelcomeMessage">There's no posts to show.</p>
+      </div>
   </div>
 </div>

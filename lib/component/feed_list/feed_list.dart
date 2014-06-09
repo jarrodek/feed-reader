@@ -19,4 +19,7 @@ class FeedListComponent {
   
   FeedListComponent(QueryService this.queryService);
   
+  void onStarChange(int feedIid){
+    
+  }
 }

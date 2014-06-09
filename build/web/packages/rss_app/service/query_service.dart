@@ -18,23 +18,9 @@ class QueryService {
   List<FeedEntry> currentPosts = [];
   Map<int, int> unreadMap = new Map<int, int>();
   
-  
-  String _currentFeedId;
-  set currentFeedId(String id) {
-    print('currentFeedId in QueryService $id');
-    _currentFeedId = id; 
-  }
-  String get currentFeedId => _currentFeedId;
-  
-  int _unreadCount;
-  int get unreadCount {
-    if(_unreadCount == null){
-      return 0;
-    }
-    return _unreadCount;
-  }
-  
-  
+  int currentFeedId;
+  int currentPostId = 0;
+  int unreadCount = 0;
   
   QueryService(Http this._http, RssDatabase this.db) {
     _loaded = Future.wait([_loadFeeds(), _countUnreads()]);
@@ -46,15 +32,27 @@ class QueryService {
   }
   ///Count number of unread posts.
   Future _countUnreads(){
-    return this.db.countUnread(null).then((int cnt) => _unreadCount = cnt);
+    return this.db.countUnread(null).then((int cnt) => unreadCount = (cnt == null ? 0 : cnt))
+        .catchError((e) => window.console.error(e));
   }
   
   
   int countUnread(int feedId){
     if(unreadMap.containsKey(feedId)){
       return unreadMap[feedId];
+    } else {
+      unreadMap[feedId] = 0;
+      this.db.countUnread(feedId).then((int cnt) {
+        unreadMap[feedId] = cnt;
+      });
     }
-    this.db.countUnread(feedId).then((int cnt) => unreadMap[feedId] = cnt);
+    return 0;
+  }
+  
+  void _revalideteUnread(int feedId){
+    this.db.countUnread(feedId).then((int cnt) {
+      unreadMap[feedId] = cnt;
+    });
   }
   
   
@@ -70,7 +68,7 @@ class QueryService {
     return null;
   }
   
-  Future<List<FeedEntry>> getPosts(String feedId){
+  Future getPosts(String feedId){
     
     switch(feedId){
       case 'unread':
@@ -106,15 +104,15 @@ class QueryService {
       return new Future.value(entry);
     }
     
-    
     entry.unread = false;
     var result = null;
     return this.db.updateEntry(entry)
-        .then((entry) => result = entry)
-        .then((_) => this.db.listUnread())
-        .then((_){
-          return result;
-        });
+      .then((entry) => result = entry)
+      .then((_) => _countUnreads())
+      .then((_){
+        _revalideteUnread(entry.feedid);
+        return result;
+      });
   }
   
   
@@ -134,6 +132,27 @@ class QueryService {
     }
     
     return this.db.getPost(id).then((FeedEntry entry) => currentPosts.add(entry));
+  }
+  
+  void markCurrentAsRead(){
+    var tasks = [];
+    currentPosts.forEach((FeedEntry entry){
+      if(!entry.unread){
+        return;
+      }
+      entry.unread = false;
+      Future f = this.db.updateEntry(entry);
+      tasks.add(f);
+    });
+    Future.wait(tasks)
+    .then((_) => _countUnreads())
+    .then((_){
+      if(currentFeedId != null && currentFeedId != 0){
+        return _revalideteUnread(currentFeedId);
+      } else {
+        return new Future.value(null);
+      }
+    });
   }
   
 }

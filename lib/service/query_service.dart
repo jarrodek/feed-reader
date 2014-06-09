@@ -134,4 +134,39 @@ class QueryService {
     return this.db.getPost(id).then((FeedEntry entry) => currentPosts.add(entry));
   }
   
+  void markCurrentAsRead(){
+    var tasks = [];
+    currentPosts.forEach((FeedEntry entry){
+      if(!entry.unread){
+        return;
+      }
+      entry.unread = false;
+      Future f = this.db.updateEntry(entry);
+      tasks.add(f);
+    });
+    Future.wait(tasks)
+    .then((_) => _countUnreads())
+    .then((_){
+      if(currentFeedId != null && currentFeedId != 0){
+        return _revalideteUnread(currentFeedId);
+      } else {
+        return new Future.value(null);
+      }
+    });
+  }
+  
+  Future markFeedStarred(bool starred, int feedId){
+    if(!feeds.contains(feedId)){
+      throw "No such feed: $feedId";
+    }
+    
+    Feed f = feeds[feedId];
+    if(f.starred){
+      return new Future.value(true);
+    } 
+    
+    //TODO: mark feed as starred,
+   
+  }
+  
 }
