@@ -12,7 +12,9 @@ import '../../service/dbstructures.dart';
     selector: 'add-feed-header', 
     templateUrl: 'packages/rss_app/component/add_feed_header/add_feed_header.html', 
     publishAs: 'cmp',
-    useShadowDom: false,
+    cssUrl: const [
+      'packages/rss_app/component/common.css'
+    ],
     map: const {
       'on-refresh-feeds': '&onRefreshFeeds'
     })

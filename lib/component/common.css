@@ -1,0 +1,38 @@
+/**
+ * App color definitions to be included in components.
+ */
+
+ [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
+.ng-cloak, .x-ng-cloak,
+.ng-hide {
+  display: none !important;
+}
+input{
+  width: 100%;
+  padding: 0.3em;
+}
+.button{
+    border: 0;
+    padding: 0.5em 1.3em;
+}
+.button.primary{
+    background-color: #0277bd;
+    color: #fff;
+}
+.button.default{
+  background-color: #e1f5fe;
+  color: #333;
+}
+
+
+.button:disabled {
+    background-color: #D3D3D3;
+    color: gray;
+}
+.button-icon{
+  pointer-events: none; 
+  width: 24px; 
+  height: 24px; 
+  display: inline-block; 
+  vertical-align: middle;
+}
