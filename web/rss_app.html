@@ -3,18 +3,16 @@
   <head>
     <meta charset="utf-8">
     <title>Rss app</title>
-    <script src="packages/web_components/platform.js"></script>
-    <script src="packages/web_components/dart_support.js"></script>
     <link rel="stylesheet" href="css/polymer.css">
     <link rel="stylesheet" href="css/rss_app.css">
     <link rel="stylesheet" href="css/bootstrap.css">
   </head>
-  <body rss-app ng-cloak>
+  <body rss-app ng-cloak layout vertical>
     <header class="top-header">
       <add-feed-header on-refresh-feeds="ctrl.refreshFeeds()"></add-feed-header>
     </header>
-    <div id="app-container">
-      <feed-list></feed-list>
+    <div id="app-container" layout horizontal flex>
+      <feed-list layout vertical></feed-list>
       <div class="main-content">
         <ng-view autoscroll="true" class="view-animate"><data-handler></data-handler></ng-view>
       </div>

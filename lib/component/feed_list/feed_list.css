@@ -1,15 +1,5 @@
 #feed-list {
-  margin: 0 10px 0 0;
-  padding: 0 0;
-  list-style: none;
-  position: fixed;
-  width: 30%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  border-right: 1px #e5e5e5 solid;
-  max-width: 400px;
-  min-width: 200px;
+  
 }
 #feed-list .feed-list-display{
   list-style: none;
@@ -22,45 +12,40 @@
   vertical-align: middle;
   width: 24px;
   height: 24px;
-  margin-right: 7px;
+  margin-right: 7px; 
+}
+.icon-area{
+  padding: 16px;
   
 }
 .feed-title{
   display: inline-block;
   vertical-align: middle;
-  word-break: break-all;
+  word-break: break-word;
+  padding: 16px 0;
 }
 
 #feed-list .feed-list-display li {
   margin: 0;
   padding: 0;
-  border-bottom: 1px #e5e5e5 solid;
   cursor: pointer;
 }
+#feed-list .feed-list-display li:hover a .icon-area{
+  fill: #fb8c00;
+}
 #feed-list .feed-list-display li a{
-  padding: 12px 15px;
+  padding: 0;
   display: block;
   color: rgb(51, 51, 51);
-}
-#feed-list .feed-list-display li.noborder{
-  border-bottom: none;
-}
-#feed-list .feed-list-display li.title-divider{
-  font-weight: bold;
-  color: #265180;
-  border-color: #265180;
-  padding-bottom: 1px;
-  padding-left: 5px;
-}
-#feed-list .feed-list-display li.subscription-feed a{
-  display: flex;
-  flex-direction: row;
+  fill: #0288d1;
   text-decoration: none;
 }
+
+
 #feed-list .feed-list-display li.subscription-feed .feed-title{
-  flex: 1;
   transition: color 0.6s;
   color: rgba(51, 51, 51, 0.68);
+  padding: 16px 0 16px 16px; 
 }
 #feed-list .feed-list-display li.subscription-feed .feed-title:hover{
   color: rgba(51, 51, 51, 1);
@@ -72,6 +57,12 @@
 #feed-list .feed-list-display li.selected{
   background-color: #F1F1F1;
 }
+
+.subscription-feed .icon-area{
+  width: 24px;
+  height: 24px;
+}
+
 
 .label {
   display: inline;
@@ -88,3 +79,4 @@
 .label-default {
   background-color: #999;
 }
+

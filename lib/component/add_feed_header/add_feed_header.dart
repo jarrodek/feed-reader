@@ -13,25 +13,27 @@ import '../../service/dbstructures.dart';
     templateUrl: 'packages/rss_app/component/add_feed_header/add_feed_header.html', 
     publishAs: 'cmp',
     cssUrl: const [
-      'packages/rss_app/component/common.css'
+      'packages/rss_app/component/common.css',
+      'packages/rss_app/component/add_feed_header/add_feed_header.css'
     ],
     map: const {
       'on-refresh-feeds': '&onRefreshFeeds'
     })
 class AddFeedHeaderComponent {
   
-  QueryService queryService;
+  QueryService _queryService;
   Router router;
   
   bool showAddFeed = false;
   bool addingFeed = false;
   bool refreshingFeeds = false;
+  bool get hasFeeds => _queryService.feeds.length > 0;
   String feedAddUrl = "";
-  int get currentPostId => queryService.currentPostId;
+  int get currentPostId => _queryService.currentPostId;
   
   bool get addFeedDisabled => !(feedAddUrl.startsWith("http://") || feedAddUrl.startsWith("https://"));
   
-  List<FeedEntry> get entries => queryService.currentPosts;
+  List<FeedEntry> get entries => _queryService.currentPosts;
   bool get hasUnread{
     for(int i=0,len=entries.length; i<len; i++){
       if(entries[i].unread == true){
@@ -66,7 +68,7 @@ class AddFeedHeaderComponent {
     return (feedEntryPosition + 1);
   }
   
-  bool get readingPost => queryService.currentPostId > 0;
+  bool get readingPost => _queryService.currentPostId > 0;
   
   bool get hasNextEntry{
     if(currentPostsLength-1 >= feedEntryPosition+1){
@@ -84,7 +86,7 @@ class AddFeedHeaderComponent {
   ///TODO: Add arrows support.
   AppEvents appEvents;
   
-  AddFeedHeaderComponent(QueryService this.queryService, Router this.router, AppEvents this.appEvents);
+  AddFeedHeaderComponent(QueryService this._queryService, Router this.router, AppEvents this.appEvents);
 
   void addFeed() {
 
@@ -96,7 +98,7 @@ class AddFeedHeaderComponent {
     showAddFeed = false;
     addingFeed = true;
 
-    queryService.addFeed(feedAddUrl).then((_) {
+    _queryService.addFeed(feedAddUrl).then((_) {
       feedAddUrl = '';
       addingFeed = false;
       //TODO: refresh feed.
@@ -130,7 +132,7 @@ class AddFeedHeaderComponent {
   dynamic onRefreshFeeds;
   
   void markAllAsRead(){
-    queryService.markCurrentAsRead();
+    _queryService.markCurrentAsRead();
   }
   
 }

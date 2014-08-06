@@ -1,0 +1,8 @@
+.current-post-index{
+  display: inline-block;
+  margin-right: 0.3em;
+}
+.current-posts-length{
+  display: inline-block;
+  margin-left: 0.3em;
+}

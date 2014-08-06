@@ -1,58 +1,44 @@
 <header layout horizontal class="app-header">
 
-  <div class="app-action-buttons">
-    <button ng-show="!cmp.showAddFeed" type="button" class="button primary" ng-click="cmp.showAddFeed = true;">
-      <svg viewBox="0 0 24 24" class="button-icon"><g id="add"><path d="M19,13h-6v6h-2v-6H5v-2h6V5h2v6h6V13z"></path></g></svg> 
-      <span class="icon-label">Add</span>
-    </button>
-    
-    <div ng-show="cmp.showAddFeed">
-      <div class="input-group">
-        <input type="url" ng-model="cmp.feedAddUrl" placeholder="Enter feed URL here." ng-class="{'loading':cmp.addingFeed}">
-        <span class="input-group-btn">
-          <button class="btn btn-primary" type="button" ng-click="cmp.addFeed()" ng-disabled="cmp.addFeedDisabled">Add</button>
-          <button class="btn btn-default" type="button" ng-click="cmp.showAddFeed = false;">Cancel</button>
-        </span>
-      </div>
-    </div>
-    <span flex></span>
-    <button type="button" class="button default" ng-click="cmp.onRefreshFeeds()">
-      <svg viewBox="0 0 24 24" class="button-icon"><g id="refresh"><path d="M17.6,6.4C16.2,4.9,14.2,4,12,4c-4.4,0-8,3.6-8,8s3.6,8,8,8c3.7,0,6.8-2.6,7.7-6h-2.1c-0.8,2.3-3,4-5.6,4c-3.3,0-6-2.7-6-6s2.7-6,6-6c1.7,0,3.1,0.7,4.2,1.8L13,11h7V4L17.6,6.4z"></path></g></svg>
-      <!--span ng-class="{'glyphicon glyphicon-refresh': !cmp.refreshingFeeds, 'loading inline': cmp.refreshingFeeds}"></span-->
-      <span class="icon-label">Refresh</span>
-    </button>
+  
+  <button ng-show="!cmp.showAddFeed" type="button" class="button primary" ng-click="cmp.showAddFeed = true;">
+    <span icon="add" class="button-icon"></span>
+    <span class="icon-label">Add</span>
+  </button>
+  
+  <div ng-show="cmp.showAddFeed" layout horizontal flex>
+      <input type="url" ng-model="cmp.feedAddUrl" placeholder="Enter feed URL here." ng-class="{'loading':cmp.addingFeed}">
+      <button class="button primary" type="button" ng-click="cmp.addFeed()" ng-disabled="cmp.addFeedDisabled">Add</button>
+      <button class="button default" type="button" ng-click="cmp.showAddFeed = false;">Cancel</button>
   </div>
   
-  <span flex></span>
+  <button ng-show="!cmp.showAddFeed" type="button" class="button default" ng-click="cmp.onRefreshFeeds()" ng-if="cmp.hasFeeds">
+    <span icon="refresh" class="button-icon"></span>
+    <!--span ng-class="{'glyphicon glyphicon-refresh': !cmp.refreshingFeeds, 'loading inline': cmp.refreshingFeeds}"></span-->
+    <span class="icon-label">Refresh</span>
+  </button>
   
-  <div class="page-action-buttons" layout horizontal>
-    <div ng-if="cmp.readingPost && cmp.entries.length > 0" class="post-pagination" layout horizontal center>
-      <b>{{cmp.currentPostsIndex}}</b> of <b>{{cmp.currentPostsLength}}</b> 
-      <div class="btn-group">
-        <button type="button" class="button default" title="Previous post" ng-disabled="!cmp.hasPrevEntry" ng-click="cmp.goToPost('prev')">
-          <svg viewBox="0 0 24 24" class="button-icon">
-            <g id="chevron-left">
-              <polygon points="15.4,7.4 14,6 8,12 14,18 15.4,16.6 10.8,12 "></polygon>
-            </g>
-          </svg>
-        </button>
-        <button type="button" class="button default" title="Next post" ng-disabled="!cmp.hasNextEntry" ng-click="cmp.goToPost('next')">
-          <svg viewBox="0 0 24 24" class="button-icon">
-            <g id="chevron-left">
-              <polygon points="10,6 8.6,7.4 13.2,12 8.6,16.6 10,18 16,12 "></polygon>
-            </g>
-          </svg>
-        </button>
-      </div>
-    </div>
-    <div ng-if="cmp.hasUnread">
-      <div class="btn-group">
-        <button type="button" class="button default" title="Mark all pasts as read" ng-click="cmp.markAllAsRead()">
-          <svg viewBox="0 0 24 24" class="button-icon"><g id="check-circle-outline"><path d="M7.9,10.1l-1.4,1.4L11,16L21,6l-1.4-1.4L11,13.2L7.9,10.1z M20,12c0,4.4-3.6,8-8,8s-8-3.6-8-8s3.6-8,8-8c0.8,0,1.5,0.1,2.2,0.3l1.6-1.6C14.6,2.3,13.3,2,12,2C6.5,2,2,6.5,2,12s4.5,10,10,10s10-4.5,10-10H20z"></path></g></svg>
-          Mark all as read
-        </button>
-      </div>
+  <span flex ng-show="!cmp.showAddFeed"></span>
+  
+  <div  ng-if="!cmp.showAddFeed && cmp.readingPost && cmp.entries.length > 0" class="post-pagination" layout horizontal center>
+    <b class="current-post-index">{{cmp.currentPostsIndex}}</b> of <b class="current-posts-length">{{cmp.currentPostsLength}}</b> 
+    <div class="btn-group">
+      <button type="button" class="button default clean" title="Previous post" ng-disabled="!cmp.hasPrevEntry" ng-click="cmp.goToPost('prev')">
+        <span icon="chevron-left" class="button-icon"></span>
+      </button>
+      <button type="button" class="button default clean" title="Next post" ng-disabled="!cmp.hasNextEntry" ng-click="cmp.goToPost('next')">
+        <span icon="chevron-right" class="button-icon"></span>
+      </button>
     </div>
   </div>
+  <div ng-if="!cmp.showAddFeed && cmp.hasUnread">
+    <div class="btn-group">
+      <button type="button" class="button default" title="Mark all pasts as read" ng-click="cmp.markAllAsRead()">
+        <span icon="check-circle-outline" class="button-icon"></span>
+        <span class="icon-label">Mark all as read</span>
+      </button>
+    </div>
+  </div>
+  
   
 </header>

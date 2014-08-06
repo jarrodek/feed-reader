@@ -22,6 +22,8 @@ class QueryService {
   int currentPostId = 0;
   int unreadCount = 0;
   
+  String currentPostsArea = 'unread';
+  
   QueryService(Http this._http, RssDatabase this.db) {
     _loaded = Future.wait([_loadFeeds(), _countUnreads()]);
   }
@@ -95,9 +97,16 @@ class QueryService {
   
   Future updateEntry(FeedEntry entry){
     return this.db.updateEntry(entry).then((_){
-      //print(currentPosts.contains(entry));
+      print(currentPosts.contains(entry));
     });
   }
+  
+  Future updateFeed(Feed feed){
+    return this.db.updateFeed(feed).then((_){
+      print(feeds.contains(feed));
+    });
+  }
+  
   
   Future setEntryRead(FeedEntry entry){
     if(!entry.unread){

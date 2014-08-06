@@ -1,5 +1,4 @@
-<span class="star"
-      ng-click="cmp.handleClick()"
-      ng-class="cmp.starClass()">
-  {{cmp.starChar()}}
+<span ng-click="cmp.handleClick()" class="star">
+  <span ng-if="cmp.starred" icon="star"></span>
+  <span ng-if="!cmp.starred" class="off" icon="star-outline"></span>
 </span>

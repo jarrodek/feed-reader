@@ -70,11 +70,11 @@ class Feed {
       'url': this.url,
       'etag': this.etag,
       'categories': this.categories == null ? [] : this.categories,
-      'starred': this.starred == null ? 0 : this.starred ? 1 : 0,
+      'starred': this.starred == null ? 0 : (this.starred ? 1 : 0),
     };
     
     if (this.id != null) {
-      data[id] = this.id;
+      data['id'] = this.id;
     }
     if (this.author != null) {
       data['author'] = this.author.toJson();

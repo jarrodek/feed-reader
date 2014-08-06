@@ -20,11 +20,13 @@ import 'package:rss_app/component/post/post.dart';
 import 'package:rss_app/component/pubdate/pubdate.dart';
 import 'package:rss_app/component/unread_counter/unread_counter.dart';
 import 'package:rss_app/component/data_handler/data_handler.dart';
+import 'package:rss_app/component/star/star.dart';
+import 'package:rss_app/decorator/app-icon.dart';
 import 'package:rss_app/router/rss_router.dart';
 import 'package:rss_app/formatter/text_formatter.dart';
 import 'package:rss_app/formatter/date_formatter.dart';
 import 'package:rss_app/formatter/posts_list_formatter.dart';
-import 'package:rss_app/component/star/star.dart';
+
 
 
 void main() {
@@ -60,6 +62,8 @@ void main() {
      ..bind(UnreadCounterComponent)
      ..bind(EntriesListComponent)
      ..bind(DataHandlerComponent)
+     
+     ..bind(AppIcon)
      
      ..bind(RssController)
      
