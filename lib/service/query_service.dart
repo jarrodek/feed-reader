@@ -98,6 +98,7 @@ class QueryService {
   Future updateEntry(FeedEntry entry){
     return this.db.updateEntry(entry).then((_){
       print(currentPosts.contains(entry));
+      return entry;
     });
   }
   

@@ -48,9 +48,12 @@ class EntriesListComponent {
   }
   
   void onStarChange(FeedEntry entry){
+    entry.starred = !entry.starred;
     queryService.updateEntry(entry).catchError((e){
       //TODO: error report.
       window.console.error(e);
+    }).then((FeedEntry entry){
+      print("Updated entry: $entry");
     });
   }
   
