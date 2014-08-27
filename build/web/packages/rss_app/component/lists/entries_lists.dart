@@ -13,9 +13,11 @@ import '../../service/query_service.dart';
 
 @Component(
     selector: 'entries-lists', 
-    templateUrl: 'packages/rss_app/component/lists/entries_lists.html',  
-    useShadowDom: false,
-    publishAs: 'cmp',
+    templateUrl: 'packages/rss_app/component/lists/entries_lists.html',
+    publishAs: 'EntriesList',
+    cssUrl: const [
+      'packages/rss_app/component/lists/entries_lists.css'
+    ],
     map: const {
       'data-source': '@dataSource'
     })
@@ -48,9 +50,12 @@ class EntriesListComponent {
   }
   
   void onStarChange(FeedEntry entry){
+    entry.starred = !entry.starred;
     queryService.updateEntry(entry).catchError((e){
       //TODO: error report.
       window.console.error(e);
+    }).then((FeedEntry entry){
+      
     });
   }
   

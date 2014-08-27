@@ -11,6 +11,7 @@ import 'package:rss_app/service/query_service.dart';
 import 'package:rss_app/service/database.dart';
 import 'package:rss_app/service/image_service.dart';
 import 'package:rss_app/service/communication.dart';
+import 'package:rss_app/service/events_observer.dart';
 import 'package:rss_app/component/lists/entries_lists.dart';
 import 'package:rss_app/component/feed_list/feed_list.dart';
 import 'package:rss_app/component/feed_entries/feed_entries.dart';
@@ -19,14 +20,16 @@ import 'package:rss_app/component/post/post.dart';
 import 'package:rss_app/component/pubdate/pubdate.dart';
 import 'package:rss_app/component/unread_counter/unread_counter.dart';
 import 'package:rss_app/component/data_handler/data_handler.dart';
+import 'package:rss_app/component/star/star.dart';
+import 'package:rss_app/decorator/app-icon.dart';
 import 'package:rss_app/router/rss_router.dart';
 import 'package:rss_app/formatter/text_formatter.dart';
 import 'package:rss_app/formatter/date_formatter.dart';
 import 'package:rss_app/formatter/posts_list_formatter.dart';
-import 'package:rss_app/component/star/star.dart';
 import 'rss_app_static_expressions.dart' as generated_static_expressions;
 import 'rss_app_static_metadata.dart' as generated_static_metadata;
 import 'rss_app_static_injector.dart' as generated_static_injector;
+
 
 
 void main() {
@@ -53,7 +56,7 @@ void main() {
      ..bind(RelativeDateFilter)
      ..bind(PostsListFormatter)
      
-     ..bind(AddFeedHeqaderComponent)
+     ..bind(AddFeedHeaderComponent)
      ..bind(StarringComponent)
      ..bind(FeedListComponent)
      ..bind(FeedEntriesComponent)
@@ -63,12 +66,15 @@ void main() {
      ..bind(EntriesListComponent)
      ..bind(DataHandlerComponent)
      
+     ..bind(AppIcon)
+     
      ..bind(RssController)
      
      ..bind(QueryService)
      ..bind(ImageService)
      ..bind(RssDatabase)
      ..bind(AppComm)
+     ..bind(AppEvents)
      
      ..bind(NodeValidator, toValue: myValidator);
   

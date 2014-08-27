@@ -109,12 +109,12 @@ class QueryService {
   }
   
   
-  Future setEntryRead(FeedEntry entry){
-    if(!entry.unread){
+  Future setEntryRead(FeedEntry entry, bool read){
+    if(entry.unread == !read){
       return new Future.value(entry);
     }
     
-    entry.unread = false;
+    entry.unread = !read;
     var result = null;
     return this.db.updateEntry(entry)
       .then((entry) => result = entry)

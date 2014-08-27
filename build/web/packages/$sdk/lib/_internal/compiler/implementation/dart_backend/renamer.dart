@@ -87,6 +87,7 @@ void renamePlaceholders(
   }
 
   String renameType(DartType type, Function renameElement) {
+    if (type.isDynamic) return 'dynamic';
     // TODO(smok): Do not rename type if it is in platform library or
     // js-helpers.
     StringBuffer result = new StringBuffer(renameElement(type.element));
@@ -106,7 +107,7 @@ void renamePlaceholders(
 
   String renameConstructor(Element element, ConstructorPlaceholder placeholder,
       Function renameString, Function renameElement) {
-    assert(element.isConstructor());
+    assert(element.isConstructor);
     StringBuffer result = new StringBuffer();
     String name = element.name;
     if (element.name != '') {
@@ -116,8 +117,8 @@ void renamePlaceholders(
         result.write(renameType(placeholder.type, renameElement));
         result.write('.');
       }
-      if (!element.getLibrary().isPlatformLibrary) {
-        name = renameString(element.getLibrary(), name);
+      if (!element.library.isPlatformLibrary) {
+        name = renameString(element.library, name);
       }
       result.write(name);
     } else {
@@ -133,12 +134,12 @@ void renamePlaceholders(
            element is TypeVariableElement);
     // TODO(smok): We may want to reuse class static field and method names.
     String originalName = element.name;
-    LibraryElement library = element.getLibrary();
-    if (identical(element.getLibrary(), compiler.coreLibrary)) {
+    LibraryElement library = element.library;
+    if (identical(element.library, compiler.coreLibrary)) {
       return originalName;
     }
     if (library.isPlatformLibrary) {
-      assert(element.isTopLevel());
+      assert(element.isTopLevel);
       if (reexportingLibraries.containsKey(element)) {
         library = reexportingLibraries[element];
       }
@@ -258,8 +259,8 @@ void renamePlaceholders(
         (functionElement, functionScope) {
       Set<LocalPlaceholder> placeholders = functionScope.localPlaceholders;
       Set<String> memberIdentifiers = new Set<String>();
-      if (functionElement.getEnclosingClass() != null) {
-        functionElement.getEnclosingClass().forEachMember(
+      if (functionElement.enclosingClass != null) {
+        functionElement.enclosingClass.forEachMember(
             (enclosingClass, member) {
               memberIdentifiers.add(member.name);
             });

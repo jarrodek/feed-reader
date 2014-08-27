@@ -715,10 +715,6 @@ class BaseElement extends HtmlElement native "HTMLBaseElement" {
 class BeforeLoadEvent extends Event native "BeforeLoadEvent" {
   // To suppress missing implicit constructor warnings.
   factory BeforeLoadEvent._() { throw new UnsupportedError("Not supported"); }
-
-  @DomName('BeforeLoadEvent.url')
-  @DocsEditable()
-  final String url;
 }
 // Copyright (c) 2012, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
@@ -1403,21 +1399,6 @@ class CanvasRenderingContext2D extends CanvasRenderingContext native "CanvasRend
   // To suppress missing implicit constructor warnings.
   factory CanvasRenderingContext2D._() { throw new UnsupportedError("Not supported"); }
 
-  /**
-   * The current default path of this canvas context, if there is one.
-   *
-   * ## Other resources
-   *
-   * * [Current default path]
-   * (http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#current-default-path)
-   * from WHATWG.
-   */
-  @DomName('CanvasRenderingContext2D.currentPath')
-  @DocsEditable()
-  // http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#path-objects
-  @Experimental()
-  Path currentPath;
-
   @DomName('CanvasRenderingContext2D.currentTransform')
   @DocsEditable()
   @Experimental() // untriaged
@@ -1502,23 +1483,6 @@ class CanvasRenderingContext2D extends CanvasRenderingContext native "CanvasRend
   @DocsEditable()
   String textBaseline;
 
-  @JSName('webkitBackingStorePixelRatio')
-  /**
-   * The ratio between this canvas' backing store dimensions and the canvas'
-   * logical dimensions.
-   *
-   * ## Other resources
-   *
-   * * [High DPI Canvas tutorial]
-   * (http://www.html5rocks.com/en/tutorials/canvas/hidpi/) from HTML5Rocks.
-   */
-  @DomName('CanvasRenderingContext2D.webkitBackingStorePixelRatio')
-  @DocsEditable()
-  @SupportedBrowser(SupportedBrowser.CHROME)
-  @SupportedBrowser(SupportedBrowser.SAFARI)
-  @Experimental()
-  final double backingStorePixelRatio;
-
   @JSName('arc')
   @DomName('CanvasRenderingContext2D.arc')
   @DocsEditable()
@@ -1595,19 +1559,10 @@ class CanvasRenderingContext2D extends CanvasRenderingContext native "CanvasRend
   @Experimental() // untriaged
   bool drawCustomFocusRing(Element element) native;
 
-  @DomName('CanvasRenderingContext2D.drawSystemFocusRing')
-  @DocsEditable()
-  @Experimental() // untriaged
-  void drawSystemFocusRing(Element element) native;
-
   @DomName('CanvasRenderingContext2D.ellipse')
   @DocsEditable()
   @Experimental() // untriaged
   void ellipse(num x, num y, num radiusX, num radiusY, num rotation, num startAngle, num endAngle, bool anticlockwise) native;
-
-  @DomName('CanvasRenderingContext2D.fill')
-  @DocsEditable()
-  void fill([String winding]) native;
 
   @DomName('CanvasRenderingContext2D.fillRect')
   @DocsEditable()
@@ -1732,57 +1687,6 @@ class CanvasRenderingContext2D extends CanvasRenderingContext native "CanvasRend
   @DomName('CanvasRenderingContext2D.translate')
   @DocsEditable()
   void translate(num tx, num ty) native;
-
-  @DomName('CanvasRenderingContext2D.webkitGetImageDataHD')
-  @DocsEditable()
-  @SupportedBrowser(SupportedBrowser.CHROME)
-  @SupportedBrowser(SupportedBrowser.SAFARI)
-  @Experimental()
-  @Creates('ImageData|=Object')
-  ImageData getImageDataHD(num sx, num sy, num sw, num sh) {
-    return convertNativeToDart_ImageData(_getImageDataHD_1(sx, sy, sw, sh));
-  }
-  @JSName('webkitGetImageDataHD')
-  @DomName('CanvasRenderingContext2D.webkitGetImageDataHD')
-  @DocsEditable()
-  @SupportedBrowser(SupportedBrowser.CHROME)
-  @SupportedBrowser(SupportedBrowser.SAFARI)
-  @Experimental()
-  @Creates('ImageData|=Object')
-  _getImageDataHD_1(sx, sy, sw, sh) native;
-
-  @DomName('CanvasRenderingContext2D.webkitPutImageDataHD')
-  @DocsEditable()
-  @SupportedBrowser(SupportedBrowser.CHROME)
-  @SupportedBrowser(SupportedBrowser.SAFARI)
-  @Experimental()
-  void putImageDataHD(ImageData imagedata, num dx, num dy, [num dirtyX, num dirtyY, num dirtyWidth, num dirtyHeight]) {
-    if (dirtyX == null && dirtyY == null && dirtyWidth == null && dirtyHeight == null) {
-      var imagedata_1 = convertDartToNative_ImageData(imagedata);
-      _putImageDataHD_1(imagedata_1, dx, dy);
-      return;
-    }
-    if (dirtyHeight != null && dirtyWidth != null && dirtyY != null && dirtyX != null) {
-      var imagedata_2 = convertDartToNative_ImageData(imagedata);
-      _putImageDataHD_2(imagedata_2, dx, dy, dirtyX, dirtyY, dirtyWidth, dirtyHeight);
-      return;
-    }
-    throw new ArgumentError("Incorrect number or type of arguments");
-  }
-  @JSName('webkitPutImageDataHD')
-  @DomName('CanvasRenderingContext2D.webkitPutImageDataHD')
-  @DocsEditable()
-  @SupportedBrowser(SupportedBrowser.CHROME)
-  @SupportedBrowser(SupportedBrowser.SAFARI)
-  @Experimental()
-  void _putImageDataHD_1(imagedata, dx, dy) native;
-  @JSName('webkitPutImageDataHD')
-  @DomName('CanvasRenderingContext2D.webkitPutImageDataHD')
-  @DocsEditable()
-  @SupportedBrowser(SupportedBrowser.CHROME)
-  @SupportedBrowser(SupportedBrowser.SAFARI)
-  @Experimental()
-  void _putImageDataHD_2(imagedata, dx, dy, dirtyX, dirtyY, dirtyWidth, dirtyHeight) native;
 
 
   /**
@@ -2062,6 +1966,17 @@ class CanvasRenderingContext2D extends CanvasRenderingContext native "CanvasRend
       JS('void', '#.fillText(#, #, #)', this, text, x, y);
     }
   }
+
+  @DomName('CanvasRenderingContext2D.fill')
+  void fill([String winding = 'nonzero']) {
+    JS('void', '#.fill(#)', this, winding);
+  }
+
+  /** Deprecated always returns 1.0 */
+  @DomName('CanvasRenderingContext2D.webkitBackingStorePixelRation')
+  @Experimental()
+  @deprecated
+  double get backingStorePixelRatio => 1.0;
 }
 
 // Copyright (c) 2012, the Dart project authors.  Please see the AUTHORS file
@@ -2823,6 +2738,7 @@ class CssRule extends Interceptor native "CSSRule" {
   void setProperty(String propertyName, String value, [String priority]) {
     // try/catch for IE9 which throws on unsupported values.
     try {
+      if (value == null) value = '';
       if (priority == null) {
         priority = '';
       }
@@ -4042,12 +3958,17 @@ abstract class CssStyleDeclarationBase {
   }
 
   /** Gets the value of "flex" */
-  String get flex =>
-    getPropertyValue('${Device.cssPrefix}flex');
+  String get flex {
+    String prefix = Device.cssPrefix;
+    if (Device.isFirefox) prefix = '';
+    return getPropertyValue('${prefix}flex');
+  }
 
   /** Sets the value of "flex" */
   void set flex(String value) {
-    setProperty('${Device.cssPrefix}flex', value, '');
+    String prefix = Device.cssPrefix;
+    if (Device.isFirefox) prefix = '';
+    setProperty('${prefix}flex', value, '');
   }
 
   /** Gets the value of "flex-basis" */
@@ -6365,7 +6286,7 @@ class DataTransfer extends Interceptor native "Clipboard,DataTransfer" {
 
   @DomName('Clipboard.setDragImage')
   @DocsEditable()
-  void setDragImage(Element element, int x, int y) native;
+  void setDragImage(Element image, int x, int y) native;
 }
 // Copyright (c) 2012, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
@@ -8023,12 +7944,6 @@ class DomException extends Interceptor native "DOMException" {
 class DomImplementation extends Interceptor native "DOMImplementation" {
   // To suppress missing implicit constructor warnings.
   factory DomImplementation._() { throw new UnsupportedError("Not supported"); }
-
-  @JSName('createCSSStyleSheet')
-  @DomName('DOMImplementation.createCSSStyleSheet')
-  @DocsEditable()
-  @Experimental() // non-standard
-  CssStyleSheet createCssStyleSheet(String title, String media) native;
 
   @DomName('DOMImplementation.createDocument')
   @DocsEditable()
@@ -10276,6 +10191,63 @@ abstract class Element extends Node implements GlobalEventHandlers, ParentNode, 
    */
   ElementEvents get on => new ElementEvents(this);
 
+  @DomName('Element.offsetHeight')
+  @DocsEditable()
+  int get offsetHeight => JS('num', '#.offsetHeight', this).round();
+
+  @DomName('Element.offsetLeft')
+  @DocsEditable()
+  int get offsetLeft => JS('num', '#.offsetLeft', this).round();
+
+  @DomName('Element.offsetTop')
+  @DocsEditable()
+  int get offsetTop => JS('num', '#.offsetTop', this).round();
+
+  @DomName('Element.offsetWidth')
+  @DocsEditable()
+  int get offsetWidth => JS('num', '#.offsetWidth', this).round();
+
+  @DomName('Element.clientHeight')
+  @DocsEditable()
+  int get clientHeight => JS('num', '#.clientHeight', this).round();
+
+  @DomName('Element.clientLeft')
+  @DocsEditable()
+  int get clientLeft => JS('num', '#.clientLeft', this).round();
+
+  @DomName('Element.clientTop')
+  @DocsEditable()
+  int get clientTop => JS('num', '#.clientTop', this).round();
+
+  @DomName('Element.clientWidth')
+  @DocsEditable()
+  int get clientWidth => JS('num', '#.clientWidth', this).round();
+
+  @DomName('Element.scrollHeight')
+  @DocsEditable()
+  int get scrollHeight => JS('num', '#.scrollHeight', this).round();
+
+  @DomName('Element.scrollLeft')
+  @DocsEditable()
+  int get scrollLeft => JS('num', '#.scrollLeft', this).round();
+
+  @DomName('Element.scrollLeft')
+  @DocsEditable()
+  void set scrollLeft(int value) => JS("void", "#.scrollLeft = #", this, value.round());
+
+  @DomName('Element.scrollTop')
+  @DocsEditable()
+  int get scrollTop => JS('num', '#.scrollTop', this).round();
+
+  @DomName('Element.scrollTop')
+  @DocsEditable()
+  void set scrollTop(int value) => JS("void", "#.scrollTop = #", this, value.round());
+
+  @DomName('Element.scrollWidth')
+  @DocsEditable()
+  int get scrollWidth => JS('num', '#.scrollWidth', this).round();
+
+
   // To suppress missing implicit constructor warnings.
   factory Element._() { throw new UnsupportedError("Not supported"); }
 
@@ -10959,21 +10931,25 @@ abstract class Element extends Node implements GlobalEventHandlers, ParentNode, 
   @DocsEditable()
   String className;
 
+  @JSName('clientHeight')
   @DomName('Element.clientHeight')
   @DocsEditable()
-  final int clientHeight;
+  final int _clientHeight;
 
+  @JSName('clientLeft')
   @DomName('Element.clientLeft')
   @DocsEditable()
-  final int clientLeft;
+  final int _clientLeft;
 
+  @JSName('clientTop')
   @DomName('Element.clientTop')
   @DocsEditable()
-  final int clientTop;
+  final int _clientTop;
 
+  @JSName('clientWidth')
   @DomName('Element.clientWidth')
   @DocsEditable()
-  final int clientWidth;
+  final int _clientWidth;
 
   @DomName('Element.id')
   @DocsEditable()
@@ -10990,46 +10966,54 @@ abstract class Element extends Node implements GlobalEventHandlers, ParentNode, 
   // Use implementation from Node.
   // final String _namespaceUri;
 
+  @JSName('offsetHeight')
   @DomName('Element.offsetHeight')
   @DocsEditable()
-  final int offsetHeight;
+  final int _offsetHeight;
 
+  @JSName('offsetLeft')
   @DomName('Element.offsetLeft')
   @DocsEditable()
-  final int offsetLeft;
+  final int _offsetLeft;
 
   @DomName('Element.offsetParent')
   @DocsEditable()
   final Element offsetParent;
 
+  @JSName('offsetTop')
   @DomName('Element.offsetTop')
   @DocsEditable()
-  final int offsetTop;
+  final int _offsetTop;
 
+  @JSName('offsetWidth')
   @DomName('Element.offsetWidth')
   @DocsEditable()
-  final int offsetWidth;
+  final int _offsetWidth;
 
   @JSName('outerHTML')
   @DomName('Element.outerHTML')
   @DocsEditable()
   final String outerHtml;
 
+  @JSName('scrollHeight')
   @DomName('Element.scrollHeight')
   @DocsEditable()
-  final int scrollHeight;
+  final int _scrollHeight;
 
+  @JSName('scrollLeft')
   @DomName('Element.scrollLeft')
   @DocsEditable()
-  int scrollLeft;
+  int _scrollLeft;
 
+  @JSName('scrollTop')
   @DomName('Element.scrollTop')
   @DocsEditable()
-  int scrollTop;
+  int _scrollTop;
 
+  @JSName('scrollWidth')
   @DomName('Element.scrollWidth')
   @DocsEditable()
-  final int scrollWidth;
+  final int _scrollWidth;
 
   @DomName('Element.style')
   @DocsEditable()
@@ -11997,7 +11981,7 @@ class ErrorEvent extends Event native "ErrorEvent" {
 
 
 @DomName('Event')
-class Event extends Interceptor native "Event" {
+class Event extends Interceptor native "Event,InputEvent" {
   // In JS, canBubble and cancelable are technically required parameters to
   // init*Event. In practice, though, if they aren't provided they simply
   // default to false (since that's Boolean(undefined)).
@@ -13341,7 +13325,17 @@ class FormElement extends HtmlElement native "HTMLFormElement" {
   @DocsEditable()
   // http://lists.whatwg.org/htdig.cgi/whatwg-whatwg.org/2012-October/037711.html
   @Experimental()
-  void requestAutocomplete() native;
+  void requestAutocomplete(Map details) {
+    var details_1 = convertDartToNative_Dictionary(details);
+    _requestAutocomplete_1(details_1);
+    return;
+  }
+  @JSName('requestAutocomplete')
+  @DomName('HTMLFormElement.requestAutocomplete')
+  @DocsEditable()
+  // http://lists.whatwg.org/htdig.cgi/whatwg-whatwg.org/2012-October/037711.html
+  @Experimental()
+  void _requestAutocomplete_1(details) native;
 
   @DomName('HTMLFormElement.reset')
   @DocsEditable()
@@ -14626,12 +14620,18 @@ class HttpRequest extends HttpRequestEventTarget native "XMLHttpRequest" {
    *
    * By default `request` will perform an HTTP GET request, but a different
    * method (`POST`, `PUT`, `DELETE`, etc) can be used by specifying the
-   * [method] parameter.
+   * [method] parameter. (See also [HttpRequest.postFormData] for `POST` 
+   * requests only.
    *
    * The Future is completed when the response is available.
    *
    * If specified, `sendData` will send data in the form of a [ByteBuffer],
    * [Blob], [Document], [String], or [FormData] along with the HttpRequest.
+   *
+   * If specified, [responseType] sets the desired response format for the
+   * request. By default it is [String], but can also be 'arraybuffer', 'blob', 
+   * 'document', 'json', or 'text'. See also [HttpRequest.responseType] 
+   * for more information.
    *
    * The [withCredentials] parameter specified that credentials such as a cookie
    * (already) set in the header or
@@ -15504,6 +15504,23 @@ class ImageElement extends HtmlElement implements CanvasImageSource native "HTML
 // BSD-style license that can be found in the LICENSE file.
 
 
+@DocsEditable()
+@DomName('InjectedScriptHost')
+@Experimental() // untriaged
+class InjectedScriptHost extends Interceptor native "InjectedScriptHost" {
+  // To suppress missing implicit constructor warnings.
+  factory InjectedScriptHost._() { throw new UnsupportedError("Not supported"); }
+
+  @DomName('InjectedScriptHost.inspect')
+  @DocsEditable()
+  @Experimental() // untriaged
+  void inspect(Object objectId, Object hints) native;
+}
+// Copyright (c) 2012, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
+
+
 @DomName('HTMLInputElement')
 class InputElement extends HtmlElement implements
     HiddenInputElement,
@@ -15762,24 +15779,6 @@ class InputElement extends HtmlElement implements
   @Experimental()
   // http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#concept-input-type-file-selected
   final List<Entry> entries;
-
-  @JSName('webkitGrammar')
-  @DomName('HTMLInputElement.webkitGrammar')
-  @DocsEditable()
-  @SupportedBrowser(SupportedBrowser.CHROME)
-  @SupportedBrowser(SupportedBrowser.SAFARI)
-  @Experimental()
-  // http://lists.w3.org/Archives/Public/public-xg-htmlspeech/2011Feb/att-0020/api-draft.html#attrib-grammar
-  bool grammar;
-
-  @JSName('webkitSpeech')
-  @DomName('HTMLInputElement.webkitSpeech')
-  @DocsEditable()
-  @SupportedBrowser(SupportedBrowser.CHROME)
-  @SupportedBrowser(SupportedBrowser.SAFARI)
-  @Experimental()
-  // http://lists.w3.org/Archives/Public/public-xg-htmlspeech/2011Feb/att-0020/api-draft.html#attrib-speech
-  bool speech;
 
   @JSName('webkitdirectory')
   @DomName('HTMLInputElement.webkitdirectory')
@@ -22844,26 +22843,7 @@ class Screen extends EventTarget native "Screen" {
   @DomName('Screen.lockOrientation')
   @DocsEditable()
   @Experimental() // untriaged
-  bool lockOrientation(orientation_OR_orientations) {
-    if ((orientation_OR_orientations is String || orientation_OR_orientations == null)) {
-      return _lockOrientation_1(orientation_OR_orientations);
-    }
-    if ((orientation_OR_orientations is List<String> || orientation_OR_orientations == null)) {
-      List orientations_1 = convertDartToNative_StringArray(orientation_OR_orientations);
-      return _lockOrientation_2(orientations_1);
-    }
-    throw new ArgumentError("Incorrect number or type of arguments");
-  }
-  @JSName('lockOrientation')
-  @DomName('Screen.lockOrientation')
-  @DocsEditable()
-  @Experimental() // untriaged
-  bool _lockOrientation_1(String orientation) native;
-  @JSName('lockOrientation')
-  @DomName('Screen.lockOrientation')
-  @DocsEditable()
-  @Experimental() // untriaged
-  bool _lockOrientation_2(List orientations) native;
+  bool lockOrientation(String orientation) native;
 
   @DomName('Screen.unlockOrientation')
   @DocsEditable()
@@ -23307,10 +23287,6 @@ class ShadowRoot extends DocumentFragment native "ShadowRoot" {
   @DocsEditable()
   final Element activeElement;
 
-  @DomName('ShadowRoot.applyAuthorStyles')
-  @DocsEditable()
-  bool applyAuthorStyles;
-
   @DomName('ShadowRoot.host')
   @DocsEditable()
   @Experimental() // untriaged
@@ -23326,9 +23302,10 @@ class ShadowRoot extends DocumentFragment native "ShadowRoot" {
   @Experimental() // untriaged
   final ShadowRoot olderShadowRoot;
 
+  @JSName('resetStyleInheritance')
   @DomName('ShadowRoot.resetStyleInheritance')
   @DocsEditable()
-  bool resetStyleInheritance;
+  bool _resetStyleInheritance;
 
   @DomName('ShadowRoot.styleSheets')
   @DocsEditable()
@@ -23367,7 +23344,43 @@ class ShadowRoot extends DocumentFragment native "ShadowRoot" {
   Selection getSelection() native;
 
   static bool get supported =>
-      JS('bool', '!!(Element.prototype.webkitCreateShadowRoot)');
+      JS('bool', '!!(Element.prototype.createShadowRoot||'
+                 'Element.prototype.webkitCreateShadowRoot)');
+
+  static bool _shadowRootDeprecationReported = false;
+  static void _shadowRootDeprecationReport() {
+    if (!_shadowRootDeprecationReported) {
+      window.console.warn('''
+ShadowRoot.resetStyleInheritance and ShadowRoot.applyAuthorStyles now deprecated in dart:html.
+Please remove them from your code.
+''');
+      _shadowRootDeprecationReported = true;
+    }
+  }
+
+  @deprecated
+  bool get resetStyleInheritance {
+    _shadowRootDeprecationReport();
+    // Default value from when it was specified.
+    return false;
+  }
+
+  @deprecated
+  void set resetStyleInheritance(bool value) {
+    _shadowRootDeprecationReport();
+  }
+
+  @deprecated
+  bool get applyAuthorStyles {
+    _shadowRootDeprecationReport();
+    // Default value from when it was specified.
+    return false;
+  }
+
+  @deprecated
+  void set applyAuthorStyles(bool value) {
+    _shadowRootDeprecationReport();
+  }
 }
 // Copyright (c) 2012, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
@@ -23783,12 +23796,6 @@ class SpeechGrammarList extends Interceptor with ListMixin<SpeechGrammar>, Immut
 class SpeechInputEvent extends Event native "SpeechInputEvent" {
   // To suppress missing implicit constructor warnings.
   factory SpeechInputEvent._() { throw new UnsupportedError("Not supported"); }
-
-  @DomName('SpeechInputEvent.results')
-  @DocsEditable()
-  @Returns('_SpeechInputResultList')
-  @Creates('_SpeechInputResultList')
-  final List<SpeechInputResult> results;
 }
 // Copyright (c) 2012, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
@@ -23802,14 +23809,6 @@ class SpeechInputEvent extends Event native "SpeechInputEvent" {
 class SpeechInputResult extends Interceptor native "SpeechInputResult" {
   // To suppress missing implicit constructor warnings.
   factory SpeechInputResult._() { throw new UnsupportedError("Not supported"); }
-
-  @DomName('SpeechInputResult.confidence')
-  @DocsEditable()
-  final double confidence;
-
-  @DomName('SpeechInputResult.utterance')
-  @DocsEditable()
-  final String utterance;
 }
 // Copyright (c) 2013, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
@@ -25741,11 +25740,6 @@ class TimedItem extends Interceptor native "TimedItem" {
   @DocsEditable()
   @Experimental() // untriaged
   final Player player;
-
-  @DomName('TimedItem.specified')
-  @DocsEditable()
-  @Experimental() // untriaged
-  final Timing specified;
 
   @DomName('TimedItem.startTime')
   @DocsEditable()
@@ -29445,13 +29439,6 @@ class WorkerConsole extends ConsoleBase native "WorkerConsole" {
 class WorkerCrypto extends Interceptor native "WorkerCrypto" {
   // To suppress missing implicit constructor warnings.
   factory WorkerCrypto._() { throw new UnsupportedError("Not supported"); }
-
-  @DomName('WorkerCrypto.getRandomValues')
-  @DocsEditable()
-  @Experimental() // untriaged
-  @Creates('TypedData')
-  @Returns('TypedData|Null')
-  TypedData getRandomValues(TypedData array) native;
 }
 // Copyright (c) 2012, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
@@ -29520,15 +29507,6 @@ class WorkerGlobalScope extends EventTarget implements _WindowTimers, WindowBase
   @DocsEditable()
   @Experimental() // untriaged
   final WorkerGlobalScope self;
-
-  @JSName('webkitNotifications')
-  @DomName('WorkerGlobalScope.webkitNotifications')
-  @DocsEditable()
-  @SupportedBrowser(SupportedBrowser.CHROME)
-  @SupportedBrowser(SupportedBrowser.SAFARI)
-  @Experimental()
-  @Experimental() // untriaged
-  final _NotificationCenter _webkitNotifications;
 
   @DomName('WorkerGlobalScope.close')
   @DocsEditable()
@@ -34934,95 +34912,6 @@ abstract class ReadyState {
 
 
 /**
- * Helper class to implement custom events which wrap DOM events.
- */
-class _WrappedEvent implements Event {
-  final Event wrapped;
-
-  /** The CSS selector involved with event delegation. */
-  String _selector;
-
-  _WrappedEvent(this.wrapped);
-
-  bool get bubbles => wrapped.bubbles;
-
-  bool get cancelable => wrapped.cancelable;
-
-  DataTransfer get clipboardData => wrapped.clipboardData;
-
-  EventTarget get currentTarget => wrapped.currentTarget;
-
-  bool get defaultPrevented => wrapped.defaultPrevented;
-
-  int get eventPhase => wrapped.eventPhase;
-
-  EventTarget get target => wrapped.target;
-
-  int get timeStamp => wrapped.timeStamp;
-
-  String get type => wrapped.type;
-
-  void _initEvent(String eventTypeArg, bool canBubbleArg,
-      bool cancelableArg) {
-    throw new UnsupportedError(
-        'Cannot initialize this Event.');
-  }
-
-  void preventDefault() {
-    wrapped.preventDefault();
-  }
-
-  void stopImmediatePropagation() {
-    wrapped.stopImmediatePropagation();
-  }
-
-  void stopPropagation() {
-    wrapped.stopPropagation();
-  }
-
-  /**
-   * A pointer to the element whose CSS selector matched within which an event
-   * was fired. If this Event was not associated with any Event delegation,
-   * accessing this value will throw an [UnsupportedError].
-   */
-  Element get matchingTarget {
-    if (_selector == null) {
-      throw new UnsupportedError('Cannot call matchingTarget if this Event did'
-          ' not arise as a result of event delegation.');
-    }
-    var currentTarget = this.currentTarget;
-    var target = this.target;
-    var matchedTarget;
-    do {
-      if (target.matches(_selector)) return target;
-      target = target.parent;
-    } while (target != null && target != currentTarget.parent);
-    throw new StateError('No selector matched for populating matchedTarget.');
-  }
-
-  /**
-   * This event's path, taking into account shadow DOM.
-   *
-   * ## Other resources
-   *
-   * * [Shadow DOM extensions to Event]
-   * (http://w3c.github.io/webcomponents/spec/shadow/#extensions-to-event) from
-   * W3C.
-   */
-  // https://dvcs.w3.org/hg/webcomponents/raw-file/tip/spec/shadow/index.html#extensions-to-event
-  @Experimental()
-  List<Node> get path => wrapped.path;
-
-  dynamic get _get_currentTarget => wrapped._get_currentTarget;
-
-  dynamic get _get_target => wrapped._get_target;
-}
-// Copyright (c) 2013, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
-
-/**
  * A list which just wraps another list, for either intercepting list calls or
  * retyping the list (for example, from List<A> to List<B> where B extends A).
  */
@@ -35447,9 +35336,12 @@ class _DOMWindowCrossFrame implements WindowBase {
 
   void postMessage(var message, String targetOrigin, [List messagePorts = null]) {
     if (messagePorts == null) {
-      JS('void', '#.postMessage(#,#)', _window, message, targetOrigin);
+      JS('void', '#.postMessage(#,#)', _window,
+          convertDartToNative_SerializedScriptValue(message), targetOrigin);
     } else {
-      JS('void', '#.postMessage(#,#,#)', _window, message, targetOrigin, messagePorts);
+      JS('void', '#.postMessage(#,#,#)', _window,
+          convertDartToNative_SerializedScriptValue(message), targetOrigin,
+          messagePorts);
     }
   }
 
@@ -35787,6 +35679,95 @@ class Platform {
    * error.
    */
   static final supportsSimd = false;
+}
+// Copyright (c) 2013, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
+
+
+/**
+ * Helper class to implement custom events which wrap DOM events.
+ */
+class _WrappedEvent implements Event {
+  final Event wrapped;
+
+  /** The CSS selector involved with event delegation. */
+  String _selector;
+
+  _WrappedEvent(this.wrapped);
+
+  bool get bubbles => wrapped.bubbles;
+
+  bool get cancelable => wrapped.cancelable;
+
+  DataTransfer get clipboardData => wrapped.clipboardData;
+
+  EventTarget get currentTarget => wrapped.currentTarget;
+
+  bool get defaultPrevented => wrapped.defaultPrevented;
+
+  int get eventPhase => wrapped.eventPhase;
+
+  EventTarget get target => wrapped.target;
+
+  int get timeStamp => wrapped.timeStamp;
+
+  String get type => wrapped.type;
+
+  void _initEvent(String eventTypeArg, bool canBubbleArg,
+      bool cancelableArg) {
+    throw new UnsupportedError(
+        'Cannot initialize this Event.');
+  }
+
+  void preventDefault() {
+    wrapped.preventDefault();
+  }
+
+  void stopImmediatePropagation() {
+    wrapped.stopImmediatePropagation();
+  }
+
+  void stopPropagation() {
+    wrapped.stopPropagation();
+  }
+
+  /**
+   * A pointer to the element whose CSS selector matched within which an event
+   * was fired. If this Event was not associated with any Event delegation,
+   * accessing this value will throw an [UnsupportedError].
+   */
+  Element get matchingTarget {
+    if (_selector == null) {
+      throw new UnsupportedError('Cannot call matchingTarget if this Event did'
+          ' not arise as a result of event delegation.');
+    }
+    var currentTarget = this.currentTarget;
+    var target = this.target;
+    var matchedTarget;
+    do {
+      if (target.matches(_selector)) return target;
+      target = target.parent;
+    } while (target != null && target != currentTarget.parent);
+    throw new StateError('No selector matched for populating matchedTarget.');
+  }
+
+  /**
+   * This event's path, taking into account shadow DOM.
+   *
+   * ## Other resources
+   *
+   * * [Shadow DOM extensions to Event]
+   * (http://w3c.github.io/webcomponents/spec/shadow/#extensions-to-event) from
+   * W3C.
+   */
+  // https://dvcs.w3.org/hg/webcomponents/raw-file/tip/spec/shadow/index.html#extensions-to-event
+  @Experimental()
+  List<Node> get path => wrapped.path;
+
+  dynamic get _get_currentTarget => wrapped._get_currentTarget;
+
+  dynamic get _get_target => wrapped._get_target;
 }
 // Copyright (c) 2013, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a

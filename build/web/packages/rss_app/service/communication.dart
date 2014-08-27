@@ -10,7 +10,7 @@ import 'package:angular/angular.dart';
 class AppComm {
   
   AppComm(){
-    
+    ///TODO: suuport for external call for feed update.
     context['feedUpdated'] = (feedId) {
        print('NNNNNNEEEWWWWWW FEEEEEEEEDDDDDD DATA. Feed has been updated in the event page. $feedId');
     };

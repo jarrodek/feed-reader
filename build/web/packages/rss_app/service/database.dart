@@ -11,7 +11,7 @@ import 'dbstructures.dart';
 
 @Injectable()
 class RssDatabase {
-  static final int DB_VERSION = 4;
+  static final int DB_VERSION = 5;
   static final String FEEDS_STORE = "feeds";
   static final String POSTS_STORE = "posts";
 
@@ -221,6 +221,35 @@ class RssDatabase {
     });
     return completer.future;
   }
+  
+  Future updateFeed(Feed feed){
+    print('[DATASTORE]  updateFeed(...)');
+    
+    var completer = new Completer();
+    Transaction transaction = this.db.transaction([FEEDS_STORE], "readwrite");
+    ObjectStore objectStore = transaction.objectStore(FEEDS_STORE);
+    if(feed.id != null){
+      objectStore.put(feed.toJson()).catchError((error) {
+        window.console.error('[Method] Unable update Feed');
+        window.console.error(error);
+      });
+    } else {
+      objectStore.add(feed.toJson()).catchError((error) {
+        window.console.error('[Method] Unable update Feed $feed');
+        window.console.error(error);
+      });
+    }
+    transaction.completed.then((_) {
+      completer.complete(feed);
+    });
+    transaction.onError.listen((e) {
+      window.console.error('[Transaction] Unable update Feed');
+      completer.completeError(e);
+    });
+    
+    return completer.future;
+  }
+  
   
   Future<FeedEntry> getPost(int id){
     print('[DATASTORE] getPost(int $id)');

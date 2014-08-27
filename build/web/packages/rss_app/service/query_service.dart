@@ -22,6 +22,8 @@ class QueryService {
   int currentPostId = 0;
   int unreadCount = 0;
   
+  String currentPostsArea = 'unread';
+  
   QueryService(Http this._http, RssDatabase this.db) {
     _loaded = Future.wait([_loadFeeds(), _countUnreads()]);
   }
@@ -95,16 +97,24 @@ class QueryService {
   
   Future updateEntry(FeedEntry entry){
     return this.db.updateEntry(entry).then((_){
-      //print(currentPosts.contains(entry));
+      print(currentPosts.contains(entry));
+      return entry;
     });
   }
   
-  Future setEntryRead(FeedEntry entry){
-    if(!entry.unread){
+  Future updateFeed(Feed feed){
+    return this.db.updateFeed(feed).then((_){
+      print(feeds.contains(feed));
+    });
+  }
+  
+  
+  Future setEntryRead(FeedEntry entry, bool read){
+    if(entry.unread == !read){
       return new Future.value(entry);
     }
     
-    entry.unread = false;
+    entry.unread = !read;
     var result = null;
     return this.db.updateEntry(entry)
       .then((entry) => result = entry)
@@ -153,6 +163,20 @@ class QueryService {
         return new Future.value(null);
       }
     });
+  }
+  
+  Future markFeedStarred(bool starred, int feedId){
+    if(!feeds.contains(feedId)){
+      throw "No such feed: $feedId";
+    }
+    
+    Feed f = feeds[feedId];
+    if(f.starred){
+      return new Future.value(true);
+    } 
+    
+    //TODO: mark feed as starred,
+   
   }
   
 }

@@ -47,7 +47,7 @@ class RuntimeTypes {
 
   void registerRtiDependency(Element element, Element dependency) {
     // We're not dealing with typedef for now.
-    if (!element.isClass() || !dependency.isClass()) return;
+    if (!element.isClass || !dependency.isClass) return;
     Set<ClassElement> classes =
         rtiDependencies.putIfAbsent(element, () => new Set<ClassElement>());
     classes.add(dependency);
@@ -144,7 +144,7 @@ class RuntimeTypes {
 
     Set<ClassElement> classesUsingTypeVariableTests = new Set<ClassElement>();
     compiler.resolverWorld.isChecks.forEach((DartType type) {
-      if (type.kind == TypeKind.TYPE_VARIABLE) {
+      if (type.isTypeVariable) {
         TypeVariableElement variable = type.element;
         classesUsingTypeVariableTests.add(variable.enclosingElement);
       }
@@ -163,7 +163,7 @@ class RuntimeTypes {
     // Compute the set of all classes and methods that need runtime type
     // information.
     compiler.resolverWorld.isChecks.forEach((DartType type) {
-      if (type.kind == TypeKind.INTERFACE) {
+      if (type.isInterfaceType) {
         InterfaceType itf = type;
         if (!itf.treatAsRaw) {
           potentiallyAddForRti(itf.element);
@@ -176,7 +176,7 @@ class RuntimeTypes {
           // variables and function types containing type variables.
           potentiallyAddForRti(contextClass);
         }
-        if (type.kind == TypeKind.FUNCTION) {
+        if (type.isFunctionType) {
           void analyzeMethod(TypedElement method) {
             DartType memberType = method.type;
             ClassElement contextClass = Types.getClassContext(memberType);
@@ -227,7 +227,6 @@ class RuntimeTypes {
     // argument is a superclass of the element of an instantiated type.
     TypeCheckMapping result = new TypeCheckMapping();
     for (ClassElement element in instantiated) {
-      if (element == compiler.dynamicClass) continue;
       if (checked.contains(element)) {
         result.add(element, element, null);
       }
@@ -264,7 +263,7 @@ class RuntimeTypes {
     Set<DartType> instantiatedTypes =
         new Set<DartType>.from(universe.instantiatedTypes);
     for (DartType instantiatedType in universe.instantiatedTypes) {
-      if (instantiatedType.kind == TypeKind.INTERFACE) {
+      if (instantiatedType.isInterfaceType) {
         InterfaceType interface = instantiatedType;
         FunctionType callType = interface.callType;
         if (callType != null) {
@@ -313,7 +312,7 @@ class RuntimeTypes {
                               {bool isTypeArgument: false}) {
       for (DartType type in types) {
         directCollector.collect(type, isTypeArgument: isTypeArgument);
-        if (type.kind == TypeKind.INTERFACE) {
+        if (type.isInterfaceType) {
           ClassElement cls = type.element;
           for (DartType supertype in cls.allSupertypes) {
             superCollector.collect(supertype, isTypeArgument: isTypeArgument);
@@ -395,8 +394,9 @@ class RuntimeTypes {
   String getTypeRepresentationForTypeConstant(DartType type) {
     JavaScriptBackend backend = compiler.backend;
     Namer namer = backend.namer;
+    if (type.isDynamic) return namer.getRuntimeTypeName(null);
     String name = namer.uniqueNameForTypeConstantElement(type.element);
-    if (!type.element.isClass()) return name;
+    if (!type.element.isClass) return name;
     InterfaceType interface = type;
     Link<DartType> variables = interface.element.typeVariables;
     // Type constants can currently only be raw types, so there is no point
@@ -412,7 +412,7 @@ class RuntimeTypes {
 
   // TODO(karlklose): maybe precompute this value and store it in typeChecks?
   bool isTrivialSubstitution(ClassElement cls, ClassElement check) {
-    if (cls.isClosure()) {
+    if (cls.isClosure) {
       // TODO(karlklose): handle closures.
       return true;
     }
@@ -584,7 +584,7 @@ class RuntimeTypes {
   }
 
   static int getTypeVariableIndex(TypeVariableElement variable) {
-    ClassElement classElement = variable.getEnclosingClass();
+    ClassElement classElement = variable.enclosingClass;
     Link<DartType> variables = classElement.typeVariables;
     for (int index = 0; !variables.isEmpty;
          index++, variables = variables.tail) {

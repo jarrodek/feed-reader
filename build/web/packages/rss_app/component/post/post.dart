@@ -9,8 +9,10 @@ import '../../service/image_service.dart';
 
 @Component(selector: 'post-item', 
     templateUrl: 'packages/rss_app/component/post/post.html', 
-    publishAs: 'cmp',
-    useShadowDom: false)
+    publishAs: 'Post',
+    cssUrl: const [
+      'packages/rss_app/component/post/post.css'
+    ])
 class PostComponent {
   
   FeedEntry entry;
@@ -21,6 +23,7 @@ class PostComponent {
   ImageService imageService;
   
   String imageUrl;
+  bool showOptions = false;
   
   PostComponent(RouteProvider this.routeProvider, QueryService this.queryService, ImageService this.imageService){
     
@@ -39,7 +42,7 @@ class PostComponent {
   void _handleEntry(FeedEntry entry){
     this.entry = entry;
     if(entry.unread){
-      queryService.setEntryRead(entry).then((_){
+      queryService.setEntryRead(entry, true).then((_){
         this.entry = entry;
       });
     }
@@ -51,8 +54,8 @@ class PostComponent {
     window.console.error(e);
   }
   
-  void frameLoad(){
-    IFrameElement webview = document.querySelector("#${elementId}");
+  void frameLoad(Event e){
+    IFrameElement webview = (e.target as IFrameElement);
     webview.contentWindow.postMessage({"action":"paste","html":entry.content}, "*");
   }
   
@@ -69,8 +72,23 @@ class PostComponent {
   }
   
   void onStarChange(){
+    
+    entry.starred = !entry.starred;
     queryService.updateEntry(entry).catchError((e){
-      window.console.error(e);
+      
+    }).then((FeedEntry entry){
+      
+    });
+  }
+  
+  void toggleOptions(){
+    showOptions = !showOptions;
+  }
+  
+  void unreadPost(){
+    
+    queryService.setEntryRead(entry, false).then((entry){
+      this.entry = entry;
     });
   }
 }

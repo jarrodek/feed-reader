@@ -5,7 +5,6 @@
     <title>Rss app</title>
     <link rel="stylesheet" href="css/polymer.css">
     <link rel="stylesheet" href="css/rss_app.css">
-    <link rel="stylesheet" href="css/bootstrap.css">
   </head>
   <body rss-app ng-cloak layout vertical>
     <header class="top-header">
@@ -13,9 +12,7 @@
     </header>
     <div id="app-container" layout horizontal flex>
       <feed-list layout vertical></feed-list>
-      <div class="main-content">
-        <ng-view autoscroll="true" class="view-animate"><data-handler></data-handler></ng-view>
-      </div>
+      <ng-view autoscroll="true" class="view-animate"  layout vertical flex><data-handler></data-handler></ng-view>
     </div>
     <script src="rss_app.dart" type="application/dart"></script>   
     <script type="text/javascript" src="packages/browser/dart.js"></script> 

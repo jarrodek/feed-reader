@@ -1,0 +1,103 @@
+header.feed {
+  color: #333;
+  border-bottom: 2px rgb(127, 184, 245) solid;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+}
+h1{
+  color: #333;
+  font-size: 24px;
+  margin: 0;
+  padding: 0;
+  margin-left: 16px;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+.show-all{
+  margin-right: 16px;
+}
+article{
+  margin-bottom: 16px;
+  border-bottom: 1px #F1F1F1 solid;
+  padding-left: 16px;
+}
+article:last-child{
+  border-bottom: none;
+}
+
+header time{
+  color: rgba(51, 51, 51, 0.5);
+  font-size: 0.85em;
+}
+star{
+  width: 24px;
+  height: 24px;
+  margin-right: 16px;
+}
+h2{
+  color: #333;
+  font-size: 27px;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  line-height: normal;
+}
+h2 a{
+  font-size: 0.6em;
+  color: gray;
+  font-weight: normal;
+  text-decoration: none;
+}
+.unread h2 a{
+  font-weight: bold;
+}
+
+.post-summary{
+  max-height: 36px;
+  overflow: hidden;
+  word-break: break-word;
+  color: rgba(51, 51, 51, 0.5);
+  font-size: 0.85em;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 8px;
+  line-height: 16px;
+  cursor: pointer;
+}
+
+h2 a,
+time,
+.post-summary,
+.unread h1 a,
+.unread time,
+.unread .post-summary{
+  transition: color 1s;
+}
+.unread time,
+.unread .post-summary{
+  color: rgba(51, 51, 51, 0.6);
+}
+article:hover time,
+article:hover .post-summary {
+  color: rgba(51, 51, 51, 0.9);
+}
+article:hover h2 a {
+  color: rgba(51, 51, 51, 1); 
+}
+
+article.unread h2 a{
+  font-weight: bold;
+  color: rgb(20, 121, 230);
+}
+.list-empty{
+  
+}
+.list-empty h1{
+  font-size: 350%;
+  color: #666;
+}
+.empty{
+  margin-left: 16px;
+  color: #666;
+  font-size: 150%;
+}

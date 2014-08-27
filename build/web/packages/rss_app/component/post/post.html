@@ -1,23 +1,28 @@
-<article class="post">
-  <header>
-    <div class="title-area">
-      <h1 class="post-title">{{cmp.entry.title}}</h1>
-      <span class="star-container">
-        <star starred="cmp.entry.starred" class="star-action" ng-click="cmp.onStarChange()"></star>
-      </span>
+<article class="post" layout vertical flex>
+  <header layout vertical>
+  
+    <div layout horizontal center>
+      <h1 class="post-title" ng-class="{'unread':Post.entry.unread}" flex>{{Post.entry.title}}</h1>
+      <star starred="Post.entry.starred" ng-click="Post.onStarChange()"></star>
     </div>
     
-    <div class="meta-area">
-      <div class="time">
-        <img ng-if="cmp.entry.author.image.src != null" class="author-image" ng-src="{{cmp.imageUrl}}"/>
-        <span ng-if="cmp.entry.author.name != null" class="author-name">by <a target="_blank" ng-if="cmp.entry.author.url != null" href="{{cmp.entry.author.url}}">{{cmp.entry.author.name}}</a><b ng-if="cmp.entry.author.url == null">{{cmp.entry.author.name}}</b>, </span>
-        <span>published</span> <time pubdate datetime="{{cmp.entry.published}}"></time>&nbsp;<span ng-if="cmp.entry.newitem && false" class="label label-danger">New</span>
+    <div class="meta-area" layout horizontal center>
+      <div class="time" flex>
+        <img ng-if="Post.entry.author.image.src != null" class="author-image" ng-src="{{Post.imageUrl}}"/>
+        <span ng-if="Post.entry.author.name != null" class="author-name">by <a target="_blank" ng-if="Post.entry.author.url != null" href="{{Post.entry.author.url}}">{{Post.entry.author.name}}</a><b ng-if="Post.entry.author.url == null">{{Post.entry.author.name}}</b>, </span>
+        <span>published</span> <time pubdate datetime="{{Post.entry.published}}"></time>&nbsp;<span ng-if="Post.entry.newitem && false" class="label label-danger">New</span>
       </div>
-      <div class="action">
-        <a href="{{cmp.entry.url}}" target="_blank" class="btn btn-primary" type="button">Open</a>
+      <div class="action" center horizontal layout>
+        <a href="{{Post.entry.url}}" target="_blank" class="button primary" type="button">Open</a>
+        <div class="menu" ng-click="Post.toggleOptions()">
+          <span icon="drawer"></span>
+          <ul ng-show="Post.showOptions" class="options">
+            <li ng-click="Post.unreadPost()">Mark as unread</li>
+          </ul>
+        </div>
       </div>
     </div>
     
   </header>
-  <iframe src="sandbox.html" class="entry-webview" ng-load="cmp.frameLoad()" id="{{cmp.elementId}}" seamless="seamless"></iframe>
+  <iframe src="sandboxed/sandbox.html" class="entry-webview" layout flex horizontal ng-load="Post.frameLoad($event)" id="{{Post.elementId}}" seamless="seamless"></iframe>
 </article>

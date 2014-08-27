@@ -8,9 +8,9 @@ library dart2js.ir_nodes;
 
 import '../dart2jslib.dart' as dart2js show Constant;
 import '../elements/elements.dart'
-    show FunctionElement, LibraryElement, ParameterElement;
-import 'ir_pickler.dart' show Pickler, IrConstantPool;
+    show FunctionElement, LibraryElement, ParameterElement, ClassElement;
 import '../universe/universe.dart' show Selector, SelectorKind;
+import '../dart_types.dart' show DartType, GenericType;
 
 abstract class Node {
   static int hashCount = 0;
@@ -32,6 +32,7 @@ abstract class Definition extends Node {
   bool get hasAtMostOneUse => firstRef == null || firstRef.nextRef == null;
   bool get hasExactlyOneUse => firstRef != null && firstRef.nextRef == null;
   bool get hasAtLeastOneUse => firstRef != null;
+  bool get hasMultipleUses => !hasAtMostOneUse;
 
   void substituteFor(Definition other) {
     if (other.firstRef == null) return;
@@ -99,8 +100,13 @@ class LetCont extends Expression {
   accept(Visitor visitor) => visitor.visitLetCont(this);
 }
 
+abstract class Invoke {
+  Selector get selector;
+  List<Reference> get arguments;
+}
+
 /// Invoke a static function in tail position.
-class InvokeStatic extends Expression {
+class InvokeStatic extends Expression implements Invoke {
   final FunctionElement target;
 
   /**
@@ -116,7 +122,7 @@ class InvokeStatic extends Expression {
   InvokeStatic(this.target, this.selector, Continuation cont,
                List<Definition> args)
       : continuation = new Reference(cont),
-        arguments = args.map((t) => new Reference(t)).toList(growable: false) {
+        arguments = _referenceList(args) {
     assert(selector.kind == SelectorKind.CALL);
     assert(selector.name == target.name);
   }
@@ -124,14 +130,92 @@ class InvokeStatic extends Expression {
   accept(Visitor visitor) => visitor.visitInvokeStatic(this);
 }
 
+/// Invoke a method, operator, getter, setter, or index getter/setter in
+/// tail position.
+class InvokeMethod extends Expression implements Invoke {
+  final Reference receiver;
+  final Selector selector;
+  final Reference continuation;
+  final List<Reference> arguments;
+
+  InvokeMethod(Definition receiver,
+               this.selector,
+               Continuation cont,
+               List<Definition> args)
+      : receiver = new Reference(receiver),
+        continuation = new Reference(cont),
+        arguments = _referenceList(args) {
+    assert(selector != null);
+    assert(selector.kind == SelectorKind.CALL ||
+           selector.kind == SelectorKind.OPERATOR ||
+           (selector.kind == SelectorKind.GETTER && arguments.isEmpty) ||
+           (selector.kind == SelectorKind.SETTER && arguments.length == 1) ||
+           (selector.kind == SelectorKind.INDEX && arguments.length == 1) ||
+           (selector.kind == SelectorKind.INDEX && arguments.length == 2));
+  }
+
+  accept(Visitor visitor) => visitor.visitInvokeMethod(this);
+}
+
+/// Non-const call to a constructor. The [target] may be a generative
+/// constructor, factory, or redirecting factory.
+class InvokeConstructor extends Expression implements Invoke {
+  final GenericType type;
+  final FunctionElement target;
+  final Reference continuation;
+  final List<Reference> arguments;
+  final Selector selector;
+
+  /// The class being instantiated. This is the same as `target.enclosingClass`
+  /// and `type.element`.
+  ClassElement get targetClass => target.enclosingElement;
+
+  /// True if this is an invocation of a factory constructor.
+  bool get isFactory => target.isFactoryConstructor;
+
+  InvokeConstructor(this.type,
+                    this.target,
+                    this.selector,
+                    Continuation cont,
+                    List<Definition> args)
+      : continuation = new Reference(cont),
+        arguments = _referenceList(args) {
+    assert(target.isConstructor);
+    assert(type.element == target.enclosingElement);
+  }
+
+  accept(Visitor visitor) => visitor.visitInvokeConstructor(this);
+}
+
+/// Invoke [toString] on each argument and concatenate the results.
+class ConcatenateStrings extends Expression {
+  final Reference continuation;
+  final List<Reference> arguments;
+
+  ConcatenateStrings(Continuation cont, List<Definition> args)
+      : continuation = new Reference(cont),
+        arguments = _referenceList(args);
+
+  accept(Visitor visitor) => visitor.visitConcatenateStrings(this);
+}
+
 /// Invoke a continuation in tail position.
 class InvokeContinuation extends Expression {
   final Reference continuation;
   final List<Reference> arguments;
 
-  InvokeContinuation(Continuation cont, List<Definition> args)
+  // An invocation of a continuation is recursive if it occurs in the body of
+  // the continuation itself.
+  bool isRecursive;
+
+  InvokeContinuation(Continuation cont, List<Definition> args,
+                     {recursive: false})
       : continuation = new Reference(cont),
-        arguments = args.map((t) => new Reference(t)).toList(growable: false);
+        arguments = _referenceList(args),
+        isRecursive = recursive {
+    if (recursive) cont.isRecursive = true;
+  }
+
   accept(Visitor visitor) => visitor.visitInvokeContinuation(this);
 }
 
@@ -168,6 +252,26 @@ class Constant extends Primitive {
   accept(Visitor visitor) => visitor.visitConstant(this);
 }
 
+class LiteralList extends Primitive {
+  List<Reference> values;
+
+  LiteralList(List<Primitive> values)
+      : this.values = _referenceList(values);
+
+  accept(Visitor visitor) => visitor.visitLiteralList(this);
+}
+
+class LiteralMap extends Primitive {
+  List<Reference> keys;
+  List<Reference> values;
+
+  LiteralMap(List<Primitive> keys, List<Primitive> values)
+      : this.keys = _referenceList(keys),
+        this.values = _referenceList(values);
+
+  accept(Visitor visitor) => visitor.visitLiteralMap(this);
+}
+
 class Parameter extends Primitive {
   final ParameterElement element;
 
@@ -182,6 +286,9 @@ class Parameter extends Primitive {
 class Continuation extends Definition {
   final List<Parameter> parameters;
   Expression body = null;
+
+  // A continuation is recursive if it has any recursive invocations.
+  bool isRecursive = false;
 
   Continuation(this.parameters);
 
@@ -199,11 +306,11 @@ class FunctionDefinition extends Node {
 
   FunctionDefinition(this.returnContinuation, this.parameters, this.body);
 
-  List<int> pickle(IrConstantPool constantPool) {
-    return new Pickler(constantPool).pickle(this);
-  }
-
   accept(Visitor visitor) => visitor.visitFunctionDefinition(this);
+}
+
+List<Reference> _referenceList(List<Definition> definitions) {
+  return definitions.map((e) => new Reference(e)).toList(growable: false);
 }
 
 abstract class Visitor<T> {
@@ -223,9 +330,14 @@ abstract class Visitor<T> {
   T visitLetCont(LetCont node) => visitExpression(node);
   T visitInvokeStatic(InvokeStatic node) => visitExpression(node);
   T visitInvokeContinuation(InvokeContinuation node) => visitExpression(node);
+  T visitInvokeMethod(InvokeMethod node) => visitExpression(node);
+  T visitInvokeConstructor(InvokeConstructor node) => visitExpression(node);
+  T visitConcatenateStrings(ConcatenateStrings node) => visitExpression(node);
   T visitBranch(Branch node) => visitExpression(node);
 
   // Definitions.
+  T visitLiteralList(LiteralList node) => visitPrimitive(node);
+  T visitLiteralMap(LiteralMap node) => visitPrimitive(node);
   T visitConstant(Constant node) => visitPrimitive(node);
   T visitParameter(Parameter node) => visitPrimitive(node);
   T visitContinuation(Continuation node) => visitDefinition(node);
@@ -256,7 +368,7 @@ class SExpressionStringifier extends Visitor<String> {
           return name;
         })
         .join(' ');
-    return '(FunctionDefinition ($parameters) ${visit(node.body)})';
+    return '(FunctionDefinition ($parameters return) ${visit(node.body)})';
   }
 
   String visitLetPrim(LetPrim node) {
@@ -279,20 +391,62 @@ class SExpressionStringifier extends Visitor<String> {
        .join('');
     String contBody = visit(node.continuation.body);
     String body = visit(node.body);
-    return '(LetCont ($cont$parameters) $contBody) $body';
+    String op = node.continuation.isRecursive ? 'LetCont*' : 'LetCont';
+    return '($op ($cont$parameters) $contBody) $body';
+  }
+
+  String formatArguments(Invoke node) {
+    int positionalArgumentCount = node.selector.positionalArgumentCount;
+    List<String> args = new List<String>();
+    args.addAll(node.arguments.getRange(0, positionalArgumentCount)
+        .map((v) => names[v.definition]));
+    for (int i = 0; i < node.selector.namedArgumentCount; ++i) {
+      String name = node.selector.namedArguments[i];
+      Definition arg = node.arguments[positionalArgumentCount + i].definition;
+      args.add("($name: $arg)");
+    }
+    return args.join(' ');
   }
 
   String visitInvokeStatic(InvokeStatic node) {
     String name = node.target.name;
     String cont = names[node.continuation.definition];
+    String args = formatArguments(node);
+    return '(InvokeStatic $name $args $cont)';
+  }
+
+  String visitInvokeMethod(InvokeMethod node) {
+    String name = node.selector.name;
+    String rcv = names[node.receiver.definition];
+    String cont = names[node.continuation.definition];
+    String args = formatArguments(node);
+    return '(InvokeMethod $rcv $name $args $cont)';
+  }
+
+  String visitInvokeConstructor(InvokeConstructor node) {
+    String callName;
+    if (node.target.name.isEmpty) {
+      callName = '${node.type}';
+    } else {
+      callName = '${node.type}.${node.target.name}';
+    }
+    String cont = names[node.continuation.definition];
+    String args = formatArguments(node);
+    return '(InvokeConstructor $callName $args $cont)';
+  }
+
+  String visitConcatenateStrings(ConcatenateStrings node) {
+    String cont = names[node.continuation.definition];
     String args = node.arguments.map((v) => names[v.definition]).join(' ');
-    return '(InvokeStatic $name $cont $args)';
+    return '(ConcatenateStrings $args $cont)';
   }
 
   String visitInvokeContinuation(InvokeContinuation node) {
     String cont = names[node.continuation.definition];
     String args = node.arguments.map((v) => names[v.definition]).join(' ');
-    return '(InvokeContinuation $cont $args)';
+    String op =
+        node.isRecursive ? 'InvokeContinuation*' : 'InvokeContinuation';
+    return '($op $cont $args)';
   }
 
   String visitBranch(Branch node) {

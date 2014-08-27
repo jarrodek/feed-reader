@@ -1,11 +1,13 @@
 body {
-  background-color: #F8F8F8;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
   font-weight: normal;
-  line-height: 1.2em;
-  margin: 15px;
+  margin: 14px;  
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333;
+  background-color: #fff;
 }
+
 
 html, body {
   height: 100%;
@@ -15,7 +17,7 @@ html, body {
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
 .ng-cloak, .x-ng-cloak,
-.ng-hide {
+.ng-hide, body /deep/ .ng-hide {
   display: none !important;
 }
 
@@ -52,9 +54,7 @@ body {
 }
 
 .feed-content{
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+  
 }
 .feed-content,
 .post-content{
@@ -71,110 +71,15 @@ feed-entries {
   padding-top: 15px;
 }
 
-.list-feed .title-area{
-  display: flex;
-}
-.list-feed .title-area .feed-title{
-  flex: 1;
-}
-.list-feed .title-area .open-feed {
-  margin-right: 1em;
-}
-article.list-feed-post{
-    margin-bottom: 15px;
-    border-bottom: 1px #F1F1F1 solid;
-    padding-left: 30px;
-}
-article.list-feed-post:last-child{
-  border-bottom: none;
-}
 
 
-.list-feed-post{
-  display: flex;
-  flex-direction: row;
-}
-.list-feed-post .content{
-  flex:1;
-}
-.list-feed-post .actions{
-  min-width: 25px;
-  margin-left: 10px;
-}
-
-
-.list-feed-post header h1 a{
-  font-size: 0.6em;
-  color: gray;
-  font-weight: normal;
-  text-decoration: none;
-}
-.list-feed-post.unread header h1 a{
-  font-weight: bold;
-}
-.list-feed header time{
-  color: rgba(51, 51, 51, 0.5);
-  font-size: 0.85em;
-}
-article.list-feed-post .post-summary{
-  max-height: 36px;
-  overflow: hidden;
-  word-break: break-word;
-  /*white-space: pre;*/
-  color: rgba(51, 51, 51, 0.5);
-  font-size: 0.85em;
-  margin: 0;
-  padding: 0;
-  margin-bottom: 10px;
-  line-height: 18px;
-  cursor: pointer;
-}
-
-.list-feed-post header h1 a,
-.list-feed-post header time,
-.list-feed-post .post-summary,
-.list-feed-post.unread header h1 a,
-.list-feed-post.unread header time,
-.list-feed-post.unread .post-summary{
-  transition: color 1s;
-}
-.list-feed-post.unread header time,
-.list-feed-post.unread .post-summary{
-  color: rgba(51, 51, 51, 0.6);
-}
-.list-feed-post:hover header time,
-.list-feed-post:hover .post-summary {
-  color: rgba(51, 51, 51, 0.9);
-}
-.list-feed-post:hover header h1 a {
-  color: rgba(51, 51, 51, 1); 
-}
-
-.list-feed-post.unread header h1 a{
-  font-weight: bold;
-  color: rgb(20, 121, 230);
-}
 
 header h1 a {
   color: #333;
   margin: 0;
   padding: 0;
 }
-.list-feed .feed-title{
-  color: #333;
-  font-size: 24px;
-  margin: 0;
-  padding: 0;
-  margin-left: 1em;
-  margin-bottom: 10px;
-  margin-top: 5px;
-}
-.list-feed header.title-area{
-  color: #333;
-  border-bottom: 2px rgb(127, 184, 245) solid;
-  margin-bottom: 10px;
-  padding-bottom: 5px;
-}
+
 
 .feed-content .page-title{
   font-size: 18px;
@@ -214,61 +119,15 @@ header h1 a {
 }
 
 .entry-webview {
-  display: flex;
+  /*display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 1;*/
   border: none;
 }
 
-ng-view,
-post-item,
-post-item article{
-  
-}
-post-item header{
-  box-shadow: 0px 3px 3px rgba(196, 196, 196, 0.76);
-}
+
 
 /* Post content padding */
-.entry-webview,
-post-item header{
-  padding-left: 15px;
-}
-post-item header{
-  padding-bottom: 10px;
-}
-
-post-item .post-title{
-  color: rgba(51, 51, 51, 1);
-  font-size: 27px;
-  font-weight: bold;
-  margin-top: 15px;
-  margin-bottom: 10px;
-  flex: 1;
-}
-.title-area {
-  display: flex;
-}
-
-.post{}
-.post img.author-image{
-  width: 32px;
-  height: 32px;
-  vertical-align: middle;
-}
-.title-area .star-container {
-  margin-top: 11px;
-  margin-right: 1em;
-}
-.meta-area {
-  display: flex;
-}
-.meta-area .time {
-  flex: 1;
-}
-.meta-area .action {
-  margin-right: 1em;
-}
 
 header.app-header {
   display: flex;
@@ -277,10 +136,6 @@ header.app-header .app-action-buttons {
   flex: 1;
 }
 
-
-.btn{
-  border-radius: 0 !important;
-}
 .ng-invalid{
   border-color: #a94442 !important;
   -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075) !important;
@@ -327,4 +182,79 @@ input.loading{
 
 [rss-app] .jumbotron{
   background-color: #fff;
+}
+
+
+
+
+html /deep/ .button{
+    padding: 8px 16px;
+    border: 1px transparent solid;
+    outline: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+    line-height: normal;
+}
+html /deep/ .button:disabled, html /deep/ .button[disabled]{
+  background-color: #D3D3D3 !important;
+  color: gray !important;
+  border-color: transparent !important;
+  fill: gray !important;
+  cursor: default;
+}
+html /deep/ .button.clean:disabled{
+  background-color: #fff !important;
+}
+html /deep/ .button.primary{
+    background-color: #0288d1;
+    color: #fff;
+    fill: #fff;
+}
+html /deep/ .button.primary:hover {
+  background-color: #0277bd;
+  border-top-color: #333;
+}
+html /deep/ .button.primary:active {
+  background-color: #01579b;
+  border-bottom-color: #333;
+  border-top-color: transparent;
+}
+html /deep/ .button.default{
+  background-color: #fff;
+  color: #333;
+  fill: #333;
+}
+html /deep/ .button.default:hover {
+  border-color: #eeeeee;
+}
+html /deep/ .button.default:active {
+  background-color: #fafafa;
+  border-color: #e0e0e0;
+}
+
+html /deep/ .button-icon{
+  pointer-events: none; 
+  width: 24px; 
+  height: 24px; 
+  display: inline-block; 
+  vertical-align: middle;
+  transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+}
+html /deep/ .button:hover,
+html /deep/ .button-icon:hover {
+  fill: #fb8c00;
+}
+html /deep/ input{
+  width: 100%;
+  padding: 0.3em;
+  border: 1px #eee solid;
+  outline:none;
+}
+html /deep/ input:hover, html /deep/ input:focus{
+  border: 1px #81d4fa solid;
+}
+html /deep/ input:focus {
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(3, 155, 229, .6);
 }

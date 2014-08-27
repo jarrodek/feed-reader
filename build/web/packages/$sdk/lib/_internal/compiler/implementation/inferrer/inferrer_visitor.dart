@@ -492,63 +492,64 @@ class LocalsHandler<T> {
    * exit of the switch, because there is no default case. So the
    * types of locals at entry of the switch have to take part to the
    * merge.
+   *
+   * The above situation is also true for labeled statements like
+   *
+   * [: L: {
+   *      if (...) break;
+   *      ...
+   *    }
+   * :]
+   *
+   * where [:this:] is the [LocalsHandler] for the paths through the
+   * labeled statement that do not break out.
    */
   void mergeAfterBreaks(List<LocalsHandler<T>> handlers,
                         {bool keepOwnLocals: true}) {
     Node level = locals.block;
-    LocalsHandler<T> startWith;
-    int index = 0;
+    Set<Element> seenLocals = new Setlet<Element>();
+    // If we want to keep the locals, we first merge [this] into itself to
+    // create the required Phi nodes.
     if (keepOwnLocals && !seenReturnOrThrow) {
-      startWith = this;
-      index--;
-    } else {
-      // Find the first handler that does not abort.
-      while (index < handlers.length
-             && (startWith = handlers[index]).seenReturnOrThrow) {
-        index++;
-      }
-      if (index == handlers.length) {
-        // If we haven't found a handler that does not abort, we know
-        // this handler aborts.
-        seenReturnOrThrow = true;
-        return;
-      } else {
-        // Otherwise, this handler does not abort.
-        seenReturnOrThrow = false;
-      }
+      mergeHandler(this, seenLocals);
     }
-    // Use [startWith] to initialize the types of locals.
-    locals.forEachLocal((local, myType) {
-      T otherType = startWith.locals[local];
-      T newType = types.allocatePhi(level, local, otherType);
-      if (myType != newType) {
-        locals[local] = newType;
-      }
-    });
+    bool allBranchesAbort = true;
     // Merge all other handlers.
-    for (int i = index + 1; i < handlers.length; i++) {
-      mergeHandler(handlers[i]);
+    for (LocalsHandler handler in handlers) {
+      allBranchesAbort = allBranchesAbort && handler.seenReturnOrThrow;
+      mergeHandler(handler, seenLocals);
     }
-
+    // Clean up Phi nodes with single input.
     locals.forEachLocal((Element element, T type) {
+      if (!seenLocals.contains(element)) return;
       T newType = types.simplifyPhi(level, element, type);
       if (newType != type) {
         locals[element] = newType;
       }
     });
+    seenReturnOrThrow = allBranchesAbort &&
+                        (!keepOwnLocals || seenReturnOrThrow);
   }
 
   /**
    * Merge [other] into this handler. Returns whether a local in this
-   * has changed.
+   * has changed. If [seen] is not null, we allocate new Phi nodes
+   * unless the local is already present in the set [seen]. This effectively
+   * overwrites the current type knowledge in this handler.
    */
-  bool mergeHandler(LocalsHandler<T> other) {
+  bool mergeHandler(LocalsHandler<T> other, [Set<Element> seen]) {
     if (other.seenReturnOrThrow) return false;
     bool changed = false;
     other.locals.forEachLocalUntilNode(locals.block, (local, otherType) {
       T myType = locals[local];
       if (myType == null) return;
-      T newType = types.addPhiInput(local, myType, otherType);
+      T newType;
+      if (seen != null && !seen.contains(local)) {
+        newType = types.allocatePhi(locals.block, local, otherType);
+        seen.add(local);
+      } else {
+        newType = types.addPhiInput(local, myType, otherType);
+      }
       if (newType != myType) {
         changed = true;
         locals[local] = newType;
@@ -595,7 +596,7 @@ class LocalsHandler<T> {
 
 abstract class InferrerVisitor
     <T, E extends MinimalInferrerEngine<T>> extends ResolvedVisitor<T> {
-  final Element analyzedElement;
+  final AstElement analyzedElement;
   final TypeSystem<T> types;
   final E inferrer;
   final Map<TargetElement, List<LocalsHandler<T>>> breaksFor =
@@ -612,17 +613,17 @@ abstract class InferrerVisitor
 
   bool get inLoop => loopLevel > 0;
   bool get isThisExposed {
-    return analyzedElement.isGenerativeConstructor()
+    return analyzedElement.isGenerativeConstructor
         ? locals.fieldScope.isThisExposed
         : true;
   }
   void set isThisExposed(value) {
-    if (analyzedElement.isGenerativeConstructor()) {
+    if (analyzedElement.isGenerativeConstructor) {
       locals.fieldScope.isThisExposed = value;
     }
   }
 
-  InferrerVisitor(Element analyzedElement,
+  InferrerVisitor(AstElement analyzedElement,
                   this.inferrer,
                   this.types,
                   Compiler compiler,
@@ -632,9 +633,9 @@ abstract class InferrerVisitor
       super(compiler.enqueuer.resolution.getCachedElements(analyzedElement),
             compiler) {
     if (handler != null) return;
-    Node node = analyzedElement.parseNode(compiler);
+    Node node = analyzedElement.node;
     FieldInitializationScope<T> fieldScope =
-        analyzedElement.isGenerativeConstructor()
+        analyzedElement.isGenerativeConstructor
             ? new FieldInitializationScope<T>(types)
             : null;
     locals = new LocalsHandler<T>(inferrer, types, compiler, node, fieldScope);
@@ -718,12 +719,12 @@ abstract class InferrerVisitor
 
   T visitLiteralList(LiteralList node) {
     node.visitChildren(this);
-    return node.isConst() ? types.constListType : types.growableListType;
+    return node.isConst ? types.constListType : types.growableListType;
   }
 
   T visitLiteralMap(LiteralMap node) {
     node.visitChildren(this);
-    return node.isConst() ? types.constMapType : types.mapType;
+    return node.isConst ? types.constMapType : types.mapType;
   }
 
   T visitLiteralNull(LiteralNull node) {
@@ -744,14 +745,13 @@ abstract class InferrerVisitor
   bool isThisOrSuper(Node node) => node.isThis() || node.isSuper();
 
   Element get outermostElement {
-    return
-        analyzedElement.getOutermostEnclosingMemberOrTopLevel().implementation;
+    return analyzedElement.outermostEnclosingMemberOrTopLevel.implementation;
   }
 
   T _thisType;
   T get thisType {
     if (_thisType != null) return _thisType;
-    ClassElement cls = outermostElement.getEnclosingClass();
+    ClassElement cls = outermostElement.enclosingClass;
     if (compiler.world.isUsedAsMixin(cls)) {
       return _thisType = types.nonNullSubtype(cls);
     } else if (compiler.world.hasAnySubclass(cls)) {
@@ -765,7 +765,7 @@ abstract class InferrerVisitor
   T get superType {
     if (_superType != null) return _superType;
     return _superType = types.nonNullExact(
-        outermostElement.getEnclosingClass().superclass);
+        outermostElement.enclosingClass.superclass);
   }
 
   T visitIdentifier(Identifier node) {
@@ -1081,7 +1081,9 @@ abstract class InferrerVisitor
     Node exception = node.exception;
     if (exception != null) {
       DartType type = elements.getType(node.type);
-      T mask = type == null || type.treatAsDynamic
+      T mask = type == null ||
+               type.treatAsDynamic ||
+               type.isTypeVariable
           ? types.dynamicType
           : types.nonNullSubtype(type.element);
       locals.update(elements[exception], mask, node);

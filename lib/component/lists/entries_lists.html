@@ -1,33 +1,28 @@
-<div class="list-feed" ng-repeat="feed in cmp.feeds">
-  <div class="feed-list-object" ng-if="cmp.hasPosts(feed.id)" ng-if="cmp.hasPostsInView">
+<div ng-repeat="feed in EntriesList.feeds">
+
+  <div ng-if="EntriesList.hasPosts(feed.id)" ng-if="EntriesList.hasPostsInView" layout vertical>
   
-    <header class="title-area">
-      <h1 class="feed-title">{{feed.title|sanitize}} (<unread-counter feed="{{feed.id}}"></unread-counter>)</h1>
-      <div class="open-feed">
-        <a href="#/feed/{{feed.id}}" class="btn btn-primary">Read all</a>
+    <header class="feed" layout horizontal center>
+      <h1 flex>{{feed.title|sanitize}} (<unread-counter feed="{{feed.id}}"></unread-counter>)</h1>
+      <div class="show-all">
+        <a href="#/feed/{{feed.id}}" class="button primary">Read all</a>
       </div>
     </header>
     
-    <article ng-class="{'unread':post.unread}" class="list-feed-post" ng-repeat="post in cmp.entries | postlist:feed.id:cmp.listLength">
-      <div class="content">
+    <article ng-class="{'unread':post.unread}" layout horizontal ng-repeat="post in EntriesList.entries | postlist:feed.id:EntriesList.listLength">
+      <div class="content" flex>
         <header>
-          <h1 class="post-title"><a href="#/post/{{post.id}}">{{post.title}}</a></h1>
+          <h2 class="post-title"><a href="#/post/{{post.id}}">{{post.title}}</a></h2>
           <time pubdate datetime="{{post.published}}">{{post.published|date:fullDate}}</time>&nbsp;<span ng-if="post.newitem && false" class="label label-danger">New</span>
         </header>
-        <p class="post-summary" ng-bind-html="post.content|truncate:250:true:false" ng-click="cmp.readPost(post.id)"></p>
+        <p class="post-summary" ng-bind-html="post.content|truncate:250:true:false" ng-click="EntriesList.readPost(post.id)"></p>
       </div>
-      <div class="actions">
-        <star starred="post.starred" class="star-action" ng-click="cmp.onStarChange(post)"></star>
-      </div>
+      <star starred="post.starred" ng-click="EntriesList.onStarChange(post)"></star>
     </article>
   </div>
+  
 </div>
-<div class="list-feed empty" ng-if="!cmp.hasPostsInView">
-
-  <div class="jumbotron">
-      <div class="container">
-          <h1>Hands up!</h1>
-          <p id="WelcomeMessage">There's no posts to show.</p>
-      </div>
-  </div>
+<div class="list-empty" ng-if="!EntriesList.hasPostsInView">
+    <h1>Dammit Jim!</h1>
+    <p class="empty">Move along, nothing to see here.</p>
 </div>

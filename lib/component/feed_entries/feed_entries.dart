@@ -9,7 +9,9 @@ import '../../service/query_service.dart';
 @Component(
     selector: 'feed-entries', 
     templateUrl: 'packages/rss_app/component/feed_entries/feed_entries.html',
-    useShadowDom: false,
+    cssUrl: const [
+      'packages/rss_app/component/lists/entries_lists.css'
+    ],
     publishAs: 'cmp')
 class FeedEntriesComponent implements AttachAware {
   

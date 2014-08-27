@@ -1,12 +1,12 @@
 {
-  "name": "Rss app",
-  "version": "1",
+  "name": "Chrome RSS reader.",
+  "version": "1.0",
   
   "manifest_version": 2,
   
-  "icons": {"128": "dart_icon.png"},
+  "icons": {"128": "img/ico_128.png"},
   
-  "permissions": ["storage","<all_urls>","alarms","unlimitedStorage", "notifications", "webview"],
+  "permissions": ["storage","<all_urls>","alarms", "unlimitedStorage", "notifications", "webview"],
   
   "app": {
     "background": {
@@ -15,6 +15,6 @@
   },
   
   "sandbox": {
-     "pages": ["sandbox.html"]
+     "pages": ["sandboxed/sandbox.html"]
   }
 }

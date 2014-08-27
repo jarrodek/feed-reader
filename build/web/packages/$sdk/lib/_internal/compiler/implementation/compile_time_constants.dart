@@ -106,9 +106,9 @@ abstract class ConstantCompilerBase implements ConstantCompiler {
       return result;
     }
     Element currentElement = element;
-    if (element.isParameter() ||
-        element.isFieldParameter() ||
-        element.isVariable()) {
+    if (element.isParameter ||
+        element.isFieldParameter ||
+        element.isVariable) {
       currentElement = element.enclosingElement;
     }
     return compiler.withCurrentElement(currentElement, () {
@@ -129,7 +129,7 @@ abstract class ConstantCompilerBase implements ConstantCompiler {
   Constant compileVariableWithDefinitions(VariableElement element,
                                           TreeElements definitions,
                                           {bool isConst: false}) {
-    Node node = element.parseNode(compiler);
+    Node node = element.node;
     if (pendingVariables.contains(element)) {
       if (isConst) {
         compiler.reportFatalError(
@@ -149,9 +149,9 @@ abstract class ConstantCompilerBase implements ConstantCompiler {
           initializer, definitions, isConst: isConst);
       if (compiler.enableTypeAssertions &&
           value != null &&
-          element.isField()) {
+          element.isField) {
         DartType elementType = element.type;
-        if (elementType.kind == TypeKind.MALFORMED_TYPE && !value.isNull) {
+        if (elementType.isMalformed && !value.isNull) {
           if (isConst) {
             ErroneousElement element = elementType.element;
             compiler.reportFatalError(
@@ -280,7 +280,7 @@ class CompileTimeConstantEvaluator extends Visitor {
   }
 
   Constant visitLiteralList(LiteralList node) {
-    if (!node.isConst())  {
+    if (!node.isConst)  {
       return signalNotCompileTimeConstant(node);
     }
     List<Constant> arguments = <Constant>[];
@@ -294,7 +294,7 @@ class CompileTimeConstantEvaluator extends Visitor {
   }
 
   Constant visitLiteralMap(LiteralMap node) {
-    if (!node.isConst()) {
+    if (!node.isConst) {
       return signalNotCompileTimeConstant(node);
     }
     List<Constant> keys = <Constant>[];
@@ -407,8 +407,7 @@ class CompileTimeConstantEvaluator extends Visitor {
         node, type, compiler.symbolConstructor, createArguments);
   }
 
-  Constant makeTypeConstant(TypeDeclarationElement element) {
-    DartType elementType = element.rawType;
+  Constant makeTypeConstant(DartType elementType) {
     DartType constantType =
         compiler.backend.typeImplementation.computeType(compiler);
     return new TypeConstant(elementType, constantType);
@@ -425,7 +424,8 @@ class CompileTimeConstantEvaluator extends Visitor {
   Constant visitIdentifier(Identifier node) {
     Element element = elements[node];
     if (Elements.isClass(element) || Elements.isTypedef(element)) {
-      return makeTypeConstant(element);
+      TypeDeclarationElement typeDeclarationElement = element;
+      return makeTypeConstant(typeDeclarationElement.rawType);
     }
     return signalNotCompileTimeConstant(node);
   }
@@ -442,20 +442,20 @@ class CompileTimeConstantEvaluator extends Visitor {
         return new FunctionConstant(element);
       } else if (Elements.isStaticOrTopLevelField(element)) {
         Constant result;
-        if (element.modifiers.isConst()) {
+        if (element.isConst) {
           result = handler.compileConstant(element);
-        } else if (element.modifiers.isFinal() && !isEvaluatingConstant) {
+        } else if (element.isFinal && !isEvaluatingConstant) {
           result = handler.compileVariable(element);
         }
         if (result != null) return result;
       } else if (Elements.isClass(element) || Elements.isTypedef(element)) {
         assert(elements.isTypeLiteral(send));
-        return makeTypeConstant(element);
+        return makeTypeConstant(elements.getTypeLiteralType(send));
       } else if (send.receiver != null) {
         // Fall through to error handling.
       } else if (!Elements.isUnresolved(element)
-                 && element.isVariable()
-                 && element.modifiers.isConst()) {
+                 && element.isVariable
+                 && element.isConst) {
         Constant result = handler.compileConstant(element);
         if (result != null) return result;
       }
@@ -636,7 +636,7 @@ class CompileTimeConstantEvaluator extends Visitor {
   }
 
   Constant visitNewExpression(NewExpression node) {
-    if (!node.isConst()) {
+    if (!node.isConst) {
       return signalNotCompileTimeConstant(node);
     }
 
@@ -738,14 +738,15 @@ class CompileTimeConstantEvaluator extends Visitor {
   }
 
   Constant makeConstructedConstant(
-      Spannable node, InterfaceType type, FunctionElement constructor,
-      List<Constant> getArguments(FunctionElement constructor)) {
+      Spannable node, InterfaceType type, ConstructorElement constructor,
+      List<Constant> getArguments(ConstructorElement constructor)) {
     // The redirection chain of this element may not have been resolved through
     // a post-process action, so we have to make sure it is done here.
     compiler.resolver.resolveRedirectionChain(constructor, node);
-    InterfaceType constructedType = constructor.computeTargetType(type);
-    constructor = constructor.redirectionTarget;
-    ClassElement classElement = constructor.getEnclosingClass();
+    InterfaceType constructedType =
+        constructor.computeEffectiveTargetType(type);
+    constructor = constructor.effectiveTarget;
+    ClassElement classElement = constructor.enclosingClass;
     // The constructor must be an implementation to ensure that field
     // initializers are handled correctly.
     constructor = constructor.implementation;
@@ -786,7 +787,7 @@ class CompileTimeConstantEvaluator extends Visitor {
 
 class ConstructorEvaluator extends CompileTimeConstantEvaluator {
   final InterfaceType constructedType;
-  final FunctionElement constructor;
+  final ConstructorElement constructor;
   final Map<Element, Constant> definitions;
   final Map<Element, Constant> fieldValues;
 
@@ -849,9 +850,9 @@ class ConstructorEvaluator extends CompileTimeConstantEvaluator {
     // Assign arguments to parameters.
     FunctionSignature signature = constructor.functionSignature;
     int index = 0;
-    signature.orderedForEachParameter((Element parameter) {
+    signature.orderedForEachParameter((ParameterElement parameter) {
       Constant argument = arguments[index++];
-      Node node = parameter.parseNode(compiler);
+      Node node = parameter.node;
       potentiallyCheckType(node, parameter, argument);
       definitions[parameter] = argument;
       if (parameter.kind == ElementKind.FIELD_PARAMETER) {
@@ -864,7 +865,7 @@ class ConstructorEvaluator extends CompileTimeConstantEvaluator {
   void evaluateSuperOrRedirectSend(List<Constant> compiledArguments,
                                    FunctionElement targetConstructor) {
     ConstructorEvaluator evaluator = new ConstructorEvaluator(
-        constructedType.asInstanceOf(targetConstructor.getEnclosingClass()),
+        constructedType.asInstanceOf(targetConstructor.enclosingClass),
         targetConstructor, handler, compiler);
     evaluator.evaluateConstructorFieldValues(compiledArguments);
     // Copy over the fieldValues from the super/redirect-constructor.
@@ -883,7 +884,7 @@ class ConstructorEvaluator extends CompileTimeConstantEvaluator {
 
       Function compileArgument = (element) => definitions[element];
       Function compileConstant = handler.compileConstant;
-      FunctionElement target = constructor.targetConstructor.implementation;
+      FunctionElement target = constructor.definingConstructor.implementation;
       Selector.addForwardingElementArgumentsToList(constructor,
                                                    compiledArguments,
                                                    target,
@@ -893,7 +894,7 @@ class ConstructorEvaluator extends CompileTimeConstantEvaluator {
       evaluateSuperOrRedirectSend(compiledArguments, target);
       return;
     }
-    FunctionExpression functionNode = constructor.parseNode(compiler);
+    FunctionExpression functionNode = constructor.node;
     NodeList initializerList = functionNode.initializers;
 
     bool foundSuperOrRedirect = false;
@@ -925,14 +926,14 @@ class ConstructorEvaluator extends CompileTimeConstantEvaluator {
     if (!foundSuperOrRedirect) {
       // No super initializer found. Try to find the default constructor if
       // the class is not Object.
-      ClassElement enclosingClass = constructor.getEnclosingClass();
+      ClassElement enclosingClass = constructor.enclosingClass;
       ClassElement superClass = enclosingClass.superclass;
       if (enclosingClass != compiler.objectClass) {
         assert(superClass != null);
         assert(superClass.resolutionState == STATE_DONE);
 
         Selector selector =
-            new Selector.callDefaultConstructor(enclosingClass.getLibrary());
+            new Selector.callDefaultConstructor(enclosingClass.library);
 
         FunctionElement targetConstructor =
             superClass.lookupConstructor(selector);

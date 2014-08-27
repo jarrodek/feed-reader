@@ -37,6 +37,7 @@ class Feed {
   set unreadCounter(int i) => _unreadCounter = i;
   ///Test if this feed has unread items.
   bool get hasUnread => _unreadCounter > 0;
+  bool starred = false;
 
   Feed(this.url);
 
@@ -55,6 +56,7 @@ class Feed {
         this.author = new FeedAuthor.fromDb(data['author']);
       }
     }
+    this.starred = data['starred'] == null ? true : data['starred'] == 1 ? true : false;
   }
 
   Map toJson() {
@@ -67,11 +69,12 @@ class Feed {
       'pageurl': this.pageurl,
       'url': this.url,
       'etag': this.etag,
-      'categories': this.categories == null ? [] : this.categories
+      'categories': this.categories == null ? [] : this.categories,
+      'starred': this.starred == null ? 0 : (this.starred ? 1 : 0),
     };
     
     if (this.id != null) {
-      data[id] = this.id;
+      data['id'] = this.id;
     }
     if (this.author != null) {
       data['author'] = this.author.toJson();

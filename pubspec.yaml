@@ -10,7 +10,7 @@ transformers:
     csp: true
 - $dart2js:
     checked: false
-    minify: false
+    minify: true
     verbose: false
     analyzeAll: false
     suppressWarnings: false

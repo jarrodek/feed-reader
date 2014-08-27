@@ -382,6 +382,13 @@ abstract class _StreamController<T> implements StreamController<T>,
     return addState.addStreamFuture;
   }
 
+  /**
+   * Returns a future that is completed when the stream is done
+   * processing events.
+   *
+   * This happens either when the done event has been sent, or if the
+   * subscriber of a single-subscription stream is cancelled.
+   */
   Future get done => _ensureDoneFuture();
 
   Future _ensureDoneFuture() {
@@ -408,20 +415,21 @@ abstract class _StreamController<T> implements StreamController<T>,
   }
 
   /**
-   * Closes this controller.
+   * Closes this controller and sends a done event on the stream.
    *
-   * After closing, no further events may be added using [add] or [addError].
+   * The first time a controller is closed, a "done" event is added to its
+   * stream.
    *
    * You are allowed to close the controller more than once, but only the first
    * call has any effect.
    *
-   * The first time a controller is closed, a "done" event is sent to its
-   * stream.
+   * After closing, no further events may be added using [add] or [addError].
+   *
+   * The returned future is completed when the done event has been delivered.
    */
   Future close() {
     if (isClosed) {
-      _ensureDoneFuture();
-      return _doneFuture;
+      return _ensureDoneFuture();
     }
     if (!_mayAddEvent) throw _badEventState();
     _state |= _STATE_CLOSED;
@@ -430,8 +438,7 @@ abstract class _StreamController<T> implements StreamController<T>,
     } else if (_isInitialState) {
       _ensurePendingEvents().add(const _DelayedDone());
     }
-    _ensureDoneFuture();
-    return _doneFuture;
+    return _ensureDoneFuture();
   }
 
   // EventSink interface. Used by the [addStream] events.
@@ -489,13 +496,40 @@ abstract class _StreamController<T> implements StreamController<T>,
   }
 
   Future _recordCancel(StreamSubscription<T> subscription) {
+    // When we cancel, we first cancel any stream being added,
+    // Then we call _onCancel, and finally the _doneFuture is completed.
+    // If either of addStream's cancel or _onCancel returns a future,
+    // we wait for it before continuing.
+    // Any error during this process ends up in the returned future.
+    // If more errors happen, we act as if it happens inside nested try/finallys
+    // or whenComplete calls, and only the last error ends up in the
+    // returned future.
+    Future result;
     if (_isAddingStream) {
       _StreamControllerAddStreamState addState = _varData;
-      addState.cancel();
+      result = addState.cancel();
     }
     _varData = null;
     _state =
         (_state & ~(_STATE_SUBSCRIBED | _STATE_ADDSTREAM)) | _STATE_CANCELED;
+
+    if (_onCancel != null) {
+      if (result == null) {
+        // Only introduce a future if one is needed.
+        // If _onCancel returns null, no future is needed.
+        try {
+          result = _onCancel();
+        } catch (e, s) {
+          // Return the error in the returned future.
+          // Complete it asynchronously, so there is time for a listener
+          // to handle the error.
+          result = new _Future().._asyncCompleteError(e, s);
+        }
+      } else {
+        // Simpler case when we already know that we will return a future.
+        result = result.whenComplete(_onCancel);
+      }
+    }
 
     void complete() {
       if (_doneFuture != null && _doneFuture._mayComplete) {
@@ -503,13 +537,13 @@ abstract class _StreamController<T> implements StreamController<T>,
       }
     }
 
-    Future future = _runGuarded(_onCancel);
-    if (future != null) {
-      future = future.whenComplete(complete);
+    if (result != null) {
+      result = result.whenComplete(complete);
     } else {
       complete();
     }
-    return future;
+
+    return result;
   }
 
   void _recordPause(StreamSubscription<T> subscription) {
@@ -703,9 +737,21 @@ class _AddStreamState<T> {
     addSubscription.resume();
   }
 
-  void cancel() {
-    addSubscription.cancel();
-    complete();
+  /**
+   * Stop adding the stream.
+   *
+   * Complete the future returned by `StreamController.addStream` when
+   * the cancel is complete.
+   *
+   * Return a future if the cancel takes time, otherwise return `null`.
+   */
+  Future cancel() {
+    var cancel = addSubscription.cancel();
+    if (cancel == null) {
+      addStreamFuture._asyncComplete(null);
+      return null;
+    }
+    return cancel.whenComplete(() { addStreamFuture._asyncComplete(null); });
   }
 
   void complete() {

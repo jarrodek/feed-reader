@@ -22,7 +22,7 @@
   
   <div  ng-if="!cmp.showAddFeed && cmp.readingPost && cmp.entries.length > 0" class="post-pagination" layout horizontal center>
     <b class="current-post-index">{{cmp.currentPostsIndex}}</b> of <b class="current-posts-length">{{cmp.currentPostsLength}}</b> 
-    <div class="btn-group">
+    <div class="pagination-buttons">
       <button type="button" class="button default clean" title="Previous post" ng-disabled="!cmp.hasPrevEntry" ng-click="cmp.goToPost('prev')">
         <span icon="chevron-left" class="button-icon"></span>
       </button>

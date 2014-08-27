@@ -29,6 +29,7 @@ class DataHandlerComponent implements AttachAware {
         //in any other case it means change in posts lists.
         this.queryService.currentPosts.clear();
         queryService.currentFeedId = null;
+        queryService.currentPostId = 0;
       } else {
         try{
           var postId = uri.substring(6);
@@ -44,8 +45,10 @@ class DataHandlerComponent implements AttachAware {
           case 'starred':
           case 'all':
             _getGenericSource(this.routeProvider.routeName);
+            this.queryService.currentPostsArea = this.routeProvider.routeName; 
             break;
-          case 'feed': 
+          case 'feed':
+            this.queryService.currentPostsArea = null;
             if(this.queryService.currentPosts.length > 0){
               return;
             }

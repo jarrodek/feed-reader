@@ -30,18 +30,18 @@
         </span>
       </a>
     </li>
+    
     <li ng-repeat="feed in cmp.feeds" class="subscription-feed" ng-class="{'selected':cmp.selected == feed.id}">
       <a href="#/feed/{{feed.id}}">
-        <span layout horizontal center>
+        <span layout horizontal>
           <span class="feed-title" flex>
             {{feed.display}} <unread-counter data-class="label label-default" data-hide-empty="true" feed="{{feed.id}}"></unread-counter>
           </span>
-          <span class="icon-area">
-            <star starred="feed.starred" class="star-action" ng-click="cmp.onStarChange(feed)"></star>
-          </span>
+          <star starred="feed.starred" class="feed-star" ng-click="cmp.onStarChange(feed)"></star>
         </span>
       </a>
     </li>
+    
   </ul>
   <div classs="" ng-if="cmp.feeds == null || cmp.feeds.length == 0">
     <p>Add a feed to the app.</p>

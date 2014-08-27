@@ -1,3 +1,7 @@
+// Copyright (c) 2014, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
+
 library dart2js.ir_tracer;
 
 import 'dart:async' show EventSink;
@@ -91,6 +95,53 @@ class IRTracer extends TracerUtil implements ir.Visitor {
     String args = node.arguments.map(formatReference).join(', ');
     String kont = formatReference(node.continuation);
     printStmt(dummy, "InvokeStatic $callName ($args) $kont");
+  }
+
+  visitInvokeMethod(ir.InvokeMethod node) {
+    String dummy = names.name(node);
+    String receiver = formatReference(node.receiver);
+    String callName = node.selector.name;
+    String args = node.arguments.map(formatReference).join(', ');
+    String kont = formatReference(node.continuation);
+    printStmt(dummy,
+        "InvokeMethod $receiver $callName ($args) $kont");
+  }
+
+  visitInvokeConstructor(ir.InvokeConstructor node) {
+    String dummy = names.name(node);
+    String callName;
+    if (node.target.name.isEmpty) {
+      callName = '${node.type}';
+    } else {
+      callName = '${node.type}.${node.target.name}';
+    }
+    String args = node.arguments.map(formatReference).join(', ');
+    String kont = formatReference(node.continuation);
+    printStmt(dummy, "InvokeConstructor $callName ($args) $kont");
+  }
+
+  visitConcatenateStrings(ir.ConcatenateStrings node) {
+    String dummy = names.name(node);
+    String args = node.arguments.map(formatReference).join(', ');
+    String kont = formatReference(node.continuation);
+    printStmt(dummy, "ConcatenateStrings ($args) $kont");
+  }
+
+  visitLiteralList(ir.LiteralList node) {
+    String dummy = names.name(node);
+    String values = node.values.map(formatReference).join(', ');
+    printStmt(dummy, "LiteralList ($values)");
+  }
+
+  visitLiteralMap(ir.LiteralMap node) {
+    String dummy = names.name(node);
+    List<String> entries = new List<String>();
+    for (int i = 0; i < node.values.length; ++i) {
+      String key = formatReference(node.keys[i]);
+      String value = formatReference(node.values[i]);
+      entries.add("$key: $value");
+    }
+    printStmt(dummy, "LiteralMap (${entries.join(', ')})");
   }
 
   visitInvokeContinuation(ir.InvokeContinuation node) {
@@ -195,7 +246,7 @@ class Block {
 
 class BlockCollector extends ir.Visitor {
   Block entry;
-  final Map<ir.Continuation, Block> cont2block = <ir.Continuation, Block> {};
+  final Map<ir.Continuation, Block> cont2block = <ir.Continuation, Block>{};
   Block current_block;
 
   Names names;
@@ -225,6 +276,27 @@ class BlockCollector extends ir.Visitor {
   }
 
   visitInvokeStatic(ir.InvokeStatic exp) {
+    ir.Definition target = exp.continuation.definition;
+    if (target is ir.Continuation && target.body != null) {
+      current_block.addEdgeTo(getBlock(target));
+    }
+  }
+
+  visitInvokeMethod(ir.InvokeMethod exp) {
+    ir.Definition target = exp.continuation.definition;
+    if (target is ir.Continuation && target.body != null) {
+      current_block.addEdgeTo(getBlock(target));
+    }
+  }
+
+  visitInvokeConstructor(ir.InvokeConstructor exp) {
+    ir.Definition target = exp.continuation.definition;
+    if (target is ir.Continuation && target.body != null) {
+      current_block.addEdgeTo(getBlock(target));
+    }
+  }
+
+  visitConcatenateStrings(ir.ConcatenateStrings exp) {
     ir.Definition target = exp.continuation.definition;
     if (target is ir.Continuation && target.body != null) {
       current_block.addEdgeTo(getBlock(target));

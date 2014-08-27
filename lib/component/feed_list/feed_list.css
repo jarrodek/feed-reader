@@ -1,6 +1,9 @@
-#feed-list {
-  
+.subscription-feed > a > span {
+  margin-left: 16px;
+  padding: 16px 0;
 }
+
+
 #feed-list .feed-list-display{
   list-style: none;
   margin: 0;
@@ -23,7 +26,6 @@
   display: inline-block;
   vertical-align: middle;
   word-break: break-word;
-  padding: 16px 0;
 }
 
 #feed-list .feed-list-display li {
@@ -43,10 +45,10 @@
 }
 
 
+
 #feed-list .feed-list-display li.subscription-feed .feed-title{
   transition: color 0.6s;
   color: rgba(51, 51, 51, 0.68);
-  padding: 16px 0 16px 16px; 
 }
 #feed-list .feed-list-display li.subscription-feed .feed-title:hover{
   color: rgba(51, 51, 51, 1);
@@ -79,5 +81,12 @@
 }
 .label-default {
   background-color: #999;
+}
+
+
+.feed-star{
+  width: 24px;
+  height: 24px;
+  margin: 0 26px;
 }
 

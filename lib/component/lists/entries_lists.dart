@@ -13,9 +13,11 @@ import '../../service/query_service.dart';
 
 @Component(
     selector: 'entries-lists', 
-    templateUrl: 'packages/rss_app/component/lists/entries_lists.html',  
-    useShadowDom: false,
-    publishAs: 'cmp',
+    templateUrl: 'packages/rss_app/component/lists/entries_lists.html',
+    publishAs: 'EntriesList',
+    cssUrl: const [
+      'packages/rss_app/component/lists/entries_lists.css'
+    ],
     map: const {
       'data-source': '@dataSource'
     })
@@ -53,7 +55,7 @@ class EntriesListComponent {
       //TODO: error report.
       window.console.error(e);
     }).then((FeedEntry entry){
-      print("Updated entry: $entry");
+      
     });
   }
   

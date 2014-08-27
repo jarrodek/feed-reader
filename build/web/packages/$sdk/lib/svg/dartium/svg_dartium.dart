@@ -14,6 +14,154 @@ import 'dart:_blink' as _blink;
 
 
 
+// FIXME: Can we make this private?
+const svgBlinkMap = const {
+  'SVGAElement': AElement,
+  'SVGAltGlyphDefElement': _SVGAltGlyphDefElement,
+  'SVGAltGlyphElement': AltGlyphElement,
+  'SVGAltGlyphItemElement': _SVGAltGlyphItemElement,
+  'SVGAngle': Angle,
+  'SVGAnimateElement': AnimateElement,
+  'SVGAnimateMotionElement': AnimateMotionElement,
+  'SVGAnimateTransformElement': AnimateTransformElement,
+  'SVGAnimatedAngle': AnimatedAngle,
+  'SVGAnimatedBoolean': AnimatedBoolean,
+  'SVGAnimatedEnumeration': AnimatedEnumeration,
+  'SVGAnimatedInteger': AnimatedInteger,
+  'SVGAnimatedLength': AnimatedLength,
+  'SVGAnimatedLengthList': AnimatedLengthList,
+  'SVGAnimatedNumber': AnimatedNumber,
+  'SVGAnimatedNumberList': AnimatedNumberList,
+  'SVGAnimatedPreserveAspectRatio': AnimatedPreserveAspectRatio,
+  'SVGAnimatedRect': AnimatedRect,
+  'SVGAnimatedString': AnimatedString,
+  'SVGAnimatedTransformList': AnimatedTransformList,
+  'SVGAnimationElement': AnimationElement,
+  'SVGCircleElement': CircleElement,
+  'SVGClipPathElement': ClipPathElement,
+  'SVGComponentTransferFunctionElement': _SVGComponentTransferFunctionElement,
+  'SVGCursorElement': _SVGCursorElement,
+  'SVGDefsElement': DefsElement,
+  'SVGDescElement': DescElement,
+  'SVGDiscardElement': DiscardElement,
+  'SVGElement': SvgElement,
+  'SVGElementInstance': ElementInstance,
+  'SVGElementInstanceList': _ElementInstanceList,
+  'SVGEllipseElement': EllipseElement,
+  'SVGFEBlendElement': FEBlendElement,
+  'SVGFEColorMatrixElement': FEColorMatrixElement,
+  'SVGFEComponentTransferElement': FEComponentTransferElement,
+  'SVGFECompositeElement': FECompositeElement,
+  'SVGFEConvolveMatrixElement': FEConvolveMatrixElement,
+  'SVGFEDiffuseLightingElement': FEDiffuseLightingElement,
+  'SVGFEDisplacementMapElement': FEDisplacementMapElement,
+  'SVGFEDistantLightElement': FEDistantLightElement,
+  'SVGFEDropShadowElement': _SVGFEDropShadowElement,
+  'SVGFEFloodElement': FEFloodElement,
+  'SVGFEFuncAElement': FEFuncAElement,
+  'SVGFEFuncBElement': FEFuncBElement,
+  'SVGFEFuncGElement': FEFuncGElement,
+  'SVGFEFuncRElement': FEFuncRElement,
+  'SVGFEGaussianBlurElement': FEGaussianBlurElement,
+  'SVGFEImageElement': FEImageElement,
+  'SVGFEMergeElement': FEMergeElement,
+  'SVGFEMergeNodeElement': FEMergeNodeElement,
+  'SVGFEMorphologyElement': FEMorphologyElement,
+  'SVGFEOffsetElement': FEOffsetElement,
+  'SVGFEPointLightElement': FEPointLightElement,
+  'SVGFESpecularLightingElement': FESpecularLightingElement,
+  'SVGFESpotLightElement': FESpotLightElement,
+  'SVGFETileElement': FETileElement,
+  'SVGFETurbulenceElement': FETurbulenceElement,
+  'SVGFilterElement': FilterElement,
+  'SVGFilterPrimitiveStandardAttributes': FilterPrimitiveStandardAttributes,
+  'SVGFitToViewBox': FitToViewBox,
+  'SVGFontElement': _SVGFontElement,
+  'SVGFontFaceElement': _SVGFontFaceElement,
+  'SVGFontFaceFormatElement': _SVGFontFaceFormatElement,
+  'SVGFontFaceNameElement': _SVGFontFaceNameElement,
+  'SVGFontFaceSrcElement': _SVGFontFaceSrcElement,
+  'SVGFontFaceUriElement': _SVGFontFaceUriElement,
+  'SVGForeignObjectElement': ForeignObjectElement,
+  'SVGGElement': GElement,
+  'SVGGeometryElement': GeometryElement,
+  'SVGGlyphElement': _SVGGlyphElement,
+  'SVGGlyphRefElement': _SVGGlyphRefElement,
+  'SVGGradientElement': _GradientElement,
+  'SVGGraphicsElement': GraphicsElement,
+  'SVGHKernElement': _SVGHKernElement,
+  'SVGImageElement': ImageElement,
+  'SVGLength': Length,
+  'SVGLengthList': LengthList,
+  'SVGLineElement': LineElement,
+  'SVGLinearGradientElement': LinearGradientElement,
+  'SVGMPathElement': _SVGMPathElement,
+  'SVGMarkerElement': MarkerElement,
+  'SVGMaskElement': MaskElement,
+  'SVGMatrix': Matrix,
+  'SVGMetadataElement': MetadataElement,
+  'SVGMissingGlyphElement': _SVGMissingGlyphElement,
+  'SVGNumber': Number,
+  'SVGNumberList': NumberList,
+  'SVGPathElement': PathElement,
+  'SVGPathSeg': PathSeg,
+  'SVGPathSegArcAbs': PathSegArcAbs,
+  'SVGPathSegArcRel': PathSegArcRel,
+  'SVGPathSegClosePath': PathSegClosePath,
+  'SVGPathSegCurvetoCubicAbs': PathSegCurvetoCubicAbs,
+  'SVGPathSegCurvetoCubicRel': PathSegCurvetoCubicRel,
+  'SVGPathSegCurvetoCubicSmoothAbs': PathSegCurvetoCubicSmoothAbs,
+  'SVGPathSegCurvetoCubicSmoothRel': PathSegCurvetoCubicSmoothRel,
+  'SVGPathSegCurvetoQuadraticAbs': PathSegCurvetoQuadraticAbs,
+  'SVGPathSegCurvetoQuadraticRel': PathSegCurvetoQuadraticRel,
+  'SVGPathSegCurvetoQuadraticSmoothAbs': PathSegCurvetoQuadraticSmoothAbs,
+  'SVGPathSegCurvetoQuadraticSmoothRel': PathSegCurvetoQuadraticSmoothRel,
+  'SVGPathSegLinetoAbs': PathSegLinetoAbs,
+  'SVGPathSegLinetoHorizontalAbs': PathSegLinetoHorizontalAbs,
+  'SVGPathSegLinetoHorizontalRel': PathSegLinetoHorizontalRel,
+  'SVGPathSegLinetoRel': PathSegLinetoRel,
+  'SVGPathSegLinetoVerticalAbs': PathSegLinetoVerticalAbs,
+  'SVGPathSegLinetoVerticalRel': PathSegLinetoVerticalRel,
+  'SVGPathSegList': PathSegList,
+  'SVGPathSegMovetoAbs': PathSegMovetoAbs,
+  'SVGPathSegMovetoRel': PathSegMovetoRel,
+  'SVGPatternElement': PatternElement,
+  'SVGPoint': Point,
+  'SVGPointList': PointList,
+  'SVGPolygonElement': PolygonElement,
+  'SVGPolylineElement': PolylineElement,
+  'SVGPreserveAspectRatio': PreserveAspectRatio,
+  'SVGRadialGradientElement': RadialGradientElement,
+  'SVGRect': Rect,
+  'SVGRectElement': RectElement,
+  'SVGRenderingIntent': RenderingIntent,
+  'SVGSVGElement': SvgSvgElement,
+  'SVGScriptElement': ScriptElement,
+  'SVGSetElement': SetElement,
+  'SVGStopElement': StopElement,
+  'SVGStringList': StringList,
+  'SVGStyleElement': StyleElement,
+  'SVGSwitchElement': SwitchElement,
+  'SVGSymbolElement': SymbolElement,
+  'SVGTSpanElement': TSpanElement,
+  'SVGTests': Tests,
+  'SVGTextContentElement': TextContentElement,
+  'SVGTextElement': TextElement,
+  'SVGTextPathElement': TextPathElement,
+  'SVGTextPositioningElement': TextPositioningElement,
+  'SVGTitleElement': TitleElement,
+  'SVGTransform': Transform,
+  'SVGTransformList': TransformList,
+  'SVGURIReference': UriReference,
+  'SVGUnitTypes': UnitTypes,
+  'SVGUseElement': UseElement,
+  'SVGVKernElement': _SVGVKernElement,
+  'SVGViewElement': ViewElement,
+  'SVGViewSpec': ViewSpec,
+  'SVGZoomAndPan': ZoomAndPan,
+  'SVGZoomEvent': ZoomEvent,
+
+};
 // Copyright (c) 2012, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -1218,10 +1366,6 @@ class ElementInstance extends EventTarget {
   @DocsEditable()
   static const EventStreamProvider<Event> unloadEvent = const EventStreamProvider<Event>('unload');
 
-  @DomName('SVGElementInstance.childNodes')
-  @DocsEditable()
-  List<ElementInstance> get childNodes => _blink.Native_SVGElementInstance_childNodes_Getter(this);
-
   @DomName('SVGElementInstance.correspondingElement')
   @DocsEditable()
   SvgElement get correspondingElement => _blink.Native_SVGElementInstance_correspondingElement_Getter(this);
@@ -1249,21 +1393,6 @@ class ElementInstance extends EventTarget {
   @DomName('SVGElementInstance.previousSibling')
   @DocsEditable()
   ElementInstance get previousSibling => _blink.Native_SVGElementInstance_previousSibling_Getter(this);
-
-  @DomName('SVGElementInstance.addEventListener')
-  @DocsEditable()
-  @Experimental() // untriaged
-  void addEventListener(String type, EventListener listener, [bool useCapture]) => _blink.Native_SVGElementInstance_addEventListener_Callback(this, type, listener, useCapture);
-
-  @DomName('SVGElementInstance.dispatchEvent')
-  @DocsEditable()
-  @Experimental() // untriaged
-  bool dispatchEvent(Event event) => _blink.Native_SVGElementInstance_dispatchEvent_Callback(this, event);
-
-  @DomName('SVGElementInstance.removeEventListener')
-  @DocsEditable()
-  @Experimental() // untriaged
-  void removeEventListener(String type, EventListener listener, [bool useCapture]) => _blink.Native_SVGElementInstance_removeEventListener_Callback(this, type, listener, useCapture);
 
   /// Stream of `abort` events handled by this [ElementInstance].
   @DomName('SVGElementInstance.onabort')
@@ -6641,22 +6770,6 @@ class SvgSvgElement extends GraphicsElement implements FitToViewBox, ZoomAndPan 
    * This can only be called by subclasses from their created constructor.
    */
   SvgSvgElement.created() : super.created();
-
-  @DomName('SVGSVGElement.contentScriptType')
-  @DocsEditable()
-  String get contentScriptType => _blink.Native_SVGSVGElement_contentScriptType_Getter(this);
-
-  @DomName('SVGSVGElement.contentScriptType')
-  @DocsEditable()
-  void set contentScriptType(String value) => _blink.Native_SVGSVGElement_contentScriptType_Setter(this, value);
-
-  @DomName('SVGSVGElement.contentStyleType')
-  @DocsEditable()
-  String get contentStyleType => _blink.Native_SVGSVGElement_contentStyleType_Getter(this);
-
-  @DomName('SVGSVGElement.contentStyleType')
-  @DocsEditable()
-  void set contentStyleType(String value) => _blink.Native_SVGSVGElement_contentStyleType_Setter(this, value);
 
   @DomName('SVGSVGElement.currentScale')
   @DocsEditable()

@@ -73,16 +73,16 @@ class CustomElementsAnalysis {
     joinFor(enqueuer).instantiatedClasses.add(classElement);
   }
 
-  void registerTypeLiteral(Element element, Enqueuer enqueuer) {
+  void registerTypeLiteral(DartType type, Enqueuer enqueuer) {
     // In codegen we see the TypeConstants instead.
     if (!enqueuer.isResolutionQueue) return;
 
-    if (element.isClass()) {
+    if (type.isInterfaceType) {
       // TODO(sra): If we had a flow query from the type literal expression to
       // the Type argument of the metadata lookup, we could tell if this type
       // literal is really a demand for the metadata.
-      resolutionJoin.selectedClasses.add(element);
-    } else {
+      resolutionJoin.selectedClasses.add(type.element);
+    } else if (type.isTypeVariable) {
       // This is a type parameter of a parameterized class.
       // TODO(sra): Is there a way to determine which types are bound to the
       // parameter?
@@ -91,7 +91,7 @@ class CustomElementsAnalysis {
   }
 
   void registerTypeConstant(Element element, Enqueuer enqueuer) {
-    assert(element.isClass());
+    assert(element.isClass);
     assert(!enqueuer.isResolutionQueue);
     codegenJoin.selectedClasses.add(element);
   }
@@ -148,7 +148,7 @@ class CustomElementsAnalysisJoin {
     if (!demanded) return;
     var newActiveClasses = new Set<ClassElement>();
     for (ClassElement classElement in instantiatedClasses) {
-      bool isNative = classElement.isNative();
+      bool isNative = classElement.isNative;
       bool isExtension =
           !isNative && Elements.isNativeOrExtendsNative(classElement);
       // Generate table entries for native classes that are explicitly named and
@@ -181,10 +181,10 @@ class CustomElementsAnalysisJoin {
     // Only classes that extend native classes have constructors in the table.
     // We could refine this to classes that extend Element, but that would break
     // the tests and there is no sane reason to subclass other native classes.
-    if (classElement.isNative()) return result;
+    if (classElement.isNative) return result;
 
     selectGenerativeConstructors(ClassElement enclosing, Element member) {
-      if (member.isGenerativeConstructor()) {
+      if (member.isGenerativeConstructor) {
         // Ignore constructors that cannot be called with zero arguments.
         FunctionElement constructor = member;
         FunctionSignature parameters = constructor.functionSignature;

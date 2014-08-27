@@ -18,10 +18,11 @@ import 'package:rss_app/component/post/post.dart' as import_11;
 import 'package:rss_app/component/pubdate/pubdate.dart' as import_12;
 import 'package:rss_app/component/unread_counter/unread_counter.dart' as import_13;
 import 'package:rss_app/component/data_handler/data_handler.dart' as import_14;
-import 'package:rss_app/formatter/text_formatter.dart' as import_15;
-import 'package:rss_app/formatter/date_formatter.dart' as import_16;
-import 'package:rss_app/formatter/posts_list_formatter.dart' as import_17;
-import 'package:rss_app/component/star/star.dart' as import_18;
+import 'package:rss_app/component/star/star.dart' as import_15;
+import 'package:rss_app/decorator/app-icon.dart' as import_16;
+import 'package:rss_app/formatter/text_formatter.dart' as import_17;
+import 'package:rss_app/formatter/date_formatter.dart' as import_18;
+import 'package:rss_app/formatter/posts_list_formatter.dart' as import_19;
 Module get metadataModule => new Module()
     ..bind(MetadataExtractor, toValue: new _StaticMetadataExtractor());
 
@@ -333,19 +334,19 @@ final Map<Type, Object> typeAnnotations = {
     const import_1.Controller(selector: '[rss-app]', publishAs: 'ctrl'),
   ],
   import_7.EntriesListComponent: const [
-    const import_1.Component(selector: 'entries-lists', templateUrl: 'packages/rss_app/component/lists/entries_lists.html', useShadowDom: false, publishAs: 'cmp', map: const {'data-source': '@dataSource'}),
+    const import_1.Component(selector: 'entries-lists', templateUrl: 'packages/rss_app/component/lists/entries_lists.html', publishAs: 'EntriesList', cssUrl: const ['packages/rss_app/component/lists/entries_lists.css',], map: const {'data-source': '@dataSource'}),
   ],
   import_8.FeedListComponent: const [
-    const import_1.Component(selector: 'feed-list', templateUrl: 'packages/rss_app/component/feed_list/feed_list.html', cssUrl: 'packages/rss_app/component/feed_list/feed_list.css', publishAs: 'cmp'),
+    const import_1.Component(selector: 'feed-list', templateUrl: 'packages/rss_app/component/feed_list/feed_list.html', cssUrl: const ['packages/rss_app/component/common.css','packages/rss_app/component/feed_list/feed_list.css',], publishAs: 'cmp'),
   ],
   import_9.FeedEntriesComponent: const [
-    const import_1.Component(selector: 'feed-entries', templateUrl: 'packages/rss_app/component/feed_entries/feed_entries.html', useShadowDom: false, publishAs: 'cmp'),
+    const import_1.Component(selector: 'feed-entries', templateUrl: 'packages/rss_app/component/feed_entries/feed_entries.html', cssUrl: const ['packages/rss_app/component/lists/entries_lists.css',], publishAs: 'cmp'),
   ],
-  import_10.AddFeedHeqaderComponent: const [
-    const import_1.Component(selector: 'add-feed-header', templateUrl: 'packages/rss_app/component/add_feed_header/add_feed_header.html', publishAs: 'cmp', useShadowDom: false, map: const {'on-refresh-feeds': '&onRefreshFeeds'}),
+  import_10.AddFeedHeaderComponent: const [
+    const import_1.Component(selector: 'add-feed-header', templateUrl: 'packages/rss_app/component/add_feed_header/add_feed_header.html', publishAs: 'cmp', cssUrl: const ['packages/rss_app/component/common.css','packages/rss_app/component/add_feed_header/add_feed_header.css',], map: const {'on-refresh-feeds': '&onRefreshFeeds'}),
   ],
   import_11.PostComponent: const [
-    const import_1.Component(selector: 'post-item', templateUrl: 'packages/rss_app/component/post/post.html', publishAs: 'cmp', useShadowDom: false),
+    const import_1.Component(selector: 'post-item', templateUrl: 'packages/rss_app/component/post/post.html', publishAs: 'Post', cssUrl: const ['packages/rss_app/component/post/post.css',]),
   ],
   import_12.PubdateComponent: const [
     const import_1.Component(selector: '[pubdate]', templateUrl: 'packages/rss_app/component/pubdate/pubdate.html', publishAs: 'cmp', map: const {'datetime': '@datetime'}, useShadowDom: false),
@@ -356,19 +357,22 @@ final Map<Type, Object> typeAnnotations = {
   import_14.DataHandlerComponent: const [
     const import_1.Component(selector: 'data-handler', template: '<!-- data handler ready -->', useShadowDom: false, publishAs: 'cmp'),
   ],
-  import_15.TruncateFilter: const [
+  import_15.StarringComponent: const [
+    const import_1.Component(selector: 'star', templateUrl: 'packages/rss_app/component/star/star.html', cssUrl: 'packages/rss_app/component/star/star.css', publishAs: 'cmp', map: const {'starred': '=>starred'}),
+  ],
+  import_16.AppIcon: const [
+    const import_1.Decorator(selector: '[icon]'),
+  ],
+  import_17.TruncateFilter: const [
     const import_1.Formatter(name: 'truncate'),
   ],
-  import_15.SanitizeFilter: const [
+  import_17.SanitizeFilter: const [
     const import_1.Formatter(name: 'sanitize'),
   ],
-  import_16.RelativeDateFilter: const [
+  import_18.RelativeDateFilter: const [
     const import_1.Formatter(name: 'relativedate'),
   ],
-  import_17.PostsListFormatter: const [
+  import_19.PostsListFormatter: const [
     const import_1.Formatter(name: 'postlist'),
-  ],
-  import_18.StarringComponent: const [
-    const import_1.Component(selector: 'star', templateUrl: 'packages/rss_app/component/star/star.html', cssUrl: 'packages/rss_app/component/star/star.css', publishAs: 'cmp', map: const {'starred': '<=>starred'}),
   ],
 };
