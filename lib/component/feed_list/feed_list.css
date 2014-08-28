@@ -28,15 +28,15 @@
   word-break: break-word;
 }
 
-#feed-list .feed-list-display li {
+#feed-list .feed-list-display > li {
   margin: 0;
   padding: 0;
   cursor: pointer;
 }
-#feed-list .feed-list-display li:hover a .icon-area{
+#feed-list .feed-list-display > li:hover a .icon-area{
   fill: #fb8c00;
 }
-#feed-list .feed-list-display li a{
+#feed-list .feed-list-display > li a{
   padding: 0;
   display: block;
   color: rgb(51, 51, 51);
@@ -89,4 +89,8 @@
   height: 24px;
   margin: 0 26px;
 }
+
+
+
+
 

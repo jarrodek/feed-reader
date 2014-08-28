@@ -1,0 +1,10 @@
+<article  ng-class="{'unread':Article.unread}" layout horizontal>
+  <div class="content" flex>
+    <header>
+      <h2 class="post-title"><a href="#/post/{{Article.id}}">{{Article.title}}</a></h2>
+      <time pubdate datetime="{{Article.published}}">{{Article.published|date:fullDate}}</time>&nbsp;<span ng-if="Article.newitem" class="new-label">New</span>
+    </header>
+    <p class="post-summary" ng-bind-html="Article.content|truncate:350:true:false" ng-click="cmp.readPost(Article.id)"></p>
+  </div>
+  <star starred="Article.starred" class="star-action" ng-click="cmp.onStarChange(Article)"></star>
+</article>

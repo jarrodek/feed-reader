@@ -20,3 +20,4 @@ class RssController {
   
 }
 //http://blog.gdgpoland.org/feeds/posts/default, http://stackoverflow.com/feeds/tag/dart, https://www.blogger.com/feeds/1989580893980143369/posts/default
+//dart2js ./web/rss_app.dart --csp -o ./js/rss_app.dart.js -m

@@ -1,7 +1,5 @@
 library rssapp.component.lists;
 
-import 'dart:html';
-
 import 'package:angular/angular.dart';
 import '../../service/dbstructures.dart';
 import '../../service/query_service.dart';
@@ -53,7 +51,7 @@ class EntriesListComponent {
     entry.starred = !entry.starred;
     queryService.updateEntry(entry).catchError((e){
       //TODO: error report.
-      window.console.error(e);
+      print(e);
     }).then((FeedEntry entry){
       
     });

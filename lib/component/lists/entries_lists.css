@@ -101,3 +101,10 @@ article.unread h2 a{
   color: #666;
   font-size: 150%;
 }
+.new-label{
+  background-color: #ff5722;
+  padding: 2px 4px;
+  margin-left: 8px;
+  font-size: 90%;
+  color: #fff;
+}

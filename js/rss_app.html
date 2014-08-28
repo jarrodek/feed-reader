@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html ng-app lang="en" ng-csp>
+  <head>
+    <meta charset="utf-8">
+    <title>Rss app</title>
+    <link rel="stylesheet" href="css/polymer.css">
+    <link rel="stylesheet" href="css/rss_app.css">
+  </head>
+  <body rss-app ng-cloak layout vertical>
+    <header class="top-header">
+      <add-feed-header on-refresh-feeds="ctrl.refreshFeeds()"></add-feed-header>
+    </header>
+    <div id="app-container" layout horizontal flex>
+      <feed-list layout vertical></feed-list>
+      <ng-view autoscroll="true" class="view-animate"  layout vertical flex><data-handler></data-handler></ng-view>
+    </div>
+    <script src="rss_app.dart.js" type="application/javascript"></script>   
+    <script type="text/javascript" src="packages/browser/dart.js"></script> 
+  </body>
+</html>

@@ -13,14 +13,17 @@ import 'package:rss_app/service/image_service.dart';
 import 'package:rss_app/service/communication.dart';
 import 'package:rss_app/service/events_observer.dart';
 import 'package:rss_app/component/lists/entries_lists.dart';
+import 'package:rss_app/component/lists/list_article.dart';
 import 'package:rss_app/component/feed_list/feed_list.dart';
 import 'package:rss_app/component/feed_entries/feed_entries.dart';
-import 'package:rss_app/component/add_feed_header/add_feed_header.dart';
+import 'package:rss_app/component/app-header/app-header.dart';
 import 'package:rss_app/component/post/post.dart';
 import 'package:rss_app/component/pubdate/pubdate.dart';
 import 'package:rss_app/component/unread_counter/unread_counter.dart';
 import 'package:rss_app/component/data_handler/data_handler.dart';
 import 'package:rss_app/component/star/star.dart';
+import 'package:rss_app/component/menu/menu.dart';
+import 'package:rss_app/component/menu/menu-item.dart';
 import 'package:rss_app/decorator/app-icon.dart';
 import 'package:rss_app/router/rss_router.dart';
 import 'package:rss_app/formatter/text_formatter.dart';
@@ -44,7 +47,7 @@ void main() {
   
   var rssModule = new Module()
      ..bind(RouteInitializerFn, toValue: rssAppRouteInitializer)
-     ..bind(NgRoutingUsePushState, toFactory: (_) => new NgRoutingUsePushState.value(false))
+     ..bind(NgRoutingUsePushState,  toValue: new NgRoutingUsePushState.value(false))
      
      ..install(new AnimationModule())
      
@@ -53,7 +56,8 @@ void main() {
      ..bind(RelativeDateFilter)
      ..bind(PostsListFormatter)
      
-     ..bind(AddFeedHeaderComponent)
+     //Components
+     ..bind(AppHeaderComponent)
      ..bind(StarringComponent)
      ..bind(FeedListComponent)
      ..bind(FeedEntriesComponent)
@@ -62,11 +66,17 @@ void main() {
      ..bind(UnreadCounterComponent)
      ..bind(EntriesListComponent)
      ..bind(DataHandlerComponent)
+     ..bind(MenuComponent)
+     ..bind(ListArticleComponent)
      
+     //Decorators
      ..bind(AppIcon)
+     ..bind(MenuItemDecorator)
      
+     //Controlers
      ..bind(RssController)
      
+     //Services
      ..bind(QueryService)
      ..bind(ImageService)
      ..bind(RssDatabase)

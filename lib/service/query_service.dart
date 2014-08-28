@@ -1,7 +1,6 @@
 library rssapp.service.queryservice;
 
 import 'dart:async';
-import 'dart:html';
 
 import 'package:angular/angular.dart';
 
@@ -35,7 +34,7 @@ class QueryService {
   ///Count number of unread posts.
   Future _countUnreads(){
     return this.db.countUnread(null).then((int cnt) => unreadCount = (cnt == null ? 0 : cnt))
-        .catchError((e) => window.console.error(e));
+        .catchError((e) => print(e));
   }
   
   
@@ -108,6 +107,9 @@ class QueryService {
     });
   }
   
+  Future removeFeed(feed){
+    return this.db.removeFeed(feed);
+  }
   
   Future setEntryRead(FeedEntry entry, bool read){
     if(entry.unread == !read){
@@ -165,7 +167,7 @@ class QueryService {
     });
   }
   
-  Future markFeedStarred(bool starred, int feedId){
+  /*Future markFeedStarred(bool starred, int feedId){
     if(!feeds.contains(feedId)){
       throw "No such feed: $feedId";
     }
@@ -177,6 +179,6 @@ class QueryService {
     
     //TODO: mark feed as starred,
    
-  }
+  }*/
   
 }

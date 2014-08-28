@@ -22,8 +22,9 @@ class DataHandlerComponent implements AttachAware {
   }
   
   void attach() {
-    
+    print('DataHandlerComponent::attach');
     router.onRouteStart.listen((RouteStartEvent e){
+      print('router.onRouteStart');
       var uri = e.uri;
       if(!e.uri.startsWith('/post')){
         //in any other case it means change in posts lists.
@@ -38,7 +39,7 @@ class DataHandlerComponent implements AttachAware {
           queryService.currentPostId = 0;
         }
       }
-      
+      print('Entering switch');
       e.completed.then((_){
         switch(this.routeProvider.routeName){
           case 'unread':

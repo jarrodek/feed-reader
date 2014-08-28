@@ -1,5 +1,5 @@
 <nav id="feed-list" flex layout vertical>
-  <ul class="feed-list-display" ng-if="cmp.feeds != null && cmp.feeds.length > 0">
+  <ul class="feed-list-display" ng-if="cmp.feeds != null && cmp.feeds.length > 0" flex>
     <li ng-class="{'selected':cmp.selectArea == 'unread'}">
       <a href="#/unread">
         <span layout horizontal center>
@@ -33,11 +33,14 @@
     
     <li ng-repeat="feed in cmp.feeds" class="subscription-feed" ng-class="{'selected':cmp.selected == feed.id}">
       <a href="#/feed/{{feed.id}}">
-        <span layout horizontal>
+        <span layout horizontal center>
           <span class="feed-title" flex>
             {{feed.display}} <unread-counter data-class="label label-default" data-hide-empty="true" feed="{{feed.id}}"></unread-counter>
           </span>
-          <star starred="feed.starred" class="feed-star" ng-click="cmp.onStarChange(feed)"></star>
+          <star starred="feed.starred" class="feed-star" ng-click="cmp.onStarChange($event, feed)"></star>
+          <app-menu>
+            <menu-item ng-click="cmp.removeFeed(feed)">Remove</menu-item>
+          </app-menu>
         </span>
       </a>
     </li>

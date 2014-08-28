@@ -1,5 +1,5 @@
 library rssapp.component.feedlist;
-
+import 'dart:html';
 import 'package:angular/angular.dart';
 import '../../service/query_service.dart';
 import '../../service/dbstructures.dart';
@@ -23,10 +23,20 @@ class FeedListComponent {
   
   FeedListComponent(QueryService this.queryService);
   
-  void onStarChange(Feed feed){
+  void onStarChange(MouseEvent e, Feed feed){
+    e.preventDefault();
     feed.starred = !feed.starred;
     queryService.updateFeed(feed).catchError((_){
       feed.starred = !feed.starred;
+    });
+  }
+  
+  void removeFeed(feed){
+    queryService.removeFeed(feed).catchError((e){
+      //TODO: notify error
+      print("Error removing feed: $e");
+    }).then((_){
+      queryService.feeds.remove(feed);
     });
   }
 }
