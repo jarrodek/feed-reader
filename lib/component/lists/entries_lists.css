@@ -1,11 +1,11 @@
 header.feed {
-  color: #333;
+  color: rgba(0,0,0,0.54);
   border-bottom: 2px rgb(127, 184, 245) solid;
   margin-bottom: 12px;
   padding-bottom: 6px;
 }
 h1{
-  color: #333;
+  color: rgba(0,0,0,0.54);
   font-size: 24px;
   margin: 0;
   padding: 0;

@@ -1,3 +1,5 @@
+var rss = rss || {};
+
 var rss_app = {
     'indexedDB': {
         db: null,
@@ -82,8 +84,9 @@ var rss_app = {
             });
         },
         addFeed: function(feedUrl) {
-            if (!feedUrl)
-                throw "Specyfi feed url";
+            if (!feedUrl){
+                throw "Specify feed url";
+            }
             rss_app.indexedDB.open(function() {
                 var transaction = rss_app.indexedDB.db.transaction(["feeds"], "readwrite");
                 transaction.onerror = rss_app.indexedDB.onerror;

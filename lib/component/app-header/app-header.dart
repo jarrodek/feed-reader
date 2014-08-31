@@ -4,6 +4,7 @@ import 'dart:html';
 
 import 'package:angular/angular.dart';
 import 'package:rss_app/service/events_observer.dart';
+import '../../service/communication.dart';
 
 import '../../service/query_service.dart';
 import '../../service/dbstructures.dart';
@@ -15,26 +16,24 @@ import '../../service/dbstructures.dart';
     cssUrl: const [
       'packages/rss_app/component/common.css',
       'packages/rss_app/component/app-header/app-header.css'
-    ],
-    map: const {
-      'on-refresh-feeds': '&onRefreshFeeds'
-    })
+    ])
 class AppHeaderComponent {
   
   QueryService _queryService;
+  AppComm communication;
   Router router;
   
   bool showAddFeed = false;
   bool addingFeed = false;
-  bool refreshingFeeds = false;
+  bool get refreshingFeeds => communication.updatingFeeds;
   bool get hasFeeds => _queryService.feeds.length > 0;
   String feedAddUrl = "";
   int get currentPostId => _queryService.currentPostId;
-  
   bool get addFeedDisabled => !(feedAddUrl.startsWith("http://") || feedAddUrl.startsWith("https://"));
   
   List<FeedEntry> get entries => _queryService.currentPosts;
   bool get hasUnread{
+    if(entries.length == 0) return false;
     for(int i=0,len=entries.length; i<len; i++){
       if(entries[i].unread == true){
         return true;
@@ -86,7 +85,7 @@ class AppHeaderComponent {
   ///TODO: Add arrows support.
   AppEvents appEvents;
   
-  AppHeaderComponent(QueryService this._queryService, Router this.router, AppEvents this.appEvents);
+  AppHeaderComponent(this._queryService, this.router, this.appEvents, this.communication);
 
   void addFeed() {
 
@@ -129,7 +128,9 @@ class AppHeaderComponent {
     router.gotoUrl('/post/$postId');
   }
   
-  dynamic onRefreshFeeds;
+  void onRefreshFeeds(){
+    communication.refreshFeeds();
+  }
   
   void markAllAsRead(){
     _queryService.markCurrentAsRead();

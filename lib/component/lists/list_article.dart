@@ -10,19 +10,22 @@ import '../../service/query_service.dart';
     templateUrl: 'packages/rss_app/component/lists/list-article.html', 
     cssUrl: 'packages/rss_app/component/lists/list-article.css',
     map: const {
-      'entry': '<=>entry'
+      'article': '<=>entry'
     }, 
     publishAs: 'Article')
 class ListArticleComponent {
 
-  var entry;
+  FeedEntry entry;
   QueryService queryService;
   Router router;
 
   ListArticleComponent(this.queryService, this.router);
 
-  void onStarChange(FeedEntry entry) {
+  void onStarChange() {
+    entry.starred = !entry.starred;
     queryService.updateEntry(entry).catchError((e) {
+      //TODO: Inform the user.
+      entry.starred = !entry.starred;
       window.console.error(e);
     });
   }

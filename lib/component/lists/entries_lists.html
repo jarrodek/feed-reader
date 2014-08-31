@@ -8,17 +8,7 @@
         <a href="#/feed/{{feed.id}}" class="button primary">Read all</a>
       </div>
     </header>
-    
-    <article ng-class="{'unread':post.unread}" layout horizontal ng-repeat="post in EntriesList.entries | postlist:feed.id:EntriesList.listLength">
-      <div class="content" flex>
-        <header>
-          <h2 class="post-title"><a href="#/post/{{post.id}}">{{post.title}}</a></h2>
-          <time pubdate datetime="{{post.published}}">{{post.published|date:fullDate}}</time>&nbsp;<span ng-if="post.newitem" class="new-label">New</span>
-        </header>
-        <p class="post-summary" ng-bind-html="post.content|truncate:250:true:false" ng-click="EntriesList.readPost(post.id)"></p>
-      </div>
-      <star starred="post.starred" ng-click="EntriesList.onStarChange(post)"></star>
-    </article>
+    <list-article article="post" ng-repeat="post in EntriesList.entries | postlist:feed.id:EntriesList.listLength"></list-article>
   </div>
   
 </div>

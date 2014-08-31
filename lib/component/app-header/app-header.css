@@ -9,3 +9,27 @@
 .pagination-buttons{
   margin-left: 8px;
 }
+.add-input{
+  max-width: 400px;
+}
+
+/* loading feed data animation */
+
+@-webkit-keyframes feedLoading {
+  from {-webkit-transform: rotate(0deg);}
+  to {-webkit-transform: rotate(360deg);}
+}
+@keyframes feedLoading {
+  from {-webkit-transform: rotate(0deg);}
+  to {-webkit-transform: rotate(360deg);}
+}
+.feed-loading{
+  -webkit-animation-name: feedLoading;
+  -webkit-animation-duration: 1.5s;
+  -webkit-animation-timing-function: ease-in-out;
+  -webkit-animation-iteration-count: infinite;
+  animation-name: feedLoading;
+  animation-duration: 2.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}

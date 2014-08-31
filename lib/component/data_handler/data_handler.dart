@@ -9,7 +9,6 @@ import '../../service/dbstructures.dart';
 @Component(
     selector: 'data-handler', 
     template: '<!-- data handler ready -->',
-    useShadowDom: false,
     publishAs: 'cmp')
 class DataHandlerComponent implements AttachAware {
   
@@ -22,9 +21,9 @@ class DataHandlerComponent implements AttachAware {
   }
   
   void attach() {
-    print('DataHandlerComponent::attach');
+    
     router.onRouteStart.listen((RouteStartEvent e){
-      print('router.onRouteStart');
+      
       var uri = e.uri;
       if(!e.uri.startsWith('/post')){
         //in any other case it means change in posts lists.
@@ -39,7 +38,7 @@ class DataHandlerComponent implements AttachAware {
           queryService.currentPostId = 0;
         }
       }
-      print('Entering switch');
+      
       e.completed.then((_){
         switch(this.routeProvider.routeName){
           case 'unread':
@@ -69,9 +68,9 @@ class DataHandlerComponent implements AttachAware {
   }
   
   void _getGenericSource(String source){
-    this.queryService.getPosts(source).then((_) {
+    this.queryService.getPosts(source)/*.then((_) {
       print('[DataHandlerComponent] Posts loaded.');
-    });
+    })*/;
   }
   
   void _getFeedSource(String _feedId){
@@ -90,9 +89,9 @@ class DataHandlerComponent implements AttachAware {
        return;
      }
      queryService.currentFeedId = feedId; 
-     queryService.getPosts(feedId.toString()).then((_) {
+     queryService.getPosts(feedId.toString())/*.then((_) {
        //TODO: finish loading.
-     });
+     })*/;
    }
 }
 

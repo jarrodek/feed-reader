@@ -35,8 +35,9 @@
       <a href="#/feed/{{feed.id}}">
         <span layout horizontal center>
           <span class="feed-title" flex>
-            {{feed.display}} <unread-counter data-class="label label-default" data-hide-empty="true" feed="{{feed.id}}"></unread-counter>
+            {{feed.display}}
           </span>
+          <unread-counter class="label label-default" data-hide-empty="true" feed="{{feed.id}}"></unread-counter>
           <star starred="feed.starred" class="feed-star" ng-click="cmp.onStarChange($event, feed)"></star>
           <app-menu>
             <menu-item ng-click="cmp.removeFeed(feed)">Remove</menu-item>
@@ -46,7 +47,7 @@
     </li>
     
   </ul>
-  <div classs="" ng-if="cmp.feeds == null || cmp.feeds.length == 0">
+  <div class="empty-feeds-list" ng-if="cmp.feeds == null || cmp.feeds.length == 0">
     <p>Add a feed to the app.</p>
   </div>
 </nav>

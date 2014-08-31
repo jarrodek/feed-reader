@@ -38,8 +38,8 @@ class QueryService {
   }
   
   
-  int countUnread(int feedId){
-    if(unreadMap.containsKey(feedId)){
+  int countUnread(int feedId, [bool forceDb=false]){
+    if(unreadMap.containsKey(feedId) && !forceDb){
       return unreadMap[feedId];
     } else {
       unreadMap[feedId] = 0;
@@ -73,14 +73,34 @@ class QueryService {
     
     switch(feedId){
       case 'unread':
-        return this.db.listUnread().then((List<FeedEntry> posts) => currentPosts = posts);
+        return this.db.listUnread().then(_sortPosts).then((List<FeedEntry> posts) => currentPosts = posts);
       case 'starred':
-        return this.db.listStarred().then((List<FeedEntry> posts) => currentPosts = posts);
+        return this.db.listStarred().then(_sortPosts).then((List<FeedEntry> posts) => currentPosts = posts);
       case 'all':
-        return this.db.listAll().then((List<FeedEntry> posts) => currentPosts = posts);
+        return this.db.listAll().then(_sortPosts).then((List<FeedEntry> posts) => currentPosts = posts);
       default:
-        return this.db.getPosts(int.parse(feedId)).then((List<FeedEntry> posts) => currentPosts = posts);
+        return this.db.getPosts(int.parse(feedId)).then(_sortPosts).then((List<FeedEntry> posts) => currentPosts = posts);
     }
+  }
+  
+  List<FeedEntry> _sortPosts(List<FeedEntry> posts){
+    posts.sort((FeedEntry a, FeedEntry b){
+      
+      DateTime d1, d2;
+      try{
+        d1 = DateTime.parse(a.published);
+      } catch(e){
+        return -a.id.compareTo(b.id);
+      }
+      try{
+        d2 = DateTime.parse(b.published);
+      } catch(e){
+        return -a.id.compareTo(b.id);
+      }
+      
+      return -d1.compareTo(d2);
+    });
+    return posts;
   }
   
   
@@ -166,19 +186,5 @@ class QueryService {
       }
     });
   }
-  
-  /*Future markFeedStarred(bool starred, int feedId){
-    if(!feeds.contains(feedId)){
-      throw "No such feed: $feedId";
-    }
-    
-    Feed f = feeds[feedId];
-    if(f.starred){
-      return new Future.value(true);
-    } 
-    
-    //TODO: mark feed as starred,
-   
-  }*/
   
 }

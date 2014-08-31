@@ -1,10 +1,11 @@
-
 import 'dart:html';
+
 
 import 'package:angular/angular.dart';
 import 'package:angular/application_factory.dart';
 import 'package:angular/animate/module.dart';
 import 'package:logging/logging.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:rss_app/rss_controller.dart';
 import 'package:rss_app/service/query_service.dart';
@@ -39,51 +40,56 @@ void main() {
         print(r.message);
       });
   
+  initializeDateFormatting("en", null).then((_) => runApp());
+}
+
+void runApp() {
   var myValidator = new NodeValidatorBuilder() //.common()
-        //..allowHtml5()
-        //..allowNavigation()
-        ..allowTextElements();
-        //..allowCustomElement('test-component', attributes: ['product-id']);
-  
+      //..allowHtml5()
+      //..allowNavigation()
+      ..allowTextElements();
+  //..allowCustomElement('test-component', attributes: ['product-id']);
+
   var rssModule = new Module()
-     ..bind(RouteInitializerFn, toValue: rssAppRouteInitializer)
-     ..bind(NgRoutingUsePushState,  toValue: new NgRoutingUsePushState.value(false))
-     
-     ..install(new AnimationModule())
-     
-     ..bind(TruncateFilter)
-     ..bind(SanitizeFilter)
-     ..bind(RelativeDateFilter)
-     ..bind(PostsListFormatter)
-     
-     //Components
-     ..bind(AppHeaderComponent)
-     ..bind(StarringComponent)
-     ..bind(FeedListComponent)
-     ..bind(FeedEntriesComponent)
-     ..bind(PostComponent)
-     ..bind(PubdateComponent)
-     ..bind(UnreadCounterComponent)
-     ..bind(EntriesListComponent)
-     ..bind(DataHandlerComponent)
-     ..bind(MenuComponent)
-     ..bind(ListArticleComponent)
-     
-     //Decorators
-     ..bind(AppIcon)
-     ..bind(MenuItemDecorator)
-     
-     //Controlers
-     ..bind(RssController)
-     
-     //Services
-     ..bind(QueryService)
-     ..bind(ImageService)
-     ..bind(RssDatabase)
-     ..bind(AppComm)
-     ..bind(AppEvents)
-     
-     ..bind(NodeValidator, toValue: myValidator);
-  
+      ..bind(RouteInitializerFn, toValue: rssAppRouteInitializer)
+      ..bind(NgRoutingUsePushState, toValue: new NgRoutingUsePushState.value(false))
+
+      ..install(new AnimationModule())
+
+      ..bind(TruncateFilter)
+      ..bind(SanitizeFilter)
+      ..bind(RelativeDateFilter)
+      ..bind(RelativeDayFilter)
+      ..bind(PostsListFormatter)
+
+      //Components
+      ..bind(AppHeaderComponent)
+      ..bind(StarringComponent)
+      ..bind(FeedListComponent)
+      ..bind(FeedEntriesComponent)
+      ..bind(PostComponent)
+      ..bind(PubdateComponent)
+      ..bind(UnreadCounterComponent)
+      ..bind(EntriesListComponent)
+      ..bind(DataHandlerComponent)
+      ..bind(MenuComponent)
+      ..bind(ListArticleComponent)
+
+      //Decorators
+      ..bind(AppIcon)
+      ..bind(MenuItemDecorator)
+
+      //Controlers
+      ..bind(RssController)
+
+      //Services
+      ..bind(QueryService)
+      ..bind(ImageService)
+      ..bind(RssDatabase)
+      ..bind(AppComm)
+      ..bind(AppEvents)
+
+      ..bind(NodeValidator, toValue: myValidator);
+
   applicationFactory().addModule(rssModule).run();
 }

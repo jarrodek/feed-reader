@@ -1,20 +1,19 @@
-<header layout horizontal class="app-header">
-
-  
+<header layout horizontal class="app-header">  
   <button ng-show="!cmp.showAddFeed" type="button" class="button primary" ng-click="cmp.showAddFeed = true;">
     <span icon="add" class="button-icon"></span>
     <span class="icon-label">Add</span>
   </button>
   
   <div ng-show="cmp.showAddFeed" layout horizontal flex>
-      <input type="url" ng-model="cmp.feedAddUrl" placeholder="Enter feed URL here." ng-class="{'loading':cmp.addingFeed}">
+      <input type="url" ng-model="cmp.feedAddUrl" class="add-input" placeholder="Enter feed URL here." ng-class="{'loading':cmp.addingFeed}">
       <button class="button primary" type="button" ng-click="cmp.addFeed()" ng-disabled="cmp.addFeedDisabled">Add</button>
       <button class="button default" type="button" ng-click="cmp.showAddFeed = false;">Cancel</button>
   </div>
   
   <button ng-show="!cmp.showAddFeed" type="button" class="button default" ng-click="cmp.onRefreshFeeds()" ng-if="cmp.hasFeeds">
-    <span icon="refresh" class="button-icon"></span>
-    <!--span ng-class="{'glyphicon glyphicon-refresh': !cmp.refreshingFeeds, 'loading inline': cmp.refreshingFeeds}"></span-->
+    <span ng-class="{'feed-loading': cmp.refreshingFeeds}">
+      <span icon="refresh" view-box="0 0 20 24" class="button-icon"></span>
+    </span>
     <span class="icon-label">Refresh</span>
   </button>
   

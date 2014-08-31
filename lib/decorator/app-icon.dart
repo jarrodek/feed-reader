@@ -39,15 +39,21 @@ class AppIcon {
       return;
     }
     
+    String viewBox = element.getAttribute('view-box');
+    if(viewBox == null || viewBox.isEmpty){
+      viewBox = "0 0 24 24";
+    }
     
     svg.GElement _g = new svg.GElement()
       ..id = icon
       ..append(_image);
     svg.SvgSvgElement _svg = new svg.SvgSvgElement()
       ..append(_g)
-      ..setAttribute('viewBox', "0 0 24 24")
+      ..setAttribute('viewBox', viewBox)
       ..setAttribute('width', '100%')
       ..setAttribute('height', '100%');
+    
+    
     
     _svg.className = element.className;
     

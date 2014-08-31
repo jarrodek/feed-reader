@@ -1,11 +1,9 @@
 article{
   margin-bottom: 16px;
   border-bottom: 1px #F1F1F1 solid;
-  padding-left: 16px;
+  padding: 0 16px;
 }
-article:last-child{
-  border-bottom: none;
-}
+
 header time{
   color: rgba(51, 51, 51, 0.5);
   font-size: 0.85em;
@@ -13,37 +11,35 @@ header time{
 star{
   width: 24px;
   height: 24px;
-  margin-right: 16px;
 }
 h2{
   color: #333;
-  font-size: 27px;
   font-weight: bold;
   margin: 0;
   padding: 0;
   line-height: normal;
 }
 h2 a{
-  font-size: 0.6em;
-  color: gray;
+  color: rgba(0, 0, 0, 0.54);
   font-weight: normal;
   text-decoration: none;
+  font-size: 16px;
 }
 .unread h2 a{
   font-weight: bold;
+  font-weight: bold;
+  color: rgba(20, 121, 230, 0.54);
 }
 
 .post-summary{
-  max-height: 36px;
   overflow: hidden;
-  word-break: break-word;
-  color: rgba(51, 51, 51, 0.5);
-  font-size: 0.85em;
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 12px;
   margin: 0;
   padding: 0;
-  margin-bottom: 8px;
-  line-height: 16px;
   cursor: pointer;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 h2 a,
 time,
@@ -53,26 +49,36 @@ time,
 .unread .post-summary{
   transition: color 1s;
 }
+
+
+
 .unread time,
 .unread .post-summary{
-  color: rgba(51, 51, 51, 0.6);
+  color: rgba(0, 0, 0, 0.54);
 }
 article:hover time,
 article:hover .post-summary {
-  color: rgba(51, 51, 51, 0.9);
+  color: rgba(0, 0, 0, 0.87);
 }
 article:hover h2 a {
-  color: rgba(51, 51, 51, 1); 
+  color: rgba(0, 0, 0, 0.87); 
+}
+article.unread:hover h2 a {
+  color: rgba(20, 121, 230, 0.87); 
 }
 
-article.unread h2 a{
-  font-weight: bold;
-  color: rgb(20, 121, 230);
-}
 .new-label{
   background-color: #ff5722;
   padding: 2px 4px;
   margin-left: 8px;
   font-size: 90%;
   color: #fff;
+}
+
+.content-summary{
+  margin-right: 20px;
+  cursor: pointer;
+}
+.action-area{
+  min-width: 70px;
 }
