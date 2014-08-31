@@ -8,13 +8,13 @@
   </head>
   <body rss-app ng-cloak layout vertical>
     <header class="top-header">
-      <add-feed-header on-refresh-feeds="ctrl.refreshFeeds()"></add-feed-header>
+      <app-header></app-header>
     </header>
     <div id="app-container" layout horizontal flex>
       <feed-list layout vertical></feed-list>
       <ng-view autoscroll="true" class="view-animate"  layout vertical flex><data-handler></data-handler></ng-view>
     </div>
-    <script src="rss_app.dart.js" type="application/javascript"></script>   
+    <script src="rss_app.dart" type="application/dart"></script>   
     <script type="text/javascript" src="packages/browser/dart.js"></script> 
   </body>
 </html>

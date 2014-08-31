@@ -1,4 +1,18 @@
-
+/* 
+ * Copyright 2014 Paweł Psztyć.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 //rss namespace.
 var rss = rss || {};
@@ -12,17 +26,11 @@ rss.app = {};
  */
 rss.config.refreshRate = {
     /**
-     * The default refresh rate
+     * The refresh rate in minutes.
      * @type Number
      * @default 10 minutes
      */
-    'default': 10,
-    /**
-     * After app initialization the value will be current refresh rate in minutes.
-     * @type Number || null
-     * @default null
-     */
-    'current': null
+    'current': 10
 };
 /**
  * The limits for feed's entries amount.
@@ -36,6 +44,27 @@ rss.config.limits = {
      */
     read: 200
 };
+/**
+ * Restore config from sync storage.
+ * @param {Function} callback Callback function when restored.
+ * @returns {undefined}
+ */
+rss.config.restore = function(callback){
+    var restoreData = {
+        'readLimit': null,
+        'refreshRate': null
+    };
+    chrome.storage.sync.get(restoreData, function(restored){
+        if(restored.readLimit){
+            rss.config.limits.read = restored.readLimit;
+        }
+        if(restored.refreshRate){
+            rss.config.refreshRate.current = restored.refreshRate;
+        }
+        callback.call(rss);
+    });
+};
+
 
 /**
  * A queue of feeds to be downloaded.
@@ -63,11 +92,11 @@ rss.app.notifications = {};
  */
 rss.app.getFeedsList = function(callback){
     console.log('Now getting feeds list.');
-    rss_app.indexedDB.onerror = function(e) {
+    rss.db.onerror = function(e) {
         console.error('Unable read feeds list.', e);
     };
-    rss_app.indexedDB.getFeeds(function(feeds) {
-        rss_app.indexedDB.close();
+    rss.db.getFeeds(function(feeds) {
+        rss.db.close();
         callback(feeds);
     });
 };
@@ -80,7 +109,7 @@ rss.app.getFeedsList = function(callback){
 rss.app.update = function(){
     console.log('Updating posts list in feeds.');
         
-    rss.app.notifyloading(true);
+    rss.app.notifyLoading(true);
     rss.app.getFeedsList(function(feeds) {
         console.log('Result feed list with:', feeds);
         if (!feeds){
@@ -194,7 +223,8 @@ rss.app.syncFeed = function(feed, newFeed) {
     };
     worker.postMessage({
         'newFeed': newFeed,
-        'currentFeed': feed
+        'currentFeed': feed/*,
+        'readLimit': rss.config.limits.read*/
     });
 };
 /**
@@ -257,18 +287,18 @@ rss.app.createAppWindow = function(initialFeed) {
 };
 
 rss.app.init = function() {
-    //TODO: First restore configuration and then setup alarms.
-    rss.app._setupAlarm();
-    rss.app._setupNotifications();
-    rss.app._setupCloseHandlers();
-    rss.app._setupOpenHandlers();
-    rss.app.update();
+    rss.config.restore(function(){
+        rss.app._setupAlarm();
+        rss.app._setupNotifications();
+        rss.app._setupCloseHandlers();
+        rss.app._setupOpenHandlers();
+        rss.app.update();
+    });
 };
 
 rss.app._setupAlarm = function() {
     chrome.alarms.onAlarm.addListener(rss.app.onAlarm);
-    var period = rss.config.refreshRate.current || rss.config.refreshRate.default;
-    chrome.alarms.create('feedownload', {'periodInMinutes': period});
+    chrome.alarms.create('feedownload', {'periodInMinutes': rss.config.refreshRate.current});
 };
 
 rss.app._setupNotifications = function() {

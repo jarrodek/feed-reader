@@ -1,7 +1,7 @@
 body {
   font-weight: normal;
   margin: 14px;  
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
   color: #333;
@@ -13,6 +13,58 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 100;
+  src: local("Roboto Thin"), local("Roboto-Thin"), url(../fonts/roboto-thin.woff) format("woff"); }
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  src: local("Roboto Light"), local("Roboto-Light"), url(../fonts/roboto-light.woff) format("woff"); }
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Roboto Regular"), local("Roboto-Regular"), url(../fonts/roboto-regular.woff) format("woff"); }
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: local("Roboto Medium"), local("Roboto-Medium"), url(../fonts/roboto-medium.woff) format("woff"); }
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  src: local("Roboto Bold"), local("Roboto-Bold"), url(../fonts/roboto-bold.woff) format("woff"); }
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 100;
+  src: local("Roboto Thin Italic"), local("Roboto-ThinItalic"), url(../fonts/roboto-thin-italic.woff) format("woff"); }
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 300;
+  src: local("Roboto Light Italic"), local("Roboto-LightItalic"), url(../fonts/roboto-light-italic.woff) format("woff"); }
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 400;
+  src: local("Roboto Italic"), local("Roboto-Italic"), url(../fonts/roboto-italic.woff) format("woff"); }
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 500;
+  src: local("Roboto Medium Italic"), local("Roboto-MediumItalic"), url(../fonts/roboto-medium-italic.woff) format("woff"); }
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 700;
+  src: local("Roboto Bold Italic"), local("Roboto-BoldItalic"), url(../fonts/roboto-bold-italic.woff) format("woff"); 
 }
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
@@ -159,26 +211,6 @@ input.loading{
   display: inline-block;
 }
 
-/* loading feed data animation */
-
-@-webkit-keyframes feedLoading {
-  from {-webkit-transform: rotate(0deg);}
-  to {-webkit-transform: rotate(360deg);}
-}
-@keyframes feedLoading {
-  from {-webkit-transform: rotate(0deg);}
-  to {-webkit-transform: rotate(360deg);}
-}
-.feed-loading{
-  -webkit-animation-name: feedLoading;
-  -webkit-animation-duration: 5s;
-  -webkit-animation-timing-function: linear;
-  -webkit-animation-iteration-count: infinite;
-  animation-name: feedLoading;
-  animation-duration: 5s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
 
 [rss-app] .jumbotron{
   background-color: #fff;
@@ -188,19 +220,20 @@ input.loading{
 
 
 html /deep/ .button{
-    padding: 8px 16px;
+    padding: 4px 12px;
     border: 1px transparent solid;
     outline: none;
     cursor: pointer;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 14px;
     line-height: normal;
+    text-transform: uppercase;
 }
 html /deep/ .button:disabled, html /deep/ .button[disabled]{
-  background-color: #D3D3D3 !important;
-  color: gray !important;
+  background-color: #F3F3F3 !important;
+  color: rgb(167, 167, 167) !important;
   border-color: transparent !important;
-  fill: gray !important;
+  fill: rgb(167, 167, 167) !important;
   cursor: default;
 }
 html /deep/ .button.clean:disabled{
@@ -208,8 +241,8 @@ html /deep/ .button.clean:disabled{
 }
 html /deep/ .button.primary{
     background-color: #0288d1;
-    color: #fff;
-    fill: #fff;
+    color: rgba(255,255,255,0.87);
+    fill: rgba(255,255,255,0.87);
 }
 html /deep/ .button.primary:hover {
   background-color: #0277bd;
@@ -222,8 +255,8 @@ html /deep/ .button.primary:active {
 }
 html /deep/ .button.default{
   background-color: #fff;
-  color: #333;
-  fill: #333;
+  color: rgba(0,0,0,0.87);
+  fill: rgba(0,0,0,0.87);
 }
 html /deep/ .button.default:hover {
   border-color: #eeeeee;
@@ -248,13 +281,27 @@ html /deep/ .button-icon:hover {
 }
 html /deep/ input{
   width: 100%;
-  padding: 0.3em;
-  border: 1px #eee solid;
-  outline:none;
+  padding: 8px;
+  border-bottom: 1px #eee solid;
+  outline: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  font-size: 110%;
+  color: rgba(0,0,0,0.54);
 }
 html /deep/ input:hover, html /deep/ input:focus{
-  border: 1px #81d4fa solid;
+  border-bottom: 1px #81d4fa solid;
 }
 html /deep/ input:focus {
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(3, 155, 229, .6);
+  border-bottom: 1px #00B0FF solid;
+}
+
+html /deep/ app-menu menu-item {
+  padding: 10px 16px;
+  margin: 0;
+  display: block;
+}
+html /deep/ app-menu menu-item:hover{
+  background-color: #F1F1F1;
 }

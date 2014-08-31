@@ -1,5 +1,5 @@
 /* 
- * Copyright 2014 jarrod.
+ * Copyright 2014 Paweł Psztyć.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,38 +20,45 @@ importScripts('structures.js');
 
 self.onmessage = function(e) {
 
-    var feed = parser.parse(e.data);
+    var feed = rss.parser.parse(e.data);
     
     self.postMessage(feed);
 };
-var parser = {
-    parse: function(data) {
-        var parser = new DOMImplementation();
-        var xml = parser.loadXML(data);
-        var _parser = this.recognize(xml);
-        if (_parser === null) {
-            throw "Unrecognized feed";
-        }
-        return _parser.parse();
-    },
-    /**
-     * Recognize feed type.
-     * Either it can be a RSS feed or an Atom feed.
-     * This function return proper parser or null if feed is unknown.
-     * @returns {Object|null} Parser object or null if unknown.
-     */
-    recognize: function(xml) {
-        if (!xml)
-            return null;
-        if (xml.getElementsByTagName('rss').length > 0) {
-            return new RssParser();
-        }
-        if (xml.getElementsByTagName('feed').length > 0) {
-            return new AtomParser(xml);
-        }
+
+var rss = rss || {};
+rss.parser = {};
+rss.parser.parse = function(data) {
+    var parser = new DOMImplementation();
+    var xml = parser.loadXML(data);
+    var _parser = rss.parser.recognize(xml);
+    if (_parser === null) {
+        throw "Unrecognized feed";
+    }
+    return _parser.parse();
+};
+/**
+ * Recognize feed type.
+ * Either it can be a RSS feed or an Atom feed.
+ * This function return proper parser or null if feed is unknown.
+ * @returns {Object|null} Parser object or null if unknown.
+ */
+rss.parser.recognize = function(xml) {
+    if (!xml)
+        return null;
+    if (xml.getElementsByTagName('rss').length > 0) {
+        //return new RssParser();
         return null;
     }
+    if (xml.getElementsByTagName('feed').length > 0) {
+        return new AtomParser(xml);
+    }
+    return null;
 };
+
+
+
+
+
 function AtomParser(xml) {
     this.xml = xml;
     this.feed = new Feed();

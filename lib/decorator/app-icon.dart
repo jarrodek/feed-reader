@@ -51,11 +51,8 @@ class AppIcon {
       ..append(_g)
       ..setAttribute('viewBox', viewBox)
       ..setAttribute('width', '100%')
-      ..setAttribute('height', '100%');
-    
-    
-    
-    _svg.className = element.className;
+      ..setAttribute('height', '100%')
+      ..setAttribute('class', element.className);
     
     element.replaceWith(_svg);
     //element.append(_svg);
