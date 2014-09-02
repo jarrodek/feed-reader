@@ -100,7 +100,7 @@ class AppHeaderComponent {
     _queryService.addFeed(feedAddUrl).then((_) {
       feedAddUrl = '';
       addingFeed = false;
-      //TODO: refresh feed.
+      communication.refreshFeeds();
     }).catchError((error) {
       addingFeed = false;
       window.console.error(error);
@@ -123,8 +123,10 @@ class AppHeaderComponent {
   
   void goToPost(String dir){
     String postId = dir == 'prev' ? _prevEntryId() : _nextEntryId();
+    postId = Uri.encodeComponent(postId);
     print('$dir post ID: $postId');
     if(postId == 0) return;
+    
     router.gotoUrl('/post/$postId');
   }
   

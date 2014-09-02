@@ -17,6 +17,8 @@ class ListArticleComponent {
   FeedEntry entry;
   QueryService queryService;
   Router router;
+  
+  String get articleUri => '/post/${Uri.encodeComponent(entry.entryid)}';
 
   ListArticleComponent(this.queryService, this.router);
 
@@ -28,7 +30,6 @@ class ListArticleComponent {
   }
   
   void readPost(postId) {
-    
-    this.router.gotoUrl("/post/$postId");
+    this.router.gotoUrl(articleUri);
   }
 }

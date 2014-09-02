@@ -15,6 +15,6 @@ void rssAppRouteInitializer(Router router, RouteViewFactory views) {
 //      
 //      'feed_default': ngRoute(defaultRoute: true, enter: (RouteEnterEvent e) => router.go('list', {}, startingFrom: router.root.findRoute('feed'), replace: true))
 //    }),
-    'post': ngRoute(path: '/post/:postId',view: 'view/post.html')
+    'post': ngRoute(path: '/post/:postId',view: 'view/post.html', dontLeaveOnParamChanges: false)
   });
 }

@@ -40,15 +40,18 @@ class DataHandlerComponent implements AttachAware {
 
 
   void _onRouteStart(RouteStartEvent e) {
-    print('DataHandler::_onRouteStart');
+    
     var uri = e.uri;
+    
+    print('DataHandler::_onRouteStart to uri: $uri');
+    
     if (!e.uri.startsWith('/post')) {
       //in any other case it means change in posts lists.
       this.queryService.currentPosts.clear();
       queryService.currentFeedId = null;
       queryService.currentPostId = null;
     } else {
-      queryService.currentPostId = uri.substring(6);
+      queryService.currentPostId = Uri.decodeComponent(uri.substring(6));
       print('Post id: ${queryService.currentPostId}');
     }
 
@@ -61,7 +64,9 @@ class DataHandlerComponent implements AttachAware {
   }
 
   void _handleRoute(String routeName, Map<String, String> parameters) {
+    
     print('DataHandler::_handleRoute - Handling $routeName area.');
+    
     switch (routeName) {
       case 'unread':
       case 'starred':
@@ -69,8 +74,8 @@ class DataHandlerComponent implements AttachAware {
         _getGenericSource(routeName);
         this.queryService.currentPostsArea = routeName;
         break;
+      
       case 'feed':
-
         this.queryService.currentPostsArea = null;
         if (this.queryService.currentPosts.length > 0) {
           return;
@@ -79,6 +84,7 @@ class DataHandlerComponent implements AttachAware {
         print('DataHandler::_handleRoute - Handling route for feed ID $feedId.');
         _getFeedSource(feedId);
         break;
+      
       case 'post':
 
         break;

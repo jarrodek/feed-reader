@@ -28,7 +28,7 @@ class PostComponent {
   PostComponent(RouteProvider this.routeProvider, QueryService this.queryService, ImageService this.imageService){
     
     //String postId = routeProvider.parameters['postId'];
-    //print('PostComponent, postId: $postId');
+    print('PostComponent, Ggetting post data for postId: ${queryService.currentPostId}');
     queryService.getPost(queryService.currentPostId).then(_handleEntry).catchError(_handleEntryError);
   }
   
