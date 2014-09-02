@@ -3,7 +3,7 @@ library angular.core.parser.syntax;
 import 'package:angular/core/parser/parser.dart' show LocalsWrapper;
 import 'package:angular/core/parser/unparser.dart' show Unparser;
 import 'package:angular/core/parser/utils.dart' show EvalError;
-import 'package:angular/core/module_internal.dart';
+import 'package:angular/core/formatter.dart' show FormatterMap;
 
 abstract class Visitor {
   visit(Expression expression) => expression.accept(this);
@@ -205,5 +205,4 @@ class _DefaultFormatterMap implements FormatterMap {
   call(name) => throw 'No Formatter: $name found!';
   Type operator[](annotation) => null;
   forEach(fn) { }
-  annotationsFor(type) => null;
 }

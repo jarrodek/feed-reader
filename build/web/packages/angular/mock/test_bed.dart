@@ -19,6 +19,9 @@ class TestBed {
 
   TestBed(this.injector, this.rootScope, this.compiler, this._parser, this.expando);
 
+  TestBed.fromInjector(Injector i) :
+    this(i, i.get(RootScope), i.get(Compiler), i.get(Parser), i.get(Expando));
+
 
   /**
    * Use to compile HTML and activate its directives.
@@ -35,10 +38,7 @@ class TestBed {
    * An option [scope] parameter can be supplied to link it with non root scope.
    */
   Element compile(html, {Scope scope, DirectiveMap directives}) {
-    var injector = this.injector;
-    if (scope != null) {
-      injector = injector.createChild([new Module()..bind(Scope, toValue: scope)]);
-    }
+    if (scope == null) scope = rootScope;
     if (html is String) {
       rootElements = toNodeList(html);
     } else if (html is Node) {
@@ -50,9 +50,9 @@ class TestBed {
     }
     rootElement = rootElements.length > 0 && rootElements[0] is Element ? rootElements[0] : null;
     if (directives == null) {
-      directives = injector.get(DirectiveMap);
+      directives = injector.getByKey(DIRECTIVE_MAP_KEY);
     }
-    rootView = compiler(rootElements, directives)(injector, rootElements);
+    rootView = compiler(rootElements, directives)(scope, null, rootElements);
     return rootElement;
   }
 

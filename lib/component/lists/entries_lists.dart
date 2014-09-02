@@ -23,7 +23,6 @@ class EntriesListComponent {
 
   String dataSource;  
   QueryService queryService;
-  Router router;
   
   List<FeedEntry> get entries => queryService.currentPosts;
   List<Feed> get feeds => queryService.feeds;
@@ -32,11 +31,10 @@ class EntriesListComponent {
   
   bool hasPostsInView = false;
   
-  EntriesListComponent(QueryService this.queryService, Router this.router);
+  EntriesListComponent(QueryService this.queryService);
   
   bool hasPosts(int feedId){
     if(entries == null) return false;
-    Feed feedObject;
     try{
       entries.firstWhere((FeedEntry entry) => entry.feedid == feedId);
       hasPostsInView = true;
@@ -47,18 +45,4 @@ class EntriesListComponent {
     return false;
   }
   
-  void onStarChange(FeedEntry entry){
-    entry.starred = !entry.starred;
-    queryService.updateEntry(entry).catchError((e){
-      //TODO: error report.
-      print(e);
-    }).then((FeedEntry entry){
-      
-    });
-  }
-  
-  void readPost(postId){
-    this.router.gotoUrl("/post/$postId");
-  }
-
 }

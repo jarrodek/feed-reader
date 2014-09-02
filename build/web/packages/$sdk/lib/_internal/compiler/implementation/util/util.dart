@@ -8,7 +8,9 @@ import 'util_implementation.dart';
 import 'characters.dart';
 
 export 'setlet.dart';
+export 'maplet.dart';
 
+part 'indentation.dart';
 part 'link.dart';
 
 /**
@@ -45,6 +47,16 @@ class SpannableAssertionFailure {
 
   String toString() => 'Assertion failure'
                        '${message != null ? ': $message' : ''}';
+}
+
+bool equalElements(List a, List b) {
+  if (a.length != b.length) return false;
+  for (int index = 0; index < a.length; index++) {
+    if (a[index] != b[index]) {
+      return false;
+    }
+  }
+  return true;
 }
 
 /**

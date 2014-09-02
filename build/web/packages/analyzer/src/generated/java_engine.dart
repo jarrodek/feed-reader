@@ -1,5 +1,6 @@
 library java.engine;
 
+import 'interner.dart';
 import 'java_core.dart';
 
 /**
@@ -10,7 +11,10 @@ typedef bool Predicate<E>(E argument);
 class StringUtilities {
   static const String EMPTY = '';
   static const List<String> EMPTY_ARRAY = const <String>[];
-  static String intern(String s) => s;
+
+  static Interner INTERNER = new NullInterner();
+
+  static String intern(String string) => INTERNER.intern(string);
   static bool isTagName(String s) {
     if (s == null || s.length == 0) {
       return false;
@@ -158,6 +162,36 @@ class StringUtilities {
     }
     return last;
   }
+
+  /**
+   * Produce a string containing all of the names in the given array, surrounded by single quotes,
+   * and separated by commas. The list must contain at least two elements.
+   *
+   * @param names the names to be printed
+   * @return the result of printing the names
+   */
+  static String printListOfQuotedNames(List<String> names) {
+    if (names == null) {
+      throw new IllegalArgumentException("The list must not be null");
+    }
+    int count = names.length;
+    if (count < 2) {
+      throw new IllegalArgumentException("The list must contain at least two names");
+    }
+    StringBuffer buffer = new StringBuffer();
+    buffer.write("'");
+    buffer.write(names[0]);
+    buffer.write("'");
+    for (int i = 1; i < count - 1; i++) {
+      buffer.write(", '");
+      buffer.write(names[i]);
+      buffer.write("'");
+    }
+    buffer.write(" and '");
+    buffer.write(names[count - 1]);
+    buffer.write("'");
+    return buffer.toString();
+  }
 }
 
 class FileNameUtilities {
@@ -179,6 +213,11 @@ class ArrayUtils {
     target.add(value);
     return target;
   }
+  static List addAt(List target, int index, Object value) {
+    target = new List.from(target);
+    target.insert(index, value);
+    return target;
+  }
   static List addAll(List target, List source) {
     List result = new List.from(target);
     result.addAll(source);
@@ -196,4 +235,100 @@ class UUID {
   UUID(this.id);
   String toString() => id;
   static UUID randomUUID() => new UUID((__nextId).toString());
+}
+
+
+/**
+ * Instances of the class `AnalysisException` represent an exception that
+ * occurred during the analysis of one or more sources.
+ */
+class AnalysisException implements Exception {
+  /**
+   * The message that explains why the exception occurred.
+   */
+  final String message;
+
+  /**
+   * The exception that caused this exception, or `null` if this exception was
+   * not caused by another exception.
+   */
+  final CaughtException cause;
+
+  /**
+   * Initialize a newly created exception to have the given [message] and
+   * [cause].
+   */
+  AnalysisException([this.message = 'Exception', this.cause = null]);
+
+  String toString() {
+    StringBuffer buffer = new StringBuffer();
+    buffer.write("AnalysisException: ");
+    buffer.writeln(message);
+    if (cause != null) {
+      buffer.write('Caused by ');
+      cause._writeOn(buffer);
+    }
+    return buffer.toString();
+  }
+}
+
+
+/**
+ * Instances of the class `CaughtException` represent an exception that was
+ * caught and has an associated stack trace.
+ */
+class CaughtException implements Exception {
+  /**
+   * The exception that was caught.
+   */
+  final Object exception;
+
+  /**
+   * The stack trace associated with the exception.
+   */
+  StackTrace stackTrace;
+
+  /**
+   * Initialize a newly created caught exception to have the given [exception]
+   * and [stackTrace].
+   */
+  CaughtException(this.exception, stackTrace) {
+    if (stackTrace == null) {
+      try {
+        throw this;
+      } catch (_, st) {
+        stackTrace = st;
+      }
+    }
+    this.stackTrace = stackTrace;
+  }
+
+  @override
+  String toString() {
+    StringBuffer buffer = new StringBuffer();
+    _writeOn(buffer);
+    return buffer.toString();
+  }
+
+  /**
+   * Write a textual representation of the caught exception and its associated
+   * stack trace.
+   */
+  void _writeOn(StringBuffer buffer) {
+    if (exception is AnalysisException) {
+      AnalysisException analysisException = exception;
+      buffer.writeln(analysisException.message);
+      if (stackTrace != null) {
+        buffer.writeln(stackTrace.toString());
+      }
+      CaughtException cause = analysisException.cause;
+      if (cause != null) {
+        buffer.write('Caused by ');
+        cause._writeOn(buffer);
+      }
+    } else {
+      buffer.writeln(exception.toString());
+      buffer.writeln(stackTrace.toString());
+    }
+  }
 }

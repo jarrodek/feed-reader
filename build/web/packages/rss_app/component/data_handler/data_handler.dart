@@ -6,92 +6,110 @@ import 'package:angular/angular.dart';
 import '../../service/query_service.dart';
 import '../../service/dbstructures.dart';
 
-@Component(
-    selector: 'data-handler', 
-    template: '<!-- data handler ready -->',
-    useShadowDom: false,
-    publishAs: 'cmp')
+@Component(selector: 'data-handler', template: '<!-- data handler ready -->', publishAs: 'cmp')
 class DataHandlerComponent implements AttachAware {
-  
+
   QueryService queryService;
   RouteProvider routeProvider;
   Router router;
-  
-  DataHandlerComponent(RouteProvider this.routeProvider, Router this.router, QueryService this.queryService){
-    _getGenericSource('unread');
-  }
-  
+
+  DataHandlerComponent(RouteProvider this.routeProvider, Router this.router, QueryService this.queryService);
+
   void attach() {
-    
-    router.onRouteStart.listen((RouteStartEvent e){
-      var uri = e.uri;
-      if(!e.uri.startsWith('/post')){
-        //in any other case it means change in posts lists.
-        this.queryService.currentPosts.clear();
-        queryService.currentFeedId = null;
-        queryService.currentPostId = 0;
-      } else {
-        try{
-          var postId = uri.substring(6);
-          queryService.currentPostId = int.parse(uri.substring(6));
-        } catch(e){
-          queryService.currentPostId = 0;
+    _handleInitial();
+    router.onRouteStart.listen(_onRouteStart);
+  }
+
+  void _handleInitial() {
+    String hash = window.location.hash;
+    if (hash != null && !hash.isEmpty) {
+      if (hash.substring(1).indexOf('/feed') != -1) {
+        try {
+          _handleRoute('feed', {
+            'feedId': hash.substring(7)
+          });
+        } catch (e) {
+          _getGenericSource('unread');
         }
       }
-      
-      e.completed.then((_){
-        switch(this.routeProvider.routeName){
-          case 'unread':
-          case 'starred':
-          case 'all':
-            _getGenericSource(this.routeProvider.routeName);
-            this.queryService.currentPostsArea = this.routeProvider.routeName; 
-            break;
-          case 'feed':
-            this.queryService.currentPostsArea = null;
-            if(this.queryService.currentPosts.length > 0){
-              return;
-            }
-            String feedId = routeProvider.parameters['feedId'];
-            _getFeedSource(feedId);
-            break;
-          case 'post':
-            
-            break;
-          default:
-            //pass
-            break;
-        }
-        
-      });
-    });
+    } else {
+      _getGenericSource('unread');
+    }
   }
-  
-  void _getGenericSource(String source){
-    this.queryService.getPosts(source).then((_) {
-      print('[DataHandlerComponent] Posts loaded.');
-    });
-  }
-  
-  void _getFeedSource(String _feedId){
-     int feedId;
-     try{
-       feedId = int.parse(_feedId);
-     } catch(e){
-       //TODO: report an error.
-       window.console.error(e);
-       return;
-     }
-     Feed feed = queryService.getFeedById(feedId);
-     if(feed == null){
-       // TODO: report an error.
-       window.console.error("No feed in response.");
-       return;
-     }
-     queryService.currentFeedId = feedId; 
-     queryService.getPosts(feedId.toString()).then((_) {
-       //TODO: finish loading.
-     });
-   }
-}
 
+
+
+  void _onRouteStart(RouteStartEvent e) {
+    print('DataHandler::_onRouteStart');
+    var uri = e.uri;
+    if (!e.uri.startsWith('/post')) {
+      //in any other case it means change in posts lists.
+      this.queryService.currentPosts.clear();
+      queryService.currentFeedId = null;
+      queryService.currentPostId = null;
+    } else {
+      queryService.currentPostId = uri.substring(6);
+      print('Post id: ${queryService.currentPostId}');
+    }
+
+    e.completed.then(_checkRoute);
+  }
+
+  void _checkRoute(_) {
+    print('DataHandler::_checkRoute');
+    _handleRoute(routeProvider.routeName, routeProvider.parameters);
+  }
+
+  void _handleRoute(String routeName, Map<String, String> parameters) {
+    print('DataHandler::_handleRoute - Handling $routeName area.');
+    switch (routeName) {
+      case 'unread':
+      case 'starred':
+      case 'all':
+        _getGenericSource(routeName);
+        this.queryService.currentPostsArea = routeName;
+        break;
+      case 'feed':
+
+        this.queryService.currentPostsArea = null;
+        if (this.queryService.currentPosts.length > 0) {
+          return;
+        }
+        String feedId = parameters['feedId'];
+        print('DataHandler::_handleRoute - Handling route for feed ID $feedId.');
+        _getFeedSource(feedId);
+        break;
+      case 'post':
+
+        break;
+      default:
+        //pass
+        break;
+    }
+  }
+
+  void _getGenericSource(String source) {
+    this.queryService.populatePosts(source);
+  }
+
+  void _getFeedSource(String _feedId) {
+    int feedId;
+    try {
+      feedId = int.parse(_feedId);
+    } catch (e) {
+      //TODO: report an error.
+      window.console.error(e);
+      return;
+    }
+    queryService.getFeedById(feedId).then((Feed feed) {
+      if (feed == null) {
+        // TODO: report an error.
+        window.console.error("No feed in response.");
+        return;
+      }
+      queryService.currentFeedId = feedId;
+      queryService.populatePosts(feedId.toString());
+    });
+
+  }
+}

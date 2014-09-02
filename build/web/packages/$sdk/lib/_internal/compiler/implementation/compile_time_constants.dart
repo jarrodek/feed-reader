@@ -105,17 +105,11 @@ abstract class ConstantCompilerBase implements ConstantCompiler {
       Constant result = initialVariableValues[element.declaration];
       return result;
     }
-    Element currentElement = element;
-    if (element.isParameter ||
-        element.isFieldParameter ||
-        element.isVariable) {
-      currentElement = element.enclosingElement;
-    }
+    AstElement currentElement = element.analyzableElement;
     return compiler.withCurrentElement(currentElement, () {
-      TreeElements definitions =
-          compiler.analyzeElement(currentElement.declaration);
+      compiler.analyzeElement(currentElement.declaration);
       Constant constant = compileVariableWithDefinitions(
-          element, definitions, isConst: isConst);
+          element, currentElement.resolvedAst.elements, isConst: isConst);
       return constant;
     });
   }
@@ -311,48 +305,9 @@ class CompileTimeConstantEvaluator extends Visitor {
       }
       map[key] = evaluateConstant(entry.value);
     }
-
-    bool onlyStringKeys = true;
-    Constant protoValue = null;
-    for (var key in keys) {
-      if (key.isString) {
-        if (key.value == MapConstant.PROTO_PROPERTY) {
-          protoValue = map[key];
-        }
-      } else {
-        onlyStringKeys = false;
-        // Don't handle __proto__ values specially in the general map case.
-        protoValue = null;
-        break;
-      }
-    }
-
-    bool hasProtoKey = (protoValue != null);
     List<Constant> values = map.values.toList();
     InterfaceType sourceType = elements.getType(node);
-    DartType keysType;
-    if (sourceType.treatAsRaw) {
-      keysType = compiler.listClass.rawType;
-    } else {
-      Link<DartType> arguments =
-          new Link<DartType>.fromList([sourceType.typeArguments.head]);
-      keysType = new InterfaceType(compiler.listClass, arguments);
-    }
-    ListConstant keysList = new ListConstant(keysType, keys);
-    String className = onlyStringKeys
-        ? (hasProtoKey ? MapConstant.DART_PROTO_CLASS
-                       : MapConstant.DART_STRING_CLASS)
-        : MapConstant.DART_GENERAL_CLASS;
-    ClassElement classElement = compiler.jsHelperLibrary.find(className);
-    classElement.ensureResolved(compiler);
-    Link<DartType> typeArgument = sourceType.typeArguments;
-    InterfaceType type;
-    if (sourceType.treatAsRaw) {
-      type = classElement.rawType;
-    } else {
-      type = new InterfaceType(classElement, typeArgument);
-    }
-    return new MapConstant(type, keysList, values, protoValue, onlyStringKeys);
+    return constantSystem.createMap(compiler, sourceType, keys, values);
   }
 
   Constant visitLiteralNull(LiteralNull node) {
@@ -404,7 +359,8 @@ class CompileTimeConstantEvaluator extends Visitor {
         new DartString.literal(node.slowNameString))];
     }
     return makeConstructedConstant(
-        node, type, compiler.symbolConstructor, createArguments);
+        compiler, handler, node, type, compiler.symbolConstructor,
+        createArguments, isLiteralSymbol: true);
   }
 
   Constant makeTypeConstant(DartType elementType) {
@@ -474,21 +430,11 @@ class CompileTimeConstantEvaluator extends Visitor {
       Constant receiverConstant = evaluate(send.receiver);
       if (receiverConstant == null) return null;
       Operator op = send.selector;
-      Constant folded;
-      switch (op.source) {
-        case "!":
-          folded = constantSystem.not.fold(receiverConstant);
-          break;
-        case "-":
-          folded = constantSystem.negate.fold(receiverConstant);
-          break;
-        case "~":
-          folded = constantSystem.bitNot.fold(receiverConstant);
-          break;
-        default:
-          compiler.internalError(op, "Unexpected operator.");
-          break;
+      UnaryOperation operation = constantSystem.lookupUnary(op.source);
+      if (operation == null) {
+        compiler.internalError(op, "Unexpected operator.");
       }
+      Constant folded = operation.fold(receiverConstant);
       if (folded == null) return signalNotCompileTimeConstant(send);
       return folded;
     } else if (send.isOperator && !send.isPostfix) {
@@ -499,64 +445,10 @@ class CompileTimeConstantEvaluator extends Visitor {
       Operator op = send.selector.asOperator();
       Constant folded = null;
       switch (op.source) {
-        case "+":
-          folded = constantSystem.add.fold(left, right);
-          break;
-        case "-":
-          folded = constantSystem.subtract.fold(left, right);
-          break;
-        case "*":
-          folded = constantSystem.multiply.fold(left, right);
-          break;
-        case "/":
-          folded = constantSystem.divide.fold(left, right);
-          break;
-        case "%":
-          folded = constantSystem.modulo.fold(left, right);
-          break;
-        case "~/":
-          folded = constantSystem.truncatingDivide.fold(left, right);
-          break;
-        case "|":
-          folded = constantSystem.bitOr.fold(left, right);
-          break;
-        case "&":
-          folded = constantSystem.bitAnd.fold(left, right);
-          break;
-        case "^":
-          folded = constantSystem.bitXor.fold(left, right);
-          break;
-        case "||":
-          folded = constantSystem.booleanOr.fold(left, right);
-          break;
-        case "&&":
-          folded = constantSystem.booleanAnd.fold(left, right);
-          break;
-        case "<<":
-          folded = constantSystem.shiftLeft.fold(left, right);
-          break;
-        case ">>":
-          folded = constantSystem.shiftRight.fold(left, right);
-          break;
-        case "<":
-          folded = constantSystem.less.fold(left, right);
-          break;
-        case "<=":
-          folded = constantSystem.lessEqual.fold(left, right);
-          break;
-        case ">":
-          folded = constantSystem.greater.fold(left, right);
-          break;
-        case ">=":
-          folded = constantSystem.greaterEqual.fold(left, right);
-          break;
         case "==":
           if (left.isPrimitive && right.isPrimitive) {
             folded = constantSystem.equal.fold(left, right);
           }
-          break;
-        case "===":
-          folded = constantSystem.identity.fold(left, right);
           break;
         case "!=":
           if (left.isPrimitive && right.isPrimitive) {
@@ -568,15 +460,11 @@ class CompileTimeConstantEvaluator extends Visitor {
             }
           }
           break;
-        case "!==":
-          BoolConstant areIdentical =
-              constantSystem.identity.fold(left, right);
-          if (areIdentical == null) {
-            folded = null;
-          } else {
-            folded = areIdentical.negate();
+        default:
+          BinaryOperation operation = constantSystem.lookupBinary(op.source);
+          if (operation != null) {
+            folded = operation.fold(left, right);
           }
-          break;
       }
       if (folded == null) return signalNotCompileTimeConstant(send);
       return folded;
@@ -628,9 +516,12 @@ class CompileTimeConstantEvaluator extends Visitor {
                                                  compileConstant,
                                                  compiler);
     if (!succeeded) {
+      String name = Elements.constructorNameForDiagnostics(
+          target.enclosingClass.name, target.name);
       compiler.reportFatalError(
           node,
-          MessageKind.INVALID_ARGUMENTS, {'methodName': target.name});
+          MessageKind.INVALID_CONSTRUCTOR_ARGUMENTS,
+          {'constructorName': name});
     }
     return compiledArguments;
   }
@@ -733,13 +624,19 @@ class CompileTimeConstantEvaluator extends Visitor {
       }
     } else {
       return makeConstructedConstant(
-          node, type, constructor, evaluateArguments);
+          compiler, handler, node, type, constructor, evaluateArguments);
     }
   }
 
-  Constant makeConstructedConstant(
-      Spannable node, InterfaceType type, ConstructorElement constructor,
-      List<Constant> getArguments(ConstructorElement constructor)) {
+  static Constant makeConstructedConstant(
+      Compiler compiler,
+      ConstantCompilerBase handler,
+      Spannable node,
+      InterfaceType type,
+      ConstructorElement constructor,
+      List<Constant> getArguments(ConstructorElement constructor),
+      {bool isLiteralSymbol: false}) {
+
     // The redirection chain of this element may not have been resolved through
     // a post-process action, so we have to make sure it is done here.
     compiler.resolver.resolveRedirectionChain(constructor, node);
@@ -758,7 +655,8 @@ class CompileTimeConstantEvaluator extends Visitor {
     evaluator.evaluateConstructorFieldValues(arguments);
     List<Constant> jsNewArguments = evaluator.buildJsNewArguments(classElement);
 
-    return new ConstructedConstant(constructedType, jsNewArguments);
+    return new ConstructedConstant(constructedType, jsNewArguments,
+        isLiteralSymbol: isLiteralSymbol);
   }
 
   Constant visitParenthesizedExpression(ParenthesizedExpression node) {
@@ -855,9 +753,9 @@ class ConstructorEvaluator extends CompileTimeConstantEvaluator {
       Node node = parameter.node;
       potentiallyCheckType(node, parameter, argument);
       definitions[parameter] = argument;
-      if (parameter.kind == ElementKind.FIELD_PARAMETER) {
-        FieldParameterElement fieldParameterElement = parameter;
-        updateFieldValue(node, fieldParameterElement.fieldElement, argument);
+      if (parameter.isInitializingFormal) {
+        InitializingFormalElement initializingFormal = parameter;
+        updateFieldValue(node, initializingFormal.fieldElement, argument);
       }
     });
   }

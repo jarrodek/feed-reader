@@ -10,6 +10,8 @@ class World {
   final Set<Element> functionsCalledInLoop = new Set<Element>();
   final Map<Element, SideEffects> sideEffects = new Map<Element, SideEffects>();
 
+  final Set<TypedefElement> allTypedefs = new Set<TypedefElement>();
+
   final Map<ClassElement, Set<MixinApplicationElement>> mixinUses =
       new Map<ClassElement, Set<MixinApplicationElement>>();
 
@@ -31,6 +33,8 @@ class World {
 
   final Set<Element> functionsThatMightBePassedToApply =
       new Set<FunctionElement>();
+
+  final Set<Element> alreadyPopulated;
 
   Set<ClassElement> subclassesOf(ClassElement cls) {
     return _subclasses[cls.declaration];
@@ -55,10 +59,14 @@ class World {
 
   World(Compiler compiler)
       : allFunctions = new FunctionSet(compiler),
-        this.compiler = compiler;
+        this.compiler = compiler,
+        alreadyPopulated = compiler.cacheStrategy.newSet();
 
   void populate() {
     void addSubtypes(ClassElement cls) {
+      if (compiler.hasIncrementalSupport && !alreadyPopulated.add(cls)) {
+        return;
+      }
       assert(cls.isDeclaration);
       if (cls.resolutionState != STATE_DONE) {
         compiler.internalError(cls, 'Class "${cls.name}" is not resolved.');

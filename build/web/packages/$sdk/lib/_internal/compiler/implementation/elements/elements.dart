@@ -81,8 +81,8 @@ class ElementKind {
       const ElementKind('parameter', ElementCategory.VARIABLE);
   // Parameters in constructors that directly initialize fields. For example:
   // [:A(this.field):].
-  static const ElementKind FIELD_PARAMETER =
-      const ElementKind('field_parameter', ElementCategory.VARIABLE);
+  static const ElementKind INITIALIZING_FORMAL =
+      const ElementKind('initializing_formal', ElementCategory.VARIABLE);
   static const ElementKind FUNCTION =
       const ElementKind('function', ElementCategory.FUNCTION);
   static const ElementKind CLASS =
@@ -91,8 +91,6 @@ class ElementKind {
       const ElementKind('generative_constructor', ElementCategory.FACTORY);
   static const ElementKind FIELD =
       const ElementKind('field', ElementCategory.VARIABLE);
-  static const ElementKind VARIABLE_LIST =
-      const ElementKind('variable_list', ElementCategory.NONE);
   static const ElementKind FIELD_LIST =
       const ElementKind('field_list', ElementCategory.NONE);
   static const ElementKind GENERATIVE_CONSTRUCTOR_BODY =
@@ -114,11 +112,6 @@ class ElementKind {
   static const ElementKind TYPEDEF =
       const ElementKind('typedef', ElementCategory.ALIAS);
 
-  static const ElementKind STATEMENT =
-      const ElementKind('statement', ElementCategory.NONE);
-  static const ElementKind LABEL =
-      const ElementKind('label', ElementCategory.NONE);
-
   static const ElementKind AMBIGUOUS =
       const ElementKind('ambiguous', ElementCategory.NONE);
   static const ElementKind WARN_ON_USE =
@@ -127,6 +120,19 @@ class ElementKind {
       const ElementKind('error', ElementCategory.NONE);
 
   toString() => id;
+}
+
+/// Abstract interface for entities.
+///
+/// Implement this directly if the entity is not a Dart language entity.
+/// Entities defined within the Dart language should implement [Element].
+///
+/// For instance, the JavaScript backend need to create synthetic variables for
+/// calling intercepted classes and such variables do not correspond to an
+/// entity in the Dart source code nor in the terminology of the Dart language
+/// and should therefore implement [Entity] directly.
+abstract class Entity implements Spannable {
+  String get name;
 }
 
 /**
@@ -173,7 +179,7 @@ class ElementKind {
  * is best if the backends avoid setting state directly in elements.
  * It is better to keep such state in a table on the side.
  */
-abstract class Element implements Spannable {
+abstract class Element implements Entity {
   String get name;
   ElementKind get kind;
   Element get enclosingElement;
@@ -265,21 +271,37 @@ abstract class Element implements Spannable {
   /// parameter.
   ///
   /// This property is `false` if this element is an initializing formal.
-  /// See [isFieldParameter].
+  /// See [isInitializingFormal].
   bool get isParameter => kind == ElementKind.PARAMETER;
 
   /// `true` if this element is an initializing formal of constructor, that
   /// is a formal of the form `this.foo`.
-  bool get isFieldParameter => kind == ElementKind.FIELD_PARAMETER;
+  bool get isInitializingFormal => kind == ElementKind.INITIALIZING_FORMAL;
 
-  bool get isStatement;
+  /// `true` if this element represents a resolution error.
+  bool get isErroneous => kind == ElementKind.ERROR;
 
-  bool get isErroneous;
-  bool get isAmbiguous;
-  bool get isWarnOnUse;
+  /// `true` if this element represents an ambiguous name.
+  ///
+  /// Ambiguous names occur when two imports/exports contain different entities
+  /// by the same name. If an ambiguous name is resolved an warning or error
+  /// is produced.
+  bool get isAmbiguous => kind == ElementKind.AMBIGUOUS;
+
+  /// `true` if this element represents an entity whose access causes one or
+  /// more warnings.
+  bool get isWarnOnUse => kind == ElementKind.WARN_ON_USE;
 
   bool get isClosure;
-  bool get isMember;
+
+  /// `true` if the element is a (static or instance) member of a class.
+  ///
+  /// Members are constructors, methods and fields.
+  bool get isClassMember;
+
+  /// `true` if the element is a nonstatic member of a class.
+  ///
+  /// Instance members are methods and fields but not constructors.
   bool get isInstanceMember;
 
   /// Returns true if this [Element] is a top level element.
@@ -292,6 +314,10 @@ abstract class Element implements Spannable {
   bool get isAssignable;
   bool get isNative;
   bool get isDeferredLoaderGetter;
+
+  /// True if the element is declared in a patch library but has no
+  /// corresponding declaration in the origin library.
+  bool get isInjected;
 
   /// `true` if this element is a constructor, top level or local variable,
   /// or static field that is declared `const`.
@@ -314,7 +340,6 @@ abstract class Element implements Spannable {
   LibraryElement get implementationLibrary;
   ClassElement get enclosingClass;
   Element get enclosingClassOrCompilationUnit;
-  Element get enclosingMember;
   Element get outermostEnclosingMemberOrTopLevel;
 
   /// The enclosing class that defines the type environment for this element.
@@ -527,6 +552,15 @@ class Elements {
     }
   }
 
+  static String constructorNameForDiagnostics(String className,
+                                              String constructorName) {
+    String classNameString = className;
+    String constructorNameString = constructorName;
+    return (constructorName == '')
+        ? classNameString
+        : "$classNameString.$constructorNameString";
+  }
+
   /// Returns `true` if [name] is the name of an operator method.
   static bool isOperatorName(String name) {
     return name == 'unary-' || isUserDefinableOperator(name);
@@ -699,7 +733,7 @@ class Elements {
                                                 Compiler compiler) {
     if (compiler.typedDataLibrary == null) return false;
     if (!element.isConstructor) return false;
-    ConstructorElement constructor = element;
+    ConstructorElement constructor = element.implementation;
     constructor = constructor.effectiveTarget;
     ClassElement cls = constructor.enclosingClass;
     return cls.library == compiler.typedDataLibrary
@@ -715,7 +749,7 @@ class Elements {
       for (Node labelOrCase in switchCase.labelsAndCases) {
         Node label = labelOrCase.asLabel();
         if (label != null) {
-          LabelElement labelElement = elements[label];
+          LabelDefinition labelElement = elements.getLabelDefinition(label);
           if (labelElement != null && labelElement.isContinueTarget) {
             return true;
           }
@@ -727,7 +761,7 @@ class Elements {
 
   static bool isUnusedLabel(LabeledStatement node, TreeElements elements) {
     Node body = node.statement;
-    TargetElement element = elements[body];
+    JumpTarget element = elements.getTargetDefinition(body);
     // Labeled statements with no element on the body have no breaks.
     // A different target statement only happens if the body is itself
     // a break or continue for a different target. In that case, this
@@ -736,13 +770,27 @@ class Elements {
   }
 }
 
+/// An element representing an erroneous resolution.
+///
+/// An [ErroneousElement] is used instead of `null` to provide additional
+/// information about the error that caused the element to be unresolvable
+/// or otherwise invalid.
+///
+/// Accessing any field or calling any method defined on [ErroneousElement]
+/// except [isErroneous] will currently throw an exception. (This might
+/// change when we actually want more information on the erroneous element,
+/// e.g., the name of the element we were trying to resolve.)
+///
+/// Code that cannot not handle an [ErroneousElement] should use
+/// `Element.isUnresolved(element)` to check for unresolvable elements instead
+/// of `element == null`.
 abstract class ErroneousElement extends Element implements ConstructorElement {
   MessageKind get messageKind;
   Map get messageArguments;
   String get message;
 }
 
-/// An [Element] whose usage should cause a warning.
+/// An [Element] whose usage should cause one or more warnings.
 abstract class WarnOnUseElement extends Element {
   /// The element whose usage cause a warning.
   Element get wrappedElement;
@@ -753,6 +801,12 @@ abstract class WarnOnUseElement extends Element {
   Element unwrap(DiagnosticListener listener, Spannable usageSpannable);
 }
 
+/// An ambiguous element represents multiple elements accessible by the same
+/// name.
+///
+/// Ambiguous elements are created during handling of import/export scopes. If
+/// an ambiguous element is encountered during resolution a warning/error is
+/// reported.
 abstract class AmbiguousElement extends Element {
   MessageKind get messageKind;
   Map get messageArguments;
@@ -766,10 +820,6 @@ abstract class ScopeContainerElement implements Element {
   Element localLookup(String elementName);
 
   void forEachLocalMember(f(Element element));
-}
-
-abstract class ClosureContainer implements Element {
-  List<FunctionElement> get nestedClosures;
 }
 
 abstract class CompilationUnitElement extends Element {
@@ -795,7 +845,7 @@ abstract class LibraryElement extends Element
   Uri get canonicalUri;
   CompilationUnitElement get entryCompilationUnit;
   Link<CompilationUnitElement> get compilationUnits;
-  Link<LibraryTag> get tags;
+  Iterable<LibraryTag> get tags;
   LibraryName get libraryTag;
   Link<Element> get exports;
 
@@ -859,6 +909,7 @@ abstract class LibraryElement extends Element
   int compareTo(LibraryElement other);
 }
 
+/// The implicit scope defined by a import declaration with a prefix clause.
 abstract class PrefixElement extends Element {
   void addImport(Element element, Import import, DiagnosticListener listener);
   Element lookupLocalMember(String memberName);
@@ -868,30 +919,140 @@ abstract class PrefixElement extends Element {
   Import get deferredImport;
 }
 
+/// A type alias definition.
 abstract class TypedefElement extends Element
     implements AstElement, TypeDeclarationElement, FunctionTypedElement {
+
+  /// The type defined by this typedef with the type variables as its type
+  /// arguments.
+  ///
+  /// For instance `F<T>` for `typedef void F<T>(T t)`.
   TypedefType get thisType;
+
+  /// The type defined by this typedef with `dynamic` as its type arguments.
+  ///
+  /// For instance `F<dynamic>` for `typedef void F<T>(T t)`.
   TypedefType get rawType;
+
+  /// The type, function type if well-defined, for which this typedef is an
+  /// alias.
+  ///
+  /// For instance `(int)->void` for `typedef void F(int)`.
   DartType get alias;
 
   void checkCyclicReference(Compiler compiler);
 }
 
-abstract class VariableElement extends Element
+/// An executable element is an element that can hold code.
+///
+/// These elements variables (fields, parameters and locals), which can hold
+/// code in their initializer, and functions (including methods and
+/// constructors), which can hold code in their body.
+abstract class ExecutableElement extends Element
     implements TypedElement, AstElement {
+  /// The outermost member that contains this element.
+  ///
+  /// For top level, static or instance members, the member context is the
+  /// element itself. For parameters, local variables and nested closures, the
+  /// member context is the top level, static or instance member in which it is
+  /// defined.
+  MemberElement get memberContext;
+}
+
+/// A top-level or static field or method, or a constructor.
+///
+/// A [MemberElement] is the outermost executable element for any executable
+/// context.
+abstract class MemberElement extends Element implements ExecutableElement {
+  /// The local functions defined within this member.
+  List<FunctionElement> get nestedClosures;
+}
+
+/// A function, variable or parameter defined in an executable context.
+abstract class LocalElement extends Element implements TypedElement, Local {
+}
+
+/// A top level, static or instance field, a formal parameter or local variable.
+abstract class VariableElement extends ExecutableElement {
   Expression get initializer;
 }
 
-abstract class FieldElement extends VariableElement
-    implements ClosureContainer {}
+/// An entity that defines a local entity (memory slot) in generated code.
+///
+/// Parameters, local variables and local functions (can) define local entity
+/// and thus implement [Local] through [LocalElement]. For non-element locals,
+/// like `this` and boxes, specialized [Local] classes are created.
+///
+/// Type variables can introduce locals in factories and constructors
+/// but since one type variable can introduce different locals in different
+/// factories and constructors it is not itself a [Local] but instead
+/// a non-element [Local] is created through a specialized class.
+// TODO(johnniwinther): Should [Local] have `isAssignable` or `type`?
+abstract class Local extends Entity {
+  /// The context in which this local is defined.
+  ExecutableElement get executableContext;
+}
 
-abstract class ParameterElement extends VariableElement
-    implements FunctionTypedElement {
+/// A variable or parameter that is local to an executable context.
+///
+/// The executable context is the [ExecutableElement] in which this variable
+/// is defined.
+abstract class LocalVariableElement extends VariableElement
+    implements LocalElement {
+}
+
+/// A top-level, static or instance field.
+abstract class FieldElement extends VariableElement implements MemberElement {
+}
+
+/// A parameter-like element of a function signature.
+///
+/// If the function signature comes from a typedef or an inline function-typed
+/// parameter (e.g. the parameter 'f' in `method(void f())`), then its
+/// parameters are not real parameters in that they can take no argument and
+/// hold no value. Such parameter-like elements are modeled by [FormalElement].
+///
+/// If the function signature comes from a function or constructor, its
+/// parameters are real parameters and are modeled by [ParameterElement].
+abstract class FormalElement extends Element
+    implements FunctionTypedElement, TypedElement, AstElement {
+  /// Use [functionDeclaration] instead.
+  @deprecated
+  get enclosingElement;
+
+  /// The function, typedef or inline function-typed parameter on which
+  /// this parameter is declared.
+  FunctionTypedElement get functionDeclaration;
+
   VariableDefinitions get node;
 }
 
-abstract class FieldParameterElement extends ParameterElement {
-  VariableElement get fieldElement;
+/// A formal parameter of a function or constructor.
+///
+/// Normal parameter that introduce a local variable are modeled by
+/// [LocalParameterElement] whereas initializing formals, that is parameter of
+/// the form `this.x`, are modeled by [InitializingFormalParameter].
+abstract class ParameterElement extends Element
+    implements VariableElement, FormalElement, LocalElement {
+  /// The function on which this parameter is declared.
+  FunctionElement get functionDeclaration;
+}
+
+/// A formal parameter on a function or constructor that introduces a local
+/// variable in the scope of the function or constructor.
+abstract class LocalParameterElement extends ParameterElement
+    implements LocalVariableElement {
+}
+
+/// A formal parameter in a constructor that directly initializes a field.
+///
+/// For example: `A(this.field)`.
+abstract class InitializingFormalElement extends ParameterElement {
+  /// The field initialized by this initializing formal.
+  FieldElement get fieldElement;
+
+  /// The function on which this parameter is declared.
+  ConstructorElement get functionDeclaration;
 }
 
 /**
@@ -908,31 +1069,33 @@ abstract class AbstractFieldElement extends Element {
 
 abstract class FunctionSignature {
   FunctionType get type;
-  Link<Element> get requiredParameters;
-  Link<Element> get optionalParameters;
+  Link<FormalElement> get requiredParameters;
+  Link<FormalElement> get optionalParameters;
 
   int get requiredParameterCount;
   int get optionalParameterCount;
   bool get optionalParametersAreNamed;
-  Element get firstOptionalParameter;
+  FormalElement get firstOptionalParameter;
 
   int get parameterCount;
-  List<Element> get orderedOptionalParameters;
+  List<FormalElement> get orderedOptionalParameters;
 
-  void forEachParameter(void function(Element parameter));
-  void forEachRequiredParameter(void function(Element parameter));
-  void forEachOptionalParameter(void function(Element parameter));
+  void forEachParameter(void function(FormalElement parameter));
+  void forEachRequiredParameter(void function(FormalElement parameter));
+  void forEachOptionalParameter(void function(FormalElement parameter));
 
-  void orderedForEachParameter(void function(Element parameter));
+  void orderedForEachParameter(void function(FormalElement parameter));
 
   bool isCompatibleWith(FunctionSignature constructorSignature);
 }
 
+/// A top level, static or instance method, constructor, local function, or
+/// closure (anonymous local function).
 abstract class FunctionElement extends Element
     implements AstElement,
                TypedElement,
                FunctionTypedElement,
-               ClosureContainer {
+               ExecutableElement {
   FunctionExpression get node;
 
   FunctionElement get patch;
@@ -950,7 +1113,19 @@ abstract class FunctionElement extends Element
   @deprecated FunctionSignature computeSignature(Compiler compiler);
 }
 
-abstract class ConstructorElement extends FunctionElement {
+/// A top level, static or instance function.
+abstract class MethodElement extends FunctionElement
+    implements MemberElement {
+}
+
+/// A local function or closure (anonymous local function).
+abstract class LocalFunctionElement extends FunctionElement
+    implements LocalElement {
+}
+
+/// A constructor.
+abstract class ConstructorElement extends FunctionElement
+    implements MemberElement {
   /// The effective target of this constructor, that is the non-redirecting
   /// constructor that is called on invocation of this constructor.
   ///
@@ -998,16 +1173,20 @@ abstract class ConstructorElement extends FunctionElement {
   /// Class `E` has a synthesized constructor, `E.c`, whose defining constructor
   /// is `C.c`.
   ConstructorElement get definingConstructor;
+
+  /// Use [enclosingClass] instead.
+  @deprecated
+  get enclosingElement;
 }
 
+/// JavaScript backend specific element for the body of constructor.
+// TODO(johnniwinther): Remove this class for the element model.
 abstract class ConstructorBodyElement extends FunctionElement {
   FunctionElement get constructor;
 }
 
-/**
- * [TypeDeclarationElement] defines the common interface for class/interface
- * declarations and typedefs.
- */
+/// [TypeDeclarationElement] defines the common interface for class/interface
+/// declarations and typedefs.
 abstract class TypeDeclarationElement extends Element implements AstElement {
   /**
    * The `this type` for this type declaration.
@@ -1043,7 +1222,7 @@ abstract class TypeDeclarationElement extends Element implements AstElement {
    * available until the type of the element has been computed through
    * [computeType].
    */
-  Link<DartType> get typeVariables;
+  List<DartType> get typeVariables;
 
   bool get isResolved;
 
@@ -1148,7 +1327,7 @@ abstract class ClassElement extends TypeDeclarationElement
 
   void forEachBackendMember(void f(Element member));
 
-  Link<DartType> computeTypeParameters(Compiler compiler);
+  List<DartType> computeTypeParameters(Compiler compiler);
 
   /// Looks up the member [name] in this class.
   Member lookupClassMember(Name name);
@@ -1174,10 +1353,11 @@ abstract class MixinApplicationElement extends ClassElement {
   void addConstructor(FunctionElement constructor);
 }
 
-abstract class LabelElement extends Element {
+/// The label entity defined by a labeled statement.
+abstract class LabelDefinition extends Entity {
   Label get label;
   String get labelName;
-  TargetElement get target;
+  JumpTarget get target;
 
   bool get isTarget;
   bool get isBreakTarget;
@@ -1187,10 +1367,12 @@ abstract class LabelElement extends Element {
   void setContinueTarget();
 }
 
-abstract class TargetElement extends Element {
+/// A jump target is the reference point of a statement or switch-case,
+/// either by label or as the default target of a break or continue.
+abstract class JumpTarget extends Local {
   Node get statement;
   int get nestingLevel;
-  Link<LabelElement> get labels;
+  Link<LabelDefinition> get labels;
 
   bool get isTarget;
   bool get isBreakTarget;
@@ -1201,12 +1383,20 @@ abstract class TargetElement extends Element {
   void set isBreakTarget(bool value);
   void set isContinueTarget(bool value);
 
-  LabelElement addLabel(Label label, String labelName);
+  LabelDefinition addLabel(Label label, String labelName);
 }
 
 /// The [Element] for a type variable declaration on a generic class or typedef.
 abstract class TypeVariableElement extends Element
     implements AstElement, TypedElement {
+
+  /// Use [typeDeclaration] instead.
+  @deprecated
+  get enclosingElement;
+
+  /// The class or typedef on which this type variable is defined.
+  TypeDeclarationElement get typeDeclaration;
+
   /// The [type] defined by the type variable.
   TypeVariableType get type;
 
@@ -1240,6 +1430,10 @@ abstract class FunctionTypedElement extends Element {
 
 /// An [Element] that holds a [TreeElements] mapping.
 abstract class AnalyzableElement extends Element {
+  /// Return `true` if [treeElements] have been (partially) computed for this
+  /// element.
+  bool get hasTreeElements;
+
   /// Returns the [TreeElements] that hold the resolution information for the
   /// AST nodes of this element.
   TreeElements get treeElements;
@@ -1249,7 +1443,26 @@ abstract class AnalyzableElement extends Element {
 ///
 /// Synthesized elements may return `null` from [node].
 abstract class AstElement extends AnalyzableElement {
+  /// `true` if [node] is available and non-null.
+  bool get hasNode;
+
+  /// The AST node of this element.
   Node get node;
+
+  /// `true` if [resolvedAst] is available.
+  bool get hasResolvedAst;
+
+  /// The defining AST node of this element with is corresponding
+  /// [TreeElements]. This is not available if [hasResolvedAst] is `false`.
+  ResolvedAst get resolvedAst;
+}
+
+class ResolvedAst {
+  final Element element;
+  final Node node;
+  final TreeElements elements;
+
+  ResolvedAst(this.element, this.node, this.elements);
 }
 
 /// A [MemberSignature] is a member of an interface.

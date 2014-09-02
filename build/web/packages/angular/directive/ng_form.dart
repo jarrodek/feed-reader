@@ -1,9 +1,9 @@
 part of angular.directive;
 
 /**
- * The form directive listens on submission requests and, depending,
- * on if an action is set, the form will automatically either allow
- * or prevent the default browser submission from occurring.
+ * Listens on form submission requests and if an action is set, either allows or
+ * prevents the default browser form submission action from occurring. `Selector: [ng-form]` or
+ * `.ng-form` or `form` or `fieldset`
  */
 @Decorator(
     selector: 'form',
@@ -19,9 +19,8 @@ part of angular.directive;
     module: NgForm.module,
     map: const { 'ng-form': '@name' })
 class NgForm extends NgControl {
-  static final Module _module = new Module()
-      ..bind(NgControl, toFactory: (i) => i.get(NgForm));
-  static module() => _module;
+  static module(DirectiveBinder binder) =>
+      binder.bind(NgControl, toInstanceOf: NG_FORM_KEY, visibility: Visibility.CHILDREN);
 
   final Scope _scope;
 
@@ -35,7 +34,7 @@ class NgForm extends NgControl {
    * * [element] - The form DOM element.
    * * [injector] - An instance of Injector.
    */
-  NgForm(this._scope, NgElement element, Injector injector, Animate animate) :
+  NgForm(this._scope, NgElement element, DirectiveInjector injector, Animate animate) :
     super(element, injector, animate) {
 
     if (!element.node.attributes.containsKey('action')) {

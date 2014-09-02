@@ -54,11 +54,14 @@ class OptionHandler {
  * For example, in ['--out=fisk.js'] and ['-ohest.js'], the parameters
  * are ['fisk.js'] and ['hest.js'], respectively.
  */
-String extractParameter(String argument) {
+String extractParameter(String argument, {bool isOptionalArgument: false}) {
   // m[0] is the entire match (which will be equal to argument). m[1]
   // is something like "-o" or "--out=", and m[2] is the parameter.
   Match m = new RegExp('^(-[a-z]|--.+=)(.*)').firstMatch(argument);
-  if (m == null) helpAndFail('Unknown option "$argument".');
+  if (m == null) {
+    if (isOptionalArgument) return null;
+    helpAndFail('Unknown option "$argument".');
+  }
   return m[2];
 }
 
@@ -73,7 +76,7 @@ void parseCommandLine(List<OptionHandler> handlers, List<String> argv) {
   for (OptionHandler handler in handlers) {
     patterns.add(handler.pattern);
   }
-  var pattern = new RegExp('^(${patterns.join(")\$|(")})\$');
+  var pattern = new RegExp('^(${patterns.join(")\$|^(")})\$');
 
   Iterator<String> arguments = argv.iterator;
   OUTER: while (arguments.moveNext()) {
@@ -224,6 +227,14 @@ Future compile(List<String> argv) {
     passThrough('--categories=${categories.join(",")}');
   }
 
+  void handleThrowOnError(String argument) {
+    diagnosticHandler.throwOnError = true;
+    String parameter = extractParameter(argument, isOptionalArgument: true);
+    if (parameter != null) {
+      diagnosticHandler.throwOnErrorCount = int.parse(parameter);
+    }
+  }
+
   handleShortOptions(String argument) {
     var shortOptions = argument.substring(1).split("");
     for (var shortOption in shortOptions) {
@@ -261,8 +272,7 @@ Future compile(List<String> argv) {
   List<String> arguments = <String>[];
   List<OptionHandler> handlers = <OptionHandler>[
     new OptionHandler('-[chvm?]+', handleShortOptions),
-    new OptionHandler('--throw-on-error',
-                      (_) => diagnosticHandler.throwOnError = true),
+    new OptionHandler('--throw-on-error(?:=[0-9]+)?', handleThrowOnError),
     new OptionHandler('--suppress-warnings', (_) {
       diagnosticHandler.showWarnings = false;
       passThrough('--suppress-warnings');
@@ -407,9 +417,9 @@ Future compile(List<String> argv) {
             " \"Content-Security-Policy: script-src 'self'\"");
       } else if (extension == 'js.map' || extension == 'dart.map') {
         uri = sourceMapOut;
-      } else if (extension == 'info.html') {
+      } else if (extension == 'info.html' || extension == "info.json") {
         String outName = out.path.substring(out.path.lastIndexOf('/') + 1);
-        uri = out.resolve('${outName}.$extension');
+        uri = out.resolve('$outName.$extension');
       } else {
         fail('Unknown extension: $extension');
       }
@@ -614,7 +624,10 @@ be removed in a future version:
     all categories, use --categories=all.
 
   --dump-info
-    Generates an out.info.html file with information about the generated code.
+    Generates an out.info.json file with information about the generated code.
+    You can inspect the generated file with the viewer at:
+    http://dart-lang.github.io/dump-info-visualizer/build/web/viewer.html
+
 '''.trim());
 }
 
@@ -679,13 +692,18 @@ Future internalMain(List<String> arguments) {
   }
 }
 
+const _EXIT_SIGNAL = const Object();
+
 void batchMain(List<String> batchArguments) {
   int exitCode;
 
   exitFunc = (errorCode) {
-    // Crash shadows any other error code.
-    if (exitCode == 253) return;
-    exitCode = errorCode;
+    // Since we only throw another part of the compiler might intercept our
+    // exception and try to exit with a different code.
+    if (exitCode == 0) {
+      exitCode = errorCode;
+    }
+    throw _EXIT_SIGNAL;
   };
 
   runJob() {
@@ -699,7 +717,9 @@ void batchMain(List<String> batchArguments) {
       return internalMain(args);
     })
     .catchError((exception, trace) {
-      exitCode = 253;
+      if (!identical(exception, _EXIT_SIGNAL)) {
+        exitCode = 253;
+      }
     })
     .whenComplete(() {
       // The testing framework waits for a status line on stdout and stderr

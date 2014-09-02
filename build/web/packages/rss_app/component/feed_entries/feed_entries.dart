@@ -13,11 +13,9 @@ import '../../service/query_service.dart';
       'packages/rss_app/component/lists/entries_lists.css'
     ],
     publishAs: 'cmp')
-class FeedEntriesComponent implements AttachAware {
+class FeedEntriesComponent {
   
   QueryService queryService;
-  RouteProvider routeProvider;
-  Router router;
   int get feedId => queryService.currentFeedId;
   
   List<FeedEntry> get entries => queryService.currentPosts;
@@ -31,42 +29,9 @@ class FeedEntriesComponent implements AttachAware {
     return null;
   }
     
-  FeedEntriesComponent(RouteProvider this.routeProvider, QueryService this.queryService, Router this.router);
-
-  void attach() {
-//    String feedId = routeProvider.parameters['feedId'];
-//    _getFeedSource(feedId);
+  FeedEntriesComponent(QueryService this.queryService){
+    queryService.loadFeeds();
+    queryService.countUnreads();
   }
   
-  void onStarChange(FeedEntry entry){
-    queryService.updateEntry(entry).catchError((e){
-      window.console.error(e);
-    });
-  }
-  
-//  void _getFeedSource(String _feedId){
-//    
-//    try{
-//      feedId = int.parse(_feedId);
-//    } catch(e){
-//      //TODO: report an error.
-//      window.console.error(e);
-//      return;
-//    }
-//    Feed feed = queryService.getFeedById(feedId);
-//    if(feed == null){
-//      // TODO: report an error.
-//      window.console.error("No feed in response.");
-//      return;
-//    }
-//    
-//    queryService.getPosts(feedId.toString()).then((_) {
-//      //TODO: finish loading.
-//    });
-//  }
-  
-  void readPost(postId){
-    this.router.gotoUrl("/post/$postId");
-  }
-
 }

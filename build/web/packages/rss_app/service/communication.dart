@@ -1,7 +1,8 @@
 library rssapp.service.communication;
 
-import 'dart:js';
-import 'dart:html';
+import 'dart:js' as js;
+
+import 'query_service.dart';
 
 import 'package:chrome/chrome_app.dart' as chrome;
 import 'package:angular/angular.dart';
@@ -9,26 +10,36 @@ import 'package:angular/angular.dart';
 @Injectable()
 class AppComm {
   
-  AppComm(){
-    ///TODO: suuport for external call for feed update.
-    context['feedUpdated'] = (feedId) {
-       print('NNNNNNEEEWWWWWW FEEEEEEEEDDDDDD DATA. Feed has been updated in the event page. $feedId');
-    };
-    
+  QueryService queryService;
+  AppComm(this.queryService){
+    js.context['feedUpdated'] = onFeedUpdated;
+    js.context['feedLoading'] = onFeedLoading;
+  }
+  /// A flag set to true when background page is loading RSS data.
+  bool updatingFeeds = false;
+  
+  
+  void onFeedUpdated(feedId){
+    print('>>> onFeedUpdated: $feedId');
+    this.queryService.countUnread(feedId, true);
+  }
+  
+  void onFeedLoading(bool isLoading){
+    print('>>> onFeedLoading: $isLoading');
+    updatingFeeds = isLoading;
   }
   
   void refreshFeeds(){
     try {
       chrome.runtime.getBackgroundPage().then((eventPage) {
         try{
-          eventPage.jsProxy['feed'].callMethod('update', []);
+          eventPage.jsProxy['rss']['app'].callMethod('update', []);
         } catch(e){
-          window.console.error(e);
+          print(e);
         }
       });
     } catch(e){
       print('Not inside Chrome app env.');
-      window.console.error(e);
     }
   }
   

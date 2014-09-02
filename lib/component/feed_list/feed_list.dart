@@ -25,8 +25,7 @@ class FeedListComponent {
   
   void onStarChange(MouseEvent e, Feed feed){
     e.preventDefault();
-    feed.starred = !feed.starred;
-    queryService.updateFeed(feed).catchError((_){
+    queryService.changeStar(!feed.starred, feed: feed).catchError((_){
       feed.starred = !feed.starred;
     });
   }
@@ -35,8 +34,6 @@ class FeedListComponent {
     queryService.removeFeed(feed).catchError((e){
       //TODO: notify error
       print("Error removing feed: $e");
-    }).then((_){
-      queryService.feeds.remove(feed);
     });
   }
 }

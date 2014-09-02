@@ -16,8 +16,6 @@ import '../../service/query_service.dart';
 class FeedEntriesComponent {
   
   QueryService queryService;
-  RouteProvider routeProvider;
-  Router router;
   int get feedId => queryService.currentFeedId;
   
   List<FeedEntry> get entries => queryService.currentPosts;
@@ -31,16 +29,9 @@ class FeedEntriesComponent {
     return null;
   }
     
-  FeedEntriesComponent(RouteProvider this.routeProvider, QueryService this.queryService, Router this.router);
-  
-  void onStarChange(FeedEntry entry){
-    queryService.updateEntry(entry).catchError((e){
-      window.console.error(e);
-    });
+  FeedEntriesComponent(QueryService this.queryService){
+    queryService.loadFeeds();
+    queryService.countUnreads();
   }
   
-  void readPost(postId){
-    this.router.gotoUrl("/post/$postId");
-  }
-
 }

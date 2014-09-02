@@ -284,7 +284,7 @@ class Dart2JsMirrorSystem extends MirrorSystem {
     if (_filteredLibraries == null) {
       var filteredLibs = new Map<Uri, LibraryMirror>();
       _libraryMap = new Map<LibraryElement, Dart2JsLibraryMirror>();
-      compiler.libraries.forEach((_, LibraryElement v) {
+      compiler.libraryLoader.libraries.forEach((LibraryElement v) {
         var mirror = new Dart2JsLibraryMirror(mirrorSystem, v);
         if (_includeLibrary(mirror)) {
           filteredLibs[mirror.uri] = mirror;
@@ -468,13 +468,13 @@ class ResolvedNode {
 class BackDoor {
   /// Return the compilation units comprising [library].
   static List<Mirror> compilationUnitsOf(Dart2JsLibraryMirror library) {
-    return library._element.compilationUnits.toList().map(
-        (cu) => new Dart2JsCompilationUnitMirror(cu, library)).toList();
+    return library._element.compilationUnits.mapToList(
+        (cu) => new Dart2JsCompilationUnitMirror(cu, library));
   }
 
   static Iterable metadataSyntaxOf(Dart2JsElementMirror declaration) {
     Compiler compiler = declaration.mirrorSystem.compiler;
-    return declaration._element.metadata.toList().map((metadata) {
+    return declaration._element.metadata.map((metadata) {
       var node = metadata.parseNode(compiler);
       var treeElements = metadata.annotatedElement.treeElements;
       return new ResolvedNode(
@@ -491,8 +491,9 @@ class BackDoor {
 
   static ResolvedNode defaultValueSyntaxOf(Dart2JsParameterMirror parameter) {
     if (!parameter.hasDefaultValue) return null;
-    var node = parameter._element.initializer;
-    var treeElements = parameter._element.treeElements;
+    ParameterElement parameterElement = parameter._element;
+    var node = parameterElement.initializer;
+    var treeElements = parameterElement.treeElements;
     return new ResolvedNode(node, treeElements, parameter.mirrorSystem);
   }
 }

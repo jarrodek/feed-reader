@@ -1,36 +1,32 @@
 library angular.core.annotation_src;
 
-import "package:di/di.dart" show Injector, Visibility;
+import "package:di/di.dart" show Injector, Visibility, Factory;
+
+abstract class DirectiveBinder {
+ void bind(key, {dynamic toValue,
+                 Function toFactory,
+                 Type toImplementation,
+                 toInstanceOf,
+                 inject: const[],
+                 Visibility visibility: Visibility.LOCAL});
+}
+
+typedef void DirectiveBinderFn(DirectiveBinder module);
 
 RegExp _ATTR_NAME = new RegExp(r'\[([^\]]+)\]$');
 
-const String SHADOW_DOM_INJECTOR_NAME = 'SHADOW_INJECTOR';
-
-skipShadow(Injector injector)
-    => injector.name == SHADOW_DOM_INJECTOR_NAME ? injector.parent : injector;
-
-localVisibility (Injector requesting, Injector defining)
-    => identical(skipShadow(requesting), defining);
-
-directChildrenVisibility(Injector requesting, Injector defining) {
-  requesting = skipShadow(requesting);
-  return identical(requesting.parent, defining) || localVisibility(requesting, defining);
-}
-
-Directive cloneWithNewMap(Directive annotation, map)
-    => annotation._cloneWithNewMap(map);
+Directive cloneWithNewMap(Directive annotation, map) => annotation._cloneWithNewMap(map);
 
 String mappingSpec(DirectiveAnnotation annotation) => annotation._mappingSpec;
 
+class Visibility {
+  static const LOCAL = const Visibility._('LOCAL');
+  static const CHILDREN = const Visibility._('CHILDREN');
+  static const DIRECT_CHILD = const Visibility._('DIRECT_CHILD');
 
-/**
- * An annotation when applied to a class indicates that the class (service) will
- * be instantiated by di injector. This annotation is also used to designate which
- * classes need to have a static factory generated when using static angular, and
- * therefore is required on any injectable class.
- */
-class Injectable {
-  const Injectable();
+  final String name;
+  const Visibility._(this.name);
+  toString() => 'Visibility: $name';
 }
 
 /**
@@ -39,16 +35,19 @@ class Injectable {
 abstract class Directive {
 
   /// The directive can only be injected to other directives on the same element.
-  static const Visibility LOCAL_VISIBILITY = localVisibility;
+  @deprecated // ('Use Visibility.LOCAL instead')
+  static const Visibility LOCAL_VISIBILITY = Visibility.LOCAL;
 
   /// The directive can be injected to other directives on the same or child elements.
-  static const Visibility CHILDREN_VISIBILITY = null;
+  @deprecated// ('Use Visibility.CHILDREN instead')
+  static const Visibility CHILDREN_VISIBILITY = Visibility.CHILDREN;
 
   /**
    * The directive on this element can only be injected to other directives
    * declared on elements which are direct children of the current element.
    */
-  static const Visibility DIRECT_CHILDREN_VISIBILITY = directChildrenVisibility;
+  @deprecated// ('Use Visibility.DIRECT_CHILD instead')
+  static const Visibility DIRECT_CHILDREN_VISIBILITY = Visibility.DIRECT_CHILD;
 
   /**
    * CSS selector which will trigger this component/directive.
@@ -73,25 +72,21 @@ abstract class Directive {
    * * [TRANSCLUDE_CHILDREN]
    * * [IGNORE_CHILDREN]
    */
-  @deprecated
   final String children;
 
   /**
    * Compile the child nodes of the element.  This is the default.
    */
-  @deprecated
   static const String COMPILE_CHILDREN = 'compile';
   /**
    * Compile the child nodes for transclusion and makes available
    * [BoundViewFactory], [ViewFactory] and [ViewPort] for injection.
    */
-  @deprecated
   static const String TRANSCLUDE_CHILDREN = 'transclude';
   /**
    * Do not compile/visit the child nodes.  Angular markup on descendant nodes
    * will not be processed.
    */
-  @deprecated
   static const String IGNORE_CHILDREN = 'ignore';
 
   /**
@@ -122,8 +117,8 @@ abstract class Directive {
    *       selector: '[foo]',
    *       module: Foo.moduleFactory)
    *     class Foo {
-   *       static moduleFactory() => new Module()
-   *         ..bind(SomeTypeA, visibility: Directive.LOCAL_VISIBILITY);
+   *       static moduleFactory(DirectiveBinder binder) =>
+   *          binder.bind(SomeTypeA, visibility: Directive.LOCAL_VISIBILITY);
    *     }
    *
    * When specifying types, factories or values in the module, notice that
@@ -132,7 +127,7 @@ abstract class Directive {
    *  * [Directive.CHILDREN_VISIBILITY]
    *  * [Directive.DIRECT_CHILDREN_VISIBILITY]
    */
-  final Function module;
+  final DirectiveBinderFn module;
 
   /**
    * Use map to define the mapping of  DOM attributes to fields.
@@ -157,10 +152,12 @@ abstract class Directive {
    *   watch on expression. Once the expression turns truthy it will no longer
    *   update. (cost: 1 watches until not null, then 0 watches)
    *
-   * * `&` - Treat the DOM attribute value as an expression. Assign a closure
-   *   function into the field. This allows the component to control
-   *   the invocation of the closure. This is useful for passing
-   *   expressions into controllers which act like callbacks. (cost: 0 watches)
+   * * `&` - Treat the DOM attribute value as an expression. The expression is
+   *   compiled and bound to the scope context. The resulting [BoundExpression]
+   *   is assigned to the designated field.  The component can evaluate the
+   *   expression by calling the [BoundExpression] when needed.  This is useful
+   *   for passing expressions into controllers which act like callbacks. (cost:
+   *   0 watches)
    *
    * Example:
    *
@@ -177,25 +174,25 @@ abstract class Directive {
    *     class MyComponent {
    *       String title;
    *       var currentItem;
-   *       ParsedFn onChange;
+   *       BoundExpression onChange;
    *     }
    *
-   *  The above example shows how all three mapping modes are used.
+   *  The above example shows how all three mapping modes are used:
    *
-   *  * `@title` maps the title DOM attribute to the controller `title`
+   *  * `@title` maps the title DOM attribute to the component `title`
    *    field. Notice that this maps the content of the attribute, which
    *    means that it can be used with `{{}}` interpolation.
    *
    *  * `<=>currentItem` maps the expression (in this case the `selectedItem`
-   *    in the current scope into the `currentItem` in the controller. Notice
+   *    in the current scope into the `currentItem` in the component. Notice
    *    that mapping is bi-directional. A change either in field or on
    *    parent scope will result in change to the other.
    *
-   *  * `&onChange` maps the expression into the controller `onChange`
-   *    field. The result of mapping is a callable function which can be
-   *    invoked at any time by the controller. The invocation of the
-   *    callable function will result in the expression `doSomething()` to
-   *    be executed in the parent context.
+   *  * `&onChange` parse the expression (`doSomething()`), bind it to the
+   *    parent context, the resulting [BoundExpression] is assigned to the
+   *    controller `onChange` field. The [BoundExpression] is a callable object
+   *    which can be invoked at any time by the component.  The invocation of
+   *    `onChange` will result in the expression `doSomething()` to be executed.
    */
   final Map<String, String> map;
 
@@ -215,18 +212,15 @@ abstract class Directive {
 
   const Directive({
     this.selector,
-    this.children: Directive.COMPILE_CHILDREN,
-    this.visibility: Directive.LOCAL_VISIBILITY,
+    this.children,
+    this.visibility,
     this.module,
     this.map: const {},
     this.exportExpressions: const [],
     this.exportExpressionAttrs: const []
   });
 
-  toString() => selector;
-  get hashCode => selector.hashCode;
-  operator==(other) =>
-      other is Directive && selector == other.selector;
+  String toString() => selector;
 
   Directive _cloneWithNewMap(newMap);
 }
@@ -236,7 +230,7 @@ bool _applyAuthorStylesDeprecationWarningPrinted = false;
 bool _resetStyleInheritanceDeprecationWarningPrinted = false;
 
 /**
- * Meta-data marker placed on a class which should act as a controller for the
+ * Annotation placed on a class which should act as a controller for the
  * component. Angular components are a light-weight version of web-components.
  * Angular components use shadow-DOM for rendering their templates.
  *
@@ -249,7 +243,8 @@ bool _resetStyleInheritanceDeprecationWarningPrinted = false;
  *
  * * `attach()` - Called on first [Scope.apply()].
  * * `detach()` - Called on when owning scope is destroyed.
- * * `onShadowRoot(ShadowRoot shadowRoot)` - Called when [ShadowRoot] is loaded.
+ * * `onShadowRoot(ShadowRoot shadowRoot)` - Called when
+ * [ShadowRoot](https://api.dartlang.org/apidocs/channels/stable/dartdoc-viewer/dart-dom-html.ShadowRoot) is loaded.
  */
 class Component extends Directive {
   /**
@@ -305,7 +300,6 @@ class Component extends Directive {
    * published into. This allows the expressions in the template to be referring
    * to controller instance and its properties.
    */
-  @deprecated
   final String publishAs;
 
   /**
@@ -315,6 +309,11 @@ class Component extends Directive {
    */
   final bool useShadowDom;
 
+  /**
+   * Defaults to true, but if set to false any NgBaseCss stylesheets will be ignored.
+   */
+  final bool useNgBaseCss;
+
   const Component({
     this.template,
     this.templateUrl,
@@ -322,13 +321,14 @@ class Component extends Directive {
     applyAuthorStyles,
     resetStyleInheritance,
     this.publishAs,
-    module,
+    DirectiveBinderFn module,
     map,
     selector,
     visibility,
     exportExpressions,
     exportExpressionAttrs,
-    this.useShadowDom})
+    this.useShadowDom,
+    this.useNgBaseCss: true})
       : _cssUrls = cssUrl,
         _applyAuthorStyles = applyAuthorStyles,
         _resetStyleInheritance = resetStyleInheritance,
@@ -358,11 +358,12 @@ class Component extends Directive {
           visibility: visibility,
           exportExpressions: exportExpressions,
           exportExpressionAttrs: exportExpressionAttrs,
-          useShadowDom: useShadowDom);
+          useShadowDom: useShadowDom,
+          useNgBaseCss: useNgBaseCss);
 }
 
 /**
- * Meta-data marker placed on a class which should act as a directive.
+ * Annotation placed on a class which should act as a directive.
  *
  * Angular directives are instantiated using dependency injection, and can
  * ask for any injectable object in their constructor. Directives
@@ -378,7 +379,7 @@ class Decorator extends Directive {
   const Decorator({children: Directive.COMPILE_CHILDREN,
                     map,
                     selector,
-                    module,
+                    DirectiveBinderFn module,
                     visibility,
                     exportExpressions,
                     exportExpressionAttrs})
@@ -402,7 +403,7 @@ class Decorator extends Directive {
 }
 
 /**
- * Meta-data marker placed on a class which should act as a controller for your
+ * Annotation placed on a class which should act as a controller for your
  * application.
  *
  * Controllers are essentially [Decorator]s with few key differences:
@@ -431,7 +432,7 @@ class Controller extends Decorator {
                     children: Directive.COMPILE_CHILDREN,
                     this.publishAs,
                     map,
-                    module,
+                    DirectiveBinderFn module,
                     selector,
                     visibility,
                     exportExpressions,
@@ -474,7 +475,6 @@ abstract class DirectiveAnnotation {
  * The value of the attribute to be treated as a string, equivalent
  * to `@` specification.
  */
-@deprecated
 class NgAttr extends DirectiveAnnotation {
   final _mappingSpec = '@';
   const NgAttr(String attrName) : super(attrName);
@@ -486,7 +486,6 @@ class NgAttr extends DirectiveAnnotation {
  * The value of the attribute to be treated as a one-way expression, equivalent
  * to `=>` specification.
  */
-@deprecated
 class NgOneWay extends DirectiveAnnotation {
   final _mappingSpec = '=>';
   const NgOneWay(String attrName) : super(attrName);
@@ -498,7 +497,6 @@ class NgOneWay extends DirectiveAnnotation {
  * The value of the attribute to be treated as a one time one-way expression,
  * equivalent to `=>!` specification.
  */
-@deprecated
 class NgOneWayOneTime extends DirectiveAnnotation {
   final _mappingSpec = '=>!';
   const NgOneWayOneTime(String attrName) : super(attrName);
@@ -510,19 +508,16 @@ class NgOneWayOneTime extends DirectiveAnnotation {
  * The value of the attribute to be treated as a two-way expression,
  * equivalent to `<=>` specification.
  */
-@deprecated
 class NgTwoWay extends DirectiveAnnotation {
   final _mappingSpec = '<=>';
   const NgTwoWay(String attrName) : super(attrName);
 }
 
 /**
- * When applied as an annotation on a directive field specifies that
- * the field is to be mapped to DOM attribute with the provided [attrName].
- * The value of the attribute to be treated as a callback expression,
- * equivalent to `&` specification.
+ * When applied as an annotation on a directive field specifies that the field is to be mapped to
+ * DOM attribute with the provided [attrName]. The value of the attribute to be treated as a
+ * an expression, equivalent to `&` specification.
  */
-@deprecated
 class NgCallback extends DirectiveAnnotation {
   final _mappingSpec = '&';
   const NgCallback(String attrName) : super(attrName);
@@ -547,10 +542,16 @@ abstract class DetachAware {
 }
 
 /**
- * Use @[Formatter] annotation to register a new formatter. A formatter is a class
- * with a [call] method (a callable function).
+ * Use the @[Formatter] class annotation to identify a class as a formatter.
  *
- * Usage:
+ * A formatter is a pure function that performs a transformation on input data from an expression.
+ * For more on formatters in Angular, see the documentation for the
+ * [angular:formatter](#angular-formatter) library.
+ *
+ * A formatter class must have a call method with at least one parameter, which specifies the value to format. Any
+ * additional parameters are treated as arguments of the formatter.
+ *
+ * **Usage**
  *
  *     // Declaration
  *     @Formatter(name:'myFormatter')
@@ -573,9 +574,6 @@ class Formatter {
   final String name;
 
   const Formatter({this.name});
-
-  int get hashCode => name.hashCode;
-  bool operator==(other) => name == other.name;
 
   toString() => 'Formatter: $name';
 }

@@ -9,7 +9,7 @@ class TypeCheckerTask extends CompilerTask {
   String get name => "Type checker";
 
   void check(TreeElements elements) {
-    AstElement element = elements.currentElement;
+    AstElement element = elements.analyzedElement;
     compiler.withCurrentElement(element, () {
       measure(() {
         Node tree = element.node;
@@ -89,6 +89,23 @@ class DynamicAccess implements ElementAccess {
   String toString() => 'DynamicAccess';
 }
 
+/// An access of the `assert` method.
+class AssertAccess implements ElementAccess {
+  const AssertAccess();
+
+  Element get element => null;
+
+  DartType computeType(Compiler compiler) {
+    return new FunctionType.synthesized(
+        const VoidType(),
+        <DartType>[const DynamicType()]);
+  }
+
+  bool isCallable(Compiler compiler) => true;
+
+  String toString() => 'AssertAccess';
+}
+
 /**
  * An access of a resolved top-level or static property or function, or an
  * access of a resolved element through [:this:].
@@ -106,7 +123,12 @@ class ResolvedAccess extends ElementAccess {
       return functionType.returnType;
     } else if (element.isSetter) {
       FunctionType functionType = element.computeType(compiler);
-      return functionType.parameterTypes.head;
+      if (functionType.parameterTypes.length != 1) {
+        // TODO(johnniwinther,karlklose): this happens for malformed static
+        // setters. Treat them the same as instance members.
+        return const DynamicType();
+      }
+      return functionType.parameterTypes.first;
     } else {
       return element.computeType(compiler);
     }
@@ -304,8 +326,8 @@ class TypeCheckerVisitor extends Visitor<DartType> {
 
   TypeCheckerVisitor(this.compiler, TreeElements elements, this.types)
       : this.elements = elements,
-        currentClass = elements.currentElement != null
-            ? elements.currentElement.enclosingClass : null {
+        currentClass = elements.analyzedElement != null
+            ? elements.analyzedElement.enclosingClass : null {
     intType = compiler.intClass.computeType(compiler);
     doubleType = compiler.doubleClass.computeType(compiler);
     boolType = compiler.boolClass.computeType(compiler);
@@ -319,7 +341,7 @@ class TypeCheckerVisitor extends Visitor<DartType> {
     }
   }
 
-  LibraryElement get currentLibrary => elements.currentElement.library;
+  LibraryElement get currentLibrary => elements.analyzedElement.library;
 
   reportTypeWarning(Spannable spannable, MessageKind kind,
                     [Map arguments = const {}]) {
@@ -374,7 +396,7 @@ class TypeCheckerVisitor extends Visitor<DartType> {
       if (lastSeenNode != null) {
         compiler.internalError(lastSeenNode, error);
       } else {
-        compiler.internalError(elements.currentElement, error);
+        compiler.internalError(elements.analyzedElement, error);
       }
     } else {
       lastSeenNode = node;
@@ -524,40 +546,41 @@ class TypeCheckerVisitor extends Visitor<DartType> {
   }
 
   DartType visitDoWhile(DoWhile node) {
-    StatementType bodyType = analyze(node.body);
+    analyze(node.body);
     checkCondition(node.condition);
-    return bodyType.join(StatementType.NOT_RETURNING);
+    return const StatementType();
   }
 
   DartType visitExpressionStatement(ExpressionStatement node) {
     Expression expression = node.expression;
     analyze(expression);
-    return (expression.asThrow() != null)
-        ? StatementType.RETURNING
-        : StatementType.NOT_RETURNING;
+    return const StatementType();
   }
 
   /** Dart Programming Language Specification: 11.5.1 For Loop */
   DartType visitFor(For node) {
-    analyzeWithDefault(node.initializer, StatementType.NOT_RETURNING);
+    if (node.initializer != null) {
+      analyze(node.initializer);
+    }
     if (node.condition != null) {
       checkCondition(node.condition);
     }
-    analyzeWithDefault(node.update, StatementType.NOT_RETURNING);
-    StatementType bodyType = analyze(node.body);
-    return bodyType.join(StatementType.NOT_RETURNING);
+    if (node.update != null) {
+      analyze(node.update);
+    }
+    return analyze(node.body);
   }
 
   DartType visitFunctionDeclaration(FunctionDeclaration node) {
     analyze(node.function);
-    return StatementType.NOT_RETURNING;
+    return const StatementType();
   }
 
   DartType visitFunctionExpression(FunctionExpression node) {
     DartType type;
     DartType returnType;
     DartType previousType;
-    final FunctionElement element = elements[node];
+    final FunctionElement element = elements.getFunctionDefinition(node);
     assert(invariant(node, element != null,
                      message: 'FunctionExpression with no element'));
     if (Elements.isUnresolved(element)) return const DynamicType();
@@ -567,8 +590,8 @@ class TypeCheckerVisitor extends Visitor<DartType> {
       returnType = const VoidType();
 
       element.functionSignature.forEachParameter((ParameterElement parameter) {
-        if (parameter.isFieldParameter) {
-          FieldParameterElement fieldParameter = parameter;
+        if (parameter.isInitializingFormal) {
+          InitializingFormalElement fieldParameter = parameter;
           checkAssignable(parameter, parameter.type,
               fieldParameter.fieldElement.computeType(compiler));
         }
@@ -583,17 +606,7 @@ class TypeCheckerVisitor extends Visitor<DartType> {
     }
     DartType previous = expectedReturnType;
     expectedReturnType = returnType;
-    StatementType bodyType = analyze(node.body);
-    if (!returnType.isVoid && !returnType.treatAsDynamic
-        && bodyType != StatementType.RETURNING) {
-      MessageKind kind;
-      if (bodyType == StatementType.MAYBE_RETURNING) {
-        kind = MessageKind.MAYBE_MISSING_RETURN;
-      } else {
-        kind = MessageKind.MISSING_RETURN;
-      }
-      reportTypeWarning(node.name, kind);
-    }
+    analyze(node.body);
     expectedReturnType = previous;
     return type;
   }
@@ -620,12 +633,11 @@ class TypeCheckerVisitor extends Visitor<DartType> {
     Statement thenPart = node.thenPart;
 
     checkCondition(node.condition);
-
-    StatementType thenType = analyzeInPromotedContext(condition, thenPart);
-
-    StatementType elseType = node.hasElsePart ? analyze(node.elsePart)
-                                              : StatementType.NOT_RETURNING;
-    return thenType.join(elseType);
+    analyzeInPromotedContext(condition, thenPart);
+    if (node.elsePart != null) {
+      analyze(node.elsePart);
+    }
+    return const StatementType();
   }
 
   void checkPrivateAccess(Node node, Element element, String name) {
@@ -740,7 +752,11 @@ class TypeCheckerVisitor extends Visitor<DartType> {
         }
       }
     }
-    if (!interface.element.isProxy) {
+    // We didn't find a member with the correct name.  If this lookup is for a
+    // super or redirecting initializer, the resolver has already emitted an
+    // error message.  If the target is a proxy, no warning needs to be emitted.
+    // Otherwise, try to emit the most precise warning.
+    if (!interface.element.isProxy && !analyzingInitializer) {
       bool foundPrivateMember = false;
       if (memberName.isPrivate) {
         void findPrivateMember(MemberSignature member) {
@@ -807,8 +823,9 @@ class TypeCheckerVisitor extends Visitor<DartType> {
     if (identical(unaliasedType.kind, TypeKind.FUNCTION)) {
       bool error = false;
       FunctionType funType = unaliasedType;
-      Link<DartType> parameterTypes = funType.parameterTypes;
-      Link<DartType> optionalParameterTypes = funType.optionalParameterTypes;
+      Iterator<DartType> parameterTypes = funType.parameterTypes.iterator;
+      Iterator<DartType> optionalParameterTypes =
+          funType.optionalParameterTypes.iterator;
       while (!arguments.isEmpty) {
         Node argument = arguments.head;
         NamedArgument namedArgument = argument.asNamedArgument();
@@ -834,8 +851,8 @@ class TypeCheckerVisitor extends Visitor<DartType> {
             }
           }
         } else {
-          if (parameterTypes.isEmpty) {
-            if (optionalParameterTypes.isEmpty) {
+          if (!parameterTypes.moveNext()) {
+            if (!optionalParameterTypes.moveNext()) {
               error = true;
               // TODO(johnniwinther): Provide better information on the
               // called function.
@@ -847,28 +864,28 @@ class TypeCheckerVisitor extends Visitor<DartType> {
               DartType argumentType = analyze(argument);
               if (argumentTypes != null) argumentTypes.addLast(argumentType);
               if (!checkAssignable(argument,
-                                   argumentType, optionalParameterTypes.head)) {
+                                   argumentType,
+                                   optionalParameterTypes.current)) {
                 error = true;
               }
-              optionalParameterTypes = optionalParameterTypes.tail;
             }
           } else {
             DartType argumentType = analyze(argument);
             if (argumentTypes != null) argumentTypes.addLast(argumentType);
-            if (!checkAssignable(argument, argumentType, parameterTypes.head)) {
+            if (!checkAssignable(argument, argumentType,
+                                 parameterTypes.current)) {
               error = true;
             }
-            parameterTypes = parameterTypes.tail;
           }
         }
         arguments = arguments.tail;
       }
-      if (!parameterTypes.isEmpty) {
+      if (parameterTypes.moveNext()) {
         error = true;
         // TODO(johnniwinther): Provide better information on the called
         // function.
         reportTypeWarning(send, MessageKind.MISSING_ARGUMENT,
-            {'argumentType': parameterTypes.head});
+            {'argumentType': parameterTypes.current});
       }
       if (error) {
         // TODO(johnniwinther): Improve access to declaring element and handle
@@ -972,7 +989,7 @@ class TypeCheckerVisitor extends Visitor<DartType> {
         return new TypeLiteralAccess(elements.getTypeLiteralType(node));
       }
       return createResolvedAccess(node, name, element);
-    } else if (element.isMember) {
+    } else if (element.isClassMember) {
       // foo() where foo is a member.
       return lookupMember(node, thisType, name, memberKind, null,
           lookupClassMember: element.isStatic);
@@ -1061,6 +1078,10 @@ class TypeCheckerVisitor extends Visitor<DartType> {
   }
 
   DartType visitSend(Send node) {
+    if (elements.isAssert(node)) {
+      return analyzeInvocation(node, const AssertAccess());
+    }
+
     Element element = elements[node];
 
     if (element != null && element.isConstructor) {
@@ -1235,17 +1256,16 @@ class TypeCheckerVisitor extends Visitor<DartType> {
   }
 
   /// Returns the first type in the list or [:dynamic:] if the list is empty.
-  DartType firstType(Link<DartType> link) {
-    return link.isEmpty ? const DynamicType() : link.head;
+  DartType firstType(List<DartType> list) {
+    return list.isEmpty ? const DynamicType() : list.first;
   }
 
   /**
    * Returns the second type in the list or [:dynamic:] if the list is too
    * short.
    */
-  DartType secondType(Link<DartType> link) {
-    return link.isEmpty || link.tail.isEmpty
-        ? const DynamicType() : link.tail.head;
+  DartType secondType(List<DartType> list) {
+    return list.length < 2 ? const DynamicType() : list[1];
   }
 
   /**
@@ -1511,40 +1531,26 @@ class TypeCheckerVisitor extends Visitor<DartType> {
   }
 
   DartType visitNodeList(NodeList node) {
-    DartType type = StatementType.NOT_RETURNING;
-    bool reportedDeadCode = false;
     for (Link<Node> link = node.nodes; !link.isEmpty; link = link.tail) {
-      DartType nextType =
-          analyze(link.head, inInitializer: analyzingInitializer);
-      if (type == StatementType.RETURNING) {
-        if (!reportedDeadCode) {
-          reportTypeWarning(link.head, MessageKind.UNREACHABLE_CODE);
-          reportedDeadCode = true;
-        }
-      } else if (type == StatementType.MAYBE_RETURNING){
-        if (nextType == StatementType.RETURNING) {
-          type = nextType;
-        }
-      } else {
-        type = nextType;
-      }
+      analyze(link.head, inInitializer: analyzingInitializer);
     }
-    return type;
+    return const StatementType();
+  }
+
+  DartType visitRedirectingFactoryBody(RedirectingFactoryBody node) {
+    // TODO(lrn): Typecheck the body. It must refer to the constructor
+    // of a subtype.
+    return const StatementType();
   }
 
   DartType visitRethrow(Rethrow node) {
-    return StatementType.RETURNING;
+    return const StatementType();
   }
 
   /** Dart Programming Language Specification: 11.10 Return */
   DartType visitReturn(Return node) {
     if (identical(node.beginToken.stringValue, 'native')) {
-      return StatementType.RETURNING;
-    }
-    if (node.isRedirectingFactoryBody) {
-      // TODO(lrn): Typecheck the body. It must refer to the constructor
-      // of a subtype.
-      return StatementType.RETURNING;
+      return const StatementType();
     }
 
     final expression = node.expression;
@@ -1555,7 +1561,7 @@ class TypeCheckerVisitor extends Visitor<DartType> {
     // immediately enclosing function.
     if (expression != null) {
       final expressionType = analyze(expression);
-      Element element = elements.currentElement;
+      Element element = elements.analyzedElement;
       if (element != null && element.isGenerativeConstructor) {
         // The resolver already emitted an error for this expression.
       } else if (isVoidFunction
@@ -1574,7 +1580,7 @@ class TypeCheckerVisitor extends Visitor<DartType> {
       reportTypeWarning(node, MessageKind.RETURN_NOTHING,
                         {'returnType': expectedReturnType});
     }
-    return StatementType.RETURNING;
+    return const StatementType();
   }
 
   DartType visitThrow(Throw node) {
@@ -1604,23 +1610,14 @@ class TypeCheckerVisitor extends Visitor<DartType> {
         checkAssignable(initialization.assignmentOperator, initializer, type);
       }
     }
-    return StatementType.NOT_RETURNING;
+    return const StatementType();
   }
 
   DartType visitWhile(While node) {
     checkCondition(node.condition);
-    StatementType bodyType = analyze(node.body);
+    analyze(node.body);
     Expression cond = node.condition.asParenthesizedExpression().expression;
-    if (cond.asLiteralBool() != null && cond.asLiteralBool().value == true) {
-      // If the condition is a constant boolean expression denoting true,
-      // control-flow always enters the loop body.
-      // TODO(karlklose): this should be StatementType.RETURNING unless there
-      // is a break in the loop body that has the loop or a label outside the
-      // loop as a target.
-      return bodyType;
-    } else {
-      return bodyType.join(StatementType.NOT_RETURNING);
-    }
+    return const StatementType();
   }
 
   DartType visitParenthesizedExpression(ParenthesizedExpression node) {
@@ -1640,7 +1637,7 @@ class TypeCheckerVisitor extends Visitor<DartType> {
 
     DartType thenType = analyzeInPromotedContext(condition, thenExpression);
 
-    DartType elseType = analyzeNonVoid(node.elseExpression);
+    DartType elseType = analyze(node.elseExpression);
     return compiler.types.computeLeastUpperBound(thenType, elseType);
   }
 
@@ -1655,21 +1652,21 @@ class TypeCheckerVisitor extends Visitor<DartType> {
   }
 
   visitEmptyStatement(EmptyStatement node) {
-    return StatementType.NOT_RETURNING;
+    return const StatementType();
   }
 
   visitBreakStatement(BreakStatement node) {
-    return StatementType.NOT_RETURNING;
+    return const StatementType();
   }
 
   visitContinueStatement(ContinueStatement node) {
-    return StatementType.NOT_RETURNING;
+    return const StatementType();
   }
 
   visitForIn(ForIn node) {
     analyze(node.expression);
-    StatementType bodyType = analyze(node.body);
-    return bodyType.join(StatementType.NOT_RETURNING);
+    analyze(node.body);
+    return const StatementType();
   }
 
   visitLabeledStatement(LabeledStatement node) {
@@ -1721,7 +1718,7 @@ class TypeCheckerVisitor extends Visitor<DartType> {
       analyze(switchCase);
     }
 
-    return StatementType.NOT_RETURNING;
+    return const StatementType();
   }
 
   visitSwitchCase(SwitchCase node) {
@@ -1737,7 +1734,7 @@ class TypeCheckerVisitor extends Visitor<DartType> {
       analyze(catchBlock);
     }
     analyzeWithDefault(node.finallyBlock, null);
-    return StatementType.NOT_RETURNING;
+    return const StatementType();
   }
 
   visitCatchBlock(CatchBlock node) {

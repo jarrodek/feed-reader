@@ -1,7 +1,15 @@
 part of angular.core.dom_internal;
 
 abstract class ComponentFactory {
-  FactoryFn call(dom.Node node, DirectiveRef ref);
+  BoundComponentFactory bind(DirectiveRef ref, directives, Injector injector);
+}
+
+/**
+ * A Component factory with has been bound to a specific component type.
+ */
+abstract class BoundComponentFactory {
+  List<Key> get callArgs;
+  Function call(dom.Element element);
 
   static async.Future<ViewFactory> _viewFuture(
         Component component, ViewCache viewCache, DirectiveMap directives) {
@@ -14,7 +22,8 @@ abstract class ComponentFactory {
     return null;
   }
 
-  static void _setupOnShadowDomAttach(controller, templateLoader, shadowScope) {
+  static void _setupOnShadowDomAttach(controller, TemplateLoader templateLoader,
+                                      Scope shadowScope) {
     if (controller is ShadowRootAware) {
       templateLoader.template.then((shadowDom) {
         if (!shadowScope.isAttached) return;
@@ -26,121 +35,184 @@ abstract class ComponentFactory {
 
 @Injectable()
 class ShadowDomComponentFactory implements ComponentFactory {
-  final Expando _expando;
+  final ViewCache viewCache;
+  final Http http;
+  final TemplateCache templateCache;
+  final WebPlatform platform;
+  final ComponentCssRewriter componentCssRewriter;
+  final dom.NodeTreeSanitizer treeSanitizer;
+  final Expando expando;
+  final CompilerConfig config;
 
-  ShadowDomComponentFactory(this._expando);
+  final Map<_ComponentAssetKey, async.Future<dom.StyleElement>> styleElementCache = {};
 
-  final Map<String, async.Future<dom.StyleElement>> _styleElementCache = {};
-
-  FactoryFn call(dom.Node node, DirectiveRef ref) {
-    return (Injector injector) {
-        var component = ref.annotation as Component;
-        Scope scope = injector.get(Scope);
-        ViewCache viewCache = injector.get(ViewCache);
-        Http http = injector.get(Http);
-        TemplateCache templateCache = injector.get(TemplateCache);
-        DirectiveMap directives = injector.get(DirectiveMap);
-        NgBaseCss baseCss = injector.get(NgBaseCss);
-        // This is a bit of a hack since we are returning different type then we are.
-        var componentFactory = new _ComponentFactory(node, ref.type, component,
-            injector.get(dom.NodeTreeSanitizer), _expando, baseCss, _styleElementCache);
-        var controller = componentFactory.call(injector, scope, viewCache, http, templateCache,
-            directives);
-
-        componentFactory.shadowScope.context[component.publishAs] = controller;
-        return controller;
-      };
+  ShadowDomComponentFactory(this.viewCache, this.http, this.templateCache, this.platform,
+                            this.componentCssRewriter, this.treeSanitizer, this.expando,
+                            this.config, CacheRegister cacheRegister) {
+    cacheRegister.registerCache("ShadowDomComponentFactoryStyles", styleElementCache);
   }
+
+  bind(DirectiveRef ref, directives, injector) =>
+      new BoundShadowDomComponentFactory(this, ref, directives, injector);
 }
 
+class BoundShadowDomComponentFactory implements BoundComponentFactory {
 
-/**
- * ComponentFactory is responsible for setting up components. This includes
- * the shadowDom, fetching template, importing styles, setting up attribute
- * mappings, publishing the controller, and compiling and caching the template.
- */
-class _ComponentFactory implements Function {
+  final ShadowDomComponentFactory _componentFactory;
+  final DirectiveRef _ref;
+  final DirectiveMap _directives;
+  final Injector _injector;
+  final DirectiveInjector _directive_injector;
 
-  final dom.Element element;
-  final Type type;
-  final Component component;
-  final dom.NodeTreeSanitizer treeSanitizer;
-  final Expando _expando;
-  final NgBaseCss _baseCss;
-  final Map<String, async.Future<dom.StyleElement>> _styleElementCache;
+  Component get _component => _ref.annotation as Component;
 
-  dom.ShadowRoot shadowDom;
-  Scope shadowScope;
-  Injector shadowInjector;
-  var controller;
+  String _tag;
+  async.Future<Iterable<dom.StyleElement>> _styleElementsFuture;
+  async.Future<ViewFactory> _viewFuture;
 
-  _ComponentFactory(this.element, this.type, this.component, this.treeSanitizer,
-                    this._expando, this._baseCss, this._styleElementCache);
+  BoundShadowDomComponentFactory(this._componentFactory, this._ref, this._directives, this._injector) {
+    _tag = _component.selector.toLowerCase();
+    _styleElementsFuture = async.Future.wait(_component.cssUrls.map(_styleFuture));
 
-  dynamic call(Injector injector, Scope scope,
-               ViewCache viewCache, Http http, TemplateCache templateCache,
-               DirectiveMap directives) {
-    shadowDom = element.createShadowRoot()
-      ..applyAuthorStyles = component.applyAuthorStyles
-      ..resetStyleInheritance = component.resetStyleInheritance;
+    _viewFuture = BoundComponentFactory._viewFuture(
+        _component,
+        new PlatformViewCache(_componentFactory.viewCache, _tag, _componentFactory.platform),
+        _directives);
+  }
 
-    shadowScope = scope.createChild({}); // Isolate
-    // TODO(pavelgj): fetching CSS with Http is mainly an attempt to
-    // work around an unfiled Chrome bug when reloading same CSS breaks
-    // styles all over the page. We shouldn't be doing browsers work,
-    // so change back to using @import once Chrome bug is fixed or a
-    // better work around is found.
-    Iterable<async.Future<dom.StyleElement>> cssFutures;
-    var cssUrls = []..addAll(_baseCss.urls)..addAll(component.cssUrls);
-    if (cssUrls.isNotEmpty) {
-      cssFutures = cssUrls.map((cssUrl) => _styleElementCache.putIfAbsent(cssUrl, () =>
+  async.Future<dom.StyleElement> _styleFuture(cssUrl) {
+    Http http = _componentFactory.http;
+    TemplateCache templateCache = _componentFactory.templateCache;
+    WebPlatform platform = _componentFactory.platform;
+    ComponentCssRewriter componentCssRewriter = _componentFactory.componentCssRewriter;
+    dom.NodeTreeSanitizer treeSanitizer = _componentFactory.treeSanitizer;
+
+    return _componentFactory.styleElementCache.putIfAbsent(
+        new _ComponentAssetKey(_tag, cssUrl), () =>
         http.get(cssUrl, cache: templateCache)
-          .then((resp) => resp.responseText,
-            onError: (e) => '/*\n$e\n*/\n')
-          .then((styleContent) => new dom.StyleElement()..appendText(styleContent))
-      )).toList();
-    } else {
-      cssFutures = [new async.Future.value(null)];
-    }
-    var viewFuture = ComponentFactory._viewFuture(component, viewCache, directives);
-    TemplateLoader templateLoader = new TemplateLoader(
-        async.Future.wait(cssFutures).then((Iterable<dom.StyleElement> cssList) {
-          cssList
-              .where((styleElement) => styleElement != null)
-              .forEach((styleElement) => shadowDom.append(styleElement.clone(true)));
-          if (viewFuture != null) {
-            return viewFuture.then((ViewFactory viewFactory) {
-              return (!shadowScope.isAttached) ?
-                shadowDom :
-                attachViewToShadowDom(viewFactory);
+        .then((resp) => resp.responseText,
+        onError: (e) => '/*\n$e\n*/\n')
+        .then((String css) {
+
+          // Shim CSS if required
+          if (platform.cssShimRequired) {
+            css = platform.shimCss(css, selector: _tag, cssUrl: cssUrl);
+          }
+
+          // If a css rewriter is installed, run the css through a rewriter
+          var styleElement = new dom.StyleElement()
+            ..appendText(componentCssRewriter(css, selector: _tag,
+          cssUrl: cssUrl));
+
+          // ensure there are no invalid tags or modifications
+          treeSanitizer.sanitizeTree(styleElement);
+
+          // If the css shim is required, it means that scoping does not
+          // work, and adding the style to the head of the document is
+          // preferrable.
+          if (platform.cssShimRequired) {
+            dom.document.head.append(styleElement);
+            return null;
+          }
+
+          return styleElement;
+        })
+    );
+  }
+
+  List<Key> get callArgs => _CALL_ARGS;
+  static final _CALL_ARGS = [DIRECTIVE_INJECTOR_KEY, SCOPE_KEY, NG_BASE_CSS_KEY,
+                             EVENT_HANDLER_KEY];
+  Function call(dom.Element element) {
+    return (DirectiveInjector injector, Scope scope, NgBaseCss baseCss,
+            EventHandler _) {
+      var s = traceEnter(View_createComponent);
+      try {
+        var shadowDom = element.createShadowRoot()
+          ..applyAuthorStyles = _component.applyAuthorStyles
+          ..resetStyleInheritance = _component.resetStyleInheritance;
+
+        var shadowScope = scope.createChild(new HashMap()); // Isolate
+
+        async.Future<Iterable<dom.StyleElement>> cssFuture;
+        if (_component.useNgBaseCss == true) {
+          cssFuture = async.Future.wait([async.Future.wait(baseCss.urls.map(_styleFuture)), _styleElementsFuture]).then((twoLists) {
+            assert(twoLists.length == 2);return []
+              ..addAll(twoLists[0])
+              ..addAll(twoLists[1]);
+          });
+        } else {
+          cssFuture = _styleElementsFuture;
+        }
+
+        ComponentDirectiveInjector shadowInjector;
+
+        TemplateLoader templateLoader = new TemplateLoader(cssFuture.then((Iterable<dom.StyleElement> cssList) {
+          cssList.where((styleElement) => styleElement != null).forEach((styleElement) {
+            shadowDom.append(styleElement.clone(true));
+          });
+          if (_viewFuture != null) {
+            return _viewFuture.then((ViewFactory viewFactory) {
+              if (shadowScope.isAttached) {
+                shadowDom.nodes.addAll(viewFactory.call(shadowInjector.scope, shadowInjector).nodes);
+              }
+              return shadowDom;
             });
           }
           return shadowDom;
         }));
-    controller = createShadowInjector(injector, templateLoader).get(type);
-    ComponentFactory._setupOnShadowDomAttach(controller, templateLoader, shadowScope);
-    return controller;
-  }
 
-  dom.ShadowRoot attachViewToShadowDom(ViewFactory viewFactory) {
-    var view = viewFactory(shadowInjector);
-    shadowDom.nodes.addAll(view.nodes);
-    return shadowDom;
-  }
+        var probe;
+        var eventHandler = new ShadowRootEventHandler(
+            shadowDom, injector.getByKey(EXPANDO_KEY), injector.getByKey(EXCEPTION_HANDLER_KEY));
+        shadowInjector = new ComponentDirectiveInjector(injector, _injector, eventHandler, shadowScope,
+            templateLoader, shadowDom, null);
+        shadowInjector.bindByKey(_ref.typeKey, _ref.factory, _ref.paramKeys, _ref.annotation.visibility);
 
-  Injector createShadowInjector(injector, TemplateLoader templateLoader) {
-    var probe;
-    var shadowModule = new Module()
-      ..bind(type)
-      ..bind(NgElement)
-      ..bind(EventHandler, toImplementation: ShadowRootEventHandler)
-      ..bind(Scope, toValue: shadowScope)
-      ..bind(TemplateLoader, toValue: templateLoader)
-      ..bind(dom.ShadowRoot, toValue: shadowDom)
-      ..bind(ElementProbe, toFactory: (_) => probe);
-    shadowInjector = injector.createChild([shadowModule], name: SHADOW_DOM_INJECTOR_NAME);
-    probe = _expando[shadowDom] = new ElementProbe(
-        injector.get(ElementProbe), shadowDom, shadowInjector, shadowScope);
-    return shadowInjector;
+        if (_componentFactory.config.elementProbeEnabled) {
+          probe = _componentFactory.expando[shadowDom] = shadowInjector.elementProbe;
+          shadowScope.on(ScopeEvent.DESTROY).listen((ScopeEvent) => _componentFactory.expando[shadowDom] = null);
+        }
+
+        var controller = shadowInjector.getByKey(_ref.typeKey);
+        if (controller is ScopeAware) controller.scope = shadowScope;
+        BoundComponentFactory._setupOnShadowDomAttach(controller, templateLoader, shadowScope);
+        shadowScope.context[_component.publishAs] = controller;
+
+        return controller;
+      } finally {
+        traceLeave(s);
+      }
+    };
+  }
+}
+
+class _ComponentAssetKey {
+  final String tag;
+  final String assetUrl;
+
+  final String _key;
+
+  _ComponentAssetKey(String tag, String assetUrl)
+      : _key = "$tag|$assetUrl",
+        this.tag = tag,
+        this.assetUrl = assetUrl;
+
+  @override
+  String toString() => _key;
+
+  @override
+  int get hashCode => _key.hashCode;
+
+  bool operator ==(key) =>
+      key is _ComponentAssetKey
+      && tag == key.tag
+      && assetUrl == key.assetUrl;
+}
+
+@Injectable()
+class ComponentCssRewriter {
+  String call(String css, { String selector, String cssUrl} ) {
+    return css;
   }
 }

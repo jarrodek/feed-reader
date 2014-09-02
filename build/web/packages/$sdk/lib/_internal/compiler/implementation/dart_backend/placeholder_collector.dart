@@ -82,6 +82,7 @@ class SendVisitor extends ResolvedVisitor {
     if (element == null) {
       collector.tryMakeMemberPlaceholder(node.selector);
     } else if (element.isErroneous) {
+      collector.makeUnresolvedPlaceholder(node);
       return;
     } else if (element.isPrefix) {
       // Node is prefix part in case of source 'lib.somesetter = 5;'
@@ -113,7 +114,7 @@ class SendVisitor extends ResolvedVisitor {
     collector.backend.registerStaticSend(element, node);
 
     if (Elements.isUnresolved(element)
-        || identical(element, compiler.assertMethod)
+        || elements.isAssert(node)
         || element.isDeferredLoaderGetter) {
       return;
     }
@@ -141,8 +142,15 @@ class SendVisitor extends ResolvedVisitor {
     collector.internalError(reason, node: node);
   }
 
-  visitTypeReferenceSend(Send node) {
+  visitTypePrefixSend(Send node) {
     collector.makeElementPlaceholder(node.selector, elements[node]);
+  }
+
+  visitTypeLiteralSend(Send node) {
+    DartType type = elements.getTypeLiteralType(node);
+    if (!type.isDynamic) {
+      collector.makeElementPlaceholder(node.selector, type.element);
+    }
   }
 }
 
@@ -187,14 +195,16 @@ class PlaceholderCollector extends Visitor {
       ConstructorElement constructor = element;
       DartType type = element.enclosingClass.thisType.asRaw();
       makeConstructorPlaceholder(node.name, element, type);
-      Return bodyAsReturn = node.body.asReturn();
-      if (bodyAsReturn != null && bodyAsReturn.isRedirectingFactoryBody) {
+      RedirectingFactoryBody bodyAsRedirectingFactoryBody =
+          node.body.asRedirectingFactoryBody();
+      if (bodyAsRedirectingFactoryBody != null) {
         // Factory redirection.
         FunctionElement redirectTarget = constructor.immediateRedirectionTarget;
         assert(redirectTarget != null && redirectTarget != element);
         type = redirectTarget.enclosingClass.thisType.asRaw();
         makeConstructorPlaceholder(
-            bodyAsReturn.expression, redirectTarget, type);
+            bodyAsRedirectingFactoryBody.constructorReference,
+            redirectTarget, type);
       }
     } else if (Elements.isStaticOrTopLevel(element)) {
       // Note: this code should only rename private identifiers for class'
@@ -202,7 +212,7 @@ class PlaceholderCollector extends Visitor {
       // just to escape conflicts and that should be enough as we shouldn't
       // be able to resolve private identifiers for other libraries.
       makeElementPlaceholder(node.name, element);
-    } else if (element.isMember) {
+    } else if (element.isClassMember) {
       if (node.name is Identifier) {
         tryMakeMemberPlaceholder(node.name);
       } else {
@@ -231,11 +241,7 @@ class PlaceholderCollector extends Visitor {
     } else if (element is VariableElement) {
       VariableDefinitions definitions = elementNode;
       Node definition = definitions.definitions.nodes.head;
-      final definitionElement = treeElements[elementNode];
-      // definitionElement == null if variable is actually unused.
-      if (definitionElement != null) {
-        collectFieldDeclarationPlaceholders(definitionElement, definition);
-      }
+      collectFieldDeclarationPlaceholders(element, definition);
       makeVarDeclarationTypePlaceholder(definitions);
     } else {
       assert(element is ClassElement || element is TypedefElement);
@@ -244,6 +250,9 @@ class PlaceholderCollector extends Visitor {
     compiler.withCurrentElement(element, () {
       elementNode.accept(this);
     });
+    if (element == backend.mirrorHelperSymbolsMap) {
+      backend.registerMirrorHelperElement(element, elementNode);
+    }
   }
 
   // TODO(karlklose): should we create placeholders for these?
@@ -255,7 +264,7 @@ class PlaceholderCollector extends Visitor {
 
   void tryMakeLocalPlaceholder(Element element, Identifier node) {
     bool isNamedOptionalParameter() {
-      FunctionElement function = element.enclosingElement;
+      FunctionTypedElement function = element.enclosingElement;
       FunctionSignature signature = function.functionSignature;
       if (!signature.optionalParametersAreNamed) return false;
       for (Element parameter in signature.optionalParameters) {
@@ -399,7 +408,7 @@ class PlaceholderCollector extends Visitor {
         Identifier name = named.name;
         String nameAsString = name.source;
         for (final parameter in optionalParameters) {
-          if (identical(parameter.kind, ElementKind.FIELD_PARAMETER)) {
+          if (parameter.isInitializingFormal) {
             if (parameter.name == nameAsString) {
               tryMakeMemberPlaceholder(name);
               break;
@@ -476,10 +485,6 @@ class PlaceholderCollector extends Visitor {
   }
 
   visitVariableDefinitions(VariableDefinitions node) {
-    Element definitionElement = treeElements[node];
-    if (definitionElement == backend.mirrorHelperSymbolsMap) {
-      backend.registerMirrorHelperElement(definitionElement, node);
-    }
     // Collect only local placeholders.
     for (Node definition in node.definitions.nodes) {
       Element definitionElement = treeElements[definition];
@@ -493,14 +498,14 @@ class PlaceholderCollector extends Visitor {
         // May get FunctionExpression here in definition.selector
         // in case of A(int this.f());
         if (send.selector is Identifier) {
-          if (identical(definitionElement.kind, ElementKind.FIELD_PARAMETER)) {
+          if (definitionElement.isInitializingFormal) {
             tryMakeMemberPlaceholder(send.selector);
           } else {
             tryMakeLocalPlaceholder(definitionElement, send.selector);
           }
         } else {
           assert(send.selector is FunctionExpression);
-          if (identical(definitionElement.kind, ElementKind.FIELD_PARAMETER)) {
+          if (definitionElement.isInitializingFormal) {
             tryMakeMemberPlaceholder(
                 send.selector.asFunctionExpression().name);
           }

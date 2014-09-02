@@ -10,6 +10,11 @@ part of angular.core_internal;
  */
 @Injectable()
 class Interpolate implements Function {
+  var _cache = new HashMap();
+
+  Interpolate(CacheRegister cacheRegister) {
+    cacheRegister.registerCache("Interpolate", _cache);
+  }
   /**
    * Compiles markup text into expression.
    *
@@ -23,6 +28,15 @@ class Interpolate implements Function {
 
   String call(String template, [bool mustHaveExpression = false,
               String startSymbol = '{{', String endSymbol = '}}']) {
+    if (mustHaveExpression == false && startSymbol == '{{' && endSymbol == '}}') {
+      // cachable
+      return _cache.putIfAbsent(template, () => _call(template, mustHaveExpression, startSymbol, endSymbol));
+    }
+    return _call(template, mustHaveExpression, startSymbol, endSymbol);
+  }
+
+  String _call(String template, [bool mustHaveExpression = false,
+              String startSymbol, String endSymbol]) {
     if (template == null || template.isEmpty) return "";
 
     final startLen = startSymbol.length;
@@ -47,8 +61,7 @@ class Interpolate implements Function {
           // formatter
           expParts.add(_wrapInQuotes(template.substring(index, startIdx)));
         }
-        expParts.add('(' + template.substring(startIdx + startLen, endIdx) +
-        '|stringify)');
+        expParts.add('(' + template.substring(startIdx + startLen, endIdx) + '|stringify)');
 
         index = endIdx + endLen;
         hasInterpolation = true;

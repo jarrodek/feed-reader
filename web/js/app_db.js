@@ -29,7 +29,7 @@ rss.db._db = null;
  * Current database schema version.
  * @type Number
  */
-rss.db._dbVersion = 5;
+rss.db._dbVersion = 6;
 /**
  * Generic error handler.
  * @param {Error} e
@@ -89,8 +89,9 @@ rss.db._dbUpgrade = function(e){
     feedstore.createIndex('url', 'url', {unique: true, multiEntry: false});
     
     console.info('Creating "posts" datastore and indexes.');
-    var poststore = db.createObjectStore("posts", {autoIncrement: true, keyPath: 'id'});
-    poststore.createIndex('entryid', 'entryid', {unique: true, multiEntry: false});
+    //var poststore = db.createObjectStore("posts", {autoIncrement: true, keyPath: 'id'});
+    var poststore = db.createObjectStore("posts", {keyPath: 'entryid'});
+    //poststore.createIndex('entryid', 'entryid', {unique: true, multiEntry: false});
     poststore.createIndex('feedid', 'feedid', {unique: false, multiEntry: false});
     poststore.createIndex('unread', 'unread', {unique: false, multiEntry: false});
     poststore.createIndex('categories', 'categories', {unique: false, multiEntry: true});
@@ -132,6 +133,27 @@ rss.db.getEntries = function(feedInternalDbId, callback) {
         };
     });
 };
+
+rss.db.getAllEntries = function(callback) {
+    rss.db.open(function() {
+        var transaction = rss.db._db.transaction(["posts"]);
+        transaction.onerror = rss.db.onerror;
+        var objectStore = transaction.objectStore("posts");
+        var entries = [];
+        var cursor = objectStore.openCursor();
+        cursor.onerror = rss.db.onerror;
+        cursor.onsuccess = function(event) {
+            var cursor = event.target.result;
+            if (cursor) {
+                entries[entries.length] = cursor.value;
+                cursor.continue();
+            } else {
+                callback(entries);
+            }
+        };
+    });
+};
+
 /**
  * Get all Feeds from Datastore.
  * @param {Function} callback Called when all entries are ready.
@@ -213,12 +235,7 @@ rss.db.insertPosts = function(inserts, updates, callback){
     rss.db.open(function() {
         var transaction = rss.db._db.transaction(["posts"], "readwrite");
         var objectStore = transaction.objectStore("posts");
-        transaction.onerror = function(e){
-            console.log("There has been an error with saving data: " + transaction.error);
-            for(var _e in transaction.error){
-                console.log("Error: [" + _e + "]: " + transaction.error[_e]);
-            }
-        };
+        transaction.onerror = rss.db.onerror;
         transaction.oncomplete = callback;
         for(var i=0, len=inserts.length; i<len; i++){
             var r = objectStore.add(inserts[i]);

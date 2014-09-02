@@ -9,8 +9,7 @@ import 'package:angular/tools/transformer/html_dart_references_generator.dart';
 import 'package:angular/tools/transformer/options.dart';
 import 'package:barback/barback.dart';
 import 'package:code_transformers/resolver.dart';
-import 'package:di/transformer/injector_generator.dart' show InjectorGenerator;
-import 'package:di/transformer/options.dart' as di;
+import 'package:di/transformer.dart' as di;
 import 'package:path/path.dart' as path;
 
 
@@ -34,7 +33,7 @@ class AngularTransformerGroup implements TransformerGroup {
 TransformOptions _parseSettings(Map args) {
   // Default angular annotations for injectable types
   var annotations = [
-      'angular.core.annotation_src.Injectable',
+      'di.annotations.Injectable',
       'angular.core.annotation_src.Decorator',
       'angular.core.annotation_src.Controller',
       'angular.core.annotation_src.Component',
@@ -48,10 +47,7 @@ TransformOptions _parseSettings(Map args) {
   injectedTypes.addAll(_readStringListValue(args, 'injected_types'));
 
   var sdkDir = _readStringValue(args, 'dart_sdk', required: false);
-  if (sdkDir == null) {
-    // Assume the Pub executable is always coming from the SDK.
-    sdkDir =  path.dirname(path.dirname(Platform.executable));
-  }
+  if (sdkDir == null) sdkDir = dartSdkDirectory;
 
   var diOptions = new di.TransformOptions(
       injectableAnnotations: annotations,
@@ -120,18 +116,21 @@ Map<String, String> _readStringMapValue(Map args, String name) {
   return value;
 }
 
-List<List<Transformer>> _createPhases(TransformOptions options) {
+Transformer _staticGenerator(TransformOptions options) {
   var resolvers = new Resolvers(options.sdkDirectory);
-  return [
-    [new HtmlDartReferencesGenerator(options)],
-    [new _SerialTransformer([
+  return new _SerialTransformer([
       new ExpressionGenerator(options, resolvers),
-      new InjectorGenerator(options.diOptions, resolvers),
       new MetadataGenerator(options, resolvers),
       new StaticAngularGenerator(options, resolvers)
-    ])]
-  ];
+  ]);
 }
+
+List<List<Transformer>> _createPhases(TransformOptions options) =>
+  [
+    [ new HtmlDartReferencesGenerator(options) ],
+    [ new di.InjectorGenerator(options.diOptions, new Resolvers(options.sdkDirectory)) ],
+    [ _staticGenerator(options) ]
+  ];
 
 /// Helper which runs a group of transformers serially and ensures that
 /// transformers with shared data are always applied in a specific order.

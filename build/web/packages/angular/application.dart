@@ -68,18 +68,24 @@
 library angular.app;
 
 import 'dart:html' as dom;
+import 'dart:js' show context;
 
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:di/di.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/perf/module.dart';
+import 'package:angular/cache/module.dart';
+import 'package:angular/cache/js_cache_register.dart';
 import 'package:angular/core/module_internal.dart';
-import 'package:angular/core/registry.dart';
 import 'package:angular/core_dom/module_internal.dart';
 import 'package:angular/directive/module.dart';
 import 'package:angular/formatter/module_internal.dart';
 import 'package:angular/routing/module.dart';
-import 'package:angular/introspection_js.dart';
+import 'package:angular/introspection.dart';
+import 'package:angular/ng_tracing.dart';
+
+import 'package:angular/core_dom/static_keys.dart';
+import 'package:angular/core_dom/directive_injector.dart';
 
 /**
  * This is the top level module which describes all Angular components,
@@ -89,19 +95,19 @@ import 'package:angular/introspection_js.dart';
  * You can use AngularModule explicitly when creating a custom Injector that needs to know
  * about Angular services, formatters, and directives. When writing tests, this is typically done for
  * you by the [SetUpInjector](#angular-mock@id_setUpInjector) method.
- *
-
  */
 class AngularModule extends Module {
   AngularModule() {
+    DirectiveInjector.initUID();
+    install(new CacheModule());
     install(new CoreModule());
     install(new CoreDomModule());
-    install(new DecoratorFormatter());
+    install(new DirectiveModule());
     install(new FormatterModule());
+    install(new JsCacheModule());
     install(new PerfModule());
     install(new RoutingModule());
 
-    bind(MetadataExtractor);
     bind(Expando, toValue: elementExpando);
   }
 }
@@ -139,21 +145,22 @@ abstract class Application {
   final List<Module> modules = <Module>[];
   dom.Element element;
 
-/**
-* Creates a selector for a DOM element.
-*/
+  /**
+   * Creates a selector for a DOM element.
+   */
   dom.Element selector(String selector) => element = _find(selector);
 
   Application(): element = _find('[ng-app]', dom.window.document.documentElement) {
+    traceDetectWTF(context);
     modules.add(ngModule);
     ngModule..bind(VmTurnZone, toValue: zone)
             ..bind(Application, toValue: this)
-            ..bind(dom.Node, toFactory: (i) => i.get(Application).element);
+            ..bind(dom.Node, toFactory: (Application app) => app.element, inject: [Application]);
   }
 
-/**
-* Returns the injector for this module.
-*/
+  /**
+   * Returns the injector for this module.
+   */
   Injector injector;
 
   Application addModule(Module module) {
@@ -161,28 +168,42 @@ abstract class Application {
     return this;
   }
 
-  Injector run() {
-    publishToJavaScript();
-    return zone.run(() {
-      var rootElements = [element];
-      Injector injector = createInjector();
-      ExceptionHandler exceptionHandler = injector.get(ExceptionHandler);
-      initializeDateFormatting(null, null).then((_) {
-        try {
-          var compiler = injector.get(Compiler);
-          var viewFactory = compiler(rootElements, injector.get(DirectiveMap));
-          viewFactory(injector, rootElements);
-        } catch (e, s) {
-          exceptionHandler(e, s);
-        }
-      });
-      return injector;
-    });
+  Application rootContextType(Type rootContext) {
+    modules.add(new Module()..bind(Object, toImplementation: rootContext));
+    return this;
   }
 
-/**
-*  Creates an injector function that can be used for retrieving services as well as for
-*  dependency injection.
-*/
-  Injector createInjector();
+  Injector run() {
+    var scope = traceEnter(Application_bootstrap);
+    try {
+      publishToJavaScript();
+      return zone.run(() {
+        var rootElements = [element];
+        Injector injector = createInjector();
+        ExceptionHandler exceptionHandler = injector.getByKey(EXCEPTION_HANDLER_KEY);
+        // Publish cache register interface
+        injector.getByKey(JS_CACHE_REGISTER_KEY);
+        initializeDateFormatting(null, null).then((_) {
+          try {
+            Compiler compiler = injector.getByKey(COMPILER_KEY);
+            DirectiveMap directiveMap = injector.getByKey(DIRECTIVE_MAP_KEY);
+            RootScope rootScope = injector.getByKey(ROOT_SCOPE_KEY);
+            ViewFactory viewFactory = compiler(rootElements, directiveMap);
+            viewFactory(rootScope, null, rootElements);
+          } catch (e, s) {
+            exceptionHandler(e, s);
+          }
+        });
+        return injector;
+      });
+    } finally {
+      traceLeave(scope);
+    }
+  }
+
+  /**
+   * Creates an injector function that can be used for retrieving services as well as for
+   * dependency injection.
+   */
+  Injector createInjector() => new ModuleInjector(modules);
 }

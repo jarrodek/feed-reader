@@ -102,19 +102,23 @@ class Feed {
 
 class FeedEntry {
   ///Database ID
-  int id;
+  //int id;
   ///Feed's database ID
   int feedid;
   ///Entry ID (from the feed)
   String entryid;
   ///Publication date as string
   String published;
+  ///Timestamp generated from [published].
+  int createtime = 0;
   ///Update time date as string
   String updated;
   ///Entry's title
   String title;
   ///Entry's content
   String content;
+  ///Stripped content data.
+  String text;
   ///Reference URL
   String url;
   ///Entry's author
@@ -128,13 +132,18 @@ class FeedEntry {
   bool starred = false;
 
   FeedEntry.fromDb(LinkedHashMap data) {
-    this.id = data['id'];
+    if(data == null){
+      throw "Can't restore DB object from null object.";
+    }
+    //this.id = data['id'];
     this.feedid = data['feedid'];
     this.entryid = data['entryid'];
     this.published = data['published'];
+    this.createtime = data['createtime'];
     this.updated = data['updated'];
     this.title = data['title'];
     this.content = data['content'];
+    this.text = data['text'];
     this.url = data['url'];
     if (data.containsKey('author')) {
       if (data['author'] != null) {
@@ -153,18 +162,20 @@ class FeedEntry {
       'feedid': this.feedid,
       'entryid': this.entryid,
       'published': this.published,
+      'createtime': this.createtime,
       'updated': this.updated,
       'title': this.title,
       'content': this.content,
+      'text': this.text,
       'url': this.url,
       'categories': this.categories,
       'newitem': this.newitem == null ? 1 : this.newitem ? 1 : 0,
       'unread': this.unread == null ? 1 : this.unread ? 1 : 0,
       'starred': this.starred == null ? 0 : this.starred ? 1 : 0,
     };
-    if (this.id != null) {
-      data['id'] = this.id;
-    }
+//    if (this.id != null) {
+//      data['id'] = this.id;
+//    }
     if (this.author != null) {
       data['author'] = this.author.toJson();
     }
@@ -175,7 +186,7 @@ class FeedEntry {
   String toString() {
     StringBuffer sb = new StringBuffer();
     sb.write("FeedEntry[ ");
-    sb.write("id(db)=$id, ");
+//    sb.write("id(db)=$id, ");
     sb.write("id(feed-db)=$feedid, ");
     sb.write("id(entry)=$entryid, ");
     sb.write("newitem=$newitem, ");
@@ -183,6 +194,7 @@ class FeedEntry {
     sb.write("published=$published, ");
     sb.write("updated=$updated, ");
     sb.write("title=$title, ");
+    sb.write("text=$text");
     sb.write("content=$content, ");
     sb.write("url=$url, ");
     sb.write("author=$author, ");

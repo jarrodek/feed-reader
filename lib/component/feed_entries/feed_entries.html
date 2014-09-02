@@ -1,6 +1,6 @@
 <div layout vertical>
   <header class="feed" layout horizontal center>
-    <h1>{{cmp.feed.title|sanitize}} (<unread-counter feed="{{cmp.feed.id}}"></unread-counter>)</h1>
+    <h1>{{cmp.feed.title}} (<unread-counter feed="{{cmp.feed.id}}"></unread-counter>)</h1>
   </header>
   <list-article article="post" ng-repeat="post in cmp.entries"></list-article>
 </div>

@@ -28,7 +28,7 @@ h2 a{
 .unread h2 a{
   font-weight: bold;
   font-weight: bold;
-  color: rgba(20, 121, 230, 0.54);
+  color: rgba(2, 136, 209, 0.80);
 }
 
 .post-summary{
@@ -64,7 +64,7 @@ article:hover h2 a {
   color: rgba(0, 0, 0, 0.87); 
 }
 article.unread:hover h2 a {
-  color: rgba(20, 121, 230, 0.87); 
+  color: rgba(2, 136, 209, 0.98); 
 }
 
 .new-label{

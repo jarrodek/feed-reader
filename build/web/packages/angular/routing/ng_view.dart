@@ -9,32 +9,28 @@ part of angular.routing;
  * [NgViewDirective] can work with [NgViewDirective] to define nested views
  * for hierarchical routes. For example:
  *
- *     void initRoutes(Router router, RouteViewFactory view) {
- *       router.root
- *         ..addRoute(
- *             name: 'library',
- *             path: '/library',
- *             enter: view('library.html'),
- *             mount: (Route route) => route
- *               ..addRoute(
- *                   name: 'all',
- *                   path: '/all',
- *                   enter: view('book_list.html'))
- *               ..addRoute(
- *                   name: 'book',
- *                   path: '/:bookId',
- *                   mount: (Route route) => route
- *                     ..addRoute(
- *                         name: 'overview',
- *                         path: '/overview',
- *                         defaultRoute: true,
- *                         enter: view('book_overview.html'))
- *                     ..addRoute(
- *                         name: 'read',
- *                         path: '/read',
- *                         enter: view('book_read.html'))));
- *     }
- *   }
+ *     void initRoutes(Router router, RouteViewFactory views) {
+ *       views.configure({
+ *          'library': ngRoute(
+ *              path: '/library',
+ *              view: 'library.html',
+ *              mount: {
+ *                  'all': ngRoute(
+ *                      path: '/all',
+ *                      view: 'book_list.html'),
+ *                   'book': ngRoute(
+ *                      path: '/:bookId',
+ *                      mount: {
+ *                          'overview': ngRoute(
+ *                              path: '/overview',
+ *                              defaultRoute: true,
+ *                              view: 'book_overview.html'),
+ *                          'read': ngRoute(
+ *                              path: '/read',
+ *                              view: 'book_read.html'),
+ *                      })
+ *              })
+ *       });
  *
  * index.html:
  *
@@ -58,47 +54,47 @@ part of angular.routing;
 @Decorator(
     selector: 'ng-view',
     module: NgView.module,
-    visibility: Directive.CHILDREN_VISIBILITY)
+    visibility: Visibility.CHILDREN)
 class NgView implements DetachAware, RouteProvider {
-  static final Module _module = new Module()
-      ..bind(RouteProvider, toFactory: (i) => i.get(NgView));
-  static module() => _module;
+  static void module(DirectiveBinder binder) =>
+      binder.bind(RouteProvider, toInstanceOf: NG_VIEW_KEY, visibility: Visibility.CHILDREN);
 
-  final NgRoutingHelper locationService;
-  final ViewCache viewCache;
-  final Injector injector;
-  final Element element;
-  final Scope scope;
+  final NgRoutingHelper _locationService;
+  final ViewCache _viewCache;
+  final Injector _appInjector;
+  final DirectiveInjector _dirInjector;
+  final Element _element;
+  final Scope _scope;
   RouteHandle _route;
 
   View _view;
-  Scope _scope;
+  Scope _childScope;
   Route _viewRoute;
 
-  NgView(this.element, this.viewCache,
-                  Injector injector, Router router,
-                  this.scope)
-      : injector = injector,
-        locationService = injector.get(NgRoutingHelper)
+  NgView(this._element, this._viewCache, DirectiveInjector dirInjector, this._appInjector,
+         Router router, this._scope)
+      : _dirInjector = dirInjector,
+        _locationService = dirInjector.getByKey(NG_ROUTING_HELPER_KEY)
   {
-    RouteProvider routeProvider = injector.parent.get(NgView);
+    RouteProvider routeProvider = dirInjector.getFromParentByKey(NG_VIEW_KEY);
     _route = routeProvider != null ?
         routeProvider.route.newHandle() :
         router.root.newHandle();
-    locationService._registerPortal(this);
+    _locationService._registerPortal(this);
     _maybeReloadViews();
   }
 
   void _maybeReloadViews() {
-    if (_route.isActive) locationService._reloadViews(startingFrom: _route);
+    if (_route.isActive) _locationService._reloadViews(startingFrom: _route);
   }
 
-  detach() {
+  void detach() {
     _route.discard();
-    locationService._unregisterPortal(this);
+    _locationService._unregisterPortal(this);
+    _cleanUp();
   }
 
-  _show(_View viewDef, Route route, List<Module> modules) {
+  void _show(_View viewDef, Route route, List<Module> modules) {
     assert(route.isActive);
 
     if (_viewRoute != null) return;
@@ -112,43 +108,57 @@ class NgView implements DetachAware, RouteProvider {
       _cleanUp();
     });
 
-    var viewInjector = modules == null ?
-        injector :
-        forceNewDirectivesAndFormatters(injector, modules);
+    Injector viewInjector = _appInjector;
 
-    var newDirectives = viewInjector.get(DirectiveMap);
+    if (modules != null) {
+      viewInjector = createChildInjectorWithReload(_appInjector, modules);
+    }
+
+    var newDirectives = viewInjector.getByKey(DIRECTIVE_MAP_KEY);
     var viewFuture = viewDef.templateHtml != null ?
-        new Future.value(viewCache.fromHtml(viewDef.templateHtml, newDirectives)) :
-        viewCache.fromUrl(viewDef.template, newDirectives);
-    viewFuture.then((viewFactory) {
+        new Future.value(_viewCache.fromHtml(viewDef.templateHtml, newDirectives)) :
+        _viewCache.fromUrl(viewDef.template, newDirectives);
+    viewFuture.then((ViewFactory viewFactory) {
       _cleanUp();
-      _scope = scope.createChild(new PrototypeMap(scope.context));
-      _view = viewFactory(
-          viewInjector.createChild([new Module()..bind(Scope, toValue: _scope)]));
-      _view.nodes.forEach((elm) => element.append(elm));
+      _childScope = _scope.createChild(new PrototypeMap(_scope.context));
+      _view = viewFactory(_childScope, _dirInjector);
+      _view.nodes.forEach((elm) => _element.append(elm));
     });
   }
 
-  _cleanUp() {
+  void _cleanUp() {
     if (_view == null) return;
 
     _view.nodes.forEach((node) => node.remove());
-    _scope.destroy();
-
+    _childScope.destroy();
     _view = null;
-    _scope = null;
+    _childScope = null;
   }
 
   Route get route => _viewRoute;
+
   String get routeName => _viewRoute.name;
+
   Map<String, String> get parameters {
-    var res = <String, String>{};
+    var res = new HashMap<String, String>();
     var p = _viewRoute;
     while (p != null) {
       res.addAll(p.parameters);
       p = p.parent;
     }
     return res;
+  }
+  /**
+   * Creates a child injector that allows loading new directives, formatters and
+   * services from the provided modules.
+   */
+  static Injector createChildInjectorWithReload(Injector injector, List<Module> modules) {
+    var modulesToAdd = new List<Module>.from(modules);
+    modulesToAdd.add(new Module()
+        ..bind(DirectiveMap)
+        ..bind(FormatterMap));
+
+    return new ModuleInjector(modulesToAdd, injector);
   }
 }
 

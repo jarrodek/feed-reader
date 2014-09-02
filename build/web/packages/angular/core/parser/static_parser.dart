@@ -1,5 +1,8 @@
 library angular.core.parser.static_parser;
 
+import 'dart:collection';
+
+import 'package:angular/cache/module.dart' show CacheRegister;
 import 'package:angular/core/annotation_src.dart' show Injectable;
 import 'package:angular/core/module_internal.dart' show FormatterMap;
 import 'package:angular/core/parser/parser.dart';
@@ -16,8 +19,10 @@ class StaticParserFunctions {
 class StaticParser implements Parser<Expression> {
   final StaticParserFunctions _functions;
   final DynamicParser _fallbackParser;
-  final _cache = <String, Expression>{};
-  StaticParser(this._functions, this._fallbackParser);
+  final _cache = new HashMap<String, Expression>();
+  StaticParser(this._functions, this._fallbackParser, CacheRegister cacheRegister) {
+    cacheRegister.registerCache("StaticParser", _cache);
+  }
 
   Expression call(String input) {
     if (input == null) input = '';

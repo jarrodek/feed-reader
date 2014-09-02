@@ -11,7 +11,7 @@ import 'dbstructures.dart';
 
 @Injectable()
 class RssDatabase {
-  static final int DB_VERSION = 5;
+  static final int DB_VERSION = 6;
   static final String FEEDS_STORE = "feeds";
   static final String POSTS_STORE = "posts";
 
@@ -40,8 +40,9 @@ class RssDatabase {
     feedstore.createIndex('feedid', 'feedid', unique: true, multiEntry: false);
     feedstore.createIndex('url', 'url', unique: true, multiEntry: false);
 
-    var poststore = db.createObjectStore(POSTS_STORE, autoIncrement: true, keyPath: 'id');
-    poststore.createIndex('entryid', 'entryid', unique: true, multiEntry: false);
+    //var poststore = db.createObjectStore(POSTS_STORE, autoIncrement: true, keyPath: 'id');
+    var poststore = db.createObjectStore(POSTS_STORE, autoIncrement: false, keyPath: 'entryid');
+    //poststore.createIndex('entryid', 'entryid', unique: true, multiEntry: false);
     poststore.createIndex('categories', 'categories', unique: false, multiEntry: true);
     poststore.createIndex('feedid', 'feedid', unique: false, multiEntry: false);
     poststore.createIndex('unread', 'unread', unique: false, multiEntry: false);
@@ -177,7 +178,7 @@ class RssDatabase {
    * Get posts list for specified by [feedId] (feed's database id). 
    * 
    */
-  Future<List<FeedEntry>> getPosts(int feedId) => db == null ? _loaded.then((_) => _getPostsForFeed(feedId)) : _getPostsForFeed(feedId);
+  Future<List<FeedEntry>> getPosts(int feedId) => _loaded.then((_) => _getPostsForFeed(feedId));
 
   Future<List<FeedEntry>> _getPostsForFeed(int feedId) {
     //print('[DATASTORE]  _getPostsForFeed(int $feedId)');
@@ -259,7 +260,7 @@ class RssDatabase {
     });
   }
 
-  Future<FeedEntry> getPost(int id) {
+  Future<FeedEntry> getPost(String id) {
     //print('[DATASTORE] getPost(int $id)');
     var completer = new Completer<FeedEntry>();
 

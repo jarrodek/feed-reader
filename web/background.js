@@ -83,7 +83,18 @@ rss.app.window = null;
  * data from this object.
  * @type Object
  */
-rss.app.notifications = {};
+rss.app.notifications = {
+    /**
+     * Data for opened notifications.
+     * @type Object
+     */
+    'opened': {},
+    /**
+     * Temp data for pending notifications.
+     * @type Array
+     */
+    'data': []
+};
 /**
  * Get from the sync storage list of all feeds.
  * @param {Function} callback Callback function. It's parameter will hold
@@ -132,6 +143,7 @@ rss.app.update = function(){
 rss.app._run = function(){
     if (rss.app._queue.length === 0){
         rss.app.notifyLoading(false);
+        rss.app.showNotifications();
         return;
     }
     var feed = rss.app._queue.shift();
@@ -230,6 +242,9 @@ rss.app.syncFeed = function(feed, newFeed) {
 /**
  * Notify about new entires in the feed.
  * 
+ * This function will not show notifications! The app must call rss.app.showNotifications
+ * function in order to display all notifications.
+ * 
  * @param {Number} feedId Feed ID
  * @param {String} feedTitle Feed title
  * @param {Number} inserted Number of new items.
@@ -240,16 +255,57 @@ rss.app.notifyEntries = function(feedId, feedTitle, inserted) {
         rss.app.window.contentWindow.feedUpdated(feedId);
         return;
     }
-    var options = {
-        type: "basic",
-        title: "You have new items in RSS reader",
-        message: inserted + ' new items in ' + feedTitle,
-        iconUrl: chrome.runtime.getURL('/img/notification.png')
+    var data = {
+        'id': feedId,
+        'title': feedTitle,
+        'count': inserted
     };
+    rss.app.notifications.data.push(data);
+};
+
+rss.app.showNotifications = function(){
+    if(rss.app.notifications.data.length === 0){
+        return;
+    }
+    
+    var icon = chrome.runtime.getURL('/img/notification.png');
+    var options = {};
+    var showFeed = -1;
+    if(rss.app.notifications.data.length === 1){
+        var _n = rss.app.notifications.data.shift();
+        options = {
+            type: "basic",
+            title: "You have new articles to read!",
+            message: _n.count + ' new items in ' + _n.title,
+            iconUrl: icon
+        };
+        showFeed = _n.id;
+    } else {
+        var feedsCount = 0, itemsCount = 0, items = [];
+        while(rss.app.notifications.data.length > 0){
+            var _n = rss.app.notifications.data.shift();
+            feedsCount++;
+            itemsCount += _n.count;
+            items[items.length] = {
+                'title': _n.title,
+                'message': _n.count + ' new articles.'
+            };
+        }
+        options = {
+            type: "basic",
+            title: "You have "+itemsCount+" new articles to read!",
+            message: feedsCount + ' has been updated.',
+            iconUrl: icon
+        };
+        if(items.length > 0){
+            options['items'] = items;
+        }
+    }
     chrome.notifications.create("", options, function(id) {
-        rss.app.notifications[id] = feedId;
+        rss.app.notifications.opened[id] = showFeed;
     });
 };
+
 /**
  * Notify the app (if the window has been opened) that Feeds are now updated
  * (loading set to true) or has been updated (loading set to false).
@@ -273,7 +329,7 @@ rss.app.notifyLoading = function(loading){
  */
 rss.app.createAppWindow = function(initialFeed) {
     var url = 'rss_app.html';
-    if (initialFeed) {
+    if (initialFeed && initialFeed !== -1) {
         url += '#/feed/' + initialFeed;
     }
     chrome.app.window.create(url, {
@@ -303,10 +359,10 @@ rss.app._setupAlarm = function() {
 
 rss.app._setupNotifications = function() {
     chrome.notifications.onClicked.addListener(function(notificationId) {
-        if (!(notificationId in rss.app.notifications))
+        if (!(notificationId in rss.app.notifications.opened))
             return;
-        var feedId = rss.app.notifications[notificationId];
-        delete rss.app.notifications[notificationId];
+        var feedId = rss.app.notifications.opened[notificationId];
+        delete rss.app.notifications.opened[notificationId];
         rss.app.createAppWindow(feedId);
     });
 };

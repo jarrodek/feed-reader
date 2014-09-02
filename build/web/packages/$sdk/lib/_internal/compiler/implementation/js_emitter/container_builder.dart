@@ -79,11 +79,8 @@ class ContainerBuilder extends CodeEmitterHelper {
     // Includes extra receiver argument when using interceptor convention
     int indexOfLastOptionalArgumentInParameters = optionalParameterStart - 1;
 
-    TreeElements elements =
-        compiler.enqueuer.resolution.getCachedElements(member);
-
     int parameterIndex = 0;
-    parameters.orderedForEachParameter((Element element) {
+    parameters.orderedForEachParameter((ParameterElement element) {
       String jsName = backend.namer.safeName(element.name);
       assert(jsName != receiverArgumentName);
       if (count < optionalParameterStart) {
@@ -152,7 +149,7 @@ class ContainerBuilder extends CodeEmitterHelper {
                          [bool canTearOff = false]) {
     if (member.enclosingElement.isClosure) {
       ClosureClassElement cls = member.enclosingElement;
-      if (cls.supertype.element == compiler.boundClosureClass) {
+      if (cls.supertype.element == backend.boundClosureClass) {
         compiler.internalError(cls.methodElement, 'Bound closure1.');
       }
       if (cls.methodElement.isInstanceMember) {
@@ -308,7 +305,8 @@ class ContainerBuilder extends CodeEmitterHelper {
             'function(#) { return #.#(#); }',
             [ parameters, buildGetter(), closureCallName, arguments]);
 
-        addProperty(invocationName, function);
+        compiler.dumpInfoTask.registerElementAst(member,
+            addProperty(invocationName, function));
       }
     }
   }
@@ -388,12 +386,14 @@ class ContainerBuilder extends CodeEmitterHelper {
     final bool needStructuredInfo =
         canTearOff || canBeReflected || canBeApplied;
     if (!needStructuredInfo) {
-      builder.addProperty(name, code);
+      compiler.dumpInfoTask.registerElementAst(member,
+          builder.addProperty(name, code));
       if (needsStubs) {
         addParameterStubs(
             member,
             (Selector selector, jsAst.Fun function) {
-              builder.addProperty(namer.invocationName(selector), function);
+              compiler.dumpInfoTask.registerElementAst(member,
+                  builder.addProperty(namer.invocationName(selector), function));
             });
       }
       return;
@@ -514,9 +514,8 @@ class ContainerBuilder extends CodeEmitterHelper {
         expressions.add(
             js.number(task.metadataEmitter.reifyName(parameter.name)));
         if (backend.mustRetainMetadata) {
-          List<MetadataAnnotation> annotations = parameter.metadata.toList();
           Iterable<int> metadataIndices =
-              annotations.map((MetadataAnnotation annotation) {
+              parameter.metadata.map((MetadataAnnotation annotation) {
             Constant constant =
                 backend.constants.getConstantForMetadata(annotation);
             backend.constants.addCompileTimeConstantForEmission(constant);
@@ -535,15 +534,20 @@ class ContainerBuilder extends CodeEmitterHelper {
             new jsAst.LiteralString(
                 '"new ${Elements.reconstructConstructorName(member)}"');
       } else {
-        reflectionName = js.string(member.name);
+        reflectionName =
+            js.string(namer.privateName(member.library, member.name));
       }
       expressions
           ..add(reflectionName)
           ..addAll(task.metadataEmitter.computeMetadata(member).map(js.number));
     } else if (isClosure && canBeApplied) {
-      expressions.add(js.string(member.name));
+      expressions.add(js.string(namer.privateName(member.library,
+                                                  member.name)));
     }
-    builder.addProperty(name, new jsAst.ArrayInitializer.from(expressions));
+    jsAst.ArrayInitializer arrayInit =
+      new jsAst.ArrayInitializer.from(expressions);
+    compiler.dumpInfoTask.registerElementAst(member,
+        builder.addProperty(name, arrayInit));
   }
 
   void addMemberField(VariableElement member, ClassBuilder builder) {

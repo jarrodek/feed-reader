@@ -2,7 +2,11 @@
   <header layout vertical>
   
     <div layout horizontal center>
-      <h1 class="post-title" ng-class="{'unread':Post.entry.unread}" flex>{{Post.entry.title}}</h1>
+      <h1 class="post-title" ng-class="{'unread':Post.entry.unread}" flex>
+        <a href="{{Post.entry.url}}" target="_blank">
+          {{Post.entry.title}}
+        </a>
+      </h1>
       <star starred="Post.entry.starred" ng-click="Post.onStarChange()"></star>
     </div>
     
@@ -10,7 +14,7 @@
       <div class="time" flex>
         <img ng-if="Post.entry.author.image.src != null" class="author-image" ng-src="{{Post.imageUrl}}"/>
         <span ng-if="Post.entry.author.name != null" class="author-name">by <a target="_blank" ng-if="Post.entry.author.url != null" href="{{Post.entry.author.url}}">{{Post.entry.author.name}}</a><b ng-if="Post.entry.author.url == null">{{Post.entry.author.name}}</b>, </span>
-        <span>published</span> <time pubdate datetime="{{Post.entry.published}}"></time>&nbsp;<span ng-if="Post.entry.newitem && false" class="label label-danger">New</span>
+        <span>published</span> <time datetime="{{Post.entry.published}}">{{Post.entry.published|relativedate}}</time>&nbsp;<span ng-if="Post.entry.newitem && false" class="label label-danger">New</span>
       </div>
       <div class="action" center horizontal layout>
         <a href="{{Post.entry.url}}" target="_blank" class="button primary" type="button">Open</a>

@@ -164,6 +164,21 @@ abstract class HttpServer implements Stream<HttpRequest> {
   String serverHeader;
 
   /**
+   * Default set of headers added to all response objects.
+   *
+   * By default the following headers are in this set:
+   *
+   *    Content-Type: text/plain; charset=utf-8
+   *    X-Frame-Options: SAMEORIGIN
+   *    X-Content-Type-Options: nosniff
+   *    X-XSS-Protection: 1; mode=block
+   *
+   * If the `Server` header is added here and the `serverHeader` is set as
+   * well then the value of `serverHeader` takes precedence.
+   */
+  HttpHeaders get defaultResponseHeaders;
+
+  /**
    * Get or set the timeout used for idle keep-alive connections. If no further
    * request is seen within [idleTimeout] after the previous request was
    * completed, the connection is dropped.
@@ -580,6 +595,13 @@ abstract class HttpHeaders {
    * 'set-cookie' header has folding disabled by default.
    */
   void noFolding(String name);
+
+  /**
+   * Remove all headers. Some headers have system supplied values and
+   * for these the system supplied values will still be added to the
+   * collection of values for the header.
+   */
+  void clear();
 }
 
 
@@ -813,6 +835,8 @@ abstract class Cookie {
 
   /**
    * Creates a new cookie optionally setting the name and value.
+   *
+   * By default the value of `httpOnly` will be set to `true`.
    */
   factory Cookie([String name, String value]) => new _Cookie(name, value);
 
@@ -1235,6 +1259,34 @@ abstract class HttpClient {
    * Default is `null`.
    */
   int maxConnectionsPerHost;
+
+  /**
+   * Get and set whether the body of a response will be automatically
+   * uncompressed.
+   *
+   * The body of an HTTP response can be compressed. In most
+   * situations providing the un-compressed body is most
+   * convenient. Therefore the default behavior is to un-compress the
+   * body. However in some situations (e.g. implementing a transparent
+   * proxy) keeping the uncompressed stream is required.
+   *
+   * NOTE: Headers in from the response is never modified. This means
+   * that when automatic un-compression is turned on the value of the
+   * header `Content-Length` will reflect the length of the original
+   * compressed body. Likewise the header `Content-Encoding` will also
+   * have the original value indicating compression.
+   *
+   * NOTE: Automatic un-compression is only performed if the
+   * `Content-Encoding` header value is `gzip`.
+   *
+   * This value affects all responses produced by this client after the
+   * value is changed.
+   *
+   * To disable, set to `false`.
+   *
+   * Default is `true`.
+   */
+  bool autoUncompress;
 
   /**
    * Set and get the default value of the `User-Agent` header for all requests

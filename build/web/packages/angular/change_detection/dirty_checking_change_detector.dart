@@ -370,8 +370,15 @@ class _ChangeIterator<H> implements Iterator<Record<H>>{
  * creates a single linked list of all of the changes for efficient traversal.
  */
 class DirtyCheckingRecord<H> implements Record<H>, WatchRecord<H> {
-  static const List<String> _MODE_NAMES =
-      const ['MARKER', 'IDENT', 'GETTER', 'MAP[]', 'ITERABLE', 'MAP'];
+  static const List<String> _MODE_NAMES = const [
+      'MARKER',
+      'NOOP',
+      'IDENTITY',
+      'GETTER',
+      'GETTER / CLOSURE'
+      'MAP[]',
+      'ITERABLE',
+      'MAP'];
   static const int _MODE_MARKER_ = 0;
   static const int _MODE_NOOP_ = 1;
   static const int _MODE_IDENTITY_ = 2;
@@ -507,19 +514,10 @@ class DirtyCheckingRecord<H> implements Record<H>, WatchRecord<H> {
     }
 
     var last = currentValue;
-    if (!identical(last, current)) {
-      if (last is String && current is String &&
-          last == current) {
-        // This is false change in strings we need to recover, and pretend it
-        // is the same. We save the value so that next time identity will pass
-        currentValue = current;
-      } else if (last is num && last.isNaN && current is num && current.isNaN) {
-        // we need this for the compiled JavaScript since in JS NaN !== NaN.
-      } else {
-        previousValue = last;
-        currentValue = current;
-        return true;
-      }
+    if (!_looseIdentical(last, current)) {
+      previousValue = currentValue;
+      currentValue = current;
+      return true;
     }
     return false;
   }
@@ -529,13 +527,14 @@ class DirtyCheckingRecord<H> implements Record<H>, WatchRecord<H> {
     _group._recordRemove(this);
   }
 
-  String toString() => '${_MODE_NAMES[_mode]}[$field]{$hashCode}';
+  String toString() =>
+      '${_mode < _MODE_NAMES.length ?  _MODE_NAMES[_mode] : '?'}[$field]{$hashCode}';
 }
 
 final Object _INITIAL_ = new Object();
 
 class _MapChangeRecord<K, V> implements MapChangeRecord<K, V> {
-  final _records = new Map<dynamic, KeyValueRecord>();
+  final _records = new HashMap<dynamic, KeyValueRecord>();
   Map _map;
 
   Map get map => _map;
@@ -612,14 +611,10 @@ class _MapChangeRecord<K, V> implements MapChangeRecord<K, V> {
       var newSeqRecord;
       if (oldSeqRecord != null && key == oldSeqRecord.key) {
         newSeqRecord = oldSeqRecord;
-        if (!identical(value, oldSeqRecord._currentValue)) {
+        if (!_looseIdentical(value, oldSeqRecord._currentValue)) {
           var prev = oldSeqRecord._previousValue = oldSeqRecord._currentValue;
           oldSeqRecord._currentValue = value;
-          if (!((value is String && prev is String && value == prev) ||
-                (value is num && value.isNaN && prev is num && prev.isNaN))) {
-            // Check string by value rather than reference
-            _addToChanges(oldSeqRecord);
-          }
+          _addToChanges(oldSeqRecord);
         }
       } else {
         seqChanged = true;
@@ -863,11 +858,11 @@ class _CollectionChangeRecord<V> implements CollectionChangeRecord<V> {
   Iterable _iterable;
   int _length;
 
-  /// Keeps track of moved items.
-  DuplicateMap _movedItems = new DuplicateMap();
+  /// Keeps track of the used records at any point in time (during & across `_check()` calls)
+  DuplicateMap _linkedRecords;
 
-  /// Keeps track of removed items.
-  DuplicateMap _removedItems = new DuplicateMap();
+  /// Keeps track of the removed records at any point in time during `_check()` calls.
+  DuplicateMap _unlinkedRecords;
 
   ItemRecord<V> _previousItHead;
   ItemRecord<V> _itHead, _itTail;
@@ -878,7 +873,7 @@ class _CollectionChangeRecord<V> implements CollectionChangeRecord<V> {
   void _revertToPreviousState() {
     if (!isDirty) return;
 
-    _movedItems.clear();
+    if (_linkedRecords != null) _linkedRecords.clear();
     ItemRecord<V> prev;
     int i = 0;
 
@@ -888,7 +883,9 @@ class _CollectionChangeRecord<V> implements CollectionChangeRecord<V> {
       record.currentIndex = record.previousIndex = i;
       record._prev = prev;
       if (prev != null) prev._next = prev._nextPrevious = record;
-      _movedItems.put(record);
+
+      if (_linkedRecords == null) _linkedRecords = new DuplicateMap();
+      _linkedRecords.put(record);
     }
 
     prev._next = null;
@@ -931,6 +928,7 @@ class _CollectionChangeRecord<V> implements CollectionChangeRecord<V> {
 
   bool _check(Iterable collection) {
     _reset();
+
     if (collection is UnmodifiableListView && identical(_iterable, collection)) {
       // Short circuit and assume that the list has not been modified.
       return false;
@@ -944,7 +942,7 @@ class _CollectionChangeRecord<V> implements CollectionChangeRecord<V> {
       _length = list.length;
       for (int index = 0; index < _length; index++) {
         var item = list[index];
-        if (record == null || !identical(item, record.item)) {
+        if (record == null || !_looseIdentical(record.item, item)) {
           record = mismatch(record, item, index);
           maybeDirty = true;
         } else if (maybeDirty) {
@@ -956,7 +954,7 @@ class _CollectionChangeRecord<V> implements CollectionChangeRecord<V> {
     } else {
       int index = 0;
       for (var item in collection) {
-        if (record == null || !identical(item, record.item)) {
+        if (record == null || !_looseIdentical(record.item, item)) {
           record = mismatch(record, item, index);
           maybeDirty = true;
         } else if (maybeDirty) {
@@ -975,22 +973,21 @@ class _CollectionChangeRecord<V> implements CollectionChangeRecord<V> {
   }
 
   /**
-   * Reset the state of the change objects to show no changes. This means set
-   * previousKey to currentKey, and clear all of the queues (additions, moves,
-   * removals).
+   * Reset the state of the change objects to show no changes. This means set previousKey to
+   * currentKey, and clear all of the queues (additions, moves, removals).
    */
   void _reset() {
     if (isDirty) {
-      // Record the state of the collection for a possible _revertToPreviousState()
-      for (ItemRecord<V> record = _previousItHead = _itHead;
-           record != null;
-           record = record._next) {
-        record._nextPrevious = record._next;
+      // Record the state of the collection for a possible `_revertToPreviousState()`
+      for (ItemRecord<V> r = _previousItHead = _itHead; r != null; r = r._next) {
+        r._nextPrevious = r._next;
       }
       _undoDeltas();
     }
   }
 
+  /// Set the [previousIndex]es of moved and added items to their [currentIndex]es
+  /// Reset the list of additions, moves and removals
   void _undoDeltas() {
     ItemRecord<V> record;
 
@@ -1013,10 +1010,7 @@ class _CollectionChangeRecord<V> implements CollectionChangeRecord<V> {
     assert(isDirty == false);
   }
 
-  /**
-   * A [_CollectionChangeRecord] is considered dirty if it has additions, moves
-   * or removals.
-   */
+  /// A [_CollectionChangeRecord] is considered dirty if it has additions, moves or removals.
   bool get isDirty => _additionsHead != null ||
                       _movesHead != null ||
                       _removalsHead != null;
@@ -1024,46 +1018,37 @@ class _CollectionChangeRecord<V> implements CollectionChangeRecord<V> {
   /**
    * This is the core function which handles differences between collections.
    *
-   * - [record] is the record which we saw at this position last time. If
-   *   [:null:] then it is a new item.
+   * - [record] is the record which we saw at this position last time. If [:null:] then it is a new
+   *   item.
    * - [item] is the current item in the collection
    * - [index] is the position of the item in the collection
    */
   ItemRecord<V> mismatch(ItemRecord<V> record, item, int index) {
-    if (record != null) {
-      if (item is String && record.item is String && record.item == item) {
-        // this is false change in strings we need to recover, and pretend it is
-        // the same. We save the value so that next time identity can pass
-        return record..item = item;
-      }
+    // The previous record after which we will append the current one.
+    ItemRecord<V> previousRecord;
 
-      if (item is num && (item as num).isNaN && record.item is num && (record.item as num).isNaN){
-        // we need this for JavaScript since in JS NaN !== NaN.
-        return record;
-      }
+    if (record == null) {
+      previousRecord = _itTail;
+    } else {
+      previousRecord = record._prev;
+      // Remove the record from the collection since we know it does not match the item.
+      _remove(record);
     }
 
-    // find the previous record so that we know where to insert after.
-    ItemRecord<V> prev = record == null ? _itTail : record._prev;
-
-    // Remove the record from the collection since we know it does not match the
-    // item.
-    if (record != null) _collection_remove(record);
     // Attempt to see if we have seen the item before.
-    record = _movedItems.get(item, index);
+    record = _linkedRecords == null ? null : _linkedRecords.get(item, index);
     if (record != null) {
       // We have seen this before, we need to move it forward in the collection.
-      _collection_moveAfter(record, prev, index);
+      _moveAfter(record, previousRecord, index);
     } else {
       // Never seen it, check evicted list.
-      record = _removedItems.get(item);
+      record = _unlinkedRecords == null ? null : _unlinkedRecords.get(item);
       if (record != null) {
-        // It is an item which we have earlier evict it, reinsert it back into
-        // the list.
-        _collection_reinsertAfter(record, prev, index);
+        // It is an item which we have evicted earlier: reinsert it back into the list.
+        _reinsertAfter(record, previousRecord, index);
       } else {
-        // It is a new item add it.
-        record = _collection_addAfter(new ItemRecord<V>(item), prev, index);
+        // It is a new item: add it.
+        record = _addAfter(new ItemRecord<V>(item), previousRecord, index);
       }
     }
     return record;
@@ -1095,14 +1080,13 @@ class _CollectionChangeRecord<V> implements CollectionChangeRecord<V> {
    * position. This is incorrect, since a better way to think of it is as insert
    * of 'b' rather then switch 'a' with 'b' and then add 'a' at the end.
    */
-  ItemRecord<V> verifyReinsertion(ItemRecord record, dynamic item,
-                               int index) {
-    ItemRecord<V> reinsertRecord = _removedItems.get(item);
+  ItemRecord<V> verifyReinsertion(ItemRecord record, item, int index) {
+    ItemRecord<V> reinsertRecord = _unlinkedRecords == null ? null : _unlinkedRecords.get(item);
     if (reinsertRecord != null) {
-      record = _collection_reinsertAfter(reinsertRecord, record._prev, index);
+      record = _reinsertAfter(reinsertRecord, record._prev, index);
     } else if (record.currentIndex != index) {
       record.currentIndex = index;
-      _moves_add(record);
+      _addToMoves(record, index);
     }
     return record;
   }
@@ -1116,10 +1100,10 @@ class _CollectionChangeRecord<V> implements CollectionChangeRecord<V> {
     // Anything after that needs to be removed;
     while (record != null) {
       ItemRecord<V> nextRecord = record._next;
-      _removals_add(_collection_unlink(record));
+      _addToRemovals(_unlink(record));
       record = nextRecord;
     }
-    _removedItems.clear();
+    if (_unlinkedRecords != null) _unlinkedRecords.clear();
 
     if (_additionsTail != null) _additionsTail._nextAdded = null;
     if (_movesTail != null) _movesTail._nextMoved = null;
@@ -1127,15 +1111,10 @@ class _CollectionChangeRecord<V> implements CollectionChangeRecord<V> {
     if (_removalsTail != null) _removalsTail._nextRemoved = null;
   }
 
-  ItemRecord<V> _collection_reinsertAfter(ItemRecord<V> record,
-                                          ItemRecord<V> insertPrev,
-                                          int index) {
-    _removedItems.remove(record);
+  ItemRecord<V> _reinsertAfter(ItemRecord<V> record, ItemRecord<V> prevRecord, int index) {
+    if (_unlinkedRecords != null) _unlinkedRecords.remove(record);
     var prev = record._prevRemoved;
     var next = record._nextRemoved;
-
-    assert((record._prevRemoved = null) == null);
-    assert((record._nextRemoved = null) == null);
 
     if (prev == null) {
       _removalsHead = next;
@@ -1148,24 +1127,20 @@ class _CollectionChangeRecord<V> implements CollectionChangeRecord<V> {
       next._prevRemoved = prev;
     }
 
-    _collection_insertAfter(record, insertPrev, index);
-    _moves_add(record);
+    _insertAfter(record, prevRecord, index);
+    _addToMoves(record, index);
     return record;
   }
 
-  ItemRecord<V> _collection_moveAfter(ItemRecord<V> record,
-                                      ItemRecord<V> prev,
-                                      int index) {
-    _collection_unlink(record);
-    _collection_insertAfter(record, prev, index);
-    _moves_add(record);
+  ItemRecord<V> _moveAfter(ItemRecord<V> record, ItemRecord<V> prevRecord, int index) {
+    _unlink(record);
+    _insertAfter(record, prevRecord, index);
+    _addToMoves(record, index);
     return record;
   }
 
-  ItemRecord<V> _collection_addAfter(ItemRecord<V> record,
-                                     ItemRecord<V> prev,
-                                     int index) {
-    _collection_insertAfter(record, prev, index);
+  ItemRecord<V> _addAfter(ItemRecord<V> record, ItemRecord<V> prevRecord, int index) {
+    _insertAfter(record, prevRecord, index);
 
     if (_additionsTail == null) {
       assert(_additionsHead == null);
@@ -1178,39 +1153,38 @@ class _CollectionChangeRecord<V> implements CollectionChangeRecord<V> {
     return record;
   }
 
-  ItemRecord<V> _collection_insertAfter(ItemRecord<V> record,
-                                        ItemRecord<V> prev,
-                                        int index) {
-    assert(record != prev);
+  ItemRecord<V> _insertAfter(ItemRecord<V> record, ItemRecord<V> prevRecord, int index) {
+    assert(record != prevRecord);
     assert(record._next == null);
     assert(record._prev == null);
 
-    ItemRecord<V> next = prev == null ? _itHead : prev._next;
+    ItemRecord<V> next = prevRecord == null ? _itHead : prevRecord._next;
     assert(next != record);
-    assert(prev != record);
+    assert(prevRecord != record);
     record._next = next;
-    record._prev = prev;
+    record._prev = prevRecord;
     if (next == null) {
       _itTail = record;
     } else {
       next._prev = record;
     }
-    if (prev == null) {
+    if (prevRecord == null) {
       _itHead = record;
     } else {
-      prev._next = record;
+      prevRecord._next = record;
     }
 
-    _movedItems.put(record);
+    if (_linkedRecords == null) _linkedRecords = new DuplicateMap();
+    _linkedRecords.put(record);
+
     record.currentIndex = index;
     return record;
   }
 
-  ItemRecord<V> _collection_remove(ItemRecord record) =>
-      _removals_add(_collection_unlink(record));
+  ItemRecord<V> _remove(ItemRecord record) => _addToRemovals(_unlink(record));
 
-  ItemRecord<V> _collection_unlink(ItemRecord record) {
-    _movedItems.remove(record);
+  ItemRecord<V> _unlink(ItemRecord record) {
+    if (_linkedRecords != null) _linkedRecords.remove(record);
 
     var prev = record._prev;
     var next = record._next;
@@ -1232,8 +1206,11 @@ class _CollectionChangeRecord<V> implements CollectionChangeRecord<V> {
     return record;
   }
 
-  ItemRecord<V> _moves_add(ItemRecord<V> record) {
+  ItemRecord<V> _addToMoves(ItemRecord<V> record, int toIndex) {
     assert(record._nextMoved == null);
+
+    if (record.previousIndex == toIndex) return record;
+
     if (_movesTail == null) {
       assert(_movesHead == null);
       _movesTail = _movesHead = record;
@@ -1245,13 +1222,16 @@ class _CollectionChangeRecord<V> implements CollectionChangeRecord<V> {
     return record;
   }
 
-  ItemRecord<V> _removals_add(ItemRecord<V> record) {
+  ItemRecord<V> _addToRemovals(ItemRecord<V> record) {
+    if (_unlinkedRecords == null) _unlinkedRecords = new DuplicateMap();
+    _unlinkedRecords.put(record);
     record.currentIndex = null;
-    _removedItems.put(record);
+    record._nextRemoved = null;
 
     if (_removalsTail == null) {
       assert(_removalsHead == null);
       _removalsTail = _removalsHead = record;
+      record._prevRemoved = null;
     } else {
       assert(_removalsTail._nextRemoved == null);
       assert(record._nextRemoved == null);
@@ -1317,65 +1297,52 @@ class ItemRecord<V> extends CollectionChangeItem<V>  {
       : '$item[$previousIndex -> $currentIndex]';
 }
 
+/// A linked list of [ItemRecord]s with the same [ItemRecord.item]
 class _DuplicateItemRecordList {
-  ItemRecord head, tail;
+  ItemRecord _head, _tail;
 
   /**
-   * Add the [record] before the [previousRecord] in the list of duplicates or
-   * at the end of the list when no [previousRecord] is specified.
+   * Append the [record] to the list of duplicates.
    *
-   * Note: by design all records in the list of duplicates hold the save value
-   * in [record.item].
+   * Note: by design all records in the list of duplicates hold the save value in [record.item].
    */
-  void add(ItemRecord record, ItemRecord previousRecord) {
-    assert(previousRecord == null || previousRecord.item == record.item);
-    if (head == null) {
-      assert(previousRecord == null);
-      head = tail = record;
+  void add(ItemRecord record) {
+    if (_head == null) {
+      _head = _tail = record;
       record._nextDup = null;
       record._prevDup = null;
     } else {
-      assert(record.item == head.item);
-      if (previousRecord == null) {
-        tail._nextDup = record;
-        record._prevDup = tail;
-        record._nextDup = null;
-        tail = record;
-      } else {
-        var prev = previousRecord._prevDup;
-        var next = previousRecord;
-        record._prevDup = prev;
-        record._nextDup = next;
-        if (prev == null) {
-          head = record;
-        } else {
-          prev._nextDup = record;
-        }
-        next._prevDup = record;
-      }
+      assert(record.item ==  _head.item ||
+             record.item is num && record.item.isNaN && _head.item is num && _head.item.isNaN);
+      _tail._nextDup = record;
+      record._prevDup = _tail;
+      record._nextDup = null;
+      _tail = record;
     }
   }
 
-  ItemRecord get(key, int hideIndex) {
+  /// Returns an [ItemRecord] having [ItemRecord.item] == [item] and
+  /// [ItemRecord.currentIndex] >= [afterIndex]
+  ItemRecord get(item, int afterIndex) {
     ItemRecord record;
-    for (record = head; record != null; record = record._nextDup) {
-      if ((hideIndex == null || hideIndex < record.currentIndex) &&
-          identical(record.item, key)) {
-        return record;
+    for (record = _head; record != null; record = record._nextDup) {
+      if ((afterIndex == null || afterIndex < record.currentIndex) &&
+           _looseIdentical(record.item, item)) {
+          return record;
+        }
       }
-    }
-    return record;
+    return null;
   }
 
   /**
    * Remove one [ItemRecord] from the list of duplicates.
    *
-   * Returns whether when the list of duplicates is empty.
+   * Returns whether the list of duplicates is empty.
    */
   bool remove(ItemRecord record) {
     assert(() {
-      // verify that the record being removed is someplace in the list.
-      for (ItemRecord cursor = head; cursor != null; cursor = cursor._nextDup) {
+      // verify that the record being removed is in the list.
+      for (ItemRecord cursor = _head; cursor != null; cursor = cursor._nextDup) {
         if (identical(cursor, record)) return true;
       }
       return false;
@@ -1384,46 +1351,49 @@ class _DuplicateItemRecordList {
     var prev = record._prevDup;
     var next = record._nextDup;
     if (prev == null) {
-      head = next;
+      _head = next;
     } else {
       prev._nextDup = next;
     }
     if (next == null) {
-      tail = prev;
+      _tail = prev;
     } else {
       next._prevDup = prev;
     }
-    return head == null;
+    return _head == null;
   }
 }
 
 /**
- * [DuplicateMap] maps [ItemRecord.value] to a list of [ItemRecord] having the
- * same value (duplicates).
+ * [DuplicateMap] maps [ItemRecord.value] to a list of [ItemRecord] having the same value
+ * (duplicates).
  *
  * The list of duplicates is implemented by [_DuplicateItemRecordList].
- *
  */
 class DuplicateMap {
-  final map = <dynamic, _DuplicateItemRecordList>{};
+  static final _nanKey = const Object();
+  final map = new HashMap<dynamic, _DuplicateItemRecordList>();
 
-  void put(ItemRecord record, [ItemRecord beforeRecord = null]) {
-    map.putIfAbsent(record.item, () => new _DuplicateItemRecordList())
-        .add(record, beforeRecord);
+  void put(ItemRecord record) {
+    var key = _getKey(record.item);
+    _DuplicateItemRecordList duplicates = map[key];
+    if (duplicates == null) {
+      duplicates = map[key] = new _DuplicateItemRecordList();
+    }
+    duplicates.add(record);
   }
 
   /**
-   * Retrieve the `value` using [key]. Because the [ItemRecord] value maybe one
-   * which we have already iterated over, we use the [hideIndex] to pretend it
-   * is not there.
+   * Retrieve the `value` using [key]. Because the [ItemRecord] value maybe one which we have
+   * already iterated over, we use the [afterIndex] to pretend it is not there.
    *
-   * Use case: `[a, b, c, a, a]` if we are at index `3` which is the second `a`
-   * then asking if we have any more `a`s needs to return the last `a` not the
-   * first or second.
+   * Use case: `[a, b, c, a, a]` if we are at index `3` which is the second `a` then asking if we
+   * have any more `a`s needs to return the last `a` not the first or second.
    */
-  ItemRecord get(key, [int hideIndex]) {
+  ItemRecord get(value, [int afterIndex]) {
+    var key = _getKey(value);
     _DuplicateItemRecordList recordList = map[key];
-    return recordList == null ? null : recordList.get(key, hideIndex);
+    return recordList == null ? null : recordList.get(value, afterIndex);
   }
 
   /**
@@ -1432,9 +1402,11 @@ class DuplicateMap {
    * The list of duplicates also is removed from the map if it gets empty.
    */
   ItemRecord remove(ItemRecord record) {
-    _DuplicateItemRecordList recordList = map[record.item];
-    assert(recordList != null);
-    if (recordList.remove(record)) map.remove(record.item);
+    var key = _getKey(record.item);
+    assert(map.containsKey(key));
+    _DuplicateItemRecordList recordList = map[key];
+    // Remove the list of duplicates when it gets empty
+    if (recordList.remove(record)) map.remove(key);
     return record;
   }
 
@@ -1444,5 +1416,32 @@ class DuplicateMap {
     map.clear();
   }
 
-  String toString() => "$runtimeType($map)";
+  /// Required to handle num.NAN as a Map value
+  dynamic _getKey(value) => value is num && value.isNaN ? _nanKey : value;
+
+  String toString() => "DuplicateMap($map)";
+}
+
+/**
+ * Returns whether the [dst] and [src] are loosely identical:
+ * * true when the value are identical,
+ * * true when both values are equal strings,
+ * * true when both values are NaN
+ *
+ * If both values are equal string, src is assigned to dst.
+ */
+bool _looseIdentical(dst, src) {
+  if (identical(dst, src)) return true;
+
+  if (dst is String && src is String && dst == src) {
+    // this is false change in strings we need to recover, and pretend it is the same. We save the
+    // value so that next time identity can pass
+    dst = src;
+    return true;
+  }
+
+  //  we need this for JavaScript since in JS NaN !== NaN.
+  if (dst is num && (dst as num).isNaN && src is num && (src as num).isNaN) return true;
+
+  return false;
 }

@@ -25,6 +25,11 @@ class CssAnimate implements Animate {
 
   CssAnimate(this._runner, this._animationMap, this._optimizer);
 
+  bool get animationsAllowed => _optimizer.animationsAllowed;
+  void set animationsAllowed(bool allowed) {
+    _optimizer.animationsAllowed = allowed;
+  }
+
   Animation addClass(dom.Element element, String cssClass) {
     if (!_optimizer.shouldAnimate(element)) {
       element.classes.add(cssClass);
@@ -134,11 +139,11 @@ class CssAnimate implements Animate {
 @Injectable()
 class CssAnimationMap {
   final Map<dom.Element, Map<String, CssAnimation>> cssAnimations
-      = new Map<dom.Element, Map<String, CssAnimation>>();
+      = new HashMap<dom.Element, Map<String, CssAnimation>>();
 
   void track(CssAnimation animation) {
     var animations = cssAnimations.putIfAbsent(animation.element,
-        () => <String, CssAnimation>{});
+        () => new HashMap<String, CssAnimation>());
     animations[animation.eventClass] = animation;
   }
 

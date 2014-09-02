@@ -8,7 +8,7 @@ import 'dart:collection' show Queue, IterableBase;
 import '../dart_types.dart' show DartType, InterfaceType, TypeKind;
 import '../elements/elements.dart';
 import '../tree/tree.dart' as ast show DartString, Node;
-import '../ir/ir_nodes.dart' as ir show Node;
+import '../cps_ir/cps_ir_nodes.dart' as cps_ir show Node;
 import '../types/types.dart'
   show TypeMask, ContainerTypeMask, MapTypeMask, DictionaryTypeMask,
        ValueTypeMask, TypesInferrer;
@@ -364,7 +364,7 @@ class TypeInformationSystem extends TypeSystem<TypeInformation> {
     // kinds of [TypeInformation] have the empty type at this point of
     // analysis.
     return info.isConcrete
-        ? new TypedSelector(info.type, selector)
+        ? new TypedSelector(info.type, selector, compiler)
         : selector;
   }
 
@@ -379,7 +379,7 @@ class TypeInformationSystem extends TypeSystem<TypeInformation> {
   }
 
   PhiElementTypeInformation allocatePhi(ast.Node node,
-                                        Element element,
+                                        Local variable,
                                         inputType) {
     // Check if [inputType] is a phi for a local updated in
     // the try/catch block [node]. If it is, no need to allocate a new
@@ -389,20 +389,20 @@ class TypeInformationSystem extends TypeSystem<TypeInformation> {
       return inputType;
     }
     PhiElementTypeInformation result =
-        new PhiElementTypeInformation(node, true, element);
+        new PhiElementTypeInformation(node, true, variable);
     allocatedTypes.add(result);
     result.addAssignment(inputType);
     return result;
   }
 
   TypeInformation simplifyPhi(ast.Node node,
-                              Element element,
+                              Local variable,
                               PhiElementTypeInformation phiType) {
     if (phiType.assignments.length == 1) return phiType.assignments.first;
     return phiType;
   }
 
-  PhiElementTypeInformation addPhiInput(Element element,
+  PhiElementTypeInformation addPhiInput(Local variable,
                                         PhiElementTypeInformation phiType,
                                         TypeInformation newType) {
     phiType.addAssignment(newType);
@@ -871,14 +871,15 @@ class TypeGraphInferrerEngine
     }
   }
 
-  void setDefaultTypeOfParameter(Element parameter, TypeInformation type) {
-    assert(parameter.enclosingElement.isImplementation);
+  void setDefaultTypeOfParameter(ParameterElement parameter,
+                                 TypeInformation type) {
+    assert(parameter.functionDeclaration.isImplementation);
     TypeInformation existing = defaultTypeOfParameter[parameter];
     defaultTypeOfParameter[parameter] = type;
     TypeInformation info = types.getInferredTypeOf(parameter);
     if (!info.abandonInferencing && existing != null && existing != type) {
       // Replace references to [existing] to use [type] instead.
-      if (parameter.enclosingElement.isInstanceMember) {
+      if (parameter.functionDeclaration.isInstanceMember) {
         ParameterAssignments assignments = info.assignments;
         int count = assignments.assignments[existing];
         if (count == null) return;
@@ -1014,8 +1015,11 @@ class TypeGraphInferrerEngine
   Iterable<Element> sortResolvedElements() {
     int max = 0;
     Map<int, Setlet<Element>> methodSizes = new Map<int, Setlet<Element>>();
-    compiler.enqueuer.resolution.resolvedElements.forEach(
-      (Element element, TreeElementMapping mapping) {
+    compiler.enqueuer.resolution.resolvedElements.forEach((AstElement element) {
+        // TODO(ngeoffray): Not sure why the resolver would put a null
+        // mapping.
+        if (!compiler.enqueuer.resolution.hasBeenResolved(element)) return;
+        TreeElementMapping mapping = element.resolvedAst.elements;
         element = element.implementation;
         if (element.impliesType) return;
         assert(invariant(element,
@@ -1025,13 +1029,10 @@ class TypeGraphInferrerEngine
             element.isGetter ||
             element.isSetter,
             message: 'Unexpected element kind: ${element.kind}'));
-        // TODO(ngeoffray): Not sure why the resolver would put a null
-        // mapping.
-        if (mapping == null) return;
         if (element.isAbstract) return;
         // Put the other operators in buckets by length, later to be added in
         // length order.
-        int length = mapping.selectors.length;
+        int length = mapping.getSelectorCount();
         max = length > max ? length : max;
         Setlet<Element> set = methodSizes.putIfAbsent(
             length, () => new Setlet<Element>());
@@ -1097,9 +1098,9 @@ class TypeGraphInferrerEngine
     }
   }
 
-  void recordCapturedLocalRead(Element local) {}
+  void recordCapturedLocalRead(Local local) {}
 
-  void recordLocalUpdate(Element local, TypeInformation type) {}
+  void recordLocalUpdate(Local local, TypeInformation type) {}
 }
 
 class TypeGraphInferrer implements TypesInferrer {

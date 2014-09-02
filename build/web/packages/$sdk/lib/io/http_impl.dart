@@ -270,7 +270,8 @@ class _HttpClientResponse
       return new Stream.fromIterable([]).listen(null, onDone: onDone);
     }
     var stream = _incoming;
-    if (headers.value(HttpHeaders.CONTENT_ENCODING) == "gzip") {
+    if (_httpClient.autoUncompress &&
+        headers.value(HttpHeaders.CONTENT_ENCODING) == "gzip") {
       stream = stream.transform(GZIP.decoder);
     }
     return stream.listen(onData,
@@ -428,14 +429,16 @@ abstract class _HttpOutboundMessage<T> extends _IOSinkImpl {
 
   _HttpOutboundMessage(Uri uri,
                        String protocolVersion,
-                       _HttpOutgoing outgoing)
+                       _HttpOutgoing outgoing,
+                       {_HttpHeaders initialHeaders})
       : super(outgoing, null),
         _uri = uri,
         headers = new _HttpHeaders(
             protocolVersion,
             defaultPortForScheme: uri.scheme == 'https' ?
                 HttpClient.DEFAULT_HTTPS_PORT :
-                HttpClient.DEFAULT_HTTP_PORT),
+                HttpClient.DEFAULT_HTTP_PORT,
+            initialHeaders: initialHeaders),
         _outgoing = outgoing {
     _outgoing.outbound = this;
     _encodingMutable = false;
@@ -502,9 +505,10 @@ class _HttpResponse extends _HttpOutboundMessage<HttpResponse>
   _HttpResponse(Uri uri,
                 String protocolVersion,
                 _HttpOutgoing outgoing,
+                HttpHeaders defaultHeaders,
                 String serverHeader)
-      : super(uri, protocolVersion, outgoing) {
-    if (serverHeader != null) headers._add('server', serverHeader);
+      : super(uri, protocolVersion, outgoing, initialHeaders: defaultHeaders) {
+    if (serverHeader != null) headers.set('server', serverHeader);
   }
 
   bool get _isConnectionClosed => _httpRequest._httpConnection._isClosing;
@@ -1279,7 +1283,9 @@ class _HttpClientConnection {
           _subscription.pause();
           // We assume the response is not here, until we have send the request.
           if (_nextResponseCompleter == null) {
-            throw new HttpException("Unexpected response.", uri: _currentUri);
+            throw new HttpException(
+                "Unexpected response (unsolicited response without request).",
+                uri: _currentUri);
           }
           _nextResponseCompleter.complete(incoming);
           _nextResponseCompleter = null;
@@ -1650,6 +1656,8 @@ class _HttpClient implements HttpClient {
 
   int maxConnectionsPerHost;
 
+  bool autoUncompress = true;
+
   String userAgent = _getHttpVersion();
 
   void set idleTimeout(Duration timeout) {
@@ -1674,10 +1682,10 @@ class _HttpClient implements HttpClient {
                                  String host,
                                  int port,
                                  String path) {
+    Uri uri = new Uri(scheme: "http", host: host, port: port).resolve(path);
     // TODO(sgjesse): The path set here can contain both query and
     // fragment. They should be cracked and set correctly.
-    return _openUrl(method, new Uri(
-        scheme: "http", host: host, port: port, path: path));
+    return _openUrl(method, uri);
   }
 
   Future<HttpClientRequest> openUrl(String method, Uri url) {
@@ -1992,13 +2000,18 @@ class _HttpClient implements HttpClient {
 }
 
 
-class _HttpConnection extends LinkedListEntry<_HttpConnection> {
+class _HttpConnection
+    extends LinkedListEntry<_HttpConnection> with _ServiceObject {
   static const _ACTIVE = 0;
   static const _IDLE = 1;
   static const _CLOSING = 2;
   static const _DETACHED = 3;
 
-  final Socket _socket;
+  // Use HashMap, as we don't need to keep order.
+  static Map<int, _HttpConnection> _connections =
+      new HashMap<int, _HttpConnection>();
+
+  final _socket;
   final _HttpServer _httpServer;
   final _HttpParser _httpParser;
   int _state = _IDLE;
@@ -2009,6 +2022,8 @@ class _HttpConnection extends LinkedListEntry<_HttpConnection> {
 
   _HttpConnection(this._socket, this._httpServer)
       : _httpParser = new _HttpParser.requestParser() {
+    try { _socket._owner = this; } catch (_) { print(_); }
+    _connections[_serviceId] = this;
     _httpParser.listenToStream(_socket);
     _subscription = _httpParser.listen(
         (incoming) {
@@ -2025,6 +2040,7 @@ class _HttpConnection extends LinkedListEntry<_HttpConnection> {
           var response = new _HttpResponse(incoming.uri,
                                            incoming.headers.protocolVersion,
                                            outgoing,
+                                           _httpServer.defaultResponseHeaders,
                                            _httpServer.serverHeader);
           var request = new _HttpRequest(response, incoming, _httpServer, this);
           _streamFuture = outgoing.done
@@ -2074,6 +2090,7 @@ class _HttpConnection extends LinkedListEntry<_HttpConnection> {
     _state = _CLOSING;
     _socket.destroy();
     _httpServer._connectionClosed(this);
+    _connections.remove(_serviceId);
   }
 
   Future<Socket> detachSocket() {
@@ -2084,6 +2101,7 @@ class _HttpConnection extends LinkedListEntry<_HttpConnection> {
     _HttpDetachedIncoming detachedIncoming = _httpParser.detachIncoming();
 
     return _streamFuture.then((_) {
+      _connections.remove(_serviceId);
       return new _DetachedSocket(_socket, detachedIncoming);
     });
   }
@@ -2094,6 +2112,42 @@ class _HttpConnection extends LinkedListEntry<_HttpConnection> {
   bool get _isIdle => _state == _IDLE;
   bool get _isClosing => _state == _CLOSING;
   bool get _isDetached => _state == _DETACHED;
+
+  String get _serviceTypePath => 'io/http/serverconnections';
+  String get _serviceTypeName => 'HttpServerConnection';
+
+  Map _toJSON(bool ref) {
+    var name = "${_socket.address.host}:${_socket.port} <-> "
+        "${_socket.remoteAddress.host}:${_socket.remotePort}";
+    var r = {
+      'id': _servicePath,
+      'type': _serviceType(ref),
+      'name': name,
+      'user_name': name,
+    };
+    if (ref) {
+      return r;
+    }
+    r['server'] = _httpServer._toJSON(true);
+    try {
+      r['socket'] = _socket._toJSON(true);
+    } catch (_) {
+      r['socket'] = {
+        'id': _servicePath,
+        'type': '@Socket',
+        'name': 'UserSocket',
+        'user_name': 'UserSocket',
+      };
+    }
+    switch (_state) {
+      case _ACTIVE: r['state'] = "Active"; break;
+      case _IDLE: r['state'] = "Idle"; break;
+      case _CLOSING: r['state'] = "Closing"; break;
+      case _DETACHED: r['state'] = "Detached"; break;
+      default: r['state'] = 'Unknown'; break;
+    }
+    return r;
+  }
 }
 
 
@@ -2105,6 +2159,7 @@ class _HttpServer
   static Map<int, _HttpServer> _servers = new Map<int, _HttpServer>();
 
   String serverHeader;
+  final HttpHeaders defaultResponseHeaders = _initDefaultResponseHeaders();
 
   Duration _idleTimeout;
   Timer _idleTimer;
@@ -2145,6 +2200,15 @@ class _HttpServer
     idleTimeout = const Duration(seconds: 120);
     _servers[_serviceId] = this;
     try { _serverSocket._owner = this; } catch (_) {}
+  }
+
+  static HttpHeaders _initDefaultResponseHeaders() {
+    var defaultResponseHeaders = new _HttpHeaders('1.1');
+    defaultResponseHeaders.contentType = ContentType.TEXT;
+    defaultResponseHeaders.set('X-Frame-Options', 'SAMEORIGIN');
+    defaultResponseHeaders.set('X-Content-Type-Options', 'nosniff');
+    defaultResponseHeaders.set('X-XSS-Protection', '1; mode=block');
+    return defaultResponseHeaders;
   }
 
   Duration get idleTimeout => _idleTimeout;
@@ -2323,8 +2387,8 @@ class _HttpServer
     }
     r['port'] = port;
     r['address'] = address.host;
-    r['active'] = _activeConnections.length;
-    r['idle'] = _idleConnections.length;
+    r['active'] = _activeConnections.map((c) => c._toJSON(true)).toList();
+    r['idle'] = _idleConnections.map((c) => c._toJSON(true)).toList();
     r['closed'] = closed;
     return r;
   }

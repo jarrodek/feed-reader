@@ -27,16 +27,9 @@ class PostComponent {
   
   PostComponent(RouteProvider this.routeProvider, QueryService this.queryService, ImageService this.imageService){
     
-    String postId = routeProvider.parameters['postId'];
-    int id;
-    try{
-      id = int.parse(postId);
-    } catch(e){
-      window.console.error(e);
-      return;
-    }
-    
-    this.queryService.getPost(id).then(_handleEntry).catchError(_handleEntryError);
+    //String postId = routeProvider.parameters['postId'];
+    //print('PostComponent, postId: $postId');
+    queryService.getPost(queryService.currentPostId).then(_handleEntry).catchError(_handleEntryError);
   }
   
   void _handleEntry(FeedEntry entry){
@@ -51,7 +44,7 @@ class PostComponent {
   
   void _handleEntryError(e){
     //TODO: error reporting.
-    window.console.error(e);
+    print(e);
   }
   
   void frameLoad(Event e){
@@ -72,10 +65,8 @@ class PostComponent {
   }
   
   void onStarChange(){
-    
-    entry.starred = !entry.starred;
-    queryService.updateEntry(entry).catchError((e){
-      
+    queryService.changeStar(!entry.starred, entry: entry).catchError((e){
+      print(e);
     }).then((FeedEntry entry){
       
     });

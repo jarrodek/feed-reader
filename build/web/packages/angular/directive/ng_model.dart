@@ -1,10 +1,10 @@
 part of angular.directive;
 
 /**
- * NgModelConverter is the class interface for performing transformations on
- * the viewValue and modelValue properties on a model. A new converter can be created
- * by implementing the NgModelConverter class and then attaching to a model via the
- * provided setter.
+ * Class interface for performing transformations on the viewValue and modelValue properties on a model.
+ *
+ * A new converter can be created by implementing the NgModelConverter class and then attaching to
+ * a model via the provided setter.
  */
 abstract class NgModelConverter {
   String get name;
@@ -18,6 +18,7 @@ class _NoopModelConverter extends NgModelConverter {
 
 /**
  * Ng-model directive is responsible for reading/writing to the model.
+ *
  * The directive itself is headless. (It does not know how to render or what
  * events to listen for.) It is meant to be used with other directives which
  * provide the rendering and listening capabilities. The directive itself
@@ -43,11 +44,14 @@ class NgModel extends NgControl implements AttachAware {
   Watch _watch;
   bool _watchCollection;
 
-  NgModel(this._scope, NgElement element, Injector injector, NodeAttrs attrs,
-          Animate animate)
+  NgModel(this._scope, NgElement element, DirectiveInjector injector, NodeAttrs attrs,
+          Animate animate, ElementProbe probe)
       : super(element, injector, animate)
   {
     _expression = attrs["ng-model"];
+    if (probe != null) {
+      probe.modelExpressions.add(_expression);
+    }
     watchCollection = false;
 
     //Since the user will never be editing the value of a select element then
@@ -69,7 +73,7 @@ class NgModel extends NgControl implements AttachAware {
   }
 
   /**
-    * Resets the model value to it's original (pristine) value. If the model has been interacted
+    * Resets the model value to its original (pristine) value. If the model has been interacted
     * with by the user at all then the model will be also reset to an "untouched" state.
     */
   void reset() {
@@ -263,7 +267,10 @@ class NgModel extends NgControl implements AttachAware {
 }
 
 /**
- * Usage:
+ * Creates a two-way databinding between the `ng-model` expression
+ * and the checkbox input element state. `Selector: input[type=checkbox][ng-model]`
+ *
+  * **Usage**
  *
  *     <input type="checkbox"
  *            ng-model="expr"
@@ -271,20 +278,26 @@ class NgModel extends NgControl implements AttachAware {
  *            [ng-false-value="f_expr"]
  *            >
  *
- * This creates a two way databinding between the `ng-model` expression
- * and the checkbox input element state.
+ * If the optional `ng-true-value` is absent,
  *
- * If the optional `ng-true-value` is absent then: if the model expression
- * evaluates to true or to a nonzero [:num:], then the checkbox is checked;
- * otherwise, it is unchecked.
+ *  * if the model expression evaluates to true or to a nonzero [:num:],
+ *    then the checkbox is checked
+ *  * otherwise, the checkbox is unchecked
  *
- * If `ng-true-value="t_expr"` is present, then: if the model expression
- * evaluates to the same value as `t_expr` then the checkbox is checked;
- * otherwise, it is unchecked.
+ * If `ng-true-value="t_expr"` is present,
  *
- * When the checkbox is checked, the model is set to the value of `t_expr` if
- * present, true otherwise. When unchecked, it is set to the value of
- * `f_expr` if present, false otherwise.
+ *  * if the model expression evaluates to the same value as `t_expr`, then the checkbox is checked
+ *  * otherwise, it is unchecked.
+ *
+ * When the checkbox is checked,
+ *
+ *  * the model is set to the value of `t_expr` if present
+ *  * otherwise, the model is set to `true`
+ *
+ * When the checkbox is unchecked,
+ *
+ *  * the model is set to the value of `f_expr` if present
+ *  * otherwise, the model is set to false.
  *
  * Also see [NgTrueValue] and [NgFalseValue].
  */
@@ -294,37 +307,43 @@ class InputCheckbox {
   final NgModel ngModel;
   final NgTrueValue ngTrueValue;
   final NgFalseValue ngFalseValue;
+  final NgModelOptions ngModelOptions;
   final Scope scope;
 
   InputCheckbox(dom.Element this.inputElement, this.ngModel,
-                this.scope, this.ngTrueValue, this.ngFalseValue) {
+                this.scope, this.ngTrueValue, this.ngFalseValue, this.ngModelOptions) {
     ngModel.render = (value) {
       scope.rootScope.domWrite(() {
         inputElement.checked = ngTrueValue.isValue(value);
       });
     };
     inputElement
-        ..onChange.listen((_) {
-          ngModel.viewValue = inputElement.checked
-              ? ngTrueValue.value : ngFalseValue.value;
-        })
-        ..onBlur.listen((e) {
+        ..onChange.listen((_) => ngModelOptions.executeChangeFunc(() {
+          ngModel.viewValue = inputElement.checked ? ngTrueValue.value : ngFalseValue.value;
+        }))
+        ..onBlur.listen((_) => ngModelOptions.executeBlurFunc(() {
           ngModel.markAsTouched();
-        });
+        }));
   }
 }
 
+
+
+
 /**
- * Usage:
+ * Creates a two-way databinding between the `ng-model` expression
+ * and the `<input>` or `<textarea>` string-based input elements.  `Selector: textarea[ng-model]`
+ * or `input[type=text|password|url|email|search|tel][ng-model]`
  *
- *     <input type="text|url|password|email|search|tel" ng-model="myModel">
+ * **Usage**
+ *
+ *     <input type="text|url|password|email|search|tel|color" ng-model="myModel">
  *     <textarea ng-model="myModel"></textarea>
  *
- * This creates a two-way binding between any string-based input element
- * (both `<input>` and `<textarea>`) so long as the ng-model attribute is
- * present on the input element. Whenever the value of the input element
- * changes then the matching model property on the scope will be updated
- * as well as the other way around (when the scope property is updated).
+ * When the `ng-model` attribute is present on the input element,
+ * and the value of the input element changes, the matching model property on the scope
+ * is updated. Likewise, if the value of the model property changes on the scope,
+ * the value of the input element is updated.
  *
  */
 @Decorator(selector: 'textarea[ng-model]')
@@ -334,59 +353,65 @@ class InputCheckbox {
 @Decorator(selector: 'input[type=email][ng-model]')
 @Decorator(selector: 'input[type=search][ng-model]')
 @Decorator(selector: 'input[type=tel][ng-model]')
+@Decorator(selector: 'input[type=color][ng-model]')
 class InputTextLike {
   final dom.Element inputElement;
   final NgModel ngModel;
+  final NgModelOptions ngModelOptions;
   final Scope scope;
   String _inputType;
+
 
   get typedValue => (inputElement as dynamic).value;
   void set typedValue(value) {
     (inputElement as dynamic).value = (value == null) ? '' : value.toString();
   }
 
-  InputTextLike(this.inputElement, this.ngModel, this.scope) {
+  InputTextLike(this.inputElement, this.ngModel, this.scope, this.ngModelOptions) {
     ngModel.render = (value) {
       scope.rootScope.domWrite(() {
         if (value == null) value = '';
-
         var currentValue = typedValue;
-        if (value != currentValue && !(value is num && currentValue is num &&
-            value.isNaN && currentValue.isNaN)) {
-          typedValue =  value;
-        }
+        if (!eqOrNaN(value, currentValue)) typedValue = value;
       });
     };
+
     inputElement
-        ..onChange.listen(processValue)
-        ..onInput.listen(processValue)
-        ..onBlur.listen((e) {
+        ..onChange.listen((event) => ngModelOptions.executeChangeFunc(() => processValue(event)))
+        ..onInput.listen((event) => ngModelOptions.executeInputFunc(() => processValue(event)))
+        ..onBlur.listen((_) => ngModelOptions.executeBlurFunc(() {
           ngModel.markAsTouched();
-        });
+        }));
   }
 
   void processValue([_]) {
     var value = typedValue;
+
     if (value != ngModel.viewValue) ngModel.viewValue = value;
+
     ngModel.validate();
   }
 }
 
 /**
- * Usage:
+ * Creates a two-way databinding between the `ng-model` expression
+ * and a numeric input element. `Selector:input[type=number|range][ng-model]`
+ *
+  * **Usage**
  *
  *     <input type="number|range" ng-model="myModel">
  *
- * Model:
+ * **Model**
  *
  *     num myModel;
  *
- * This creates a two-way binding between the input and the named model property
- * (e.g., myModel in the example above). When processing the input, its value is
- * read as a [:num:], via the [dom.InputElement.valueAsNumber] field. If the
- * input text does not represent a number, then the model is appropriately set
- * to [double.NAN]. Setting the model property to [null] will clear the input.
- * Setting the model to [double.NAN] will have no effect (input will be left
+ * When processing the input, its value is read as a `num`, via the
+ * `dom.InputElement.valueAsNumber` field.
+ *
+ * If the input text does not represent a number, then the
+ * model is set to `double.NAN`. Setting the model property to `null` will clear the input.
+ *
+ * Setting the model to `double.NAN` will have no effect (input will be left
  * unchanged).
  */
 @Decorator(selector: 'input[type=number][ng-model]')
@@ -394,6 +419,7 @@ class InputTextLike {
 class InputNumberLike {
   final dom.InputElement inputElement;
   final NgModel ngModel;
+  final NgModelOptions ngModelOptions;
   final Scope scope;
 
 
@@ -414,7 +440,7 @@ class InputNumberLike {
     }
   }
 
-  InputNumberLike(dom.Element this.inputElement, this.ngModel, this.scope) {
+  InputNumberLike(dom.Element this.inputElement, this.ngModel, this.scope, this.ngModelOptions) {
     ngModel.render = (value) {
       scope.rootScope.domWrite(() {
         if (value != typedValue
@@ -424,11 +450,11 @@ class InputNumberLike {
       });
     };
     inputElement
-        ..onChange.listen(relaxFnArgs(processValue))
-        ..onInput.listen(relaxFnArgs(processValue))
-        ..onBlur.listen((e) {
+        ..onChange.listen((event) => ngModelOptions.executeChangeFunc(() => processValue()))
+        ..onInput.listen((event) => ngModelOptions.executeInputFunc(() => processValue()))
+        ..onBlur.listen((_) => ngModelOptions.executeBlurFunc(() {
           ngModel.markAsTouched();
-        });
+        }));
   }
 
   void processValue() {
@@ -441,24 +467,24 @@ class InputNumberLike {
 }
 
 /**
- * This directive affects which IDL attribute will be used to read the value of
- * date/time related input directives. Recognized values for this directive are:
+ * Subordinate directive to [InputDateLike] that specifies the type for date/time related values.
+ * `Selector: input[type=date|time|datetime|datetime-local|month|week][ng-model][ng-bind-type]`
  *
- * - [DATE]: [dom.InputElement].valueAsDate will be read.
- * - [NUMBER]: [dom.InputElement].valueAsNumber will be read.
- * - [STRING]: [dom.InputElement].value will be read.
+ * This directive controls which IDL attribute is read and thus sets the type. This allows an app
+ * to support browsers that deviate from the HTML5 standard for date/time.
  *
- * The default is [DATE]. Use other settings, e.g., when an app needs to support
- * browsers that treat date-like inputs as text (in such a case the [STRING]
- * kind would be appropriate) or, for browsers that fail to conform to the
- * HTML5 standard in their processing of date-like inputs.
+ * Recognized values for this directive are:
+ *
+ * - [DATE]: `dom.InputElement.valueAsDate` is read. (This is the default.)
+ * - [NUMBER]: `dom.InputElement.valueAsNumber` is read.
+ * - [STRING]: `dom.InputElement.value` is read.
  */
-@Decorator(selector: 'input[type=date][ng-model][ng-bind-type]')
-@Decorator(selector: 'input[type=time][ng-model][ng-bind-type]')
-@Decorator(selector: 'input[type=datetime][ng-model][ng-bind-type]')
-@Decorator(selector: 'input[type=datetime-local][ng-model][ng-bind-type]')
-@Decorator(selector: 'input[type=month][ng-model][ng-bind-type]')
-@Decorator(selector: 'input[type=week][ng-model][ng-bind-type]')
+@Decorator(selector: 'input[type=date][ng-model][ng-bind-type]', visibility: Visibility.LOCAL)
+@Decorator(selector: 'input[type=time][ng-model][ng-bind-type]', visibility: Visibility.LOCAL)
+@Decorator(selector: 'input[type=datetime][ng-model][ng-bind-type]', visibility: Visibility.LOCAL)
+@Decorator(selector: 'input[type=datetime-local][ng-model][ng-bind-type]', visibility: Visibility.LOCAL)
+@Decorator(selector: 'input[type=month][ng-model][ng-bind-type]', visibility: Visibility.LOCAL)
+@Decorator(selector: 'input[type=week][ng-model][ng-bind-type]', visibility: Visibility.LOCAL)
 class NgBindTypeForDateLike {
   static const DATE = 'date';
   static const NUMBER = 'number';
@@ -521,23 +547,19 @@ class NgBindTypeForDateLike {
 }
 
 /**
- * **Background: Standards and Browsers**
+ * Controls the IDL attribute that reads the value of a date/time input,
+ * to support browsers that deviate from the HTML5 standard for date/time. `Selector:
+ * input[type=date|datetime|datetime-local|month|time|week][ng-model]`
  *
- * According to the
- * [HTML5 Standard](http://www.w3.org/TR/html5/forms.html#the-input-element),
- * the [dom.InputElement.valueAsDate] and [dom.InputElement.valueAsNumber] IDL
- * attributes should be available for all date/time related input types,
- * except for `datetime-local` which is limited to
- * [dom.InputElement.valueNumber]. Of course, all input types support
- * [dom.InputElement.value] which yields a [String];
- * [dom.InputElement.valueAsDate] yields a [DateTime] and
- * [dom.InputElement.valueNumber] yields a [num].
+ * The [HTML5 Standard](http://www.w3.org/TR/html5/forms.html#the-input-element) for date/time
+ * related inputs specifies that the `dom.InputElement.valueAsDate` and
+ * `dom.InputElement.valueAsNumber` IDL attributes should be available for all date/time related
+ * input types, except for `datetime-local` which is limited to `dom.InputElement.valueNumber`.
  *
- * But not all browsers currently support date/time related inputs and of
- * those that do, some deviate from the standard. Hence, this directive
- * allows developers to control the IDL attribute that will be used
- * to read the value of a date/time input. This is achieved via the subordinate
- * 'ng-bind-type' directive; see [NgBindTypeForDateLike] for details.
+ * This directive creates a two-way binding between the input and a model
+ * property. The subordinate `ng-bind-type` directive determines which input
+ * IDL attribute is read (see [NgBindTypeForDateLike] for details) and
+ * hence the type of the read values.
  *
  * **Usage**:
  *
@@ -549,23 +571,24 @@ class NgBindTypeForDateLike {
  *
  *     dynamic myModel; // one of DateTime | num | String
  *
- * This directive creates a two-way binding between the input and a model
- * property. The subordinate 'ng-bind-type' directive determines which input
- * IDL attribute is read (see [NgBindTypeForDateLike] for details) and
- * hence the type of the read values. The type of the model property value
- * determines which IDL attribute is written to: [DateTime] and [num] values
- * are assigned to [dom.InputElement.valueAsDate] and
- * [dom.InputElement.valueNumber], respectively; [String] and `null` values
- * are assigned to [dom.InputElement.value]. Setting the model to `null` will
- * clear the input if it is currently valid, otherwise, invalid input is left
- * untouched (so that the user has an opportunity to correct it). To clear the
- * input unconditionally, set the model property to the empty string ('').
+ * The type of the model property value determines which IDL attribute is written to:
+ *
+ *  - `DateTime` values are assigned to `dom.InputElement.valueAsDate`
+ *  - `num` values are assigned to `dom.InputElement.valueAsDate`
+ *  - `String` and `null` values are assigned to `dom.InputElement.value`
+ *
+ * Setting the model to `null` will clear the input if it is currently
+ * valid, otherwise, invalid input is left untouched (so that the user has an opportunity to
+ * correct it).
+ *
+ * To clear the input unconditionally, set the model property to the empty string (`''`).
  *
  * **Notes**:
+ *
  * - As prescribed by the HTML5 standard, [DateTime] values returned by the
  *   `valueAsDate` IDL attribute are meant to be in UTC.
  * - As of the HTML5 Editor's Draft 29 March 2014, datetime-local is no longer
- *   part of the standard. Other date related input are also at risk of being
+ *   part of the standard. Other date-related input are also at risk of being
  *   dropped.
  */
 
@@ -582,15 +605,17 @@ class NgBindTypeForDateLike {
 @Decorator(selector: 'input[type=week][ng-model]',
     module: InputDateLike.moduleFactory)
 class InputDateLike {
-  static Module moduleFactory() => new Module()..bind(NgBindTypeForDateLike,
-      toFactory: (Injector i) => new NgBindTypeForDateLike(i.get(dom.Element)));
+  static void moduleFactory(DirectiveBinder binder)
+        => binder.bind(NgBindTypeForDateLike,
+            toFactory: (dom.Element e) => new NgBindTypeForDateLike(e), inject: [ELEMENT_KEY]);
   final dom.InputElement inputElement;
   final NgModel ngModel;
+  final NgModelOptions ngModelOptions;
   final Scope scope;
   NgBindTypeForDateLike ngBindType;
 
   InputDateLike(dom.Element this.inputElement, this.ngModel, this.scope,
-      this.ngBindType) {
+      this.ngBindType, this.ngModelOptions) {
     if (inputElement.type == 'datetime-local') {
       ngBindType.idlAttrKind = NgBindTypeForDateLike.NUMBER;
     }
@@ -600,11 +625,11 @@ class InputDateLike {
       });
     };
     inputElement
-        ..onChange.listen(relaxFnArgs(processValue))
-        ..onInput.listen(relaxFnArgs(processValue))
-        ..onBlur.listen((e) {
+        ..onChange.listen((event) => ngModelOptions.executeChangeFunc(() => processValue()))
+        ..onInput.listen((event) => ngModelOptions.executeInputFunc(() => processValue()))
+        ..onBlur.listen((_) => ngModelOptions.executeBlurFunc(() {
           ngModel.markAsTouched();
-        });
+        }));
   }
 
   dynamic get typedValue => ngBindType.inputTypedValue;
@@ -651,7 +676,13 @@ class _UidCounter {
 final _uidCounter = new _UidCounter();
 
 /**
- * Usage:
+ * Binds an expression to the value of a radio element or option,
+ * to be used when that element is selected.
+ *
+ * When the element is selected, the `ng-model` property of that element is set to the bound value.
+ * Note that `expr` can be any type; i.e., it is not restricted to [String].
+ *
+  * **Usage**
  *
  *     <input type=radio ng-model=model [ng-value=expr]>
  *
@@ -665,14 +696,12 @@ final _uidCounter = new _UidCounter();
  *
  * When present, the value of this `ng-value` one-way attribute is assigned to
  * the `ng-model` property when the corresponding radio element or option is
- * selected. Note that `expr` can be not any type; i.e., it is not restricted
- * to [String].
+ * selected.
  */
-@Decorator(selector: 'input[type=radio][ng-model][ng-value]')
-@Decorator(selector: 'option[ng-value]')
+@Decorator(selector: 'input[type=radio][ng-model][ng-value]', visibility: Visibility.LOCAL)
+@Decorator(selector: 'option[ng-value]', visibility: Visibility.LOCAL)
 class NgValue {
-  static Module _module = new Module()..bind(NgValue);
-  static Module moduleFactory() => _module;
+  static module(DirectiveBinder binder) => binder.bind(NgValue, visibility: Visibility.LOCAL);
 
   final dom.Element element;
   var _value;
@@ -680,20 +709,24 @@ class NgValue {
   NgValue(this.element);
 
   @NgOneWay('ng-value')
-  void set value(val) { this._value = val; }
+  void set value(val) {
+    _value = val;
+  }
   dynamic get value => _value == null ? (element as dynamic).value : _value;
 }
 
 /**
- * Usage:
+ * Assigns the value of a bound expression to the model when an input checkbox is
+ * checked. `Selector: input[type=checkbox][ng-model][ng-true-value]`
+ *
+  * **Usage**
  *
  *     <input type=checkbox
  *            ng-model=model
  *            [ng-true-value=expr]>
  *
- * The initial value of the expression bound to this directive is assigned to
- * the model when the input is checked. Note that the expression can be of any
- * type, not just [String]. Also see [InputCheckboxDirective], [NgFalseValue].
+ * Note that the expression can be of any type, not just [String].
+ * Also see [InputCheckboxDirective], [NgFalseValue].
  */
 @Decorator(selector: 'input[type=checkbox][ng-model][ng-true-value]')
 class NgTrueValue {
@@ -707,14 +740,16 @@ class NgTrueValue {
 }
 
 /**
- * Usage:
+ * Assigns the value of a bound expression to the model when an input checkbox is
+ * unchecked. `Selector: input[type=checkbox][ng-model][ng-false-value]`
+ *
+ * **Usage**
  *
  *     <input type=checkbox
  *            ng-model=model
  *            [ng-false-value=expr]>
  *
- * The initial value of the expression bound to this directive is assigned to
- * the model when the input is unchecked. Note that the expression can be of any
+ * Note that the expression can be of any
  * type, not just [String]. Also see [InputCheckboxDirective], [NgTrueValue].
  */
 @Decorator(selector: 'input[type=checkbox][ng-model][ng-false-value]')
@@ -727,24 +762,28 @@ class NgFalseValue {
 }
 
 /**
- * Usage:
+ * Creates a two-way databinding between the `ng-model` expression
+ * and the radio input elements in the DOM. `Selector: input[type=radio][ng-model]`
  *
- *     <input type="radio" ng-model="category">
+  * **Usage**
  *
- * This creates a two way databinding between the expression specified in
- * ng-model and the range input elements in the DOM. If the ng-model value is
- * set to a value not corresponding to one of the radio elements, then none of
- * the radio elements will be check.  Otherwise, only the corresponding input
- * element in the group is checked.  Likewise, when a radio button element is
- * checked, the model is updated with its value.  Radio buttons that have a
- * `name` attribute are left alone.  Those that are missing the attribute will
- * have a unique `name` assigned to them.  This sequence goes `001`,  `001`, ...
- * `009`, `00A`, `00Z`, `010`, and so on using more than 3 characters for the
- * name when the counter overflows.
+ *     <input type="radio" name="foo" ng-model="category">
+ *
+ *
+ *  - If the `ng-model` value corresponds to one of the radio elements, that input element will be
+ *    selected.
+ *  - If the `ng-model` value doesn't correspond to any of the radio elements, then none of
+ *    the radio elements will be selected.
+ *  - When a radio button element is selected, the model is updated with its value.
+ *
+ * Radio buttons that do not have a `name` attribute set will have a unique `name` assigned to
+ * them. (If a `name` is already defined, it remains unchanged.) The sequence of assigned names
+ * goes from `001`,  `001`, ..., `009`, `00A`, `00Z`, `010`, and so on using more than 3
+ * characters for the name when the counter overflows.
  */
 @Decorator(
     selector: 'input[type=radio][ng-model]',
-    module: NgValue.moduleFactory)
+    module: NgValue.module)
 class InputRadio {
   final dom.RadioButtonInputElement radioButtonElement;
   final NgModel ngModel;
@@ -767,26 +806,28 @@ class InputRadio {
         ..onClick.listen((_) {
           if (radioButtonElement.checked) ngModel.viewValue = ngValue.value;
         })
-        ..onBlur.listen((e) {
+        ..onBlur.listen((event) {
           ngModel.markAsTouched();
         });
   }
 }
 
 /**
- * Usage (span could be replaced with any element which supports text content, such as `p`):
+ * Creates a two-way databinding between the expression specified in `ng-model` and the HTML element
+ * in the DOM. `Selector: [contenteditable][ng-model]`
  *
- *     <span contenteditable= ng-model="name">
+  * **Usage**
  *
- * This creates a two way databinding between the expression specified in
- * ng-model and the html element in the DOM. If the ng-model value is
- * `null`, it is treated as equivalent to the empty string for rendering
+ *     <span contenteditable ng-model="name">
+ *
+ * The `<span>` element could be any element which supports text content, such as `<p>`.
+ * If the ng-model value is `null`, it is treated as equivalent to the empty string for rendering
  * purposes.
  */
 @Decorator(selector: '[contenteditable][ng-model]')
 class ContentEditable extends InputTextLike {
-  ContentEditable(dom.Element inputElement, NgModel ngModel, Scope scope)
-      : super(inputElement, ngModel, scope);
+  ContentEditable(dom.Element inputElement, NgModel ngModel, Scope scope, NgModelOptions modelOptions)
+      : super(inputElement, ngModel, scope, modelOptions);
 
   // The implementation is identical to InputTextLike but use innerHtml instead of value
   String get typedValue => (inputElement as dynamic).innerHtml;

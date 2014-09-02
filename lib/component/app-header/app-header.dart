@@ -28,7 +28,7 @@ class AppHeaderComponent {
   bool get refreshingFeeds => communication.updatingFeeds;
   bool get hasFeeds => _queryService.feeds.length > 0;
   String feedAddUrl = "";
-  int get currentPostId => _queryService.currentPostId;
+  String get currentPostId => _queryService.currentPostId;
   bool get addFeedDisabled => !(feedAddUrl.startsWith("http://") || feedAddUrl.startsWith("https://"));
   
   List<FeedEntry> get entries => _queryService.currentPosts;
@@ -56,7 +56,7 @@ class AppHeaderComponent {
     bool found = false;
     feedEntryPosition = 0;
     for(int len = currentPostsLength; feedEntryPosition<len; feedEntryPosition++){
-      if(entries[feedEntryPosition].id == currentPostId){
+      if(entries[feedEntryPosition].entryid == currentPostId){
         found = true;
         break;
       }
@@ -67,7 +67,7 @@ class AppHeaderComponent {
     return (feedEntryPosition + 1);
   }
   
-  bool get readingPost => _queryService.currentPostId > 0;
+  bool get readingPost => _queryService.currentPostId != null;
   
   bool get hasNextEntry{
     if(currentPostsLength-1 >= feedEntryPosition+1){
@@ -108,21 +108,21 @@ class AppHeaderComponent {
   }
   
   
-  int _nextEntryId(){
+  String _nextEntryId(){
     if(currentPostsLength-1 >= feedEntryPosition+1){
-      return entries[feedEntryPosition+1].id;
+      return entries[feedEntryPosition+1].entryid;
     }
-    return 0;
+    return "";
   }
-  int _prevEntryId(){
+  String _prevEntryId(){
     if(feedEntryPosition == 0){
-      return 0;
+      return "";
     }
-    return entries[feedEntryPosition-1].id;
+    return entries[feedEntryPosition-1].entryid;
   }
   
   void goToPost(String dir){
-    int postId = dir == 'prev' ? _prevEntryId() : _nextEntryId();
+    String postId = dir == 'prev' ? _prevEntryId() : _nextEntryId();
     print('$dir post ID: $postId');
     if(postId == 0) return;
     router.gotoUrl('/post/$postId');

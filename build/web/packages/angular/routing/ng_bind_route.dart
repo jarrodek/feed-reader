@@ -27,20 +27,18 @@ part of angular.routing;
     module: NgBindRoute.module,
     map: const {'ng-bind-route': '@routeName'})
 class NgBindRoute implements RouteProvider {
-  Router _router;
   String routeName;
-  Injector _injector;
+  final Router _router;
+  final DirectiveInjector _injector;
 
-  static final Module _module = new Module()
-      ..bind(RouteProvider, toFactory: (i) => i.get(NgBindRoute),
-             visibility: Directive.CHILDREN_VISIBILITY);
-  static module() => _module;
+  static void module(DirectiveBinder binder) =>
+      binder.bind(RouteProvider, toInstanceOf: NG_BIND_ROUTE_KEY, visibility: Visibility.CHILDREN);
 
   // We inject NgRoutingHelper to force initialization of routing.
   NgBindRoute(this._router, this._injector, NgRoutingHelper _);
 
   /// Returns the parent [RouteProvider].
-  RouteProvider get _parent => _injector.parent.get(RouteProvider);
+  RouteProvider get _parent => _injector.getFromParentByKey(ROUTE_PROVIDER_KEY);
 
   Route get route => routeName.startsWith('.') ?
       _parent.route.getRoute(routeName.substring(1)) :

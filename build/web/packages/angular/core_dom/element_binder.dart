@@ -1,5 +1,6 @@
 part of angular.core.dom_internal;
 
+
 class TemplateElementBinder extends ElementBinder {
   final DirectiveRef template;
   ViewFactory templateViewFactory;
@@ -14,27 +15,14 @@ class TemplateElementBinder extends ElementBinder {
     return _directiveCache = [template];
   }
 
-  TemplateElementBinder(perf, expando, parser, componentFactory,
-                        transcludingComponentFactory, shadowDomComponentFactory,
+  TemplateElementBinder(perf, expando, parser, config, appInjector,
                         this.template, this.templateBinder,
                         onEvents, bindAttrs, childMode)
-      : super(perf, expando, parser, componentFactory,
-          transcludingComponentFactory, shadowDomComponentFactory,
+      : super(perf, expando, parser, config, appInjector,
           null, null, onEvents, bindAttrs, childMode);
 
   String toString() => "[TemplateElementBinder template:$template]";
-
-  _registerViewFactory(node, parentInjector, nodeModule) {
-    assert(templateViewFactory != null);
-    nodeModule
-      ..bind(ViewPort, toFactory: (_) =>
-          new ViewPort(node, parentInjector.get(Animate)))
-      ..bind(ViewFactory, toValue: templateViewFactory)
-      ..bind(BoundViewFactory, toFactory: (Injector injector) =>
-          templateViewFactory.bind(injector));
-  }
 }
-
 
 /**
  * ElementBinder is created by the Selector and is responsible for instantiating
@@ -45,28 +33,26 @@ class ElementBinder {
   final Profiler _perf;
   final Expando _expando;
   final Parser _parser;
+  final CompilerConfig _config;
+  final Injector _appInjector;
+  Animate _animate;
 
-  // The default component factory
-  final ComponentFactory _componentFactory;
-  final TranscludingComponentFactory _transcludingComponentFactory;
-  final ShadowDomComponentFactory _shadowDomComponentFactory;
   final Map onEvents;
   final Map bindAttrs;
 
   // Member fields
   final decorators;
 
-  final DirectiveRef component;
+  final BoundComponentData componentData;
 
   // Can be either COMPILE_CHILDREN or IGNORE_CHILDREN
   final String childMode;
 
-  ElementBinder(this._perf, this._expando, this._parser,
-                this._componentFactory,
-                this._transcludingComponentFactory,
-                this._shadowDomComponentFactory,
-                this.component, this.decorators,
-                this.onEvents, this.bindAttrs, this.childMode);
+  ElementBinder(this._perf, this._expando, this._parser, this._config,
+                this._appInjector, this.componentData, this.decorators,
+                this.onEvents, this.bindAttrs, this.childMode) {
+    _animate = _appInjector.getByKey(ANIMATE_KEY);
+  }
 
   final bool hasTemplate = false;
 
@@ -76,259 +62,267 @@ class ElementBinder {
   var _directiveCache;
   List<DirectiveRef> get _usableDirectiveRefs {
     if (_directiveCache != null) return _directiveCache;
-    if (component != null) return _directiveCache = new List.from(decorators)..add(component);
+    if (componentData != null) return _directiveCache = new List.from(decorators)..add(componentData.ref);
     return _directiveCache = decorators;
   }
 
   bool get hasDirectivesOrEvents =>
-      _usableDirectiveRefs.isNotEmpty || onEvents.isNotEmpty;
+      _usableDirectiveRefs.isNotEmpty || onEvents.isNotEmpty || bindAttrs.isNotEmpty;
 
-  _bindTwoWay(tasks, expression, scope, dstPathFn, controller, formatters, dstExpression) {
-    var taskId = tasks.registerTask();
-    Expression expressionFn = _parser(expression);
+  void _bindTwoWay(tasks, AST ast, scope, directiveScope,
+                   controller, AST dstAST) {
+    var taskId = (tasks != null) ? tasks.registerTask() : 0;
 
     var viewOutbound = false;
     var viewInbound = false;
-    scope.watch(expression, (inboundValue, _) {
+    scope.watchAST(ast, (inboundValue, _) {
       if (!viewInbound) {
         viewOutbound = true;
         scope.rootScope.runAsync(() => viewOutbound = false);
-        var value = dstPathFn.assign(controller, inboundValue);
-        tasks.completeTask(taskId);
+        var value = dstAST.parsedExp.assign(controller, inboundValue);
+        if (tasks != null) tasks.completeTask(taskId);
         return value;
       }
-    }, formatters: formatters);
-    if (expressionFn.isAssignable) {
-      scope.watch(dstExpression, (outboundValue, _) {
+    });
+    if (ast.parsedExp.isAssignable) {
+      directiveScope.watchAST(dstAST, (outboundValue, _) {
         if (!viewOutbound) {
           viewInbound = true;
           scope.rootScope.runAsync(() => viewInbound = false);
-          expressionFn.assign(scope.context, outboundValue);
-          tasks.completeTask(taskId);
+          ast.parsedExp.assign(scope.context, outboundValue);
+          if (tasks != null) tasks.completeTask(taskId);
         }
-      }, context: controller, formatters: formatters);
+      });
     }
   }
 
-  _bindOneWay(tasks, expression, scope, dstPathFn, controller, formatters) {
-    var taskId = tasks.registerTask();
+  void _bindOneWay(tasks, ast, scope, AST dstAST, controller) {
+    var taskId = (tasks != null) ? tasks.registerTask() : 0;
 
-    Expression attrExprFn = _parser(expression);
-    scope.watch(expression, (v, _) {
-      dstPathFn.assign(controller, v);
-      tasks.completeTask(taskId);
-    }, formatters: formatters);
+    scope.watchAST(ast, (v, _) {
+      dstAST.parsedExp.assign(controller, v);
+      if (tasks != null) tasks.completeTask(taskId);
+    });
   }
 
-  _bindCallback(dstPathFn, controller, expression, scope) {
+  void _bindCallback(dstPathFn, controller, expression, scope) {
     dstPathFn.assign(controller, _parser(expression).bind(scope.context, ScopeLocals.wrapper));
   }
 
-  _createAttrMappings(controller, scope, List<MappingParts> mappings, nodeAttrs, formatters, tasks) {
-    mappings.forEach((MappingParts p) {
-      var attrName = p.attrName;
-      var dstExpression = p.dstExpression;
 
-      Expression dstPathFn = _parser(dstExpression);
-      if (!dstPathFn.isAssignable) {
-        throw "Expression '$dstExpression' is not assignable in mapping '${p.originalValue}' "
+  void _createAttrMappings(directive, scope, List<MappingParts> mappings, nodeAttrs, tasks) {
+    Scope directiveScope; // Only created if there is a two-way binding in the element.
+    for(var i = 0; i < mappings.length; i++) {
+      MappingParts p = mappings[i];
+      var attrName = p.attrName;
+      var attrValueAST = p.attrValueAST;
+      AST dstAST = p.dstAST;
+
+      if (!dstAST.parsedExp.isAssignable) {
+        throw "Expression '${dstAST.expression}' is not assignable in mapping '${p.originalValue}' "
               "for attribute '$attrName'.";
       }
 
       // Check if there is a bind attribute for this mapping.
-      var bindAttr = bindAttrs["bind-${p.attrName}"];
+      var bindAttr = bindAttrs[p.attrName];
       if (bindAttr != null) {
         if (p.mode == '<=>') {
-          _bindTwoWay(tasks, bindAttr, scope, dstPathFn,
-              controller, formatters, dstExpression);
-        } else if(p.mode == '&') {
-          _bindCallback(dstPathFn, controller, bindAttr, scope);
+          if (directiveScope == null) {
+            directiveScope = scope.createChild(directive);
+          }
+          _bindTwoWay(tasks, bindAttr, scope, directiveScope,
+              directive, dstAST);
+        } else if (p.mode == '&') {
+          throw "Callbacks do not support bind- syntax";
         } else {
-          _bindOneWay(tasks, bindAttr, scope, dstPathFn, controller, formatters);
+          _bindOneWay(tasks, bindAttr, scope, dstAST, directive);
         }
-        return;
+        continue;
       }
 
       switch (p.mode) {
         case '@': // string
-          var taskId = tasks.registerTask();
+          var taskId = (tasks != null) ? tasks.registerTask() : 0;
           nodeAttrs.observe(attrName, (value) {
-            dstPathFn.assign(controller, value);
-            tasks.completeTask(taskId);
+            dstAST.parsedExp.assign(directive, value);
+            if (tasks != null) tasks.completeTask(taskId);
           });
           break;
 
         case '<=>': // two-way
-          if (nodeAttrs[attrName] == null) return;
-
-          _bindTwoWay(tasks, nodeAttrs[attrName], scope, dstPathFn,
-              controller, formatters, dstExpression);
+          if (nodeAttrs[attrName] == null) continue;
+          if (directiveScope == null) {
+            directiveScope = scope.createChild(directive);
+          }
+          _bindTwoWay(tasks, attrValueAST, scope, directiveScope,
+              directive, dstAST);
           break;
 
         case '=>': // one-way
-          if (nodeAttrs[attrName] == null) return;
-          _bindOneWay(tasks, nodeAttrs[attrName], scope,
-              dstPathFn, controller, formatters);
+          if (nodeAttrs[attrName] == null) continue;
+          _bindOneWay(tasks, attrValueAST, scope, dstAST, directive);
           break;
 
         case '=>!': //  one-way, one-time
-          if (nodeAttrs[attrName] == null) return;
+          if (nodeAttrs[attrName] == null) continue;
 
-          Expression attrExprFn = _parser(nodeAttrs[attrName]);
           var watch;
-          watch = scope.watch(nodeAttrs[attrName], (value, _) {
-            if (dstPathFn.assign(controller, value) != null) {
-              watch.remove();
+          var lastOneTimeValue;
+          watch = scope.watchAST(attrValueAST, (value, _) {
+            if ((lastOneTimeValue = dstAST.parsedExp.assign(directive, value)) != null && watch != null) {
+                var watchToRemove = watch;
+                watch = null;
+                scope.rootScope.domWrite(() {
+                  if (lastOneTimeValue != null) {
+                    watchToRemove.remove();
+                  } else {  // It was set to non-null, but stablized to null, wait.
+                    watch = watchToRemove;
+                  }
+                });
             }
-          }, formatters: formatters);
+          });
           break;
 
         case '&': // callback
-          _bindCallback(dstPathFn, controller, nodeAttrs[attrName], scope);
+          _bindCallback(dstAST.parsedExp, directive, nodeAttrs[attrName], scope);
           break;
       }
-    });
+    }
   }
 
-  _link(nodeInjector, probe, scope, nodeAttrs, formatters) {
-    _usableDirectiveRefs.forEach((DirectiveRef ref) {
-      var linkTimer;
-      try {
-        var linkMapTimer;
-        assert((linkTimer = _perf.startTimer('ng.view.link', ref.type)) != false);
-        var controller = nodeInjector.get(ref.type);
-        probe.directives.add(controller);
-        assert((linkMapTimer = _perf.startTimer('ng.view.link.map', ref.type)) != false);
+  void _link(DirectiveInjector directiveInjector, Scope scope, nodeAttrs) {
+    var s;
+    for(var i = 0; i < _usableDirectiveRefs.length; i++) {
+      DirectiveRef ref = _usableDirectiveRefs[i];
+      var key = ref.typeKey;
+      var directiveName = traceEnabled ? ref.typeKey.toString() : null;
+      if (identical(key, TEXT_MUSTACHE_KEY) || identical(key, ATTR_MUSTACHE_KEY)) continue;
 
+      s = traceEnter1(Directive_create, directiveName);
+      var directive;
+      try {
+        directive = directiveInjector.getByKey(ref.typeKey);
         if (ref.annotation is Controller) {
-          scope.context[(ref.annotation as Controller).publishAs] = controller;
+          scope.parentScope.context[(ref.annotation as Controller).publishAs] = directive;
         }
 
-        var tasks = new _TaskList(controller is AttachAware ? () {
-          if (scope.isAttached) controller.attach();
-        } : null);
+        var tasks = directive is AttachAware ? new _TaskList(() {
+          if (scope.isAttached) directive.attach();
+        }) : null;
 
         if (ref.mappings.isNotEmpty) {
           if (nodeAttrs == null) nodeAttrs = new _AnchorAttrs(ref);
-          _createAttrMappings(controller, scope, ref.mappings, nodeAttrs, formatters, tasks);
+          _createAttrMappings(directive, scope, ref.mappings, nodeAttrs, tasks);
         }
 
-        if (controller is AttachAware) {
-          var taskId = tasks.registerTask();
+        if (directive is AttachAware) {
+          var taskId = (tasks != null) ? tasks.registerTask() : 0;
           Watch watch;
-          watch = scope.watch('1', // Cheat a bit.
+          watch = scope.watch('"attach()"', // Cheat a bit.
               (_, __) {
             watch.remove();
-            tasks.completeTask(taskId);
+            if (tasks != null) tasks.completeTask(taskId);
           });
         }
 
-        tasks.doneRegistering();
+        if (tasks != null) tasks.doneRegistering();
 
-        if (controller is DetachAware) {
-          scope.on(ScopeEvent.DESTROY).listen((_) => controller.detach());
+        if (directive is DetachAware) {
+          scope.on(ScopeEvent.DESTROY).listen((_) => directive.detach());
         }
-
-        assert(_perf.stopTimer(linkMapTimer) != false);
       } finally {
-        assert(_perf.stopTimer(linkTimer) != false);
+        traceLeave(s);
       }
-    });
+    }
   }
 
-  _createDirectiveFactories(DirectiveRef ref, nodeModule, node, nodesAttrsDirectives, nodeAttrs,
-                            visibility) {
-    if (ref.type == TextMustache) {
-      nodeModule.bind(TextMustache, toFactory: (Injector injector) {
-        return new TextMustache(node, ref.value, injector.get(Interpolate),
-            injector.get(Scope), injector.get(FormatterMap));
-      });
-    } else if (ref.type == AttrMustache) {
-      if (nodesAttrsDirectives.isEmpty) {
-        nodeModule.bind(AttrMustache, toFactory: (Injector injector) {
-          var scope = injector.get(Scope);
-          var interpolate = injector.get(Interpolate);
-          for (var ref in nodesAttrsDirectives) {
-            new AttrMustache(nodeAttrs, ref.value, interpolate, scope,
-                injector.get(FormatterMap));
-          }
-        });
-      }
-      nodesAttrsDirectives.add(ref);
+  void _createDirectiveFactories(DirectiveRef ref, DirectiveInjector nodeInjector, node,
+                                 nodeAttrs) {
+    if (ref.typeKey == TEXT_MUSTACHE_KEY) {
+      new TextMustache(node, ref.valueAST, nodeInjector.scope);
+    } else if (ref.typeKey == ATTR_MUSTACHE_KEY) {
+      new AttrMustache(nodeAttrs, ref.value, ref.valueAST, nodeInjector.scope);
     } else if (ref.annotation is Component) {
-      var factory;
-      var annotation = ref.annotation as Component;
-      if (annotation.useShadowDom == true) {
-        factory = _shadowDomComponentFactory;
-      } else if (annotation.useShadowDom == false) {
-        factory = _transcludingComponentFactory;
-      } else {
-        factory = _componentFactory;
-      }
-      nodeModule.bind(ref.type, toFactory: factory.call(node, ref), visibility: visibility);
+      assert(ref == componentData.ref);
+
+      BoundComponentFactory boundComponentFactory = componentData.factory;
+      Function componentFactory = boundComponentFactory.call(node);
+      nodeInjector.bindByKey(ref.typeKey, componentFactory,
+          boundComponentFactory.callArgs, ref.annotation.visibility);
     } else {
-      nodeModule.bind(ref.type, visibility: visibility);
+      nodeInjector.bindByKey(ref.typeKey, ref.factory, ref.paramKeys, ref.annotation.visibility);
     }
   }
 
-  // Overridden in TemplateElementBinder
-  _registerViewFactory(node, parentInjector, nodeModule) {
-    nodeModule..bind(ViewPort, toValue: null)
-              ..bind(ViewFactory, toValue: null)
-              ..bind(BoundViewFactory, toValue: null);
-  }
-
-  Injector bind(View view, Injector parentInjector, dom.Node node) {
-    Injector nodeInjector;
-    Scope scope = parentInjector.get(Scope);
-    FormatterMap formatters = parentInjector.get(FormatterMap);
+  DirectiveInjector bind(View view, Scope scope,
+                         DirectiveInjector parentInjector,
+                         dom.Node node) {
     var nodeAttrs = node is dom.Element ? new NodeAttrs(node) : null;
-    ElementProbe probe;
 
-    var timerId;
-    assert((timerId = _perf.startTimer('ng.view.link.setUp', _html(node))) != false);
     var directiveRefs = _usableDirectiveRefs;
-    try {
-      if (!hasDirectivesOrEvents) return parentInjector;
+    if (!hasDirectivesOrEvents) return parentInjector;
 
-      var nodesAttrsDirectives = [];
-      var nodeModule = new Module()
-          ..bind(NgElement)
-          ..bind(View, toValue: view)
-          ..bind(dom.Element, toValue: node)
-          ..bind(dom.Node, toValue: node)
-          ..bind(NodeAttrs, toValue: nodeAttrs)
-          ..bind(ElementProbe, toFactory: (_) => probe);
+    DirectiveInjector nodeInjector;
+    var parentEventHandler = parentInjector == null ?
+        _appInjector.getByKey(EVENT_HANDLER_KEY) :
+        eventHandler(parentInjector);
+    if (this is TemplateElementBinder) {
+      nodeInjector = new TemplateDirectiveInjector(parentInjector, _appInjector,
+          node, nodeAttrs, parentEventHandler, scope, _animate, (this as TemplateElementBinder).templateViewFactory);
+    } else {
+      nodeInjector = new DirectiveInjector(parentInjector, _appInjector, node, nodeAttrs, parentEventHandler, scope, _animate);
+    }
 
-      directiveRefs.forEach((DirectiveRef ref) {
-        Directive annotation = ref.annotation;
-        var visibility = ref.annotation.visibility;
-        if (ref.annotation is Controller) {
-          scope = scope.createChild(new PrototypeMap(scope.context));
-          nodeModule.bind(Scope, toValue: scope);
-        }
+    for(var i = 0; i < directiveRefs.length; i++) {
+      DirectiveRef ref = directiveRefs[i];
+      Directive annotation = ref.annotation;
+      if (ref.annotation is Controller) {
+        scope = nodeInjector.scope = scope.createChild(new PrototypeMap(scope.context));
+      }
+      _createDirectiveFactories(ref, nodeInjector, node, nodeAttrs);
+      if (ref.annotation.module != null) {
+        DirectiveBinderFn config = ref.annotation.module;
+        if (config != null) config(nodeInjector);
+      }
+      if (_config.elementProbeEnabled && ref.valueAST != null) {
+        nodeInjector.elementProbe.bindingExpressions.add(ref.valueAST.expression);
+      }
+    }
 
-        _createDirectiveFactories(ref, nodeModule, node, nodesAttrsDirectives, nodeAttrs,
-            visibility);
-        if (ref.annotation.module != null) {
-           nodeModule.install(ref.annotation.module());
-        }
+    if (_config.elementProbeEnabled) {
+      _expando[node] = nodeInjector.elementProbe;
+      // TODO(misko): pretty sure that clearing Expando is not necessary. Remove?
+      scope.on(ScopeEvent.DESTROY).listen((_) => _expando[node] = null);
+    }
+
+    _link(nodeInjector, scope, nodeAttrs);
+
+    var jsNode;
+    List bindAssignableProps = [];
+    bindAttrs.forEach((String prop, AST ast) {
+      if (jsNode == null) jsNode = new js.JsObject.fromBrowserObject(node);
+      scope.watchAST(ast, (v, _) {
+        jsNode[prop] = v;
       });
 
-      _registerViewFactory(node, parentInjector, nodeModule);
+      if (ast.parsedExp.isAssignable) {
+        bindAssignableProps.add([prop, ast.parsedExp]);
+      }
+    });
 
-      nodeInjector = parentInjector.createChild([nodeModule]);
-      probe = _expando[node] = new ElementProbe(
-          parentInjector.get(ElementProbe), node, nodeInjector, scope);
-    } finally {
-      assert(_perf.stopTimer(timerId) != false);
+    if (bindAssignableProps.isNotEmpty) {
+      node.addEventListener('change', (_) {
+        bindAssignableProps.forEach((propAndExp) {
+          propAndExp[1].assign(scope.context, jsNode[propAndExp[0]]);
+        });
+      });
     }
 
-    _link(nodeInjector, probe, scope, nodeAttrs, formatters);
-
-    onEvents.forEach((event, value) {
-      view.registerEvent(EventHandler.attrNameToEventName(event));
-    });
+    if (onEvents.isNotEmpty) {
+      onEvents.forEach((event, value) {
+        parentEventHandler.register(EventHandler.attrNameToEventName(event));
+      });
+    }
     return nodeInjector;
   }
 
@@ -339,12 +333,14 @@ class ElementBinder {
  * Private class used for managing controller.attach() calls
  */
 class _TaskList {
-  var onDone;
+  Function onDone;
   final List _tasks = [];
   bool isDone = false;
+  int firstTask;
 
   _TaskList(this.onDone) {
     if (onDone == null) isDone = true;
+    firstTask = registerTask();
   }
 
   int registerTask() {
@@ -362,8 +358,8 @@ class _TaskList {
     }
   }
 
-  doneRegistering() {
-    completeTask(registerTask());
+  void doneRegistering() {
+    completeTask(firstTask);
   }
 }
 
@@ -387,14 +383,13 @@ class TaggedTextBinder {
   final int offsetIndex;
 
   TaggedTextBinder(this.binder, this.offsetIndex);
-  toString() => "[TaggedTextBinder binder:$binder offset:$offsetIndex]";
+  String toString() => "[TaggedTextBinder binder:$binder offset:$offsetIndex]";
 }
 
 // Used for the tagging compiler
 class TaggedElementBinder {
   final ElementBinder binder;
   int parentBinderOffset;
-  var injector;
   bool isTopLevel;
 
   List<TaggedTextBinder> textBinders;
@@ -406,7 +401,8 @@ class TaggedElementBinder {
     textBinders.add(tagged);
   }
 
+  bool get isDummy => binder == null && textBinders == null && !isTopLevel;
+
   String toString() => "[TaggedElementBinder binder:$binder parentBinderOffset:"
-                       "$parentBinderOffset textBinders:$textBinders "
-                       "injector:$injector]";
+                       "$parentBinderOffset textBinders:$textBinders]";
 }

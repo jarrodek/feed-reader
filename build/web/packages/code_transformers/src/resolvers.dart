@@ -7,9 +7,14 @@ library code_transformers.src.resolvers;
 import 'dart:async';
 import 'package:barback/barback.dart';
 
+import 'package:analyzer/src/generated/engine.dart' show AnalysisOptions;
+import 'package:analyzer/src/generated/sdk.dart' show DartSdk;
+import 'package:analyzer/src/generated/source.dart' show DartUriResolver;
+
 import 'entry_point.dart';
 import 'resolver.dart';
 import 'resolver_impl.dart';
+import 'dart_sdk.dart' hide dartSdkDirectory;
 
 /// Barback-based code resolvers which maintains up-to-date resolved ASTs for
 /// the specified code entry points.
@@ -21,9 +26,23 @@ import 'resolver_impl.dart';
 /// the same Resolvers object to minimize re-parsing the AST.
 class Resolvers {
   final Map<AssetId, Resolver> _resolvers = {};
-  final String dartSdkDirectory;
+  final DartSdk dartSdk;
+  final DartUriResolver dartUriResolver;
+  final AnalysisOptions options;
 
-  Resolvers(this.dartSdkDirectory);
+  Resolvers.fromSdk(this.dartSdk, this.dartUriResolver, {this.options});
+
+  factory Resolvers(dartSdkDirectory, {AnalysisOptions options}) {
+    var sdk = new DirectoryBasedDartSdkProxy(dartSdkDirectory);
+    var uriResolver = new DartUriResolverProxy(sdk);
+    return new Resolvers.fromSdk(sdk, uriResolver, options: options);
+  }
+
+  factory Resolvers.fromMock(Map<String, String> sources,
+      {bool reportMissing: false, AnalysisOptions options}) {
+    var sdk = new MockDartSdk(sources, reportMissing: reportMissing);
+    return new Resolvers.fromSdk(sdk, sdk.resolver, options: options);
+  }
 
   /// Get a resolver for [transform]. If provided, this resolves the code
   /// starting from each of the assets in [entryPoints]. If not, this resolves
@@ -35,7 +54,7 @@ class Resolvers {
   Future<Resolver> get(Transform transform, [List<AssetId> entryPoints]) {
     var id = transform.primaryInput.id;
     var resolver = _resolvers.putIfAbsent(id,
-        () => new ResolverImpl(dartSdkDirectory));
+        () => new ResolverImpl(dartSdk, dartUriResolver, options: options));
     return resolver.resolve(transform, entryPoints);
   }
 }

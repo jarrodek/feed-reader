@@ -101,7 +101,7 @@ class MirrorUsageAnalyzerTask extends CompilerTask {
   /// Collect @MirrorsUsed annotations in all libraries.  Called by the
   /// compiler after all libraries are loaded, but before resolution.
   void analyzeUsage(LibraryElement mainApp) {
-    if (compiler.mirrorsLibrary == null) return;
+    if (mainApp == null || compiler.mirrorsLibrary == null) return;
     measure(analyzer.run);
     List<String> symbols = analyzer.mergedMirrorUsage.symbols;
     List<Element> targets = analyzer.mergedMirrorUsage.targets;
@@ -136,7 +136,7 @@ class MirrorUsageAnalyzerTask extends CompilerTask {
 
       MirrorUsageBuilder builder =
           new MirrorUsageBuilder(
-              analyzer, mapping.currentElement.library, named.expression,
+              analyzer, mapping.analyzedElement.library, named.expression,
               value, mapping);
 
       if (named.name.source == 'symbols') {
@@ -175,7 +175,7 @@ class MirrorUsageAnalyzer {
   /// compute which libraries have the annotation (which is used by
   /// [MirrorUsageAnalyzerTask.hasMirrorUsage]).
   void run() {
-    wildcard = compiler.libraries.values.toList();
+    wildcard = compiler.libraryLoader.libraries.toList();
     Map<LibraryElement, List<MirrorUsage>> usageMap =
         collectMirrorsUsedAnnotation();
     propagateOverrides(usageMap);
@@ -195,7 +195,7 @@ class MirrorUsageAnalyzer {
   Map<LibraryElement, List<MirrorUsage>> collectMirrorsUsedAnnotation() {
     Map<LibraryElement, List<MirrorUsage>> result =
         new Map<LibraryElement, List<MirrorUsage>>();
-    for (LibraryElement library in compiler.libraries.values) {
+    for (LibraryElement library in compiler.libraryLoader.libraries) {
       if (library.isInternalLibrary) continue;
       for (LibraryTag tag in library.tags) {
         Import importTag = tag.asImport();
@@ -471,7 +471,7 @@ class MirrorUsageBuilder {
         String string = entry;
         LibraryElement libraryCandiate;
         String libraryNameCandiate;
-        for (LibraryElement l in compiler.libraries.values) {
+        for (LibraryElement l in compiler.libraryLoader.libraries) {
           if (l.hasLibraryName()) {
             String libraryName = l.getLibraryOrScriptName();
             if (string == libraryName) {

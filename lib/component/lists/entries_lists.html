@@ -3,7 +3,7 @@
   <div ng-if="EntriesList.hasPosts(feed.id)" ng-if="EntriesList.hasPostsInView" layout vertical>
   
     <header class="feed" layout horizontal center>
-      <h1 flex>{{feed.title|sanitize}} (<unread-counter feed="{{feed.id}}"></unread-counter>)</h1>
+      <h1 flex>{{feed.title}} (<unread-counter feed="{{feed.id}}"></unread-counter>)</h1>
       <div class="show-all">
         <a href="#/feed/{{feed.id}}" class="button primary">Read all</a>
       </div>

@@ -34,7 +34,7 @@ class ClassEmitter extends CodeEmitterHelper {
       task.needsMixinSupport = true;
     }
 
-    ClassBuilder builder = new ClassBuilder(namer);
+    ClassBuilder builder = new ClassBuilder(classElement, namer);
     emitClassConstructor(classElement, builder, onlyForRti: onlyForRti);
     emitFields(classElement, builder, superName, onlyForRti: onlyForRti);
     emitClassGettersSetters(classElement, builder, onlyForRti: onlyForRti);
@@ -44,7 +44,7 @@ class ClassEmitter extends CodeEmitterHelper {
       additionalProperties.forEach(builder.addProperty);
     }
 
-    if (classElement == compiler.closureClass) {
+    if (classElement == backend.closureClass) {
       // We add a special getter here to allow for tearing off a closure from
       // itself.
       String name = namer.getMappedInstanceName(Compiler.CALL_OPERATOR_NAME);
@@ -80,32 +80,10 @@ class ClassEmitter extends CodeEmitterHelper {
     //        [ constructorName, fields,
     //            fields.map(
     //                (name) => js('this.# = #', [name, name]))]));
-    task.precompiledFunction.add(
-        new jsAst.FunctionDeclaration(
-            new jsAst.VariableDeclaration(constructorName),
-            js('function(#) { #; }',
-                [fields,
-                 fields.map((name) => js('this.# = #', [name, name]))])));
-    // TODO(floitsch): do we actually need the name field?
-    // TODO(floitsch): these should all go through the namer.
-
-    task.precompiledFunction.add(
-        js.statement(r'''{
-          #.builtin$cls = #;
-          if (!"name" in #)
-              #.name = #;
-          $desc=$collectedClasses.#;
-          if ($desc instanceof Array) $desc = $desc[1];
-          #.prototype = $desc;
-        }''',
-            [   constructorName, js.string(constructorName),
-                constructorName,
-                constructorName, js.string(constructorName),
-                constructorName,
-                constructorName
-             ]));
-
-    task.precompiledConstructorNames.add(js('#', constructorName));
+    jsAst.Expression constructorAst = js('function(#) { #; }',
+        [fields,
+         fields.map((name) => js('this.# = #', [name, name]))]);
+    task.emitPrecompiledConstructor(constructorName, constructorAst);
   }
 
   /// Returns `true` if fields added.
@@ -154,7 +132,8 @@ class ClassEmitter extends CodeEmitterHelper {
             metadata = new jsAst.LiteralNull();
           }
           fieldMetadata.add(metadata);
-          recordMangledField(field, accessorName, field.name);
+          recordMangledField(field, accessorName,
+              namer.privateName(field.library, field.name));
           String fieldName = name;
           String fieldCode = '';
           String reflectionMarker = '';
@@ -224,13 +203,14 @@ class ClassEmitter extends CodeEmitterHelper {
             }
           }
           if (backend.isAccessibleByReflection(field)) {
-            reflectionMarker = '-';
-            if (backend.isNeededForReflection(field)) {
-              DartType type = field.type;
-              reflectionMarker = '-${task.metadataEmitter.reifyType(type)}';
-            }
+            DartType type = field.type;
+            reflectionMarker = '-${task.metadataEmitter.reifyType(type)}';
           }
-          builder.addField('$fieldName$fieldCode$reflectionMarker');
+          String builtFieldname = '$fieldName$fieldCode$reflectionMarker';
+          builder.addField(builtFieldname);
+          // Add 1 because adding a field to the class also requires a comma
+          compiler.dumpInfoTask.recordFieldNameSize(field,
+              builtFieldname.length + 1);
           fieldsAdded = true;
         }
       });
@@ -313,24 +293,30 @@ class ClassEmitter extends CodeEmitterHelper {
       classBuilder.addProperty("@", metadata);
     }
 
-    if (backend.isNeededForReflection(classElement)) {
-      Link typeVars = classElement.typeVariables;
+    if (backend.isAccessibleByReflection(classElement)) {
+      List<DartType> typeVars = classElement.typeVariables;
       Iterable typeVariableProperties = task.typeVariableHandler
           .typeVariablesOf(classElement).map(js.number);
 
       ClassElement superclass = classElement.superclass;
       bool hasSuper = superclass != null;
       if ((!typeVariableProperties.isEmpty && !hasSuper) ||
-          (hasSuper && superclass.typeVariables != typeVars)) {
+          (hasSuper && !equalElements(superclass.typeVariables, typeVars))) {
         classBuilder.addProperty('<>',
             new jsAst.ArrayInitializer.from(typeVariableProperties));
       }
     }
 
     List<jsAst.Property> statics = new List<jsAst.Property>();
-    ClassBuilder staticsBuilder = new ClassBuilder(namer);
+    ClassBuilder staticsBuilder = new ClassBuilder(classElement, namer);
     if (emitFields(classElement, staticsBuilder, null, emitStatics: true)) {
-      statics.add(staticsBuilder.toObjectInitializer().properties.single);
+      jsAst.ObjectInitializer initializer =
+        staticsBuilder.toObjectInitializer();
+      compiler.dumpInfoTask.registerElementAst(classElement,
+        initializer);
+      jsAst.Node property = initializer.properties.single;
+      compiler.dumpInfoTask.registerElementAst(classElement, property);
+      statics.add(property);
     }
 
     Map<OutputUnit, ClassBuilder> classPropertyLists =
@@ -349,11 +335,13 @@ class ClassEmitter extends CodeEmitterHelper {
     }
 
     // TODO(ahe): This method (generateClass) should return a jsAst.Expression.
-    enclosingBuilder.addProperty(className, classBuilder.toObjectInitializer());
+    jsAst.ObjectInitializer propertyValue = classBuilder.toObjectInitializer();
+    compiler.dumpInfoTask.registerElementAst(classBuilder.element, propertyValue);
+    enclosingBuilder.addProperty(className, propertyValue);
 
     String reflectionName = task.getReflectionName(classElement, className);
     if (reflectionName != null) {
-      if (!backend.isNeededForReflection(classElement)) {
+      if (!backend.isAccessibleByReflection(classElement)) {
         enclosingBuilder.addProperty("+$reflectionName", js.number(0));
       } else {
         List<int> types = <int>[];
@@ -521,7 +509,8 @@ class ClassEmitter extends CodeEmitterHelper {
     jsAst.Expression code = backend.generatedCode[member];
     assert(code != null);
     String setterName = namer.setterNameFromAccessorName(accessorName);
-    builder.addProperty(setterName, code);
+    compiler.dumpInfoTask.registerElementAst(member,
+        builder.addProperty(setterName, code));
     generateReflectionDataForFieldGetterOrSetter(
         member, setterName, builder, isGetter: false);
   }
@@ -536,7 +525,7 @@ class ClassEmitter extends CodeEmitterHelper {
     task.precompiledFunction.add(
         js('#.prototype.# = function(#) { return #.# }',
            [className, getterName, args, receiver, fieldName]));
-    if (backend.isNeededForReflection(member)) {
+    if (backend.isAccessibleByReflection(member)) {
       task.precompiledFunction.add(
           js('#.prototype.#.${namer.reflectableField} = 1',
               [className, getterName]));
@@ -554,7 +543,7 @@ class ClassEmitter extends CodeEmitterHelper {
         // TODO: remove 'return'?
         js('#.prototype.# = function(#, v) { return #.# = v; }',
             [className, setterName, args, receiver, fieldName]));
-    if (backend.isNeededForReflection(member)) {
+    if (backend.isAccessibleByReflection(member)) {
       task.precompiledFunction.add(
           js('#.prototype.#.${namer.reflectableField} = 1',
               [className, setterName]));
@@ -599,7 +588,7 @@ class ClassEmitter extends CodeEmitterHelper {
 
     Substitution substitution =
         backend.rti.computeSubstitution(
-            cls, element.enclosingElement, alwaysGenerateFunction: true);
+            cls, element.typeDeclaration, alwaysGenerateFunction: true);
     if (substitution != null) {
       jsAst.Expression typeArguments =
           js(r'#.apply(null, this.$builtinTypeInfo)',
@@ -611,9 +600,10 @@ class ClassEmitter extends CodeEmitterHelper {
           js(r'this.$builtinTypeInfo && this.$builtinTypeInfo[#]', index);
     }
     jsAst.Expression convertRtiToRuntimeType =
-        namer.elementAccess(compiler.findHelper('convertRtiToRuntimeType'));
-    builder.addProperty(name,
-        js('function () { return #(#) }',
-            [convertRtiToRuntimeType, computeTypeVariable]));
+        namer.elementAccess(backend.findHelper('convertRtiToRuntimeType'));
+    compiler.dumpInfoTask.registerElementAst(element,
+        builder.addProperty(name,
+            js('function () { return #(#) }',
+                [convertRtiToRuntimeType, computeTypeVariable])));
   }
 }

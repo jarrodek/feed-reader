@@ -1,7 +1,6 @@
 library rssapp.service.communication;
 
 import 'dart:js' as js;
-import 'dart:html';
 
 import 'query_service.dart';
 
@@ -34,14 +33,13 @@ class AppComm {
     try {
       chrome.runtime.getBackgroundPage().then((eventPage) {
         try{
-          eventPage.jsProxy['feed'].callMethod('update', []);
+          eventPage.jsProxy['rss']['app'].callMethod('update', []);
         } catch(e){
-          window.console.error(e);
+          print(e);
         }
       });
     } catch(e){
       print('Not inside Chrome app env.');
-      window.console.error(e);
     }
   }
   

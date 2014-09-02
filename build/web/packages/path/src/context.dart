@@ -4,10 +4,13 @@
 
 library path.context;
 
+import 'internal_style.dart';
 import 'style.dart';
 import 'parsed_path.dart';
 import 'path_exception.dart';
 import '../path.dart' as p;
+
+Context createInternal() => new Context._internal();
 
 /// An instantiable class for manipulating paths. Unlike the top-level
 /// functions, this lets you explicitly select what platform the paths will use.
@@ -30,18 +33,30 @@ class Context {
       }
     }
 
-    if (style == null) style = Style.platform;
+    if (style == null) {
+      style = Style.platform;
+    } else if (style is! InternalStyle) {
+      throw new ArgumentError("Only styles defined by the path package are "
+          "allowed.");
+    }
 
     return new Context._(style, current);
   }
 
-  Context._(this.style, this.current);
+  /// Create a [Context] to be used internally within path.
+  Context._internal() : style = Style.platform, _current = null;
+
+  Context._(this.style, this._current);
 
   /// The style of path that this context works with.
-  final Style style;
+  final InternalStyle style;
 
-  /// The current directory that relative paths will be relative to.
-  final String current;
+  /// The current directory given when Context was created. If null, current
+  /// directory is evaluated from 'p.current'.
+  final String _current;
+
+  /// The current directory that relative paths are relative to.
+  String get current => _current != null ? _current : p.current;
 
   /// Gets the path separator for the context's [style]. On Mac and Linux,
   /// this is `/`. On Windows, it's `\`.
@@ -213,7 +228,7 @@ class Context {
         // replaces the path after it.
         var parsed = _parse(part);
         parsed.root = this.rootPrefix(buffer.toString());
-        if (parsed.root.contains(style.needsSeparatorPattern)) {
+        if (style.needsSeparator(parsed.root)) {
           parsed.separators[0] = style.separator;
         }
         buffer.clear();
@@ -224,7 +239,7 @@ class Context {
         buffer.clear();
         buffer.write(part);
       } else {
-        if (part.length > 0 && part[0].contains(style.separatorPattern)) {
+        if (part.length > 0 && style.containsSeparator(part[0])) {
           // The part starts with a separator, so we don't need to add one.
         } else if (needsSeparator) {
           buffer.write(separator);
@@ -235,7 +250,7 @@ class Context {
 
       // Unless this part ends with a separator, we'll need to add one before
       // the next part.
-      needsSeparator = part.contains(style.needsSeparatorPattern);
+      needsSeparator = style.needsSeparator(part);
     }
 
     return buffer.toString();

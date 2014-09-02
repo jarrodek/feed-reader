@@ -44,12 +44,11 @@ void main() {
 }
 
 void runApp() {
-  var myValidator = new NodeValidatorBuilder() //.common()
+  /*var myValidator = new NodeValidatorBuilder() //.common()
       //..allowHtml5()
       //..allowNavigation()
       ..allowTextElements();
-  //..allowCustomElement('test-component', attributes: ['product-id']);
-
+  */
   var rssModule = new Module()
       ..bind(RouteInitializerFn, toValue: rssAppRouteInitializer)
       ..bind(NgRoutingUsePushState, toValue: new NgRoutingUsePushState.value(false))
@@ -57,7 +56,6 @@ void runApp() {
       ..install(new AnimationModule())
 
       ..bind(TruncateFilter)
-      ..bind(SanitizeFilter)
       ..bind(RelativeDateFilter)
       ..bind(RelativeDayFilter)
       ..bind(PostsListFormatter)
@@ -87,9 +85,9 @@ void runApp() {
       ..bind(ImageService)
       ..bind(RssDatabase)
       ..bind(AppComm)
-      ..bind(AppEvents)
+      ..bind(AppEvents);
 
-      ..bind(NodeValidator, toValue: myValidator);
+      //..bind(NodeValidator, toValue: myValidator);
 
   applicationFactory().addModule(rssModule).run();
 }

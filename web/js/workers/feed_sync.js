@@ -235,7 +235,7 @@ rss.sync._syncContent = function(){
             }
         }
     }
-    rss.sync.update(inserts, updates);
+    rss.sync.sanitize(inserts, updates);
 };
 rss.sync._checkEntry = function(existing, arrival){
     var entryChanged = false;
@@ -287,7 +287,28 @@ rss.sync._checkEntry = function(existing, arrival){
 
     return entryChanged ? existing : null;
 };
+
+/**
+ * Strip html tags from entries.
+ * @param {Array} inserts
+ * @param {Array} updates
+ * @returns {undefined}
+ */
+rss.sync.sanitize = function(inserts, updates){
     
+    var reg = /<.+?>/gim;
+    var reg_whitespaces = /\s{2,}/gim;
+    
+    for(var i=0, len=inserts.length; i<len; i++){
+        inserts[i].text = inserts[i].content.replace(reg, ' ');
+        inserts[i].text = inserts[i].text.replace(reg_whitespaces, ' ');
+    }
+    
+    rss.sync.update(inserts, updates);
+};
+
+
+
 rss.sync.update = function(inserts, updates){
     if(inserts.length > 0 || updates.length > 0){
         rss.db.insertPosts(inserts, updates, function(){
@@ -297,7 +318,7 @@ rss.sync.update = function(inserts, updates){
         });
     } else {
         rss.db.close();
-        console.log('FINISHING WORK.');
+        console.log('FINISHING WORK WITHOUT INSERTING POSTS.');
         self.postMessage({'inserted':0, feedid: rss.sync.currentFeed.id});
     }
 };

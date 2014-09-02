@@ -455,7 +455,7 @@ class ConcreteTypeSystem extends TypeSystem<ConcreteType> {
   }
 
   @override
-  ConcreteType addPhiInput(Element element,
+  ConcreteType addPhiInput(Local variable,
                            ConcreteType phiType,
                            ConcreteType newType) {
     return computeLUB(phiType, newType);
@@ -468,7 +468,7 @@ class ConcreteTypeSystem extends TypeSystem<ConcreteType> {
   }
 
   @override
-  ConcreteType allocatePhi(Node node, Element element, ConcreteType inputType) {
+  ConcreteType allocatePhi(Node node, Local variable, ConcreteType inputType) {
     return inputType;
   }
 
@@ -509,7 +509,8 @@ class ConcreteTypeSystem extends TypeSystem<ConcreteType> {
 
   @override
   Selector newTypedSelector(ConcreteType receiver, Selector selector) {
-    return new TypedSelector(concreteTypeToTypeMask(receiver), selector);
+    return new TypedSelector(concreteTypeToTypeMask(receiver), selector,
+        compiler);
   }
 
   @override
@@ -559,7 +560,9 @@ class ConcreteTypeSystem extends TypeSystem<ConcreteType> {
   }
 
   @override
-  ConcreteType simplifyPhi(Node node, Element element, ConcreteType phiType) {
+  ConcreteType simplifyPhi(Node node,
+                           Local variable,
+                           ConcreteType phiType) {
     return phiType;
   }
 
@@ -1122,7 +1125,7 @@ class ConcreteTypesInferrer
   /**
    * [:readers[local]:] is the list of [:local:]'s possible readers.
    */
-  final Map<Element, Set<Element>> capuredLocalsReaders;
+  final Map<Local, Set<FunctionElement>> capturedLocalsReaders;
 
   /// The set of classes encountered so far.
   final Set<ClassElement> seenClasses;
@@ -1164,8 +1167,7 @@ class ConcreteTypesInferrer
         workQueue = new WorkQueue(),
         callers = new Map<FunctionElement, Set<Element>>(),
         fieldReaders = new Map<Element, Set<Element>>(),
-        capuredLocalsReaders = new Map<VariableElement,
-            Set<FunctionElement>>(),
+        capturedLocalsReaders = new Map<Local, Set<FunctionElement>>(),
         seenClasses = new Set<ClassElement>(),
         dynamicCallers = new Map<String, Set<FunctionElement>>(),
         inferredSelectorTypes = new Map<Selector, Map<TypeMask, TypeMask>>(),
@@ -1369,9 +1371,9 @@ class ConcreteTypesInferrer
   /**
    * Add [reader] to the set of [local]'s readers.
    */
-  void addCapturedLocalReader(VariableElement local, FunctionElement reader) {
-    capuredLocalsReaders.putIfAbsent(local, () => new Set<FunctionElement>())
-                        .add(reader);
+  void addCapturedLocalReader(Local local, FunctionElement reader) {
+    capturedLocalsReaders.putIfAbsent(local, () => new Set<FunctionElement>())
+                         .add(reader);
   }
 
   /**
@@ -1864,7 +1866,7 @@ class ConcreteTypesInferrer
       print("  $k: $v");
     });
     print("readers of captured locals:");
-    capuredLocalsReaders.forEach((k,v) {
+    capturedLocalsReaders.forEach((k,v) {
       print("  $k: $v");
     });
     print("inferredFieldTypes:");
@@ -1948,13 +1950,13 @@ class ConcreteTypesInferrer
   }
 
   @override
-  void recordCapturedLocalRead(Element local) {
+  void recordCapturedLocalRead(Local local) {
     addCapturedLocalReader(local, currentWorkItem.method);
   }
 
   @override
-  void recordLocalUpdate(Element local, ConcreteType type) {
-    Set<Element> localReaders = capuredLocalsReaders[local];
+  void recordLocalUpdate(Local local, ConcreteType type) {
+    Set<FunctionElement> localReaders = capturedLocalsReaders[local];
     if (localReaders != null) {
       localReaders.forEach(invalidate);
     }
@@ -2229,7 +2231,8 @@ class ConcreteTypesInferrer
   }
 
   @override
-  void setDefaultTypeOfParameter(Element parameter, ConcreteType type) {
+  void setDefaultTypeOfParameter(ParameterElement parameter,
+                                 ConcreteType type) {
     // We handle default parameters our own way in associateArguments
   }
 
@@ -2263,7 +2266,7 @@ class ConcreteTypesInferrer
       final result = currentWorkItem.environment.lookupType(element);
       if (result != null) return result;
     }
-    if (element.isParameter || element.isFieldParameter) {
+    if (element.isParameter || element.isInitializingFormal) {
       return inferredParameterTypes[element];
     } else if (element.isField) {
       return inferredFieldTypes[element];
@@ -2346,10 +2349,12 @@ class TypeInferrerVisitor extends SimpleTypeInferrerVisitor<ConcreteType> {
   @override
   ConcreteType visitGetterSend(Send node) {
     if (inferrer.testMode) {
-      Element element = elements[node];
-      ConcreteType type = locals.use(element);
-      if (type != null) {
-        inferrer.augmentInferredType(node, type);
+      var element = elements[node];
+      if (element is Local) {
+        ConcreteType type = locals.use(element);
+        if (type != null) {
+          inferrer.augmentInferredType(node, type);
+        }
       }
     }
     return super.visitGetterSend(node);

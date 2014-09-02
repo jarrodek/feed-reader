@@ -60,8 +60,6 @@ class VmTurnZone {
   /// an "inner" [Zone], which is a child of the outer [Zone].
   async.Zone _innerZone;
 
-  ZoneScheduleMicrotask defaultOnScheduleMicrotask;
-
   /**
    * Associates with this
    *
@@ -82,13 +80,16 @@ class VmTurnZone {
     onError = _defaultOnError;
     onTurnDone = _defaultOnTurnDone;
     onTurnStart = _defaultOnTurnStart;
+    onScheduleMicrotask = _defaultOnScheduleMicrotask;
   }
 
   List _asyncQueue = [];
   bool _errorThrownFromOnRun = false;
 
   var _currentlyInTurn = false;
-  _onRunBase(async.Zone self, async.ZoneDelegate delegate, async.Zone zone, fn()) {
+
+  dynamic _onRunBase(async.Zone self, async.ZoneDelegate delegate, async.Zone zone, fn()) {
+    var scope = traceEnter(VmTurnZone_run);
     _runningInTurn++;
     try {
       if (!_currentlyInTurn) {
@@ -103,34 +104,37 @@ class VmTurnZone {
     } finally {
       _runningInTurn--;
       if (_runningInTurn == 0) _finishTurn(zone, delegate);
+      traceLeave(scope);
     }
   }
+
   // Called from the parent zone.
-  _onRun(async.Zone self, async.ZoneDelegate delegate, async.Zone zone, fn()) =>
+  dynamic _onRun(async.Zone self, async.ZoneDelegate delegate, async.Zone zone, fn()) =>
       _onRunBase(self, delegate, zone, () => delegate.run(zone, fn));
 
-  _onRunUnary(async.Zone self, async.ZoneDelegate delegate, async.Zone zone,
-              fn(args), args) =>
+  dynamic _onRunUnary(async.Zone self, async.ZoneDelegate delegate, async.Zone zone,
+                      fn(args), args) =>
       _onRunBase(self, delegate, zone, () => delegate.runUnary(zone, fn, args));
 
-  _onScheduleMicrotask(async.Zone self, async.ZoneDelegate delegate,
-                       async.Zone zone, fn()) {
-    if (defaultOnScheduleMicrotask != null) {
-      return defaultOnScheduleMicrotask(fn);
+  void _onScheduleMicrotask(async.Zone self, async.ZoneDelegate delegate, async.Zone zone, fn()) {
+    var s = traceEnter(VmTurnZone_scheduleMicrotask);
+    try {
+      onScheduleMicrotask(() => delegate.run(zone, fn));
+      if (_runningInTurn == 0 && !_inFinishTurn)  _finishTurn(zone, delegate);
+    } finally {
+      traceLeave(s);
     }
-
-    _asyncQueue.add(() => delegate.run(zone, fn));
-    if (_runningInTurn == 0 && !_inFinishTurn)  _finishTurn(zone, delegate);
   }
 
-  _uncaughtError(async.Zone self, async.ZoneDelegate delegate, async.Zone zone,
-                 e, StackTrace s) {
+  void _uncaughtError(async.Zone self, async.ZoneDelegate delegate, async.Zone zone,
+                      e, StackTrace s) {
     if (!_errorThrownFromOnRun) onError(e, s, _longStacktrace);
     _errorThrownFromOnRun = false;
   }
 
   var _inFinishTurn = false;
-  _finishTurn(zone, delegate) {
+
+  void _finishTurn(zone, delegate) {
     if (_inFinishTurn) return;
     _inFinishTurn = true;
     try {
@@ -145,7 +149,7 @@ class VmTurnZone {
           delegate.run(zone, onTurnStart);
         }
         while (!_asyncQueue.isEmpty) {
-          delegate.run(zone, _asyncQueue.removeAt(0));
+          _asyncQueue.removeAt(0)();
         }
         delegate.run(zone, onTurnDone);
         _currentlyInTurn = false;
@@ -197,6 +201,13 @@ class VmTurnZone {
   ZoneOnTurnDone onTurnDone;
   void _defaultOnTurnDone() => null;
 
+  /**
+   * Called any time a microtask is scheduled. If you override [onScheduleMicrotask], you
+   * are expected to call the function at some point.
+   */
+  ZoneScheduleMicrotask onScheduleMicrotask;
+  void _defaultOnScheduleMicrotask(fn) => _asyncQueue.add(fn);
+
   LongStackTrace _longStacktrace = null;
 
   LongStackTrace _getLongStacktrace(name) {
@@ -215,15 +226,27 @@ class VmTurnZone {
 
   /**
    * Runs [body] in the inner zone and returns whatever it returns.
+   *
+   * In a typical app where the inner zone is the Angular zone, this allows one to make use of the
+   * Angular's auto digest mechanism.
+   *
+   *    VmTurnZone zone = <ref to app.zone>;
+   *
+   *    void functionCalledFromJS() {
+   *      zone.run(() {
+   *        // auto-digest will run after this function is called from JS
+   *      })
+   *    }
    */
   dynamic run(body()) => _innerZone.run(body);
 
   /**
    * Runs [body] in the outer zone and returns whatever it returns.
-   * In a typical app where the inner zone is the Angular zone, this allows
-   * one to escape Angular's auto-digest mechanism.
    *
-   *     myFunction(VmTurnZone zone, Element element) {
+   * In a typical app where the inner zone is the Angular zone, this allows one to escape Angular's
+   * auto-digest mechanism.
+   *
+   *     void myFunction(VmTurnZone zone, Element element) {
    *       element.onClick.listen(() {
    *         // auto-digest will run after element click.
    *       });

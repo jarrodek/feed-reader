@@ -87,8 +87,7 @@ class NgRepeat {
   Function _generateId = (key, value, index) => value;
   Watch _watch;
 
-  NgRepeat(this._viewPort, this._boundViewFactory, this._scope,
-           this._parser, this.formatters);
+  NgRepeat(this._viewPort, this._boundViewFactory, this._scope, this._parser, this.formatters);
 
   set expression(value) {
     assert(value != null);
@@ -107,7 +106,7 @@ class NgRepeat {
     if (trackByExpr != null) {
       Expression trackBy = _parser(trackByExpr);
       _generateId = ((key, value, index) {
-        final context = <String, Object>{}
+        final context = new HashMap<String, Object>()
             ..[_valueIdentifier] = value
             ..[r'$index'] = index
             ..[r'$id'] = (obj) => obj;
@@ -131,9 +130,8 @@ class NgRepeat {
 
     _watch = _scope.watch(
         _listExpr,
-        (CollectionChangeRecord changes, _) {
-          if (changes is! CollectionChangeRecord) return;
-          _onChange(changes);
+        (changes, _) {
+          _onChange((changes is CollectionChangeRecord) ? changes : null);
         },
         collection: true,
         formatters: formatters
@@ -142,7 +140,8 @@ class NgRepeat {
 
   // Computes and executes DOM changes when the item list changes
   void _onChange(CollectionChangeRecord changes) {
-    final int length = changes.length;
+    final iterable = (changes == null) ? const [] : changes.iterable;
+    final int length = (changes == null) ? 0 : changes.length;
     final rows = new List<_Row>(length);
     final changeFunctions = new List<Function>(length);
     final removedIndexes = <int>[];
@@ -170,43 +169,49 @@ class NgRepeat {
       _rows = new List<_Row>(length);
       for (var i = 0; i < length; i++) {
         changeFunctions[i] = (index, previousView) {
-          addRow(index, changes.iterable.elementAt(i), previousView);
+          addRow(index, iterable.elementAt(i), previousView);
         };
       }
     } else {
-      changes.forEachRemoval((CollectionChangeItem removal) {
-        var index = removal.previousIndex;
-        var row = _rows[index];
-        row.scope.destroy();
-        _viewPort.remove(row.view);
-        leftInDom.removeAt(domLength - 1 - index);
-      });
+      if (changes == null) {
+        _rows.forEach((row) {
+          _viewPort.remove(row.view);
+        });
+        leftInDom.clear();
+      } else {
+        changes.forEachRemoval((CollectionChangeItem removal) {
+          var index = removal.previousIndex;
+          var row = _rows[index];
+          _viewPort.remove(row.view);
+          leftInDom.removeAt(domLength - 1 - index);
+        });
 
-      changes.forEachAddition((CollectionChangeItem addition) {
-        changeFunctions[addition.currentIndex] = (index, previousView) {
-          addRow(index, addition.item, previousView);
-        };
-      });
+        changes.forEachAddition((CollectionChangeItem addition) {
+          changeFunctions[addition.currentIndex] = (index, previousView) {
+            addRow(index, addition.item, previousView);
+          };
+        });
 
-      changes.forEachMove((CollectionChangeItem move) {
-        var previousIndex = move.previousIndex;
-        var value = move.item;
-        changeFunctions[move.currentIndex] = (index, previousView) {
-          var previousRow = _rows[previousIndex];
-          var childScope = previousRow.scope;
-          var childContext = _updateContext(childScope.context, index, length);
-          if (!identical(childScope.context[_valueIdentifier], value)) {
-            childContext[_valueIdentifier] = value;
-          }
-          rows[index] = _rows[previousIndex];
-          // Only move the DOM node when required
-          if (domIndex < 0 || leftInDom[domIndex] != previousIndex) {
-            _viewPort.move(previousRow.view, moveAfter: previousView);
-            leftInDom.remove(previousIndex);
-          }
-          domIndex--;
-        };
-      });
+        changes.forEachMove((CollectionChangeItem move) {
+          var previousIndex = move.previousIndex;
+          var value = move.item;
+          changeFunctions[move.currentIndex] = (index, previousView) {
+            var previousRow = _rows[previousIndex];
+            var childScope = previousRow.scope;
+            var childContext = _updateContext(childScope.context, index, length);
+            if (!identical(childScope.context[_valueIdentifier], value)) {
+              childContext[_valueIdentifier] = value;
+            }
+            rows[index] = _rows[previousIndex];
+            // Only move the DOM node when required
+            if (domIndex < 0 || leftInDom[domIndex] != previousIndex) {
+              _viewPort.move(previousRow.view, moveAfter: previousView);
+              leftInDom.remove(previousIndex);
+            }
+            domIndex--;
+          };
+        });
+      }
     }
 
     var previousView = null;
@@ -215,9 +220,12 @@ class NgRepeat {
       var changeFn = changeFunctions[targetIndex];
       if (changeFn == null) {
         rows[targetIndex] = _rows[targetIndex];
+        if (domIndex < 0 || leftInDom[domIndex] != targetIndex) {
+          _viewPort.move(rows[targetIndex].view, moveAfter: previousView);
+          leftInDom.remove(targetIndex);
+        }
         domIndex--;
-        // The element has not moved but `$last` and `$middle` might still need
-        // to be updated
+        // The element has not moved but `$last` and `$middle` might still need to be updated
         _updateContext(rows[targetIndex].scope.context, targetIndex, length);
       } else {
         changeFn(targetIndex, previousView);
@@ -247,7 +255,7 @@ class _Row {
   View view;
   dom.Element startNode;
   dom.Element endNode;
-  List<dom.Element> nodes;
+  List<dom.Node> nodes;
 
   _Row(this.id);
 }

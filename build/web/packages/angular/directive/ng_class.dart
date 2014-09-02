@@ -2,7 +2,7 @@ part of angular.directive;
 
 /**
  * The `ngClass` directive allows you to dynamically style an HTML element,
- * by binding to an expression that represents the classes to be bound.
+ * by binding to an expression that represents the classes to be bound. `Selector: [ng-class]`
  *
  * Classes are specified by a bound model that can be a string, array, or map:
  *
@@ -11,8 +11,8 @@ part of angular.directive;
  *  * Array syntax: If the expression is an array, CSS classes are additively applied to the
  *    element.
  *  * Map syntax: If the expression is a map of 'key':value pairs, then the truthiness of the
- *    value is used to determine which CSS classes are applied. (Here,
- *    the keys correspond to the CSS classes to be applied.)
+ *    value is used to determine which CSS classes are applied. (Here, the keys correspond to the
+ *    CSS classes to be applied.)
  *
  * The directive won't add duplicate classes if a particular class was already set. When the
  * expression changes, CSS classes are updated to reflect the change.
@@ -82,23 +82,17 @@ class NgClass extends _NgClassBase {
 }
 
 /**
- * The `ngClassOdd` and `ngClassEven` directives work exactly as
- * {@link ng.directive:ngClass ngClass}, except it works in
- * conjunction with `ngRepeat` and takes affect only on odd (even) rows.
+ * Dynamically style only odd rows in an `ng-repeat` list. `Selector: [ng-class-odd]`
  *
- * This directive can be applied only within a scope of an `ngRepeat`.
+ * This directive works exactly as [ngClass] with regard to String, Array,
+ * and Map syntax for associating CSS classes with an element, but only affects odd rows in a
+ * list.
  *
- * ##Examples
+ * Also see [ngClassEven], which applies CSS classes to even rows.
  *
- * index.html:
- *
- *     <li ng-repeat="name in ['John', 'Mary', 'Cate', 'Suz']">
- *       <span ng-class-odd="'odd'" ng-class-even="'even'">
- *         {{name}}
- *       </span>
- *     </li>
- *
- * style.css:
+ * ##Example
+ * Let's assume that we have a simple stylesheet that defines two CSS classes for the following
+ * example.
  *
  *     .odd {
  *       color: red;
@@ -106,6 +100,14 @@ class NgClass extends _NgClassBase {
  *     .even {
  *       color: blue;
  *     }
+ *
+ * The following template applies these classes to the odd and even rows respectively:
+ *
+ *     <li ng-repeat="name in ['John', 'Mary', 'Cate', 'Suz']">
+ *       <span ng-class-odd="'odd'" ng-class-even="'even'">
+ *         {{name}}
+ *       </span>
+ *     </li>
  */
 @Decorator(
     selector: '[ng-class-odd]',
@@ -117,23 +119,17 @@ class NgClassOdd extends _NgClassBase {
 }
 
 /**
- * The `ngClassOdd` and `ngClassEven` directives work exactly as
- * {@link ng.directive:ngClass ngClass}, except it works in
- * conjunction with `ngRepeat` and takes affect only on odd (even) rows.
+ * Dynamically style only even rows in an `ng-repeat` list. `Selector: [ng-class-even]`
  *
- * This directive can be applied only within a scope of an `ngRepeat`.
+ * This directive works exactly as [ngClass] with regard to String, Array,
+ * and Map syntax for associating CSS classes with an element, but only affects even rows in a
+ * list.
  *
- * ##Examples
+ * Also see [ngClassEven], which applies CSS classes to even rows.
  *
- * index.html:
- *
- *     <li ng-repeat="name in ['John', 'Mary', 'Cate', 'Suz']">
- *       <span ng-class-odd="'odd'" ng-class-even="'even'">
- *         {{name}}
- *       </span>
- *     </li>
- *
- * style.css:
+ * ##Example
+ * Let's assume that we have a simple stylesheet that defines two CSS classes for the following
+ * example.
  *
  *     .odd {
  *       color: red;
@@ -141,6 +137,14 @@ class NgClassOdd extends _NgClassBase {
  *     .even {
  *       color: blue;
  *     }
+ *
+ * The following template applies these classes to the odd and even rows respectively:
+ *
+ *     <li ng-repeat="name in ['John', 'Mary', 'Cate', 'Suz']">
+ *       <span ng-class-odd="'odd'" ng-class-even="'even'">
+ *         {{name}}
+ *       </span>
+ *     </li>
  */
 @Decorator(
     selector: '[ng-class-even]',

@@ -1,32 +1,67 @@
 library di.key;
 
-int _lastKeyId = 0;
-int get lastKeyId => _lastKeyId;
+import 'dart:collection';
 
-Map<int, int> _hashToKey = {};
-
+/**
+ * Key to which an [Injector] binds a [Provider].  This is a pair consisting of
+ * a [type] and an optional [annotation].
+ */
 class Key {
+  // TODO: experiment with having a separate map for non-annotated types (perf)
+  // While Map.identity is faster here, it's not supported in dart2js (dart issue 19622 wontfix)
+  static Map<Type, Map<Type, Key>> _typeToAnnotationToKey = {};
+  static int _numInstances = 0;
+  /// The number of instances of [Key] created.
+  static int get numInstances => _numInstances;
+
   final Type type;
+  /// Optional.
   final Type annotation;
-  final int hashCode;
+  /// Assigned via auto-increment.
   final int id;
 
-  factory Key(Type type, [Type annotation]) {
-    var _hashCode = type.hashCode + annotation.hashCode;
-    var _id = _hashToKey.putIfAbsent(_hashCode, () => _lastKeyId++);
-    return new Key._newKey(type, annotation, _hashCode, _id);
+  int _data;
+  @deprecated
+  int get uid => _data;
+  @deprecated
+  set uid(int d) {
+    if (_data == null) {
+      _data = d;
+      return;
+    }
+    throw "Key($type).uid has already been set to $_data.";
   }
 
-  Key._newKey(this.type, this.annotation, this.hashCode, this.id);
+  int get hashCode => id;
 
-  bool operator ==(other) =>
-      other is Key && other.hashCode == hashCode;
+  /**
+   * Creates a new key or returns one from a cache if given the same inputs that
+   * a previous call had.  E.g. `identical(new Key(t, a), new Key(t, a))` holds.
+   */
+  factory Key(Type type, [Type annotation]) {
+    // Don't use Map.putIfAbsent -- too slow!
+    var annotationToKey = _typeToAnnotationToKey[type];
+    if (annotationToKey == null) {
+      _typeToAnnotationToKey[type] = annotationToKey = new Map();
+    }
+    Key key = annotationToKey[annotation];
+    if (key == null) {
+      annotationToKey[annotation] =
+          key = new Key._(type, annotation, _numInstances++);
+    }
+    return key;
+  }
+
+  Key._(this.type, this.annotation, this.id);
 
   String toString() {
     String asString = type.toString();
     if (annotation != null) {
-      asString += ' annotated with: ${annotation.toString()}';
+      asString += ' annotated with: $annotation';
     }
     return asString;
   }
 }
+
+/// shortcut function
+Key key(Type type, [Type annotation]) => new Key(type, annotation);

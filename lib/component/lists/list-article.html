@@ -1,7 +1,7 @@
 <article ng-class="{'unread':Article.entry.unread}" layout horizontal>
-  <div flex layout vertical class="content-summary" ng-click="Article.readPost(Article.entry.id)">
-    <h2 class="post-title"><a href="#/post/{{Article.entry.id}}">{{Article.entry.title}}</a></h2>
-    <p class="post-summary" ng-bind-html="Article.entry.content|truncate:350:true:false"></p>
+  <div flex layout vertical class="content-summary" ng-click="Article.readPost(Article.entry.entryid)">
+    <h2 class="post-title"><a href="#/post/{{Article.entry.entryid}}">{{Article.entry.title}}</a></h2>
+    <p class="post-summary">{{Article.entry.text|truncate:350:false}}</p>
   </div>
   <div layout vertical center class="action-area">
     <star starred="Article.entry.starred" class="star-action" ng-click="Article.onStarChange()"></star>

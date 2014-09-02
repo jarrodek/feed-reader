@@ -8,15 +8,16 @@ import "dart:html" show ShadowRoot;
 export "package:angular/core/annotation_src.dart" show
     AttachAware,
     DetachAware,
-    ShadowRootAware,
 
     Formatter,
-    Injectable,
+    DirectiveBinder,
+    DirectiveBinderFn,
 
     Directive,
     Component,
     Controller,
     Decorator,
+    Visibility,
 
     DirectiveAnnotation,
     NgAttr,

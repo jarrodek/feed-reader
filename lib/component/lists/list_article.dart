@@ -1,6 +1,5 @@
 library rssapp.component.listarticle;
 
-import 'dart:html';
 
 import 'package:angular/angular.dart';
 import '../../service/dbstructures.dart';
@@ -22,15 +21,14 @@ class ListArticleComponent {
   ListArticleComponent(this.queryService, this.router);
 
   void onStarChange() {
-    entry.starred = !entry.starred;
-    queryService.updateEntry(entry).catchError((e) {
-      //TODO: Inform the user.
+    queryService.changeStar(!entry.starred, entry: entry).catchError((e) {
       entry.starred = !entry.starred;
-      window.console.error(e);
+      print(e);
     });
   }
   
   void readPost(postId) {
+    
     this.router.gotoUrl("/post/$postId");
   }
 }
