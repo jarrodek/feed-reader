@@ -203,7 +203,7 @@ rss.app._parseFeedResponse = function(feed, e){
         rss.app.syncFeed(feed, data);
         window.setTimeout(rss.app._run, 0);
     };
-    worker.postMessage(e.target.response);
+    worker.postMessage({'url': feed.url, 'data': e.target.response});
 };
 /**
  * This function will run another service responsible for synchronizing
