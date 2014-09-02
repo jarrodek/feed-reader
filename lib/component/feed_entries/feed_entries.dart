@@ -16,9 +16,9 @@ import '../../service/query_service.dart';
 class FeedEntriesComponent {
   
   QueryService queryService;
-  int get feedId => queryService.currentFeedId;
+  int get feedId => queryService.feedId;
   
-  List<FeedEntry> get entries => queryService.currentPosts;
+  List<FeedEntry> get entries => queryService.entries;
   Feed get feed {
     if(feedId == null) return null;
     for(var i=0, len=queryService.feeds.length; i<len; i++){

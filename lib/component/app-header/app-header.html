@@ -19,13 +19,13 @@
   
   <span flex ng-show="!cmp.showAddFeed"></span>
   
-  <div  ng-if="!cmp.showAddFeed && cmp.readingPost && cmp.entries.length > 0" class="post-pagination" layout horizontal center>
-    <b class="current-post-index">{{cmp.currentPostsIndex}}</b> of <b class="current-posts-length">{{cmp.currentPostsLength}}</b> 
+  <div  ng-if="!cmp.showAddFeed && cmp.readingEntry && cmp.entries.length > 0" class="post-pagination" layout horizontal center>
+    <b class="current-post-index">{{cmp.currentEntryIndex}}</b> of <b class="current-posts-length">{{cmp.currentEntriesLength}}</b> 
     <div class="pagination-buttons">
-      <button type="button" class="button default clean" title="Previous post" ng-disabled="!cmp.hasPrevEntry" ng-click="cmp.goToPost('prev')">
+      <button type="button" class="button default clean" title="Previous entry" ng-disabled="!cmp.hasPrevEntry" ng-click="cmp.goToEntry('prev')">
         <span icon="chevron-left" class="button-icon"></span>
       </button>
-      <button type="button" class="button default clean" title="Next post" ng-disabled="!cmp.hasNextEntry" ng-click="cmp.goToPost('next')">
+      <button type="button" class="button default clean" title="Next entry" ng-disabled="!cmp.hasNextEntry" ng-click="cmp.goToEntry('next')">
         <span icon="chevron-right" class="button-icon"></span>
       </button>
     </div>

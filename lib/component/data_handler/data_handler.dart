@@ -42,52 +42,38 @@ class DataHandlerComponent implements AttachAware {
   void _onRouteStart(RouteStartEvent e) {
     
     var uri = e.uri;
-    
-    print('DataHandler::_onRouteStart to uri: $uri');
-    
     if (!e.uri.startsWith('/post')) {
-      //in any other case it means change in posts lists.
-      this.queryService.currentPosts.clear();
-      queryService.currentFeedId = null;
-      queryService.currentPostId = null;
-    } else {
-      queryService.currentPostId = Uri.decodeComponent(uri.substring(6));
-      print('Post id: ${queryService.currentPostId}');
+      //If the user doeasn't read entries list means that the tist itself will change.
+      this.queryService.entries.clear();
+      queryService.feedId = null;
+      queryService.entryId = null;
     }
 
     e.completed.then(_checkRoute);
   }
 
   void _checkRoute(_) {
-    print('DataHandler::_checkRoute');
     _handleRoute(routeProvider.routeName, routeProvider.parameters);
   }
 
   void _handleRoute(String routeName, Map<String, String> parameters) {
-    
-    print('DataHandler::_handleRoute - Handling $routeName area.');
-    
     switch (routeName) {
       case 'unread':
       case 'starred':
       case 'all':
         _getGenericSource(routeName);
-        this.queryService.currentPostsArea = routeName;
+        this.queryService.currentEntriesArea = routeName;
         break;
       
       case 'feed':
-        this.queryService.currentPostsArea = null;
-        if (this.queryService.currentPosts.length > 0) {
+        this.queryService.currentEntriesArea = null;
+        if (this.queryService.entries.length > 0) {
           return;
         }
         String feedId = parameters['feedId'];
-        print('DataHandler::_handleRoute - Handling route for feed ID $feedId.');
         _getFeedSource(feedId);
         break;
       
-      case 'post':
-
-        break;
       default:
         //pass
         break;
@@ -95,7 +81,7 @@ class DataHandlerComponent implements AttachAware {
   }
 
   void _getGenericSource(String source) {
-    this.queryService.populatePosts(source);
+    this.queryService.populateEntries(source);
   }
 
   void _getFeedSource(String _feedId) {
@@ -110,11 +96,11 @@ class DataHandlerComponent implements AttachAware {
     queryService.getFeedById(feedId).then((Feed feed) {
       if (feed == null) {
         // TODO: report an error.
-        window.console.error("No feed in response.");
+        print("No feed in response.");
         return;
       }
-      queryService.currentFeedId = feedId;
-      queryService.populatePosts(feedId.toString());
+      queryService.feedId = feedId;
+      queryService.populateEntries(_feedId);
     });
 
   }

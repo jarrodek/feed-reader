@@ -24,7 +24,7 @@ class EntriesListComponent {
   String dataSource;  
   QueryService queryService;
   
-  List<FeedEntry> get entries => queryService.currentPosts;
+  List<FeedEntry> get entries => queryService.entries;
   List<Feed> get feeds => queryService.feeds;
   
   int listLength = 5;

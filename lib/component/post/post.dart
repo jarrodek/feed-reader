@@ -26,10 +26,11 @@ class PostComponent {
   bool showOptions = false;
   
   PostComponent(RouteProvider this.routeProvider, QueryService this.queryService, ImageService this.imageService){
+    String _entryId = routeProvider.parameters['postId'];
+    queryService.entryId = Uri.decodeComponent(_entryId);
     
-    //String postId = routeProvider.parameters['postId'];
-    print('PostComponent, Ggetting post data for postId: ${queryService.currentPostId}');
-    queryService.getPost(queryService.currentPostId).then(_handleEntry).catchError(_handleEntryError);
+    print('PostComponent, getting entry data for entryId: ${queryService.entryId}');
+    queryService.getEntry(queryService.entryId).then(_handleEntry).catchError(_handleEntryError);
   }
   
   void _handleEntry(FeedEntry entry){
@@ -76,7 +77,7 @@ class PostComponent {
     showOptions = !showOptions;
   }
   
-  void unreadPost(){
+  void unreadEntry(){
     
     queryService.setEntryRead(entry, false).then((entry){
       this.entry = entry;
