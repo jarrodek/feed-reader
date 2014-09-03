@@ -25,14 +25,14 @@ class Feed {
   List<String> categories = [];
 
   String get display => title == null ? url : title;
-  int _postsCounter = 0;
-  /// Get number of posts in this feed. 
+  int _entriesCounter = 0;
+  /// Get number of entries in this feed. 
   /// This field is not saved into database. 
-  int get postsCounter => _postsCounter;
+  int get entriesCounter => _entriesCounter;
   ///Sent a number of posts available for this feed. 
-  set postsCounter(int i) => _postsCounter = i;
+  set entriesCounter(int i) => _entriesCounter = i;
   
-  int _unreadCounter = 0;
+  int _unreadCounter = null;
   int get unreadCounter => _unreadCounter;
   set unreadCounter(int i) => _unreadCounter = i;
   ///Test if this feed has unread items.

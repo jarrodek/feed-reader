@@ -15,8 +15,8 @@ import '../../service/dbstructures.dart';
 class FeedListComponent {
   
   List<Feed> get feeds => queryService.feeds;
-  int get selected => queryService.currentFeedId;
-  String get selectArea => queryService.currentPostsArea;
+  int get selected => queryService.feedId;
+  String get selectArea => queryService.currentEntriesArea;
   int unreadCount = 0;
   
   QueryService queryService;

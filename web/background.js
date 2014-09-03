@@ -268,7 +268,8 @@ rss.app.showNotifications = function(){
         return;
     }
     
-    var icon = chrome.runtime.getURL('/img/notification.png');
+    //var icon = chrome.runtime.getURL('/img/notification.png');
+    var icon = chrome.runtime.getURL('/img/ico_128.png');
     var options = {};
     var showFeed = -1;
     if(rss.app.notifications.data.length === 1){
@@ -276,7 +277,7 @@ rss.app.showNotifications = function(){
         options = {
             type: "basic",
             title: "You have new articles to read!",
-            message: _n.count + ' new items in ' + _n.title,
+            message: _n.count + ' new posts in ' + _n.title,
             iconUrl: icon
         };
         showFeed = _n.id;
@@ -287,14 +288,14 @@ rss.app.showNotifications = function(){
             feedsCount++;
             itemsCount += _n.count;
             items[items.length] = {
-                'title': _n.title,
-                'message': _n.count + ' new articles.'
+                'title': _n.count + ' new articles.',
+                'message': 'in '+_n.title
             };
         }
         options = {
             type: "list",
             title: "You have "+itemsCount+" new articles to read!",
-            message: feedsCount + ' has been updated.',
+            message: feedsCount + ' feeds has been updated.',
             iconUrl: icon
         };
         if(items.length > 0){

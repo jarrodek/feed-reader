@@ -12,16 +12,25 @@ class QueryService {
   final Http _http;
   final RssDatabase db;
   Future _loaded;
-
+  
+  ///List of all feeds in the app
   List<Feed> feeds = [];
-  List<FeedEntry> currentPosts = [];
+  
+  ///An database ID of currently selected feed.
+  int feedId;
+  
+  ///List of all currently displaed entries
+  List<FeedEntry> entries = [];
+  
+  ///And database ID of currently selected entry.
+  String entryId = null;
+  
+  ///The map where the key is the [Feed.id] and the value is a number of unread messages for this feed.
   Map<int, int> unreadMap = new Map<int, int>();
-
-  int currentFeedId;
-  String currentPostId = null;
+  
+  ///Number of all unread entrys.
   int unreadCount = 0;
-
-  String currentPostsArea = 'unread';
+  String currentEntriesArea = 'unread';
 
   QueryService(Http this._http, RssDatabase this.db) {
     _loaded = Future.wait([loadFeeds(), countUnreads()]);
@@ -31,7 +40,7 @@ class QueryService {
   Future loadFeeds() {
     return this.db.getFeeds().then((List<Feed> feeds) => this.feeds = feeds);
   }
-  ///Count number of unread posts.
+  ///Count number of unread entries.
   Future countUnreads() {
     return this.db.countUnread(null).then((int cnt) => unreadCount = (cnt == null ? 0 : cnt)).catchError((e) => print(e));
   }
@@ -56,29 +65,29 @@ class QueryService {
   }
   
   
-  /// Populate current posts list with posts for given [Feed] as it's databases [feedId]
-  Future populatePosts(String feedId) {
+  /// Populate current entries list with entries for given [Feed] as it's databases [feedId]
+  Future populateEntries(String feedId) {
     switch (feedId) {
       case 'unread':
-        return this.db.listUnread().then(_sortPosts).then((List<FeedEntry> posts) => currentPosts = posts);
+        return this.db.listUnread().then(_sortEntries).then((List<FeedEntry> entriesList) => entries = entriesList);
       case 'starred':
-        return this.db.listStarred().then(_sortPosts).then((List<FeedEntry> posts) => currentPosts = posts);
+        return this.db.listStarred().then(_sortEntries).then((List<FeedEntry> entriesList) => entries = entriesList);
       case 'all':
-        return this.db.listAll().then(_sortPosts).then((List<FeedEntry> posts) => currentPosts = posts);
+        return this.db.listAll().then(_sortEntries).then((List<FeedEntry> entriesList) => entries = entriesList);
       default:
-        return this.db.getPosts(int.parse(feedId)).then(_sortPosts).then((List<FeedEntry> posts) => currentPosts = posts);
+        return this.db.getEntries(int.parse(feedId)).then(_sortEntries).then((List<FeedEntry> entriesList) => entries = entriesList);
     }
   }
   
   /**
-   * Sort posts in current feed.
-   * Posts should be sorted by special field "created" genereated
+   * Sort entries in current feed.
+   * Entries should be sorted by special field "created" genereated
    * by the backgroud page as a timestamp of "published".
    * If, for some reason, this field doeas not exists
    * fallback will be used (parsing "published" field).
    */
-  List<FeedEntry> _sortPosts(List<FeedEntry> posts) {
-    posts.sort((FeedEntry a, FeedEntry b) {
+  List<FeedEntry> _sortEntries(List<FeedEntry> entries) {
+    entries.sort((FeedEntry a, FeedEntry b) {
       if (a.createtime == null || b.createtime == null) {
         DateTime d1, d2;
         try {
@@ -95,7 +104,7 @@ class QueryService {
       }
       return a.createtime.compareTo(b.createtime);
     });
-    return posts;
+    return entries;
   }
 
 
@@ -149,7 +158,7 @@ class QueryService {
     }
   /** 
    * Set the [entry] [read] or not. 
-   * This function will recalculate number of unread posts.
+   * This function will recalculate number of unread entries.
    */
   Future setEntryRead(FeedEntry entry, bool read) {
     if (entry.unread == !read) {
@@ -176,15 +185,15 @@ class QueryService {
   }
 
   /// Get the [FeedEntry] by it's [id]
-  Future<FeedEntry> getPost(String id) {
+  Future<FeedEntry> getEntry(String id) {
     for (int i = 0,
-        len = currentPosts.length; i < len; i++) {
-      if (currentPosts[i].entryid == id) {
-        return new Future.value(currentPosts[i]);
+        len = entries.length; i < len; i++) {
+      if (entries[i].entryid == id) {
+        return new Future.value(entries[i]);
       }
     }
 
-    return this.db.getPost(id).then((FeedEntry entry) => currentPosts.add(entry));
+    return this.db.getEntry(id).then((FeedEntry entry) => entries.add(entry));
   }
 
   /// Change state of the "starred" for feed or entry.
@@ -199,10 +208,10 @@ class QueryService {
     return null;
   }
 
-  /// Mark all curently loaded posts as read.
+  /// Mark all curently loaded entries as read.
   void markCurrentAsRead() {
     var tasks = [];
-    currentPosts.forEach((FeedEntry entry) {
+    entries.forEach((FeedEntry entry) {
       if (!entry.unread) {
         return;
       }
@@ -211,8 +220,8 @@ class QueryService {
       tasks.add(f);
     });
     Future.wait(tasks).then((_) => countUnreads()).then((_) {
-      if (currentFeedId != null && currentFeedId != 0) {
-        return _revalideteUnread(currentFeedId);
+      if (feedId != null && feedId != 0) {
+        return _revalideteUnread(feedId);
       } else {
         return new Future.value(null);
       }

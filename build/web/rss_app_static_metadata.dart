@@ -346,7 +346,7 @@ final Map<Type, Object> typeAnnotations = {
   import_7.RssController: const [
     const import_1.Controller(selector: '[rss-app]', publishAs: 'ctrl'),
   ],
-  import_8.PostsListFormatter: const [
+  import_8.EntriesListFormatter: const [
     const import_1.Formatter(name: 'postlist'),
   ],
   import_9.StarringComponent: const [

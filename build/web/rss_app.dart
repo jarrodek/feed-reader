@@ -62,7 +62,7 @@ void runApp() {
       ..bind(TruncateFilter)
       ..bind(RelativeDateFilter)
       ..bind(RelativeDayFilter)
-      ..bind(PostsListFormatter)
+      ..bind(EntriesListFormatter)
 
       //Components
       ..bind(AppHeaderComponent)

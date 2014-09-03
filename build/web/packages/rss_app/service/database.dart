@@ -13,7 +13,7 @@ import 'dbstructures.dart';
 class RssDatabase {
   static final int DB_VERSION = 6;
   static final String FEEDS_STORE = "feeds";
-  static final String POSTS_STORE = "posts";
+  static final String ENTRIES_STORE = "posts";
 
   Database db;
   Future _loaded;
@@ -33,21 +33,21 @@ class RssDatabase {
     if (db.objectStoreNames.contains(FEEDS_STORE)) {
       db.deleteObjectStore(FEEDS_STORE);
     }
-    if (db.objectStoreNames.contains(POSTS_STORE)) {
-      db.deleteObjectStore(POSTS_STORE);
+    if (db.objectStoreNames.contains(ENTRIES_STORE)) {
+      db.deleteObjectStore(ENTRIES_STORE);
     }
     var feedstore = db.createObjectStore(FEEDS_STORE, autoIncrement: true, keyPath: 'id');
     feedstore.createIndex('feedid', 'feedid', unique: true, multiEntry: false);
     feedstore.createIndex('url', 'url', unique: true, multiEntry: false);
 
-    //var poststore = db.createObjectStore(POSTS_STORE, autoIncrement: true, keyPath: 'id');
-    var poststore = db.createObjectStore(POSTS_STORE, autoIncrement: false, keyPath: 'entryid');
-    //poststore.createIndex('entryid', 'entryid', unique: true, multiEntry: false);
-    poststore.createIndex('categories', 'categories', unique: false, multiEntry: true);
-    poststore.createIndex('feedid', 'feedid', unique: false, multiEntry: false);
-    poststore.createIndex('unread', 'unread', unique: false, multiEntry: false);
-    poststore.createIndex('starred', 'starred', unique: false, multiEntry: false);
-    poststore.createIndex('unread, feedid', ['unread', 'feedid'], unique: false);
+    //var entriesstore = db.createObjectStore(ENTRIES_STORE, autoIncrement: true, keyPath: 'id');
+    var entriesstore = db.createObjectStore(ENTRIES_STORE, autoIncrement: false, keyPath: 'entryid');
+    //entriesstore.createIndex('entryid', 'entryid', unique: true, multiEntry: false);
+    entriesstore.createIndex('categories', 'categories', unique: false, multiEntry: true);
+    entriesstore.createIndex('feedid', 'feedid', unique: false, multiEntry: false);
+    entriesstore.createIndex('unread', 'unread', unique: false, multiEntry: false);
+    entriesstore.createIndex('starred', 'starred', unique: false, multiEntry: false);
+    entriesstore.createIndex('unread, feedid', ['unread', 'feedid'], unique: false);
   }
 
   Future<List<Feed>> getFeeds() => db == null ? _loaded.then((_) => _getFeeds()) : _getFeeds();
@@ -103,15 +103,15 @@ class RssDatabase {
     return completer.future;
   }
 
-  Future<List<FeedEntry>> listUnread() => db == null ? _loaded.then((_) => _listPosts("unread")) : _listPosts("unread");
-  Future<List<FeedEntry>> listStarred() => db == null ? _loaded.then((_) => _listPosts("starred")) : _listPosts("starred");
-  Future<List<FeedEntry>> listAll() => db == null ? _loaded.then((_) => _listPosts()) : _listPosts();
+  Future<List<FeedEntry>> listUnread() => _loaded.then((_) => _listEntries("unread"));
+  Future<List<FeedEntry>> listStarred() => _loaded.then((_) => _listEntries("starred"));
+  Future<List<FeedEntry>> listAll() => _loaded.then((_) => _listEntries());
 
-  Future<List<FeedEntry>> _listPosts([String source = null]) {
-    //print('[DATASTORE]  _listPosts(String $source)');
+  Future<List<FeedEntry>> _listEntries([String source = null]) {
+    
     var completer = new Completer<List<FeedEntry>>();
-    Transaction transaction = this.db.transaction([POSTS_STORE], "readonly");
-    ObjectStore objectStore = transaction.objectStore(POSTS_STORE);
+    Transaction transaction = this.db.transaction([ENTRIES_STORE], "readonly");
+    ObjectStore objectStore = transaction.objectStore(ENTRIES_STORE);
 
     Stream<CursorWithValue> cursors;
 
@@ -139,8 +139,8 @@ class RssDatabase {
   Future<int> countUnread(int feedId) => db == null ? _loaded.then((_) => _countUnread(feedId)) : _countUnread(feedId);
   Future<int> _countUnread(int feedId) {
     //print('[DATASTORE]  _countUnread(int $feedId)');
-    Transaction transaction = this.db.transaction([POSTS_STORE], "readonly");
-    ObjectStore objectStore = transaction.objectStore(POSTS_STORE);
+    Transaction transaction = this.db.transaction([ENTRIES_STORE], "readonly");
+    ObjectStore objectStore = transaction.objectStore(ENTRIES_STORE);
 
     var index, range;
     if (feedId == null) {
@@ -155,15 +155,15 @@ class RssDatabase {
     return index.count(range);
   }
 
-  Future<Map<int, int>> countPosts(List<int> feedIds) => db == null ? _loaded.then((_) => _countPosts(feedIds)) : _countPosts(feedIds);
-  Future<Map<int, int>> _countPosts(List<int> feedIds) {
-    //print('[DATASTORE]  _countPosts(List<int> $feedIds)');
+  Future<Map<int, int>> countEntries(List<int> feedIds) => db == null ? _loaded.then((_) => _countEntries(feedIds)) : _countEntries(feedIds);
+  Future<Map<int, int>> _countEntries(List<int> feedIds) {
+    
     var completer = new Completer<Map<int, int>>();
     var ops = [];
     Map<int, int> result = new Map<int, int>();
     feedIds.forEach((int feedId) {
-      Transaction transaction = this.db.transaction([POSTS_STORE], "readonly");
-      ObjectStore objectStore = transaction.objectStore(POSTS_STORE);
+      Transaction transaction = this.db.transaction([ENTRIES_STORE], "readonly");
+      ObjectStore objectStore = transaction.objectStore(ENTRIES_STORE);
       var index = objectStore.index("feedid");
       var range = new KeyRange.only(feedId);
       var fut = index.count(range).then((int cnt) => result[feedId] = cnt);
@@ -175,17 +175,16 @@ class RssDatabase {
     return completer.future;
   }
   /**
-   * Get posts list for specified by [feedId] (feed's database id). 
+   * Get entries list for specified by [feedId] (feed's database id). 
    * 
    */
-  Future<List<FeedEntry>> getPosts(int feedId) => _loaded.then((_) => _getPostsForFeed(feedId));
+  Future<List<FeedEntry>> getEntries(int feedId) => _loaded.then((_) => _getEntriesForFeed(feedId));
 
-  Future<List<FeedEntry>> _getPostsForFeed(int feedId) {
-    //print('[DATASTORE]  _getPostsForFeed(int $feedId)');
+  Future<List<FeedEntry>> _getEntriesForFeed(int feedId) {
     var completer = new Completer<List<FeedEntry>>();
 
-    Transaction transaction = this.db.transaction([POSTS_STORE], "readonly");
-    ObjectStore objectStore = transaction.objectStore(POSTS_STORE);
+    Transaction transaction = this.db.transaction([ENTRIES_STORE], "readonly");
+    ObjectStore objectStore = transaction.objectStore(ENTRIES_STORE);
     Index index = objectStore.index("feedid");
     KeyRange range = new KeyRange.only(feedId);
 
@@ -206,8 +205,8 @@ class RssDatabase {
   Future updateEntry(FeedEntry entry) {
     //print('[DATASTORE]  updateEntry(...)');
     var completer = new Completer();
-    Transaction transaction = this.db.transaction([POSTS_STORE], "readwrite");
-    ObjectStore objectStore = transaction.objectStore(POSTS_STORE);
+    Transaction transaction = this.db.transaction([ENTRIES_STORE], "readwrite");
+    ObjectStore objectStore = transaction.objectStore(ENTRIES_STORE);
 
     objectStore.put(entry.toJson()).catchError((error) {
       window.console.error('[Method] Unable update FeedEntry $entry');
@@ -260,14 +259,13 @@ class RssDatabase {
     });
   }
 
-  Future<FeedEntry> getPost(String id) {
-    //print('[DATASTORE] getPost(int $id)');
+  Future<FeedEntry> getEntry(String id) {
     var completer = new Completer<FeedEntry>();
 
-    Transaction transaction = this.db.transaction([POSTS_STORE], "readonly");
-    ObjectStore objectStore = transaction.objectStore(POSTS_STORE);
-    objectStore.getObject(id).then((post) {
-      FeedEntry entry = new FeedEntry.fromDb(post);
+    Transaction transaction = this.db.transaction([ENTRIES_STORE], "readonly");
+    ObjectStore objectStore = transaction.objectStore(ENTRIES_STORE);
+    objectStore.getObject(id).then((mapEntry) {
+      FeedEntry entry = new FeedEntry.fromDb(mapEntry);
       completer.complete(entry);
     });
 

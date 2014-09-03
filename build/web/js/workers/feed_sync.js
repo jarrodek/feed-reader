@@ -59,7 +59,7 @@ var rss = rss || {};
  * @type type
  */
 rss.sync = {};
-rss.sync.dbposts = [];
+rss.sync.dbposts = {};
 rss.sync.newFeed = [];
 rss.sync.currentFeed = null;
 /**
@@ -81,25 +81,24 @@ rss.sync._syncFeed = function(){
     var currentFeed = rss.sync.currentFeed;
     var feedNewData = rss.sync.newFeed;
     var feedChanged = false;
-    //console.log('Compering two Feed objects. (_syncFeed): \n' + JSON.stringify(currentFeed) + "\nand\n" + JSON.stringify(feedNewData));
     
     if(currentFeed.feedid != feedNewData.feedid){
         currentFeed.feedid = feedNewData.feedid;
         feedChanged = true;
-        console.log('Feed\'s "feedid" is different. Need update Feed object. '
-            + 'Current: ' + currentFeed.feedid + ', new: ' + feedNewData.feedid);
+//        console.log('Feed\'s "feedid" is different. Need update Feed object. '
+//            + 'Current: ' + currentFeed.feedid + ', new: ' + feedNewData.feedid);
     }
     if(currentFeed.title != feedNewData.title){
         currentFeed.title = feedNewData.title;
         feedChanged = true;
-        console.log('Feed\'s "title" is different. Need update Feed object. '
-            + 'Current: ' + currentFeed.title + ', new: ' + feedNewData.title);
+//        console.log('Feed\'s "title" is different. Need update Feed object. '
+//            + 'Current: ' + currentFeed.title + ', new: ' + feedNewData.title);
     }
     if(currentFeed.subtitle != feedNewData.subtitle){
         currentFeed.subtitle = feedNewData.subtitle;
         feedChanged = true;
-        console.log('Feed\'s "subtitle" is different. Need update Feed object. '
-            + 'Current: ' + currentFeed.subtitle + ', new: ' + feedNewData.subtitle);
+//        console.log('Feed\'s "subtitle" is different. Need update Feed object. '
+//            + 'Current: ' + currentFeed.subtitle + ', new: ' + feedNewData.subtitle);
     }
     if(currentFeed.author != feedNewData.author){
         if(!currentFeed.author){
@@ -115,44 +114,44 @@ rss.sync._syncFeed = function(){
             };
         }
         if(currentFeed.author.name != feedNewData.author.name){
-            console.log('Feed\'s "author.name" is different. ' 
-                + 'Need update Feed object. Current: ' + currentFeed.author.name 
-                + ', new: ' + feedNewData.author.name);
+//            console.log('Feed\'s "author.name" is different. ' 
+//                + 'Need update Feed object. Current: ' + currentFeed.author.name 
+//                + ', new: ' + feedNewData.author.name);
             feedChanged = true;
             currentFeed.author.name = feedNewData.author.name;
         }
         if(currentFeed.author.email != feedNewData.author.email){
-            console.log('Feed\'s "author.email" is different. ' 
-                + 'Need update Feed object. Current: ' + currentFeed.author.email 
-                + ', new: ' + feedNewData.author.email);
+//            console.log('Feed\'s "author.email" is different. ' 
+//                + 'Need update Feed object. Current: ' + currentFeed.author.email 
+//                + ', new: ' + feedNewData.author.email);
             feedChanged = true;
             currentFeed.author.email = feedNewData.author.email;
         }
         if(currentFeed.author.url != feedNewData.author.url){
-            console.log('Feed\'s "author.name" is different. '
-                    + 'Need update Feed object. Current: ' + currentFeed.author.url 
-                    + ', new: ' + feedNewData.author.url);
+//            console.log('Feed\'s "author.name" is different. '
+//                    + 'Need update Feed object. Current: ' + currentFeed.author.url 
+//                    + ', new: ' + feedNewData.author.url);
             feedChanged = true;
             currentFeed.author.url = feedNewData.author.url;
         }
         if(currentFeed.author.image.src != feedNewData.author.image.src){
-            console.log('Feed\'s "author.image.src" is different. '
-                    + 'Need update Feed object. Current: ' + currentFeed.author.image.src 
-                    + ', new: ' + feedNewData.author.image.src);
+//            console.log('Feed\'s "author.image.src" is different. '
+//                    + 'Need update Feed object. Current: ' + currentFeed.author.image.src 
+//                    + ', new: ' + feedNewData.author.image.src);
             feedChanged = true;
             currentFeed.author.image.src = feedNewData.author.image.src;
         }
         if(currentFeed.author.image.width != feedNewData.author.image.width){
-            console.log('Feed\'s "author.image.width" is different. '
-                    + 'Need update Feed object. Current: ' + currentFeed.author.image.width 
-                    + ', new: ' + feedNewData.author.image.width);
+//            console.log('Feed\'s "author.image.width" is different. '
+//                    + 'Need update Feed object. Current: ' + currentFeed.author.image.width 
+//                    + ', new: ' + feedNewData.author.image.width);
             feedChanged = true;
             currentFeed.author.image.width = feedNewData.author.image.width;
         }
         if(currentFeed.author.image.height != feedNewData.author.image.height){
-            console.log('Feed\'s "author.image.height" is different. ' 
-                    + 'Need update Feed object. Current: ' + currentFeed.author.image.height 
-                    + ', new: ' + feedNewData.author.image.height);
+//            console.log('Feed\'s "author.image.height" is different. ' 
+//                    + 'Need update Feed object. Current: ' + currentFeed.author.image.height 
+//                    + ', new: ' + feedNewData.author.image.height);
             feedChanged = true;
             currentFeed.author.image.height = feedNewData.author.image.height;
         }
@@ -160,38 +159,41 @@ rss.sync._syncFeed = function(){
     if(!currentFeed.categories.equals(feedNewData.categories)){
         currentFeed.categories = feedNewData.categories;
         feedChanged = true;
-        console.log('Feed\'s "categories" is different. Need update Feed object. ' 
-                + 'Current: ' + currentFeed.categories + ', new: ' + feedNewData.categories);
+//        console.log('Feed\'s "categories" is different. Need update Feed object. ' 
+//                + 'Current: ' + currentFeed.categories + ', new: ' + feedNewData.categories);
     }
     if(currentFeed.etag != feedNewData.etag){
         currentFeed.etag = feedNewData.etag;
         feedChanged = true;
-        console.log('Feed\'s "etag" is different. Need update Feed object. Current: ' 
-                + currentFeed.etag + ', new: ' + feedNewData.etag);
+//        console.log('Feed\'s "etag" is different. Need update Feed object. Current: ' 
+//                + currentFeed.etag + ', new: ' + feedNewData.etag);
     }
     if(currentFeed.updated != feedNewData.updated){
         currentFeed.updated = feedNewData.updated;
         feedChanged = true;
-        console.log('Feed\'s "updated" is different. Need update Feed object. Current: ' 
-                + currentFeed.updated + ', new: ' + feedNewData.updated);
+//        console.log('Feed\'s "updated" is different. Need update Feed object. Current: ' 
+//                + currentFeed.updated + ', new: ' + feedNewData.updated);
     }
     if(currentFeed.pageurl != feedNewData.pageurl){
         currentFeed.pageurl = feedNewData.pageurl;
         feedChanged = true;
-        console.log('Feed\'s "pageurl" is different. Need update Feed object. Current: ' 
-                + currentFeed.pageurl + ', new: ' + feedNewData.pageurl);
+//        console.log('Feed\'s "pageurl" is different. Need update Feed object. Current: ' 
+//                + currentFeed.pageurl + ', new: ' + feedNewData.pageurl);
     }
     if(feedChanged){
         rss.db.updateFeed(currentFeed, function(){
-            console.info('Feed has been updated');
-            console.info(JSON.stringify(currentFeed));
+//            console.info('Feed has been updated');
+//            console.info(JSON.stringify(currentFeed));
         });
     } else {
-        console.log('Feed\'s hasn\'t changed.');
+//        console.log('Feed\'s hasn\'t changed.');
     }
 
     rss.db.getEntries(rss.sync.currentFeed.id, function(posts){
-        rss.sync.dbposts = posts;
+        for(var i=0, len=posts.length; i<len; i++){
+            rss.sync.dbposts[posts[i].entryid] = posts[i];
+        }
+        rss.sync.dbposts.length = posts.length;
         rss.sync._syncContent();
     });
 };
@@ -203,22 +205,17 @@ rss.sync._syncFeed = function(){
  * @returns {undefined}
  */
 rss.sync._syncContent = function(){
-    var oldSize = rss.sync.dbposts.length;
     var inserts = [];
     var updates = [];
     for(var i=0, len=rss.sync.newFeed.entries.length; i<len; i++){
-        
         var newEntry = rss.sync.newFeed.entries[i];
-        var existing = null;
-        
-        for(var j=0; j<oldSize; j++){
-            if(newEntry.entryid.trim() == rss.sync.dbposts[j].entryid.trim()){
-                existing = rss.sync.dbposts[j];
-                break;
+        if(newEntry.entryid in rss.sync.dbposts){
+            var existing = rss.sync.dbposts[newEntry.entryid];
+            var toUpdate = rss.sync._checkEntry(existing, newEntry);
+            if(toUpdate !== null){
+                updates[updates.length] = toUpdate;
             }
-        }
-        if(existing === null){
-            console.log('Have new entry: ' + newEntry.entryid + ' for feed: ' + rss.sync.currentFeed.id);
+        } else {
             newEntry['new'] = 1;
             newEntry['unread'] = 1;
             newEntry['feedid'] = rss.sync.currentFeed.id;
@@ -228,11 +225,6 @@ rss.sync._syncContent = function(){
                 newEntry['createtime'] = d.getTime();
             } catch(e){}
             inserts[inserts.length] = newEntry;
-        } else {
-            var toUpdate = rss.sync._checkEntry(existing, newEntry);
-            if(toUpdate !== null){
-                updates[updates.length] = toUpdate;
-            }
         }
     }
     rss.sync.sanitize(inserts, updates);
@@ -313,12 +305,10 @@ rss.sync.update = function(inserts, updates){
     if(inserts.length > 0 || updates.length > 0){
         rss.db.insertPosts(inserts, updates, function(){
             rss.db.close();
-            console.log('FINISHING WORK.');
             self.postMessage({'inserted':inserts.length, feedid: rss.sync.currentFeed.id});
         });
     } else {
         rss.db.close();
-        console.log('FINISHING WORK WITHOUT INSERTING POSTS.');
         self.postMessage({'inserted':0, feedid: rss.sync.currentFeed.id});
     }
 };

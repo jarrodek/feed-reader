@@ -268,7 +268,8 @@ rss.app.showNotifications = function(){
         return;
     }
     
-    var icon = chrome.runtime.getURL('/img/notification.png');
+    //var icon = chrome.runtime.getURL('/img/notification.png');
+    var icon = chrome.runtime.getURL('/img/ico_128.png');
     var options = {};
     var showFeed = -1;
     if(rss.app.notifications.data.length === 1){
@@ -276,7 +277,7 @@ rss.app.showNotifications = function(){
         options = {
             type: "basic",
             title: "You have new articles to read!",
-            message: _n.count + ' new items in ' + _n.title,
+            message: _n.count + ' new posts in ' + _n.title,
             iconUrl: icon
         };
         showFeed = _n.id;
@@ -287,14 +288,14 @@ rss.app.showNotifications = function(){
             feedsCount++;
             itemsCount += _n.count;
             items[items.length] = {
-                'title': _n.title,
-                'message': _n.count + ' new articles.'
+                'title': _n.count + ' new articles.',
+                'message': 'in '+_n.title
             };
         }
         options = {
-            type: "basic",
+            type: "list",
             title: "You have "+itemsCount+" new articles to read!",
-            message: feedsCount + ' has been updated.',
+            message: feedsCount + ' feeds has been updated.',
             iconUrl: icon
         };
         if(items.length > 0){
@@ -343,18 +344,21 @@ rss.app.createAppWindow = function(initialFeed) {
 };
 
 rss.app.init = function() {
+    console.log('Initializing the background app.');
+    rss.app._setupOpenHandlers();
+    rss.app._setupCloseHandlers();
     rss.config.restore(function(){
         rss.app._setupAlarm();
         rss.app._setupNotifications();
-        rss.app._setupCloseHandlers();
-        rss.app._setupOpenHandlers();
         rss.app.update();
     });
 };
 
 rss.app._setupAlarm = function() {
-    chrome.alarms.onAlarm.addListener(rss.app.onAlarm);
-    chrome.alarms.create('feedownload', {'periodInMinutes': rss.config.refreshRate.current});
+    chrome.alarms.clear('feedownload', function(){
+        chrome.alarms.onAlarm.addListener(rss.app.onAlarm);
+        chrome.alarms.create('feedownload', {'periodInMinutes': rss.config.refreshRate.current});
+    });
 };
 
 rss.app._setupNotifications = function() {
@@ -384,8 +388,6 @@ rss.app._setupOpenHandlers = function() {
 rss.app.onAlarm = function(alarm){
     if (alarm && alarm.name === 'feedownload') {
         rss.app.update();
-    } else {
-        console.log('no alarm');
     }
 };
 

@@ -37,7 +37,7 @@ rss.db._dbVersion = 6;
  */
 rss.db.onerror = function(e) {
     console.error('rss::db:error');
-    console.dir(e);
+    console.log(e.message);
 };
 /**
  * Open the database.
@@ -197,7 +197,7 @@ rss.db.addFeed = function(feedUrl, callback) {
         var objectStore = transaction.objectStore("feeds");
         
         transaction.oncomplete = function(event) {
-            console.info('Feed %s has been saved', feedUrl);
+//            console.info('Feed %s has been saved', feedUrl);
             callback();
         };
         
@@ -240,11 +240,11 @@ rss.db.insertPosts = function(inserts, updates, callback){
         for(var i=0, len=inserts.length; i<len; i++){
             var r = objectStore.add(inserts[i]);
             r.onerror = function(e){
-                console.log("ADD ERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                console.log(JSON.stringify(this))
-                for(var _e in e.target.error){
-                    console.log("Error: [" + _e + "]: " + e.target.error[_e]);
-                }
+//                console.log("ADD ERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//                console.log(JSON.stringify(this))
+//                for(var _e in e.target.error){
+//                    console.log("Error: [" + _e + "]: " + e.target.error[_e]);
+//                }
             }.bind(inserts[i]);
         }
         for(var i=0, len=updates.length; i<len; i++){
