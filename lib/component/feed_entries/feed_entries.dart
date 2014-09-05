@@ -1,10 +1,9 @@
 library rssapp.component.postlist;
 
-import 'dart:html';
-
 import 'package:angular/angular.dart';
 import '../../service/dbstructures.dart';
 import '../../service/query_service.dart';
+import '../../service/analytics.dart';
 
 @Component(
     selector: 'feed-entries', 
@@ -29,8 +28,10 @@ class FeedEntriesComponent {
     return null;
   }
     
-  FeedEntriesComponent(QueryService this.queryService){
+  FeedEntriesComponent(QueryService this.queryService, AnalyticsService analytics){
     queryService.loadFeeds();
+    
+    analytics.trackPageview('Reading user\'s feed');
   }
   
 }

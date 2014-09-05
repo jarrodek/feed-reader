@@ -17,7 +17,6 @@ class MenuComponent extends AttachAware with DetachAware{
   void toggleOptions(MouseEvent e) {
     e.preventDefault();
     showOptions = !showOptions;
-    print('Toggle');
   }
   
   void attach(){

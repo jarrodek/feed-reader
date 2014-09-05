@@ -289,7 +289,7 @@ html /deep/ .button:hover,
 html /deep/ .button-icon:hover {
   fill: #fb8c00;
 }
-html /deep/ input{
+html /deep/ input:not([type="checkbox"]){
   width: 100%;
   padding: 8px;
   border-bottom: 1px #eee solid;

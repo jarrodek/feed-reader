@@ -5,9 +5,9 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:rss_app/service/events_observer.dart';
 import '../../service/communication.dart';
-
 import '../../service/query_service.dart';
 import '../../service/dbstructures.dart';
+import '../../service/analytics.dart';
 
 @Component(
     selector: 'app-header', 
@@ -22,6 +22,7 @@ class AppHeaderComponent {
   QueryService _queryService;
   AppComm communication;
   Router router;
+  AnalyticsService analytics;
   
   bool showAddFeed = false;
   bool addingFeed = false;
@@ -83,10 +84,18 @@ class AppHeaderComponent {
     }
     return true;
   }
-  ///TODO: Add arrows support.
-  AppEvents appEvents;
   
-  AppHeaderComponent(this._queryService, this.router, this.appEvents, this.communication);
+  AppHeaderComponent(this._queryService, this.router, this.communication, AppEvents appEvents, this.analytics){
+    appEvents.broadcastStream.listen((Map data){
+      if(!readingEntry) return;
+      if(!data.containsKey('dir')) return;
+      String dir = data['dir'];
+      if(dir == 'prev' && !hasPrevEntry) return;
+      if(dir == 'next' && !hasNextEntry) return;
+      goToEntry(dir);
+      analytics.trackEvent('Nav', 'Going $dir', 'keyboard');
+    });
+  }
 
   void addFeed() {
 
@@ -106,6 +115,8 @@ class AppHeaderComponent {
       addingFeed = false;
       window.console.error(error);
     });
+    
+    analytics.trackEvent('Feed', 'Add', 'Header');
   }
   
   
@@ -122,20 +133,26 @@ class AppHeaderComponent {
     return entries[feedEntryPosition-1].entryid;
   }
   
-  void goToEntry(String dir){
+  void goToEntry(String dir, [bool sendEvent]){
     String entryId = dir == 'prev' ? _prevEntryId() : _nextEntryId();
     entryId = Uri.encodeComponent(entryId);
     //print('$dir entry ID: $entryId');
     if(entryId == 0) return;
     router.gotoUrl('/post/$entryId');
+    
+    if(sendEvent){
+      analytics.trackEvent('Nav', 'Going $dir', 'pagination');
+    }
   }
   
   void onRefreshFeeds(){
     communication.refreshFeeds();
+    analytics.trackEvent('Feeds', 'Refresh', 'Header');
   }
   
   void markAllAsRead(){
     _queryService.markCurrentAsRead();
+    analytics.trackEvent('Feeds', 'Mark current read', 'Header');
   }
   
 }

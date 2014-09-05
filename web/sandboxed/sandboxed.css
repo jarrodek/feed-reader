@@ -10,6 +10,8 @@ body{
     line-height: 1.42857143;
     color: #333;
     -webkit-user-select: text;
+    margin: 0;
+    padding: 0;
 }
 .content{
     cursor: text;

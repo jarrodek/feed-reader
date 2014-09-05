@@ -3,6 +3,7 @@ library rssapp.component.lists;
 import 'package:angular/angular.dart';
 import '../../service/dbstructures.dart';
 import '../../service/query_service.dart';
+import '../../service/analytics.dart';
 
 /**
  * Class responsible for displaying posts list for "Unread", "Starred" and "All items" sections.
@@ -31,7 +32,9 @@ class EntriesListComponent {
   
   bool hasPostsInView = false;
   
-  EntriesListComponent(QueryService this.queryService);
+  EntriesListComponent(QueryService this.queryService, AnalyticsService analytics){
+    analytics.trackPageview('Reading "${queryService.currentEntriesArea}" system feed');
+  }
   
   bool hasPosts(int feedId){
     if(entries == null) return false;

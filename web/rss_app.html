@@ -11,9 +11,14 @@
       <app-header></app-header>
     </header>
     <div id="app-container" layout horizontal flex>
-      <feed-list layout vertical></feed-list>
+      <div layout vertical>
+        <feed-list layout vertical flex></feed-list>
+        <app-footer></app-footer>
+      </div>
+      
       <ng-view autoscroll="true" class="view-animate"  layout vertical flex><data-handler></data-handler></ng-view>
     </div>
+    <script src="js/google-analytics-bundle.js"></script>
     <script src="rss_app.dart" type="application/dart"></script>   
     <script type="text/javascript" src="packages/browser/dart.js"></script> 
   </body>

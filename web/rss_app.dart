@@ -10,6 +10,7 @@ import 'package:rss_app/service/database.dart';
 import 'package:rss_app/service/image_service.dart';
 import 'package:rss_app/service/communication.dart';
 import 'package:rss_app/service/events_observer.dart';
+import 'package:rss_app/service/analytics.dart';
 import 'package:rss_app/component/lists/entries_lists.dart';
 import 'package:rss_app/component/lists/list_article.dart';
 import 'package:rss_app/component/feed_list/feed_list.dart';
@@ -22,9 +23,11 @@ import 'package:rss_app/component/data_handler/data_handler.dart';
 import 'package:rss_app/component/star/star.dart';
 import 'package:rss_app/component/menu/menu.dart';
 import 'package:rss_app/component/menu/menu-item.dart';
+import 'package:rss_app/component/tag_entries/tag_entries.dart';
+import 'package:rss_app/component/app_footer/app_footer.dart';
+import 'package:rss_app/component/app_settings/app_settings.dart';
 import 'package:rss_app/decorator/app-icon.dart';
 import 'package:rss_app/decorator/app-image.dart';
-//import 'package:rss_app/decorator/list-article.dart';
 import 'package:rss_app/router/rss_router.dart';
 import 'package:rss_app/formatter/text_formatter.dart';
 import 'package:rss_app/formatter/date_formatter.dart';
@@ -71,6 +74,9 @@ void runApp() {
       ..bind(DataHandlerComponent)
       ..bind(MenuComponent)
       ..bind(ListArticleComponent)
+      ..bind(TagEntriesComponent)
+      ..bind(AppFooterComponent)
+      ..bind(AppSettingsComponent)
 
       //Decorators
       ..bind(AppIcon)
@@ -82,6 +88,7 @@ void runApp() {
       ..bind(RssController)
 
       //Services
+      ..bind(AnalyticsService)
       ..bind(QueryService)
       ..bind(ImageService)
       ..bind(RssDatabase)

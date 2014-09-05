@@ -62,7 +62,7 @@ class DataHandlerComponent implements AttachAware {
       case 'starred':
       case 'all':
         _getGenericSource(routeName);
-        this.queryService.currentEntriesArea = routeName;
+        queryService.currentEntriesArea = routeName;
         break;
       
       case 'feed':

@@ -1,0 +1,29 @@
+<div layout vertical>
+  <header class="feed" layout horizontal>
+    <h1 self-end>Settings and informations</h1>
+  </header>
+  
+  <section>
+    <h2>Google Analytics</h2>
+    <div class="content">
+      <p>This app is using Google Analytics Platform to collect usage data.</p>
+      <p class="bg-info">None of your personal or your feed's data is collected by the app. There's no possibility to recognize a person from collected data.</p>
+      <p>You can disable sending any statistical data. However, this data help me - the author - determine how the app is used by the users, what is screen size, chrome version etc. It will help to develop new features and help create more usable application for you.</p>
+      
+      <div>
+        <label for="analytics"><input id="analytics" type="checkbox" ng-model="Settings.analyticsEnabled" ng-click="Settings.toggleAnalytics()"> Analytics is {{Settings.analyticsLabel}}</label> 
+      </div>
+      
+    </div>
+  </section>
+  
+  <section>
+    <h2>The RSS app</h2>
+    <div class="content">
+      <p>Version: {{Settings.appVersion}}</p>
+      <p>Author: Pawel Psztyć (<a href="https://google.com/+PawelPsztyc" target="_blank">Google+ profile</a>)</p>
+      <p>Send a review in <a href="https://chrome.google.com/webstore/detail/chrome-rss-reader/pcciiglipgjjihflmlkfckgecaemhpdo" target="_blank">Chrome web store</a></p>
+    </div>
+  </section>
+  
+</div>

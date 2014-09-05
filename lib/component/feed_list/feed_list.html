@@ -41,6 +41,7 @@
           <!--star starred="feed.starred" class="feed-star" ng-click="cmp.onStarChange($event, feed)"></star-->
           <app-menu>
             <menu-item ng-click="cmp.removeFeed(feed)"><span icon="delete" class="inline-icon left"></span>Remove</menu-item>
+            <menu-item ng-click="cmp.clearFeed(feed)"><span icon="clear" class="inline-icon left"></span>Clear entries</menu-item>
           </app-menu>
         </span>
       </a>

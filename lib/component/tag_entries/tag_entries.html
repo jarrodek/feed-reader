@@ -1,0 +1,6 @@
+<div layout vertical>
+  <header class="feed" layout horizontal>
+    <h1 self-end>Results for: {{Tag.tag}} ({{Tag.entries.length}})</h1>
+  </header>
+  <list-article article="entry" ng-repeat="entry in Tag.entries"></list-article>
+</div>

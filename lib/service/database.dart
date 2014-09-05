@@ -108,7 +108,7 @@ class RssDatabase {
   Future<List<FeedEntry>> listAll() => _loaded.then((_) => _listEntries());
 
   Future<List<FeedEntry>> _listEntries([String source = null]) {
-    
+
     var completer = new Completer<List<FeedEntry>>();
     Transaction transaction = this.db.transaction([ENTRIES_STORE], "readonly");
     ObjectStore objectStore = transaction.objectStore(ENTRIES_STORE);
@@ -157,7 +157,7 @@ class RssDatabase {
 
   Future<Map<int, int>> countEntries(List<int> feedIds) => db == null ? _loaded.then((_) => _countEntries(feedIds)) : _countEntries(feedIds);
   Future<Map<int, int>> _countEntries(List<int> feedIds) {
-    
+
     var completer = new Completer<Map<int, int>>();
     var ops = [];
     Map<int, int> result = new Map<int, int>();
@@ -201,6 +201,10 @@ class RssDatabase {
     });
     return completer.future;
   }
+
+
+
+
 
   Future updateEntry(FeedEntry entry) {
     //print('[DATASTORE]  updateEntry(...)');
@@ -254,7 +258,7 @@ class RssDatabase {
     Transaction transaction = this.db.transaction([FEEDS_STORE], "readwrite");
     ObjectStore objectStore = transaction.objectStore(FEEDS_STORE);
     objectStore.delete(feed.id);
-    return transaction.completed.then((_){
+    return transaction.completed.then((_) {
       return true;
     });
   }
@@ -268,6 +272,57 @@ class RssDatabase {
       FeedEntry entry = new FeedEntry.fromDb(mapEntry);
       completer.complete(entry);
     });
+
+    return completer.future;
+  }
+
+
+  /**
+   * Get entries for specified by [tag] category. 
+   */
+  Future<List<FeedEntry>> getByCategory(String tag) => _loaded.then((_) => _getByCategory(tag));
+
+  Future<List<FeedEntry>> _getByCategory(String tag) {
+    var completer = new Completer<List<FeedEntry>>();
+
+    Transaction transaction = this.db.transaction([ENTRIES_STORE], "readonly");
+    ObjectStore objectStore = transaction.objectStore(ENTRIES_STORE);
+    Index index = objectStore.index("categories");
+
+    KeyRange range = new KeyRange.only(tag);
+    List<FeedEntry> entries = new List<FeedEntry>();
+    Stream<CursorWithValue> cursors = index.openCursor(range: range, autoAdvance: true, direction: "prev").asBroadcastStream();
+    cursors.listen((cursor) {
+      FeedEntry feed = new FeedEntry.fromDb(cursor.value);
+      entries.add(feed);
+    });
+    transaction.completed.then((_) {
+      completer.complete(entries);
+    });
+    return completer.future;
+  }
+
+  Future clearEntries(int feedId) => _loaded.then((_) => _clearEntries(feedId));
+  Future _clearEntries(int feedId) {
+    var completer = new Completer<List<FeedEntry>>();
+
+    Transaction transaction = this.db.transaction([ENTRIES_STORE], "readwrite");
+    ObjectStore objectStore = transaction.objectStore(ENTRIES_STORE);
+
+    Index index = objectStore.index("feedid");
+    KeyRange range = new KeyRange.only(feedId);
+
+    Stream<CursorWithValue> cursors = index.openKeyCursor(range: range).asBroadcastStream();
+    cursors.listen((cursor) {
+      objectStore.delete(cursor.primaryKey);
+      cursor.next();
+    });
+
+    transaction.completed.then((_) {
+      completer.complete();
+    });
+
+
 
     return completer.future;
   }

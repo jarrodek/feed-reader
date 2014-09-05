@@ -232,5 +232,17 @@ class QueryService {
       }
     });
   }
-
+  ///Get list of [FeedEntry] for specified by [tag] category.
+  Future<List<FeedEntry>> entriesByTag(String tag){
+    return db.getByCategory(tag).then(_sortEntries).then((List<FeedEntry> entriesList) => entries = entriesList);
+  }
+  
+  Future clearFeed(Feed feed){
+    return db.clearEntries(feed.id).then((_){
+      if(feedId== feed.id){
+        entries.clear();
+        unreadMap[feed.id] = 0;
+      }
+    });
+  }
 }
