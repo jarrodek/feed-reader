@@ -1,7 +1,9 @@
 {
   "name": "Chrome RSS reader.",
-  "version": "1.0",
-  
+  "short_name": "RSS",
+  "version": "1.0.1",
+  "description": "An app to read RSS/Atom feeds in your browser",
+  "author": "Pawel Psztyc",
   "manifest_version": 2,
   
   "icons": {"128": "img/ico_128.png"},

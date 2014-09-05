@@ -121,6 +121,9 @@ class FeedEntry {
   String text;
   ///Reference URL
   String url;
+  
+  ///The image url founded in the entry content.
+  String imageUrl;
   ///Entry's author
   FeedAuthor author;
   ///Entry's categories
@@ -151,6 +154,7 @@ class FeedEntry {
       }
     }
     this.categories = data['categories'];
+    this.imageUrl = data['imageUrl'];
     
     this.newitem = data['new'] == null ? true : data['new'] == 1 ? true : false;
     this.unread = data['unread'] == null ? true : data['unread'] == 1 ? true : false;
@@ -168,6 +172,7 @@ class FeedEntry {
       'content': this.content,
       'text': this.text,
       'url': this.url,
+      'imageUrl': this.imageUrl,
       'categories': this.categories,
       'newitem': this.newitem == null ? 1 : this.newitem ? 1 : 0,
       'unread': this.unread == null ? 1 : this.unread ? 1 : 0,

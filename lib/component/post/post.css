@@ -4,11 +4,16 @@ header{
   box-shadow: 0px 3px 3px rgba(196, 196, 196, 0.76);
   position: relative;
   z-index: 2;
+  background-color: #0277bd;
 }
 star{
   width: 28px;
   height: 28px;
   margin-right: 16px;
+}
+.time,
+.time a{
+  color: rgba(255,255,255,0.8);
 }
 
 .action {
@@ -26,7 +31,7 @@ iframe{
   vertical-align: middle;
 }
 .post-title a{
-  color: rgba(0, 0, 0, 0.54);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 24px;
   font-weight: bold;
   margin-top: 16px;
@@ -37,9 +42,10 @@ iframe{
 .post-title a:hover{
   text-decoration: underline;
 }
-.post-title.unread{
-  color: rgba(0, 0, 0, 87);
+.post-title.unread a{
+  color: rgba(255, 255, 255, 87);
 }
+
 
 
 .menu{
@@ -50,29 +56,62 @@ iframe{
   height: 24px;
   cursor: pointer;
   position: relative;
+  fill: #fff;
+  transition: all 200ms ease-in-out;
 }
 .menu:hover{
-  border: 1px #999 solid;
+  border-color: rgba(255,255,255,0.87);
 }
 .menu > svg {
   width: 24px;
   height: 24px;
 }
 .options{
-  position: absolute;
-  background-color: #fff;
-  bottom: -46px;
-  left: -93px;
-  list-style: none;
-  margin: 0;
-  padding: 0px;
-  border: 1px #999 solid;
-  width: 126px;
+    position: absolute;
+    background-color: #fff;
+    bottom: -46px;
+    left: -132px;
+    list-style: none;
+    margin: 0;
+    padding: 0px;
+    border: 1px #999 solid;
+    width: 165px;
 }
 .options li{
   padding: 6px 12px;
   margin: 6px 0; 
+  fill: #999;
 }
 .options li:hover{
   background-color: #F1F1F1;
+}
+.menu-icon{
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+.info{
+  margin-left: 16px;
+}
+h3{
+  color: rgba(0, 0, 0, 0.54);
+}
+.tag a{
+  padding: 8px 12px;
+  border: 2px #e5e5e5 solid;
+  margin: 0 8px 8px 0;
+  -webkit-transition-delay: 0s;
+  -webkit-transition-duration: 0.2s;
+  -webkit-transition-property: all;
+  -webkit-transition-timing-function: ease-in-out;
+  cursor: pointer;
+  display: inline-block;
+  color: rgba(51, 51, 51, 0.68);
+  text-decoration: none;
+}
+.tag a:hover {
+  border-color: #29b6f6;
+}
+star /deep/ .off{
+  fill: rgba(255,255,255,0.87);
 }

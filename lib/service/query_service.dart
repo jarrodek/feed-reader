@@ -29,21 +29,26 @@ class QueryService {
   Map<int, int> unreadMap = new Map<int, int>();
   
   ///Number of all unread entrys.
-  int unreadCount = 0;
+  int get unreadCount {
+    int cnt = 0;
+    unreadMap.forEach((int feed, int _cnt) => cnt += _cnt);
+    return cnt;
+  }
+  
   String currentEntriesArea = 'unread';
 
   QueryService(Http this._http, RssDatabase this.db) {
-    _loaded = Future.wait([loadFeeds(), countUnreads()]);
+    _loaded = Future.wait([loadFeeds()]); //, countUnreads()
   }
 
   ///Load all feeds data.
   Future loadFeeds() {
     return this.db.getFeeds().then((List<Feed> feeds) => this.feeds = feeds);
   }
-  ///Count number of unread entries.
+  /*///Count number of unread entries.
   Future countUnreads() {
-    return this.db.countUnread(null).then((int cnt) => unreadCount = (cnt == null ? 0 : cnt)).catchError((e) => print(e));
-  }
+    return this.db.countUnread(null);//.then((int cnt) => unreadCount = (cnt == null ? 0 : cnt)).catchError((e) => print(e));
+  }*/
 
   /// Count unread [FeedEntry] in the datastore.
   int countUnread(int feedId, [bool forceDb = false]) {
@@ -102,7 +107,7 @@ class QueryService {
         }
         return -d1.compareTo(d2);
       }
-      return a.createtime.compareTo(b.createtime);
+      return -a.createtime.compareTo(b.createtime);
     });
     return entries;
   }
@@ -166,7 +171,7 @@ class QueryService {
     }
     entry.unread = !read;
     var result = null;
-    return this.db.updateEntry(entry).then((entry) => result = entry).then((_) => countUnreads()).then((_) {
+    return this.db.updateEntry(entry).then((entry) => result = entry)/*.then((_) => countUnreads())*/.then((_) {
       _revalideteUnread(entry.feedid);
       return result;
     });
@@ -219,7 +224,7 @@ class QueryService {
       Future f = this.db.updateEntry(entry);
       tasks.add(f);
     });
-    Future.wait(tasks).then((_) => countUnreads()).then((_) {
+    Future.wait(tasks)/*.then((_) => countUnreads())*/.then((_) {
       if (feedId != null && feedId != 0) {
         return _revalideteUnread(feedId);
       } else {

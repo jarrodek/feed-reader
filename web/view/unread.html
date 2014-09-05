@@ -1,4 +1,6 @@
 <div class="feed-content" layout vertical>
-  <h1 class="page-title">Unread items (<unread-counter></unread-counter>)</h1>
-  <entries-lists data-source="unread"></entries-lists>
+  <header class="feed-list" horizontal layout>
+    <h1 class="page-title" flex self-end>Unread items (<unread-counter></unread-counter>)</h1>
+  </header>
+  <entries-lists data-source="unread" flex></entries-lists>
 </div>

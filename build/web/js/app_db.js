@@ -42,22 +42,24 @@ rss.db.onerror = function(e) {
 /**
  * Open the database.
  * 
- * @param {Function} callback Callback function called on successful database open.
- *  I could really use the Future object already...
- * @returns {undefined}
+ * @returns {Promise} The promise when ready.
  */
-rss.db.open = function(callback){
-    if (rss.db._db !== null) {
-        callback();
-        return;
-    }
-    var request = indexedDB.open("rss_feeds", rss.db._dbVersion);
-    request.onupgradeneeded = rss.db._dbUpgrade;
-    request.onsuccess = function(e) {
-        rss.db._db = e.target.result;
-        callback();
-    };
-    request.onerror = rss.db.onerror;
+rss.db.open = function(){
+    return new Promise(function(resolve, reject) {
+        if (rss.db._db) {
+            resolve();
+            return;
+        }
+        var request = indexedDB.open("rss_feeds", rss.db._dbVersion);
+        request.onupgradeneeded = rss.db._dbUpgrade;
+        request.onsuccess = function(e) {
+            rss.db._db = e.target.result;
+//            console.log('DB opened.');
+//            console.log(rss.db._db);
+            resolve();
+        };
+        request.onerror = reject;
+    });
 };
 /**
  * Called when database verstion change.
@@ -111,13 +113,21 @@ rss.db.close = function(){
 /**
  * Get entries for given feed.
  * @param {Number} feedInternalDbId Feed database ID.
- * @param {Function} callback The callback function called when ready.
- * @returns {undefined}
+ * @returns {Promise} Resolved with an array of entries.
  */
-rss.db.getEntries = function(feedInternalDbId, callback) {
-    rss.db.open(function() {
+rss.db.getEntries = function(feedInternalDbId) {
+    return rss.db.open().then(function(){
+        return rss.db._getEntries(feedInternalDbId);
+    }).catch(function(e){
+        console.error('can\'t call rss.db.open');
+        throw e;
+    });
+};
+rss.db._getEntries = function(feedInternalDbId){
+    return new Promise(function(resolve, reject) {
         var transaction = rss.db._db.transaction(["posts"]);
-        transaction.onerror = rss.db.onerror;
+//        console.log(transaction);
+        transaction.onerror = reject;
         var objectStore = transaction.objectStore("posts");
         var entries = [];
         var index = objectStore.index("feedid");
@@ -128,16 +138,20 @@ rss.db.getEntries = function(feedInternalDbId, callback) {
                 entries[entries.length] = cursor.value;
                 cursor.continue();
             } else {
-                callback(entries);
+                resolve(entries);
             }
         };
+        
     });
 };
 
-rss.db.getAllEntries = function(callback) {
-    rss.db.open(function() {
+rss.db.getAllEntries = function() {
+    return rss.db.open().then(rss.db._getAllEntries);
+};
+rss.db._getAllEntries = function() {
+    return new Promise(function(resolve, reject) {
         var transaction = rss.db._db.transaction(["posts"]);
-        transaction.onerror = rss.db.onerror;
+        transaction.onerror = reject;
         var objectStore = transaction.objectStore("posts");
         var entries = [];
         var cursor = objectStore.openCursor();
@@ -148,7 +162,7 @@ rss.db.getAllEntries = function(callback) {
                 entries[entries.length] = cursor.value;
                 cursor.continue();
             } else {
-                callback(entries);
+                resolve(entries);
             }
         };
     });
@@ -156,13 +170,15 @@ rss.db.getAllEntries = function(callback) {
 
 /**
  * Get all Feeds from Datastore.
- * @param {Function} callback Called when all entries are ready.
- * @returns {undefined}
+ * @returns {Promise} The promise with entries read.
  */
-rss.db.getFeeds = function(callback) {
-    rss.db.open(function() {
+rss.db.getFeeds = function() {
+    return rss.db.open().then(rss.db._getFeeds);
+};
+rss.db._getFeeds = function() {
+    return new Promise(function(resolve, reject) {
         var transaction = rss.db._db.transaction(["feeds"]);
-        transaction.onerror = rss.db.onerror;
+        transaction.onerror = reject;
         var objectStore = transaction.objectStore("feeds");
         var entries = [];
         var cursor = objectStore.openCursor();
@@ -173,7 +189,7 @@ rss.db.getFeeds = function(callback) {
                 entries[entries.length] = cursor.value;
                 cursor.continue();
             } else {
-                callback(entries);
+                resolve(entries);
             }
         };
     });
@@ -183,42 +199,49 @@ rss.db.getFeeds = function(callback) {
  * At the begining the entry is only a feed URL. After next update data will be 
  * populated to the Feed object.
  * 
- * @param {String} feedUrl
- * @param {Function} callback A callback function called after complete.
- * @returns {undefined}
+ * @param {String} feedUrl 
+ * @returns {Promise} Fullfiled when ready.
  */
-rss.db.addFeed = function(feedUrl, callback) {
+rss.db.addFeed = function(feedUrl) {
+    return rss.db.open().then(function(){
+        return rss.db._addFeed(feedUrl);
+    });
+};
+
+rss.db._addFeed = function(feedUrl) {
     if (!feedUrl){
         throw "Specify feed url!";
     }
-    rss.db.open(function() {
+    
+    return new Promise(function(resolve, reject) {
         var transaction = rss.db._db.transaction(["feeds"], "readwrite");
-        transaction.onerror = rss.db.onerror;
+        transaction.onerror = reject;
         var objectStore = transaction.objectStore("feeds");
-        
-        transaction.oncomplete = function(event) {
-//            console.info('Feed %s has been saved', feedUrl);
-            callback();
-        };
-        
+        transaction.oncomplete = resolve;
         var newFeed = new Feed();
         var data = newFeed.toJson();
         data.url = feedUrl;
         objectStore.add(data);
     });
 };
+
+
 /**
  * Udpate Feed data in the datastore.
  * @param {Feed} feed The Feed object.
- * @param {Function} callback Callback function called when done.
- * @returns {undefined}
+ * @returns {Promise} Fullfiled when ready.
  */
-rss.db.updateFeed = function(feed, callback){
-    rss.db.open(function() {
+rss.db.updateFeed = function(feed){
+    return rss.db.open().then(function(){
+        return rss.db._updateFeed(feed);
+    });
+};
+rss.db._updateFeed = function(feed){
+    return new Promise(function(resolve, reject) {
         var transaction = rss.db._db.transaction(["feeds"], "readwrite");
-        transaction.onerror = rss.db.onerror;
+        transaction.onerror = reject;
         transaction.oncomplete = function(event) {
-            callback();
+            resolve();
         };
         var objectStore = transaction.objectStore("feeds");
         objectStore.put(feed);
@@ -228,27 +251,60 @@ rss.db.updateFeed = function(feed, callback){
  * 
  * @param {Array} inserts Array of Feed object to be inserted.
  * @param {Array} updates Array of Feed object to be updated.
- * @param {type} callback  Callback function called when done.
- * @returns {undefined}
+ * @returns {Promise} callend when done.
  */
-rss.db.insertPosts = function(inserts, updates, callback){
-    rss.db.open(function() {
+rss.db.insertPosts = function(inserts, updates){
+    return rss.db.open().then(function(){
+        return rss.db._insertPosts(inserts, updates);
+    });
+};
+rss.db._insertPosts = function(inserts, updates){
+    return new Promise(function(resolve, reject) {
         var transaction = rss.db._db.transaction(["posts"], "readwrite");
         var objectStore = transaction.objectStore("posts");
-        transaction.onerror = rss.db.onerror;
-        transaction.oncomplete = callback;
+        transaction.onerror = reject;
+        transaction.oncomplete = resolve;
         for(var i=0, len=inserts.length; i<len; i++){
             var r = objectStore.add(inserts[i]);
-            r.onerror = function(e){
+//            r.onerror = function(e){
 //                console.log("ADD ERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 //                console.log(JSON.stringify(this))
 //                for(var _e in e.target.error){
 //                    console.log("Error: [" + _e + "]: " + e.target.error[_e]);
 //                }
-            }.bind(inserts[i]);
+//            }.bind(inserts[i]);
         }
         for(var i=0, len=updates.length; i<len; i++){
             objectStore.put(updates[i]);
         }
+    });
+};
+
+/**
+ * Get all unread posts.
+ * @returns {Promise} With an array of unread entries.
+ */
+rss.db.getUnread = function(){
+    return rss.db.open().then(rss.db._getUnread);
+};
+
+rss.db._getUnread = function(){
+    return new Promise(function(resolve, reject) {
+        var transaction = rss.db._db.transaction(["posts"]);
+        transaction.onerror = reject;
+        var objectStore = transaction.objectStore("posts");
+        var entries = [];
+        
+        var index = objectStore.index("unread");
+        var range = IDBKeyRange.only(1);
+        index.openCursor(range).onsuccess = function(event) {
+            var cursor = event.target.result;
+            if (cursor) {
+                entries[entries.length] = cursor.value;
+                cursor.continue();
+            } else {
+                resolve(entries);
+            }
+        };
     });
 };

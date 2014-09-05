@@ -21,7 +21,7 @@ class ListArticleComponent {
   String get articleUri => '/post/${Uri.encodeComponent(entry.entryid)}';
 
   ListArticleComponent(this.queryService, this.router);
-
+  
   void onStarChange() {
     queryService.changeStar(!entry.starred, entry: entry).catchError((e) {
       entry.starred = !entry.starred;

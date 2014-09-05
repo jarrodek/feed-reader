@@ -40,7 +40,7 @@
           <unread-counter class="label label-default" data-hide-empty="true" feed="{{feed.id}}"></unread-counter>
           <!--star starred="feed.starred" class="feed-star" ng-click="cmp.onStarChange($event, feed)"></star-->
           <app-menu>
-            <menu-item ng-click="cmp.removeFeed(feed)">Remove</menu-item>
+            <menu-item ng-click="cmp.removeFeed(feed)"><span icon="delete" class="inline-icon left"></span>Remove</menu-item>
           </app-menu>
         </span>
       </a>

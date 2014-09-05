@@ -125,7 +125,7 @@ class AppHeaderComponent {
   void goToEntry(String dir){
     String entryId = dir == 'prev' ? _prevEntryId() : _nextEntryId();
     entryId = Uri.encodeComponent(entryId);
-    print('$dir entry ID: $entryId');
+    //print('$dir entry ID: $entryId');
     if(entryId == 0) return;
     router.gotoUrl('/post/$entryId');
   }

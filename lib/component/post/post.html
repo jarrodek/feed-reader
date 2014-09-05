@@ -1,6 +1,6 @@
 <article class="post" layout vertical flex>
+
   <header layout vertical>
-  
     <div layout horizontal center>
       <h1 class="post-title" ng-class="{'unread':Post.entry.unread}" flex>
         <a href="{{Post.entry.url}}" target="_blank">
@@ -17,16 +17,26 @@
         <span>published</span> <time datetime="{{Post.entry.published}}">{{Post.entry.published|relativedate}}</time>&nbsp;<span ng-if="Post.entry.newitem && false" class="label label-danger">New</span>
       </div>
       <div class="action" center horizontal layout>
-        <a href="{{Post.entry.url}}" target="_blank" class="button primary" type="button">Open</a>
+        <a href="{{Post.entry.url}}" target="_blank" class="button blue" type="button">Open</a>
         <div class="menu" ng-click="Post.toggleOptions()">
           <span icon="drawer"></span>
           <ul ng-show="Post.showOptions" class="options">
-            <li ng-click="Post.unreadEntry()">Mark as unread</li>
+            <li ng-click="Post.unreadEntry()" layout horizontal center><span icon="markunread" class="menu-icon"></span><span flex>Mark unread</span></li>
           </ul>
         </div>
       </div>
     </div>
-    
   </header>
-  <iframe src="sandboxed/sandbox.html" class="entry-webview" layout flex horizontal ng-load="Post.frameLoad($event)" id="{{Post.elementId}}" seamless="seamless"></iframe>
+  
+  <div layout horizontal flex>
+    <iframe src="sandboxed/sandbox.html" class="entry-webview" layout flex horizontal ng-load="Post.frameLoad($event)" seamless="seamless"></iframe>
+    <div class="info">
+      <section ng-if="Post.entry.categories.length > 0">
+        <h3>Tags</h3>
+        <div>
+          <span ng-repeat="tag in Post.entry.categories" class="tag"><a href="#/tag/{{tag}}">{{tag}}</a></span>
+        </div>
+      </section>
+    </div>
+  </div>
 </article>

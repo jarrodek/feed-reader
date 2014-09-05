@@ -5,7 +5,7 @@
     <header class="feed" layout horizontal center>
       <h1 flex>{{feed.title}} (<unread-counter feed="{{feed.id}}"></unread-counter>)</h1>
       <div class="show-all">
-        <a href="#/feed/{{feed.id}}" class="button primary">Read all</a>
+        <a href="#/feed/{{feed.id}}" class="button primary"><span icon="check" class="inline-icon left"></span>Read all</a>
       </div>
     </header>
     <list-article article="post" ng-repeat="post in EntriesList.entries | postlist:feed.id:EntriesList.listLength"></list-article>

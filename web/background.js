@@ -46,22 +46,23 @@ rss.config.limits = {
 };
 /**
  * Restore config from sync storage.
- * @param {Function} callback Callback function when restored.
- * @returns {undefined}
+ * @returns {Promise} fullfiled when restored.
  */
-rss.config.restore = function(callback){
-    var restoreData = {
-        'readLimit': null,
-        'refreshRate': null
-    };
-    chrome.storage.sync.get(restoreData, function(restored){
-        if(restored.readLimit){
-            rss.config.limits.read = restored.readLimit;
-        }
-        if(restored.refreshRate){
-            rss.config.refreshRate.current = restored.refreshRate;
-        }
-        callback.call(rss);
+rss.config.restore = function(){
+    return new Promise(function(resolve) {
+        var restoreData = {
+            'readLimit': null,
+            'refreshRate': null
+        };
+        chrome.storage.sync.get(restoreData, function(restored){
+            if(restored.readLimit){
+                rss.config.limits.read = restored.readLimit;
+            }
+            if(restored.refreshRate){
+                rss.config.refreshRate.current = restored.refreshRate;
+            }
+            resolve();
+        });
     });
 };
 
@@ -97,18 +98,16 @@ rss.app.notifications = {
 };
 /**
  * Get from the sync storage list of all feeds.
- * @param {Function} callback Callback function. It's parameter will hold
- *  a list of Feed objects.
- * @returns {undefined}
+ * @returns {Promise} with list of feeds.
  */
-rss.app.getFeedsList = function(callback){
-    console.log('Now getting feeds list.');
-    rss.db.onerror = function(e) {
-        console.error('Unable read feeds list.', e);
-    };
-    rss.db.getFeeds(function(feeds) {
-        rss.db.close();
-        callback(feeds);
+rss.app.getFeedsList = function(){
+    return new Promise(function(resolve, reject) {
+        console.log('Now getting feeds list.');
+        rss.db.onerror = reject;
+        rss.db.getFeeds().then(function(feeds) {
+            rss.db.close();
+            resolve(feeds);
+        });
     });
 };
 /**
@@ -121,7 +120,7 @@ rss.app.update = function(){
     console.log('Updating posts list in feeds.');
         
     rss.app.notifyLoading(true);
-    rss.app.getFeedsList(function(feeds) {
+    rss.app.getFeedsList().then(function(feeds) {
         console.log('Result feed list with:', feeds);
         if (!feeds){
             rss.app.notifyLoading(false);
@@ -130,6 +129,8 @@ rss.app.update = function(){
         rss.app._queue = rss.app._queue.concat(feeds);
         console.log('update: queue.length = %d', rss.app._queue.length);
         rss.app._run();
+    }).catch(function(error){
+        console.error('Unable read feeds list.', error);
     });
 };
 
@@ -142,14 +143,47 @@ rss.app.update = function(){
  */
 rss.app._run = function(){
     if (rss.app._queue.length === 0){
-        rss.app.notifyLoading(false);
-        rss.app.showNotifications();
+        rss.app._runEnd();
         return;
     }
     var feed = rss.app._queue.shift();
     console.log('Get data for url: %s', feed.url);
     rss.app._getFeedEntries(feed);
 };
+/**
+ * A function called when queue will end.
+ * @returns {undefined}
+ */
+rss.app._runEnd = function(){
+    console.log('The queue has finished.');
+    rss.app.notifyLoading(false);
+    rss.app.showNotifications();
+    //rss.app.updateImages();
+};
+/**
+ * Calling this function has no sense right now because function
+ * URL.createObjectURL gives temporary link that should not be stored.
+ * @returns {undefined}
+ */
+rss.app.updateImages = function(){
+    function handleError(error) {
+        console.error(error);
+    }
+    
+    var worker = new Worker('js/workers/image_service.js');
+    worker.onerror = function(event) {
+        handleError(event);
+        worker.terminate();
+    };
+    worker.onmessage = function(event) {
+        console.log('Image service finished work.');
+        worker.terminate();
+    };
+    worker.postMessage({
+        'cmd':'images'
+    });
+};
+
 /**
  * Download Feed entries and send to parser.
  * 
@@ -235,7 +269,8 @@ rss.app.syncFeed = function(feed, newFeed) {
     };
     worker.postMessage({
         'newFeed': newFeed,
-        'currentFeed': feed/*,
+        'currentFeed': feed,
+        'cmd':'sync'/*,
         'readLimit': rss.config.limits.read*/
     });
 };
@@ -267,8 +302,6 @@ rss.app.showNotifications = function(){
     if(rss.app.notifications.data.length === 0){
         return;
     }
-    
-    //var icon = chrome.runtime.getURL('/img/notification.png');
     var icon = chrome.runtime.getURL('/img/ico_128.png');
     var options = {};
     var showFeed = -1;
@@ -347,7 +380,7 @@ rss.app.init = function() {
     console.log('Initializing the background app.');
     rss.app._setupOpenHandlers();
     rss.app._setupCloseHandlers();
-    rss.config.restore(function(){
+    rss.config.restore().then(function(){
         rss.app._setupAlarm();
         rss.app._setupNotifications();
         rss.app.update();

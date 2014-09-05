@@ -1,6 +1,3 @@
-import 'dart:html';
-
-
 import 'package:angular/angular.dart';
 import 'package:angular/application_factory.dart';
 import 'package:angular/animate/module.dart';
@@ -26,6 +23,8 @@ import 'package:rss_app/component/star/star.dart';
 import 'package:rss_app/component/menu/menu.dart';
 import 'package:rss_app/component/menu/menu-item.dart';
 import 'package:rss_app/decorator/app-icon.dart';
+import 'package:rss_app/decorator/app-image.dart';
+//import 'package:rss_app/decorator/list-article.dart';
 import 'package:rss_app/router/rss_router.dart';
 import 'package:rss_app/formatter/text_formatter.dart';
 import 'package:rss_app/formatter/date_formatter.dart';
@@ -76,6 +75,8 @@ void runApp() {
       //Decorators
       ..bind(AppIcon)
       ..bind(MenuItemDecorator)
+      ..bind(AppImage)
+//      ..bind(ListArticleDecorator)
 
       //Controlers
       ..bind(RssController)

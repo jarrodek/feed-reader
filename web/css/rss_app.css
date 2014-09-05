@@ -120,7 +120,7 @@ body {
 entries-lists,
 feed-entries {
   overflow: auto;
-  padding-top: 15px;
+  /*padding-top: 15px;*/
 }
 
 
@@ -134,14 +134,11 @@ header h1 a {
 
 
 .feed-content .page-title{
-  font-size: 18px;
+  font-size: 24px;
   margin: 0;
-  padding-right: 0;
-  padding-left: 30px;
-  padding-bottom: 35px;
-  padding-top: 10px;
-  color: rgb(20, 121, 230);
+  color: rgba(255, 255, 255, 0.8);
   box-shadow: 0px 3px 3px rgba(196, 196, 196, 0.76);
+  padding: 0 0 16px 16px;
 }
 
 .star-action{
@@ -220,7 +217,7 @@ input.loading{
 
 
 html /deep/ .button{
-    padding: 4px 12px;
+    padding: 8px 12px;
     border: 1px transparent solid;
     outline: none;
     cursor: pointer;
@@ -228,6 +225,7 @@ html /deep/ .button{
     font-size: 14px;
     line-height: normal;
     text-transform: uppercase;
+    transition: all 200ms ease-in-out;
 }
 html /deep/ .button:disabled, html /deep/ .button[disabled]{
   background-color: #F3F3F3 !important;
@@ -264,6 +262,18 @@ html /deep/ .button.default:hover {
 html /deep/ .button.default:active {
   background-color: #fafafa;
   border-color: #e0e0e0;
+}
+
+html /deep/ .button.blue{
+  background-color: #0277bd;
+  color: rgba(255,255,255,0.87);
+  fill: rgba(255,255,255,0.87);
+}
+html /deep/ .button.blue:hover{
+  border-color: rgba(255,255,255,0.87);
+}
+html /deep/ .button.blue:active{
+  
 }
 
 html /deep/ .button-icon{
@@ -304,4 +314,24 @@ html /deep/ app-menu menu-item {
 }
 html /deep/ app-menu menu-item:hover{
   background-color: #F1F1F1;
+}
+
+html /deep/ .inline-icon{
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+}
+html /deep/ .inline-icon.left{
+  margin-right: 8px;
+}
+html /deep/ .inline-icon.right{
+  margin-left: 8px;
+}
+
+
+.feed-list{
+  background-color: #056f00;
+  height: 160px;
+  box-shadow: 0px 3px 3px rgba(196, 196, 196, 0.76);
 }

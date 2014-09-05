@@ -10,7 +10,7 @@ import '../../service/query_service.dart';
     selector: 'feed-entries', 
     templateUrl: 'packages/rss_app/component/feed_entries/feed_entries.html',
     cssUrl: const [
-      'packages/rss_app/component/lists/entries_lists.css'
+      'packages/rss_app/component/feed_entries/feed_entries.css'
     ],
     publishAs: 'cmp')
 class FeedEntriesComponent {
@@ -31,7 +31,6 @@ class FeedEntriesComponent {
     
   FeedEntriesComponent(QueryService this.queryService){
     queryService.loadFeeds();
-    queryService.countUnreads();
   }
   
 }
