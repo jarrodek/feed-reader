@@ -1,7 +1,7 @@
 <article class="post" layout vertical flex>
 
   <header layout vertical>
-    <div layout horizontal center>
+    <div layout horizontal center flex>
       <h1 class="post-title" ng-class="{'unread':Post.entry.unread}" flex>
         <a href="{{Post.entry.url}}" target="_blank" ng-click="Post.reportOpen('Entry title')">
           {{Post.entry.title}}
@@ -29,7 +29,7 @@
   </header>
   
   <div layout horizontal flex>
-    <iframe src="sandboxed/sandbox.html" class="entry-webview" layout flex horizontal ng-load="Post.frameLoad($event)" seamless="seamless"></iframe>
+    <iframe src="sandboxed/sandbox.html" class="entry-webview" layout flex horizontal three ng-load="Post.frameLoad($event)" seamless="seamless"></iframe>
     <div class="info" flex ng-if="Post.showRightFrame">
       <section ng-if="Post.entry.categories.length > 0">
         <h3>Tags</h3>

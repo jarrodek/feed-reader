@@ -18,11 +18,13 @@ class TagEntriesComponent {
   QueryService queryService;
   String tag;
   List<FeedEntry> get entries => queryService.entries;
+  bool loadingPage = true;
   
-  TagEntriesComponent(QueryService this.queryService, RouteProvider routeProvider, AnalyticsService analytics){
+  TagEntriesComponent(this.queryService, RouteProvider routeProvider, AnalyticsService analytics){
+    queryService.clearState();
     tag = routeProvider.parameters['tag'];
     tag = Uri.decodeComponent(tag);
-    queryService.entriesByTag(tag);
+    queryService.entriesByTag(tag).then((_) => loadingPage = false);
     
     analytics.trackPageview('Reading tag');
   }

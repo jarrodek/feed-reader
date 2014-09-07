@@ -1,8 +1,11 @@
 header.feed {
-  margin-bottom: 12px;
   height: 160px;
   background-color: rgba(239, 108, 0, 1);
   box-shadow: 0px 3px 3px rgba(196, 196, 196, 0.76);
+  z-index: 2;
+}
+header.feed.maxtop{
+  box-shadow:none;
 }
 h1{
   color: rgba(255,255,255,0.8);
@@ -10,6 +13,14 @@ h1{
   margin: 0;
   padding: 0 0 16px 16px;
 }
+.list{
+  overflow: auto;
+}
+
+
+
+
+
 .show-all{
   margin-right: 16px;
 }

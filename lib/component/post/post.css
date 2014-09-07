@@ -5,6 +5,7 @@ header{
   position: relative;
   z-index: 2;
   background-color: #0277bd;
+  height: 160px;
 }
 star{
   width: 28px;
@@ -22,7 +23,7 @@ star{
 iframe{
   border: none;
   padding-left: 16px;
-  padding-top: 16px;
+  /*padding-top: 16px;*/
   max-width: 650px;
   border-right: 1px #e5e5e5 solid;
 }

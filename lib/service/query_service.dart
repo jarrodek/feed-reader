@@ -12,30 +12,30 @@ class QueryService {
   final Http _http;
   final RssDatabase db;
   Future _loaded;
-  
+
   ///List of all feeds in the app
   List<Feed> feeds = [];
-  
+
   ///An database ID of currently selected feed.
   int feedId;
-  
+
   ///List of all currently displaed entries
   List<FeedEntry> entries = [];
-  
+
   ///And database ID of currently selected entry.
   String entryId = null;
-  
+
   ///The map where the key is the [Feed.id] and the value is a number of unread messages for this feed.
   Map<int, int> unreadMap = new Map<int, int>();
-  
+
   ///Number of all unread entrys.
   int get unreadCount {
     int cnt = 0;
     unreadMap.forEach((int feed, int _cnt) => cnt += _cnt);
     return cnt;
   }
-  
-  String currentEntriesArea = 'unread';
+
+  String currentEntriesArea = null;
 
   QueryService(Http this._http, RssDatabase this.db) {
     _loaded = Future.wait([loadFeeds()]); //, countUnreads()
@@ -45,10 +45,13 @@ class QueryService {
   Future loadFeeds() {
     return this.db.getFeeds().then((List<Feed> feeds) => this.feeds = feeds);
   }
-  /*///Count number of unread entries.
-  Future countUnreads() {
-    return this.db.countUnread(null);//.then((int cnt) => unreadCount = (cnt == null ? 0 : cnt)).catchError((e) => print(e));
-  }*/
+  
+  void clearState(){
+    entries.clear();
+    feedId = null;
+    entryId = null;
+    currentEntriesArea = null;
+  }
 
   /// Count unread [FeedEntry] in the datastore.
   int countUnread(int feedId, [bool forceDb = false]) {
@@ -68,8 +71,8 @@ class QueryService {
       unreadMap[feedId] = cnt;
     });
   }
-  
-  
+
+
   /// Populate current entries list with entries for given [Feed] as it's databases [feedId]
   Future populateEntries(String feedId) {
     switch (feedId) {
@@ -80,10 +83,34 @@ class QueryService {
       case 'all':
         return this.db.listAll().then(_sortEntries).then((List<FeedEntry> entriesList) => entries = entriesList);
       default:
-        return this.db.getEntries(int.parse(feedId)).then(_sortEntries).then((List<FeedEntry> entriesList) => entries = entriesList);
+        return this.db.getEntries(int.parse(feedId), from: 0, to: 25).then(_sortEntries).then((List<FeedEntry> entriesList) => entries = entriesList);
     }
   }
-  
+  ///[page] parameter is 1-based.
+  Future<int> feedEntries(int feedId, {count: null, page: null}) {
+
+    int from = null;
+    int to = null;
+    if (count != null) {
+      if (page == null) {
+        page = 1;
+      }
+      if (page > 0) {
+        page--;
+      }
+      from = count * page;
+      to = from + count;
+    }
+
+    return this.db.getEntries(feedId, from: from, to: to).then(_sortEntries).then((List<FeedEntry> entriesList) {
+      if (entriesList == null) {
+        return 0;
+      }
+      entries.addAll(entriesList);
+      return entriesList.length;
+    });
+  }
+
   /**
    * Sort entries in current feed.
    * Entries should be sorted by special field "created" genereated
@@ -113,7 +140,7 @@ class QueryService {
   }
 
 
-  
+
   /// Update the [FeedEntry] object.
   Future _updateEntry(FeedEntry entry) {
     return this.db.updateEntry(entry).then((_) {
@@ -127,7 +154,7 @@ class QueryService {
       print(feeds.contains(feed));
     });
   }
-  
+
   ///Add a new [Feed] to the datastore.
   Future addFeed(String url) {
     return this.db.addFeed(url).then((Feed feed) {
@@ -139,7 +166,7 @@ class QueryService {
   }
   ///Delete feed from database.
   Future removeFeed(feed) {
-    return this.db.removeFeed(feed).then((_){
+    return this.db.removeFeed(feed).then((_) {
       this.feeds.remove(feed);
       return true;
     });
@@ -151,16 +178,16 @@ class QueryService {
    * This function will not look for [Feed] in datastore. 
    */
   Feed getFeed(int feedId) {
-      if (feeds == null) return null;
+    if (feeds == null) return null;
 
-      for (int i = 0,
-          len = feeds.length; i < len; i++) {
-        if (feeds[i].id == feedId) {
-          return feeds[i];
-        }
+    for (int i = 0,
+        len = feeds.length; i < len; i++) {
+      if (feeds[i].id == feedId) {
+        return feeds[i];
       }
-      return null;
     }
+    return null;
+  }
   /** 
    * Set the [entry] [read] or not. 
    * This function will recalculate number of unread entries.
@@ -215,31 +242,33 @@ class QueryService {
 
   /// Mark all curently loaded entries as read.
   void markCurrentAsRead() {
-    var tasks = [];
+    List _entries = [];
     entries.forEach((FeedEntry entry) {
       if (!entry.unread) {
         return;
       }
       entry.unread = false;
-      Future f = this.db.updateEntry(entry);
-      tasks.add(f);
+      _entries.add(entry);
     });
-    Future.wait(tasks)/*.then((_) => countUnreads())*/.then((_) {
+
+    db.updateEntries(_entries).then((_) {
       if (feedId != null && feedId != 0) {
-        return _revalideteUnread(feedId);
+        _revalideteUnread(feedId);
       } else {
-        return new Future.value(null);
+        feeds.forEach((Feed f) => _revalideteUnread(f.id));
       }
     });
+
+
   }
   ///Get list of [FeedEntry] for specified by [tag] category.
-  Future<List<FeedEntry>> entriesByTag(String tag){
+  Future<List<FeedEntry>> entriesByTag(String tag) {
     return db.getByCategory(tag).then(_sortEntries).then((List<FeedEntry> entriesList) => entries = entriesList);
   }
-  
-  Future clearFeed(Feed feed){
-    return db.clearEntries(feed.id).then((_){
-      if(feedId== feed.id){
+
+  Future clearFeed(Feed feed) {
+    return db.clearEntries(feed.id).then((_) {
+      if (feedId == feed.id) {
         entries.clear();
         unreadMap[feed.id] = 0;
       }

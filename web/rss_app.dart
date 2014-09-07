@@ -26,6 +26,7 @@ import 'package:rss_app/component/menu/menu-item.dart';
 import 'package:rss_app/component/tag_entries/tag_entries.dart';
 import 'package:rss_app/component/app_footer/app_footer.dart';
 import 'package:rss_app/component/app_settings/app_settings.dart';
+import 'package:rss_app/component/app_loader/app_loader.dart';
 import 'package:rss_app/decorator/app-icon.dart';
 import 'package:rss_app/decorator/app-image.dart';
 import 'package:rss_app/router/rss_router.dart';
@@ -77,6 +78,7 @@ void runApp() {
       ..bind(TagEntriesComponent)
       ..bind(AppFooterComponent)
       ..bind(AppSettingsComponent)
+      ..bind(AppLoaderComponent)
 
       //Decorators
       ..bind(AppIcon)

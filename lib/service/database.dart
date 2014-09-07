@@ -151,7 +151,6 @@ class RssDatabase {
       range = new KeyRange.only([1, feedId]);
     }
 
-
     return index.count(range);
   }
 
@@ -174,13 +173,13 @@ class RssDatabase {
 
     return completer.future;
   }
+  
   /**
    * Get entries list for specified by [feedId] (feed's database id). 
-   * 
+   * If [from] (inclusive) and [to] (exclusive) are specified, in result the list will contain elements for those indexes.
+   * Indexes are 0-based.
    */
-  Future<List<FeedEntry>> getEntries(int feedId) => _loaded.then((_) => _getEntriesForFeed(feedId));
-
-  Future<List<FeedEntry>> _getEntriesForFeed(int feedId) {
+  Future<List<FeedEntry>> getEntries(int feedId, {int from:null, int to:null}) => _loaded.then((_) {
     var completer = new Completer<List<FeedEntry>>();
 
     Transaction transaction = this.db.transaction([ENTRIES_STORE], "readonly");
@@ -191,7 +190,16 @@ class RssDatabase {
     List<FeedEntry> entries = new List<FeedEntry>();
 
     Stream<CursorWithValue> cursors = index.openCursor(range: range, autoAdvance: true, direction: "prev").asBroadcastStream();
+    int current = 0;
     cursors.listen((cursor) {
+      current++;
+      if(from != null && current-1 <from){
+        return;
+      }
+      if(to != null && current-1 > to){
+        return;
+      }
+      
       FeedEntry feed = new FeedEntry.fromDb(cursor.value);
       entries.add(feed);
     });
@@ -200,9 +208,7 @@ class RssDatabase {
       completer.complete(entries);
     });
     return completer.future;
-  }
-
-
+  });
 
 
 
@@ -218,6 +224,23 @@ class RssDatabase {
 
     transaction.completed.then((_) {
       completer.complete(entry);
+    });
+    transaction.onError.listen((e) {
+      window.console.error('[Transaction] Unable update FeedEntry');
+      completer.completeError(e);
+    });
+    return completer.future;
+  }
+  
+  Future<List<FeedEntry>> updateEntries(List<FeedEntry> entries) {
+    var completer = new Completer();
+    Transaction transaction = this.db.transaction([ENTRIES_STORE], "readwrite");
+    ObjectStore objectStore = transaction.objectStore(ENTRIES_STORE);
+    
+    entries.forEach((FeedEntry entry) => objectStore.put(entry.toJson()));
+    
+    transaction.completed.then((_) {
+      completer.complete(entries);
     });
     transaction.onError.listen((e) {
       window.console.error('[Transaction] Unable update FeedEntry');
@@ -280,9 +303,7 @@ class RssDatabase {
   /**
    * Get entries for specified by [tag] category. 
    */
-  Future<List<FeedEntry>> getByCategory(String tag) => _loaded.then((_) => _getByCategory(tag));
-
-  Future<List<FeedEntry>> _getByCategory(String tag) {
+  Future<List<FeedEntry>> getByCategory(String tag) => _loaded.then((_) {
     var completer = new Completer<List<FeedEntry>>();
 
     Transaction transaction = this.db.transaction([ENTRIES_STORE], "readonly");
@@ -300,10 +321,9 @@ class RssDatabase {
       completer.complete(entries);
     });
     return completer.future;
-  }
+  });
 
-  Future clearEntries(int feedId) => _loaded.then((_) => _clearEntries(feedId));
-  Future _clearEntries(int feedId) {
+  Future clearEntries(int feedId) => _loaded.then((_) {
     var completer = new Completer<List<FeedEntry>>();
 
     Transaction transaction = this.db.transaction([ENTRIES_STORE], "readwrite");
@@ -322,8 +342,6 @@ class RssDatabase {
       completer.complete();
     });
 
-
-
     return completer.future;
-  }
+  });
 }

@@ -133,7 +133,7 @@ class AppHeaderComponent {
     return entries[feedEntryPosition-1].entryid;
   }
   
-  void goToEntry(String dir, [bool sendEvent]){
+  void goToEntry(String dir, [bool sendEvent = false]){
     String entryId = dir == 'prev' ? _prevEntryId() : _nextEntryId();
     entryId = Uri.encodeComponent(entryId);
     //print('$dir entry ID: $entryId');

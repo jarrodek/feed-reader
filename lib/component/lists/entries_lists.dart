@@ -27,12 +27,17 @@ class EntriesListComponent {
   
   List<FeedEntry> get entries => queryService.entries;
   List<Feed> get feeds => queryService.feeds;
-  
   int listLength = 5;
-  
   bool hasPostsInView = false;
+  bool loadingPage = true;
   
-  EntriesListComponent(QueryService this.queryService, AnalyticsService analytics){
+  EntriesListComponent(this.queryService, RouteProvider routeProvider, AnalyticsService analytics){
+    if(queryService.currentEntriesArea != routeProvider.routeName){
+      queryService.clearState();
+      queryService.currentEntriesArea = routeProvider.routeName;
+      queryService.populateEntries(routeProvider.routeName).then((_) => loadingPage = false);
+    }
+    
     analytics.trackPageview('Reading "${queryService.currentEntriesArea}" system feed');
   }
   

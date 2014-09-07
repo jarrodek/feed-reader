@@ -34,7 +34,7 @@
     <li ng-repeat="feed in cmp.feeds" class="subscription-feed" ng-class="{'selected':cmp.selected == feed.id}">
       <a href="#/feed/{{feed.id}}">
         <span layout horizontal center>
-          <span class="feed-title" flex>
+          <span class="feed-title"  title="{{feed.display}}" flex>
             {{feed.display}}
           </span>
           <unread-counter class="label label-default" data-hide-empty="true" feed="{{feed.id}}"></unread-counter>

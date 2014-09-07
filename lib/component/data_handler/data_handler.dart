@@ -13,11 +13,11 @@ class DataHandlerComponent implements AttachAware {
   RouteProvider routeProvider;
   Router router;
 
-  DataHandlerComponent(RouteProvider this.routeProvider, Router this.router, QueryService this.queryService);
+  DataHandlerComponent(this.routeProvider, this.router, this.queryService);
 
   void attach() {
-    _handleInitial();
-    router.onRouteStart.listen(_onRouteStart);
+    //_handleInitial();
+    //router.onRouteStart.listen(_onRouteStart);
   }
 
   void _handleInitial() {
@@ -66,12 +66,12 @@ class DataHandlerComponent implements AttachAware {
         break;
       
       case 'feed':
-        this.queryService.currentEntriesArea = null;
-        if (this.queryService.entries.length > 0) {
+        queryService.currentEntriesArea = null;
+        /*if (this.queryService.entries.length > 0) {
           return;
         }
         String feedId = parameters['feedId'];
-        _getFeedSource(feedId);
+        _getFeedSource(feedId);*/
         break;
       
       default:

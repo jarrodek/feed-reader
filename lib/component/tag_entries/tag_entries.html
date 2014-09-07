@@ -3,4 +3,7 @@
     <h1 self-end>Results for: {{Tag.tag}} ({{Tag.entries.length}})</h1>
   </header>
   <list-article article="entry" ng-repeat="entry in Tag.entries"></list-article>
+  <div ng-show="Tag.loadingPage">
+    <app-loader></app-loader>
+  </div>
 </div>
