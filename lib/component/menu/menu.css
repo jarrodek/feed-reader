@@ -5,6 +5,7 @@
   height: 24px;
   cursor: pointer;
   position: relative;
+  transition: all 200ms ease-in-out;
 }
 .menu.highlighted,
 .menu:hover{

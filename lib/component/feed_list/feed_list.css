@@ -85,5 +85,9 @@ li a{
   color: rgba(0,0,0,0.54);
 }
 
-
-
+.feed-item-menu{
+  /*display: none;*/
+}
+.subscription-feed:hover .feed-item-menu{
+  /*display: initial;*/
+}

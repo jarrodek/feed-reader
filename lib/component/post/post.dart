@@ -102,4 +102,33 @@ class PostComponent {
   void reportOpen(String buttonSource){
     analytics.trackEvent('Entry', 'Open', buttonSource);
   }
+  
+  void share(String platform){
+    String shareUrl;
+    String encodedUrl = Uri.encodeFull(entry.url);
+    switch(platform){
+      case 'facebook':
+        shareUrl = 'https://www.facebook.com/sharer/sharer.php?u=';
+        break;
+      case 'google':
+        shareUrl = 'https://plus.google.com/share?url=';
+        break;
+      case 'twitter':
+        shareUrl = 'https://twitter.com/intent/tweet?url=';
+        break;
+      case 'linkedin':
+        shareUrl = 'https://www.linkedin.com/shareArticle?mini=true&url=';
+        break;
+      case 'pinterest':
+        shareUrl = 'https://pinterest.com/pin/create/button/?url=';
+        break;
+      case 'tumblr':
+        shareUrl = 'http://www.tumblr.com/share/link?url=';
+        break;
+    }
+    
+    shareUrl = "$shareUrl$encodedUrl";
+    window.open(shareUrl, "Share");
+    print(shareUrl);
+  }
 }

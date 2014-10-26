@@ -307,15 +307,6 @@ html /deep/ input:focus {
   border-bottom: 1px #00B0FF solid;
 }
 
-html /deep/ app-menu menu-item {
-  padding: 10px 16px;
-  margin: 0;
-  display: block;
-}
-html /deep/ app-menu menu-item:hover{
-  background-color: #F1F1F1;
-}
-
 html /deep/ .inline-icon{
   display: inline-block;
   width: 24px;

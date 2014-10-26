@@ -23,7 +23,6 @@ class FeedListComponent {
     queryService.changeStar(!feed.starred, feed: feed).catchError((_) {
       feed.starred = !feed.starred;
     });
-    
     String mark = !feed.starred == true ? 'starred' : 'unstarred';
     analytics.trackEvent('Feed', 'Star', mark);
   }
@@ -44,4 +43,6 @@ class FeedListComponent {
     });
     analytics.trackEvent('Feed', 'clear', 'feed list menu clear');
   }
+  
+  String starClass(Feed feed) => !feed.starred ? 'star-outline' : 'star';
 }

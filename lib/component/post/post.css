@@ -48,50 +48,19 @@ iframe{
   color: rgba(255, 255, 255, 87);
 }
 
-
-
 .menu{
-  padding: 5px 5px;
-  border: 1px transparent solid;
   margin-left: 8px;
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-  position: relative;
   fill: #fff;
-  transition: all 200ms ease-in-out;
+  
 }
-.menu:hover{
-  border-color: rgba(255,255,255,0.87);
-}
-.menu > svg {
-  width: 24px;
-  height: 24px;
-}
-.options{
-    position: absolute;
-    background-color: #fff;
-    bottom: -46px;
-    left: -132px;
-    list-style: none;
-    margin: 0;
-    padding: 0px;
-    border: 1px #999 solid;
-    width: 165px;
-}
-.options li{
-  padding: 6px 12px;
-  margin: 6px 0; 
+.menu-item{
   fill: #999;
 }
-.options li:hover{
-  background-color: #F1F1F1;
+
+app-menu /deep/ .menu:hover {
+  border: 1px rgba(255,255,255,0.87) solid;
 }
-.menu-icon{
-  width: 24px;
-  height: 24px;
-  margin-right: 8px;
-}
+
 .info{
   margin-left: 16px;
 }

@@ -22,7 +22,7 @@ import 'package:rss_app/component/unread_counter/unread_counter.dart';
 import 'package:rss_app/component/data_handler/data_handler.dart';
 import 'package:rss_app/component/star/star.dart';
 import 'package:rss_app/component/menu/menu.dart';
-import 'package:rss_app/component/menu/menu-item.dart';
+import 'package:rss_app/component/menu/menu_item.dart';
 import 'package:rss_app/component/tag_entries/tag_entries.dart';
 import 'package:rss_app/component/app_footer/app_footer.dart';
 import 'package:rss_app/component/app_settings/app_settings.dart';
@@ -82,7 +82,7 @@ void runApp() {
 
       //Decorators
       ..bind(AppIcon)
-      ..bind(MenuItemDecorator)
+      ..bind(MenuItemComponent)
       ..bind(AppImage)
 //      ..bind(ListArticleDecorator)
 

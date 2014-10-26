@@ -1,5 +1,5 @@
-<div class="menu" ng-class="{'highlighted':Menu.showOptions}" ng-click="Menu.toggleOptions($event)">
-  <div icon="drawer"></div>
+<div class="menu" ng-class="{'highlighted': Menu.showOptions}" ng-click="Menu.toggleOptions($event)">
+  <div icon="{{Menu.icon}}"></div>
   <div ng-show="Menu.showOptions" class="options">
     <content></content>
   </div>

@@ -18,12 +18,17 @@
       </div>
       <div class="action" center horizontal layout>
         <a href="{{Post.entry.url}}" target="_blank" class="button blue" type="button" ng-click="Post.reportOpen('Open button')">Open</a>
-        <div class="menu" ng-click="Post.toggleOptions()">
-          <span icon="drawer"></span>
-          <ul ng-show="Post.showOptions" class="options">
-            <li ng-click="Post.unreadEntry()" layout horizontal center><span icon="markunread" class="menu-icon"></span><span flex>Mark unread</span></li>
-          </ul>
-        </div>
+        <app-menu icon="share" class="menu">
+          <menu-item ng-click="Post.share('facebook')" icon="post-facebook" label="Facebook" class="menu-item"></menu-item>
+          <menu-item ng-click="Post.share('google')" icon="post-gplus" label="Google +" class="menu-item"></menu-item>
+          <menu-item ng-click="Post.share('twitter')" icon="post-twitter" label="Twitter" class="menu-item"></menu-item>
+          <menu-item ng-click="Post.share('linkedin')" icon="post-linkedin" label="LinkedIn" class="menu-item"></menu-item>
+          <menu-item ng-click="Post.share('pinterest')" icon="post-pinterest" label="Pinterest" class="menu-item"></menu-item>
+          <!--menu-item ng-click="Post.share('tumblr')" icon="post-tumblr" label="Tumblr" class="menu-item"></menu-item-->
+        </app-menu>
+        <app-menu icon="drawer" class="menu">
+          <menu-item ng-click="Post.unreadEntry()" icon="markunread" label="Mark unread" class="menu-item"></menu-item>
+        </app-menu>
       </div>
     </div>
   </header>

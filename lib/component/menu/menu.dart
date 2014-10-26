@@ -1,29 +1,35 @@
 library rssapp.component.menu;
 
 import 'dart:html';
-import 'dart:async';
+//import 'dart:async';
 import 'package:angular/angular.dart';
 
 
 @Component(selector: 'app-menu', 
     templateUrl: 'packages/rss_app/component/menu/menu.html', 
     cssUrl: const ['packages/rss_app/component/menu/menu.css'], 
-    publishAs: 'Menu')
-class MenuComponent extends AttachAware with DetachAware{
+    publishAs: 'Menu',
+    map: const {
+      'icon': '@attrIcon'
+    })
+class MenuComponent /* extends AttachAware with DetachAware */{
 
   bool showOptions = false;
-  StreamSubscription<MouseEvent> subscription;
+  String attrIcon;
+  String get icon => attrIcon == null || attrIcon.isEmpty ? 'drawer' : attrIcon;
+  //StreamSubscription<MouseEvent> subscription;
 
   void toggleOptions(MouseEvent e) {
     e.preventDefault();
     showOptions = !showOptions;
   }
   
+  /*
   void attach(){
     subscription = window.onClick.listen(_onClick);
   }
   
-  ///Issue: For window ther's always feed-list element as a target. 
+  ///Issue: For window there's always feed-list element as a target. 
   void _onClick(MouseEvent e){
     if((e.target as Element).nodeName.toLowerCase() == 'feed-list'){
       return;
@@ -33,7 +39,9 @@ class MenuComponent extends AttachAware with DetachAware{
     }
   }
   
+  
   void detach(){
     subscription.cancel();
   }
+  */
 }

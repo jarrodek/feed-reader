@@ -1,7 +1,7 @@
 library rssapp.service.database;
 
 import 'dart:async';
-import 'dart:html';
+import 'dart:html' as html;
 import 'dart:indexed_db';
 
 import 'package:angular/angular.dart';
@@ -23,7 +23,7 @@ class RssDatabase {
   }
 
   Future _loadDatabase() {
-    return window.indexedDB.open('rss_feeds', version: DB_VERSION, onUpgradeNeeded: _initializeDatabase).then((Database db) => this.db = db);
+    return html.window.indexedDB.open('rss_feeds', version: DB_VERSION, onUpgradeNeeded: _initializeDatabase).then((Database db) => this.db = db);
   }
 
   void _initializeDatabase(VersionChangeEvent e) {
@@ -84,13 +84,13 @@ class RssDatabase {
     try {
       map = feed.toJson();
     } catch (e) {
-      window.console.error(e);
+      html.window.console.error(e);
       throw "Unable to add a feed.";
     }
     objectStore.add(map).then((addedKey) {
       feed.id = addedKey;
     }).catchError((error) {
-      window.console.error('[Method] Unable insert new feed');
+      html.window.console.error('[Method] Unable insert new feed');
     });
 
 
@@ -98,7 +98,7 @@ class RssDatabase {
       completer.complete(feed);
     });
     transaction.onError.listen((e) {
-      window.console.error('[Transaction] Unable insert new feed');
+      html.window.console.error('[Transaction] Unable insert new feed');
     });
     return completer.future;
   }
@@ -219,14 +219,14 @@ class RssDatabase {
     ObjectStore objectStore = transaction.objectStore(ENTRIES_STORE);
 
     objectStore.put(entry.toJson()).catchError((error) {
-      window.console.error('[Method] Unable update FeedEntry $entry');
+      html.window.console.error('[Method] Unable update FeedEntry $entry');
     });
 
     transaction.completed.then((_) {
       completer.complete(entry);
     });
     transaction.onError.listen((e) {
-      window.console.error('[Transaction] Unable update FeedEntry');
+      html.window.console.error('[Transaction] Unable update FeedEntry');
       completer.completeError(e);
     });
     return completer.future;
@@ -243,7 +243,7 @@ class RssDatabase {
       completer.complete(entries);
     });
     transaction.onError.listen((e) {
-      window.console.error('[Transaction] Unable update FeedEntry');
+      html.window.console.error('[Transaction] Unable update FeedEntry');
       completer.completeError(e);
     });
     return completer.future;
@@ -257,20 +257,20 @@ class RssDatabase {
     ObjectStore objectStore = transaction.objectStore(FEEDS_STORE);
     if (feed.id != null) {
       objectStore.put(feed.toJson()).catchError((error) {
-        window.console.error('[Method] Unable update Feed');
-        window.console.error(error);
+        html.window.console.error('[Method] Unable update Feed');
+        html.window.console.error(error);
       });
     } else {
       objectStore.add(feed.toJson()).catchError((error) {
-        window.console.error('[Method] Unable update Feed $feed');
-        window.console.error(error);
+        html.window.console.error('[Method] Unable update Feed $feed');
+        html.window.console.error(error);
       });
     }
     transaction.completed.then((_) {
       completer.complete(feed);
     });
     transaction.onError.listen((e) {
-      window.console.error('[Transaction] Unable update Feed');
+      html.window.console.error('[Transaction] Unable update Feed');
       completer.completeError(e);
     });
 
