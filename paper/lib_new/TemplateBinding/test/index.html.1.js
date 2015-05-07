@@ -1,0 +1,2 @@
+
+WCT.loadSuites(['tests.js']);

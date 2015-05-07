@@ -1,0 +1,69 @@
+<!DOCTYPE html><!--
+    @license
+    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><html><head>
+  <meta name="viewport" content="initial-scale=1.0">
+  <title>Using combinators styling</title>
+  <script src="../../tools/chai/chai.js"></script>
+  <script src="../../tools/htmltest.js"></script>
+
+  <script src="../../../webcomponents.js"></script>
+  <script src="register.js"></script>
+  <style shim-shadowdom="">
+    x-foo ^ .foo {
+      background: orange;
+    }
+  </style>
+  <link rel="stylesheet" href="combinators.css" shim-shadowdom="">
+  <link rel="import" href="combinators-import.html">
+</head>
+<body>
+
+  <template id="x-foo">
+    <style>
+      x-bar ^ .bar {
+        background: red;
+      }
+
+      x-bar ^ .noogy {
+        background: blue;
+      }
+
+      x-bar ^^ .zot {
+        color: white;
+      }
+    </style>
+    <div class="foo">orange</div>
+    <div class="foo2">green</div>
+    <x-bar></x-bar>
+  </template>
+  <template id="x-bar">
+    <style>
+      x-zot ^ .zot {
+        background: green;
+      }
+    </style>
+    <div class="bar">Bar</div>
+    <div class="noogy">Noogy</div>
+    <x-zot></x-zot>
+  </template>
+
+  <template id="x-zot">
+    <div class="zot">Zot</div>
+    <div class="zot-inner">inner</div>
+  </template>
+
+
+  <script src="combinators.html.0.js"></script>
+
+  <x-foo></x-foo>
+
+  <script src="combinators.html.1.js"></script>
+
+
+</body></html>

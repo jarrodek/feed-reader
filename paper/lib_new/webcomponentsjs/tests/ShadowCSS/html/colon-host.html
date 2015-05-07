@@ -1,0 +1,167 @@
+<!DOCTYPE html><!--
+    @license
+    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><html><head>
+  <meta name="viewport" content="initial-scale=1.0">
+  <title>Using :host styling</title>
+  <script src="../../tools/chai/chai.js"></script>
+  <script src="../../tools/htmltest.js"></script>
+
+  <script src="../../../webcomponents.js"></script>
+  <script src="register.js"></script>
+</head>
+<body>
+  <template id="x-foo">
+    <style>
+      :host {
+        display: block;
+        background: red;
+      }
+
+      :host(.foo) {
+        background: black;
+        color: white;
+      }
+
+      :host-context(.opened:not(.animating)) div {
+        background: blue;
+      }
+    </style>
+    <div>background</div>
+  </template>
+  <template id="x-bar">
+    <style>
+      :host {
+        color: white;
+      }
+    </style>
+    <shadow></shadow>
+    <div>white text</div>
+  </template>
+
+  <template id="x-zot">
+    <style>
+      :host {
+        border: 5px solid orange;
+      }
+    </style>
+    <shadow></shadow>
+    <div>orange border &amp; gray background</div>
+  </template>
+
+  <template id="x-scope">
+    <style>
+      :host {
+        display: block;
+        background: red;
+      }
+
+      :host(.foo) {
+        background: black;
+        color: white;
+      }
+    </style>
+    <div>background</div>
+  </template>
+  <template id="x-button">
+    <style>
+      :host {
+        background: green;
+      }
+    </style>
+    <content></content>
+  </template>
+
+  <template id="x-anchor">
+    <style>
+      :host(:link) {
+        font-style: italic;
+      }
+    </style>
+    Hello
+  </template>
+
+  <template id="x-zim">
+    <style>
+      :host {
+        padding: 20px;
+        border-top-color: brown;
+      }
+    </style>
+    <shadow></shadow>
+    <div>padding: 20px</div>
+  </template>
+
+  <template id="x-zim2">
+    <style>
+      :host {
+        padding: 20px;
+      }
+
+      :host(.foo), :host-context(.bar) {
+        background: green;
+        display: block;
+      }
+    </style>
+    <div>padding: 20px</div>
+  </template>
+
+  <script src="colon-host.html.0.js"></script>
+
+  <h4>Expected: red background</h4>
+  <x-foo></x-foo>
+
+  <h4>Expected: red background</h4>
+  <x-scope></x-scope>
+
+  <h4>Expected: green background</h4>
+  <button is="x-button">green</button>
+
+  <h4>Expected: black background</h4>
+  <x-foo class="foo"></x-foo>
+
+  <h4>Expected: black background</h4>
+  <x-scope class="foo"></x-scope>
+
+  <h4>Expected: red background with white text</h4>
+  <x-bar></x-bar>
+
+  <h4>Expected: red background with white text</h4>
+  <x-bar2></x-bar2>
+
+  <h4>Expected: red background with black text and orange border</h4>
+  <x-zot></x-zot>
+
+  <h4>Expected: red background with black text and orange border and 20px padding</h4>
+  <x-zim></x-zim>
+
+  <h4>Expected: 20px padding, background green</h4>
+  <x-zim2 class="foo"></x-zim2>
+
+  <h4>Expected: 20px padding, background green</h4>
+  <div class="bar">
+    <x-zim2></x-zim2>
+  </div>
+  <h4>Expected: 20px padding</h4>
+  <div class="foo">
+    <x-zim2></x-zim2>
+  </div>
+
+  <h4>Expected: blue background</h4>
+     <a href="#" is="x-anchor">Test Link</a>
+  
+  <h4>Expected: blue background</h4>
+     <div class="opened">
+       <x-foo class="foo3"></x-foo>
+     </div>
+  
+
+  <script src="colon-host.html.1.js"></script>
+
+
+</body></html>

@@ -1,0 +1,78 @@
+:host{
+  position: relative;
+}
+article{
+  border-bottom: 1px #F1F1F1 solid;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  margin-top: 8px;
+  padding-top: 8px;
+  position: relative;
+}
+
+time{
+  color: rgba(51, 51, 51, 0.5);
+  font-size: smaller;
+}
+h2{
+  margin: 0;
+  padding: 0;
+  line-height: normal;
+  color: rgba(0, 0, 0, 0.54);
+  font-weight: normal;
+  font-size: 16px;
+}
+.unread h2{
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.post-summary{
+  overflow: hidden;
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+h2,
+time,
+.post-summary,
+.unread time,
+.unread .post-summary{
+  transition: color 1s;
+}
+
+.unread time,
+.unread .post-summary{
+  color: rgba(0, 0, 0, 0.54);
+}
+article:hover time,
+article:hover .post-summary {
+  color: rgba(0, 0, 0, 0.87);
+}
+article:hover h2 {
+  color: rgba(0, 0, 0, 0.87); 
+}
+article.unread:hover h2 {
+  color: rgba(0, 0, 0, 0.98); 
+}
+
+.content-summary{
+  cursor: pointer;
+}
+.action-area{
+  min-width: 70px;
+}
+.image-container{
+}
+.image-container:empty{
+  display: none !important;
+}
+.entry-image[src] /deep/ .image{
+  max-height: 75px;
+  max-width: 75px;
+  margin-right: 16px;
+}

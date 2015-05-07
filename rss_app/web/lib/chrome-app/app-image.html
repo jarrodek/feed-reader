@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<link rel="import" href="packages/polymer/polymer.html">
+<link rel="import" href="../app-spinner/app-spinner.html">
+
+<polymer-element name="chrome-app-image" attributes="width height alt src">
+  <template>
+    <template if="{{chrome_src != null && !error}}">
+      <img class="image" hidden?="{{!loaded || chrome_src == null}}" id="chromeAppImage" src="{{chrome_src}}" alt="{{alt}}" width="{{width}}" height="{{height}}" on-load="{{imageLoad}}" />
+    </template>
+    <template if="{{!loaded}}">
+      <app-spinner></app-spinner>
+    </template>
+  </template>
+  <script type="application/dart" src="app-image.dart"></script>
+</polymer-element>
+</html>

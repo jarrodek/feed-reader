@@ -1,0 +1,63 @@
+<!DOCTYPE html><!--
+Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><html><head>
+    <title>event path</title>
+    <script src="../../../webcomponentsjs/webcomponents.js"></script>
+    <link rel="import" href="../../polymer.html">
+    <script src="../../../tools/test/htmltest.js"></script>
+    <script src="../../../tools/test/chai/chai.js"></script>
+  </head>
+  <body>
+
+  <x-menu-button id="menuButton">
+    <div id="item1"><div id="source"></div>Item1</div>
+    <div id="item2">Item2</div>
+  </x-menu-button>
+  
+  <polymer-element name="x-selector">
+    <template>
+      <div id="selectorDiv">
+        <content id="selectorContent"></content>
+      </div>
+    </template>
+    <script src="event-path.html.0.js"></script>  
+  </polymer-element>
+  
+  <polymer-element name="x-menu" extends="x-selector">
+    <template>
+      <div id="menuDiv">
+        <shadow id="menuShadow"></shadow>
+      </div>
+    </template>
+    <script src="event-path.html.1.js"></script>  
+  </polymer-element>
+  
+  <polymer-element name="x-overlay">
+    <template>
+      <content id="overlayContent"></content>
+    </template>
+    <script src="event-path.html.2.js"></script>  
+  </polymer-element>
+    
+  <polymer-element name="x-menu-button">
+    <template>
+      <x-overlay id="overlay">
+        <div id="menuButtonDiv">
+          <x-menu id="menu">
+            <content id="menuButtonContent"></content>
+          </x-menu>
+        </div>
+      </x-overlay>
+    </template>
+    <script src="event-path.html.3.js"></script>
+  </polymer-element>
+  
+  <script src="event-path.html.4.js"></script>
+  
+
+</body></html>

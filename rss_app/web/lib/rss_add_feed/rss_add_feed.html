@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<link rel="import" href="packages/polymer/polymer.html">
+<link rel="import" href="packages/paper/paper-dialog/paper-dialog.html">
+<link rel="import" href="packages/paper/paper-input/paper-input.html">
+<link rel="import" href="packages/paper/paper-button/paper-button.html">
+
+<polymer-element name="rss-add-feed">
+  <template>
+    <paper-dialog backdrop opened="{{opened}}">
+      <div>
+        <paper-input autofocus label="Enter feed URL" floatingLabel="true" type="URL" inputValue="{{url}}"></paper-input>
+      </div>
+      <paper-button dismissive label="Cancel"></paper-button>
+      <paper-button affirmative on-click="{{addFeedHandler}}" label="Add"></paper-button>
+    </paper-dialog>
+  </template>
+  <script type="application/dart" src="rss_add_feed.dart"></script>
+</polymer-element>
+</html>

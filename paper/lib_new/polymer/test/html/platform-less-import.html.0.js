@@ -1,0 +1,6 @@
+
+  Polymer({
+    ready: function() {
+      elementsReadied++;
+    }
+  });

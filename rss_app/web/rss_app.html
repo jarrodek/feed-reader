@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+  	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rss_app</title>
+    <link rel="stylesheet" href="rss_app.css">
+    <!-- Load Polymer -->
+    <!--script src="packages/web_components/platform.js"></script-->
+    <!-- script src="packages/web_components/dart_support.js"></script -->
+    <script type="text/javascript" src="third_party/analytics/google-analytics-bundle.js"></script>
+    <link rel="import" href="rss_app_ui.html">
+  </head>
+  <body unresolved>
+    <rss-app-ui></rss-app-ui>
+    <rss-database id="db"></rss-database>
+    <script type="application/dart" src="rss_app.dart"></script>
+  </body>
+</html>

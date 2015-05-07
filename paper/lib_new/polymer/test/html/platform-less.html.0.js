@@ -1,0 +1,3 @@
+
+      elementsReadied = 0;
+    

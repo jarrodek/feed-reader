@@ -1,0 +1,102 @@
+<!DOCTYPE html><!--
+Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><html><head>
+    <title>take attributes</title>
+    <script src="../../../webcomponentsjs/webcomponents.js"></script>
+    <link rel="import" href="../../polymer.html">
+    <script src="../../../tools/test/htmltest.js"></script>
+    <script src="../../../tools/test/chai/chai.js"></script>
+  </head>
+  <body>
+
+    <polymer-element name="x-foo">
+      <script src="take-attributes.html.0.js"></script>
+    </polymer-element>
+
+    <x-foo id="foo0" bool="true"></x-foo>
+    <x-foo id="foo1" bool="false"></x-foo>
+    <x-foo id="foo2" bool=""></x-foo>
+    <x-foo id="foo3"></x-foo>
+    <x-foo id="foo4" bool="squid"></x-foo>
+    <x-foo id="foo5" bool="0"></x-foo>
+
+    <polymer-element name="x-bar" attributes="bool num str">
+      <script src="take-attributes.html.1.js"></script>
+    </polymer-element>
+
+    <x-bar id="bar0" bool="true"></x-bar>
+    <x-bar id="bar1" bool="false"></x-bar>
+    <x-bar id="bar2" bool=""></x-bar>
+    <x-bar id="bar3"></x-bar>
+    <x-bar id="bar4" bool="squid"></x-bar>
+    <x-bar id="bar5" bool="0"></x-bar>
+
+    <polymer-element name="x-zot" extends="x-bar" attributes="bool">
+      <script src="take-attributes.html.2.js"></script>
+    </polymer-element>
+
+    <x-zot id="zot0" bool="true"></x-zot>
+    <x-zot id="zot1" bool="false"></x-zot>
+    <x-zot id="zot2" bool=""></x-zot>
+    <x-zot id="zot3"></x-zot>
+    <x-zot id="zot4" bool="squid"></x-zot>
+    <x-zot id="zot5" bool="0"></x-zot>
+    <x-zot id="zot6" num="185"></x-zot>    
+
+    <polymer-element name="x-date" attributes="value">
+      <script src="take-attributes.html.3.js"></script>
+    </polymer-element>
+
+    <x-date id="date1" value="2014/12/25"></x-date>
+    <x-date id="date2" value="December 25, 2014"></x-date>
+    <x-date id="date3" value="2014/12/25 11:45"></x-date>
+    <x-date id="date4" value="2014/12/25 11:45:30"></x-date>
+    <x-date id="date5" value="2014/12/25 11:45:30:33"></x-date>
+    <x-date id="dated" value="2014/12/25T11:45:30:33"></x-date>
+    
+    <polymer-element name="x-array" attributes="values">
+      <script src="take-attributes.html.4.js"></script>
+    </polymer-element>
+
+    <x-array id="arr1" values="[0, 1, 2]"></x-array>
+    <x-array id="arr2" values="[33]"></x-array>
+
+    <polymer-element name="x-obj" attributes="values">
+      <script src="take-attributes.html.5.js"></script>
+    </polymer-element>
+
+    <x-obj id="obj1" values="{ &quot;name&quot;: &quot;Brandon&quot;, &quot;nums&quot;: [1, 22, 33] }"></x-obj>
+    <x-obj id="obj2" values="{ &quot;color&quot;: &quot;Red&quot; }"></x-obj>
+    <x-obj id="obj3" values="{ 'movie': 'Buckaroo Banzai', 'DOB': '07/31/1978' }"></x-obj>
+
+    <polymer-element name="x-commas" attributes="bool,num,str">
+      <script src="take-attributes.html.6.js"></script>
+    </polymer-element>
+
+    <x-commas id="comma1" bool="true"></x-commas>
+    <x-commas id="comma2" bool="false"></x-commas>
+    <x-commas id="comma3" bool=""></x-commas>
+    <x-commas id="comma4" num="1"></x-commas>
+    <x-commas id="comma5" str="hi"></x-commas>
+
+    <polymer-element name="x-vertspace" attributes="bool
+    num
+    str">
+      <script src="take-attributes.html.7.js"></script>
+    </polymer-element>
+
+    <x-vertspace id="vertspace1" bool="true"></x-vertspace>
+    <x-vertspace id="vertspace2" bool="false"></x-vertspace>
+    <x-vertspace id="vertspace3" bool=""></x-vertspace>
+    <x-vertspace id="vertspace4" num="1"></x-vertspace>
+    <x-vertspace id="vertspace5" str="hi"></x-vertspace>
+
+  <script src="take-attributes.html.8.js"></script>
+  
+
+</body></html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html><!--
+Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><html><head>
+    <title>bind object + repeat</title>
+    <script src="../../../webcomponentsjs/webcomponents.js"></script>
+    <link rel="import" href="../../polymer.html">
+    <script src="../../../tools/test/htmltest.js"></script>
+    <script src="../../../tools/test/chai/chai.js"></script>
+  </head>
+  <body>
+    <polymer-element name="x-foo" attributes="obj">
+      <template>
+        <p>obj.foo is {{obj.foo}}</p>
+      </template>
+      <script src="bind-object-repeat.html.0.js"></script>
+    </polymer-element>
+    
+    <polymer-element name="x-bind-obj">
+      <template>
+        <x-foo id="foo" obj="{{testObj}}"></x-foo>
+        <div id="container">
+          <template repeat="{{arr}}">
+            <x-foo obj="{{}}"></x-foo>
+          </template>
+        </div>
+      </template>
+      <script src="bind-object-repeat.html.1.js"></script>
+    </polymer-element>
+    
+    <x-bind-obj></x-bind-obj>
+  
+
+</body></html>

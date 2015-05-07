@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<link rel="import" href="packages/polymer/polymer.html">
+<link rel="import" href="packages/paper/paper-dialog/paper-dialog.html">
+<link rel="import" href="packages/paper/paper-input/paper-input.html">
+<link rel="import" href="packages/paper/paper-button/paper-button.html">
+<link rel="import" href="packages/paper/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="packages/paper/core-label/core-label.html">
+
+<polymer-element name="rss-settings" attributes="gaenabled appversion">
+  <template>
+    <link rel="stylesheet" href="rss-settings.css">
+    <paper-dialog backdrop opened="{{opened}}">
+      <section>
+        <h2>Google Analytics</h2>
+        <div class="content">
+          <p>This app is using Google Analytics Platform to collect usage data.</p>
+          <p class="bg-info">None of your personal or your feed's data is collected by the app. There's no possibility to recognize a person from collected data.</p>
+          <p>You can disable sending any statistical data. However, this data help me - the author - determine how the app is used by the users, what is screen size, chrome version etc. It will help to develop new features and help create more usable application for you.</p>
+          
+          
+          <core-label horizontal layout center>
+            <paper-checkbox for checked="{{gaCheckboxEnabled}}" on-change="{{gaChange}}"></paper-checkbox>
+            
+            <div vertical layout class="ga-label">
+              <h4>Google Analytics</h4>
+              <div>Send data to Google Analytics</div>
+            </div>
+            
+          </core-label>
+          
+        </div>
+      </section>
+      
+      <section>
+        <h2>The RSS app</h2>
+        <div class="content">
+          <p>Version: {{appversion}}</p>
+          <p>Author: Pawel Psztyć (<a href="https://google.com/+PawelPsztyc" target="_blank">Google+ profile</a>)</p>
+          <p>Send a review on <a href="https://chrome.google.com/webstore/detail/chrome-rss-reader/pcciiglipgjjihflmlkfckgecaemhpdo" target="_blank">Chrome web store</a></p>
+        </div>
+      </section>
+      
+      
+      <paper-button affirmative label="Close"></paper-button>
+    </paper-dialog>
+  </template>
+  <script type="application/dart" src="rss-settings.dart"></script>
+</polymer-element>
+</html>

@@ -1,0 +1,15 @@
+
+:host {
+
+}
+
+#bar {
+  max-width: 500px;
+  background: white;
+  font-size: 1.0em;
+  border-radius: 2px;
+}
+
+#bar paper-shadow {
+  display: none;
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<link rel="import" href="packages/polymer/polymer.html">
+<link rel="import" href="../chrome-app/app-image.html">
+<link rel="import" href="../star/star.html">
+<link rel="import" href="../formatters/date-formatter.html">
+
+<polymer-element name="rss-list-entry">
+  <template>
+    <link rel="stylesheet" href="rss_list_entry.css">
+    <article listarticle data-id="{{entry.entryid}}" class="{{ {'unread': entry.unread} }}" layout horizontal center>
+      <template if="{{entry.imageUrl != null}}">
+        <div class="image-container" layout horizontal on-click="{{readPost}}">
+          <chrome-app-image class="entry-image" src="{{entry.imageUrl}}" self-center></chrome-app-image>
+        </div>
+      </template>
+      <div flex layout vertical class="content-summary" on-click="{{readPost}}">
+        <h2 class="post-title">{{entry.title}}</h2>
+        <p class="post-summary">{{entry.text | truncate}}</p>
+        <paper-ripple fit></paper-ripple>
+      </div>
+      <div layout vertical center class="action-area">
+        <app-star starred="{{entry.starred}}" class="star-action" on-star-change="{{onStarChange}}"></app-star>
+        <time pubdate datetime="{{entry.published}}">
+          <span layout vertical center>
+            <date-formatter type="relativeday" datetime="{{entry.published}}">{{entry.published}}</date-formatter>
+            <date-formatter type="time" datetime="{{entry.published}}">{{entry.published}}</date-formatter>
+          </span>
+        </time>
+      </div>
+    </article>
+  </template>
+  <script type="application/dart" src="rss_list_entry.dart"></script>
+</polymer-element>
+</html>

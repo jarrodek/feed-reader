@@ -1,0 +1,62 @@
+:host{
+  display: block;
+  height: 100%;
+  position: relative;
+}
+[header]{
+  margin: 40px;
+  font-size: 160%;
+}
+[header],
+[header] a{
+  color: rgba(0,0,0,0.60);
+}
+[header] > * {
+  margin-right: 0.2em;
+}
+
+iframe{
+  border: none;
+  margin-bottom: 24px;
+}
+.info{
+  margin-left: 16px;
+}
+
+.author-image /deep/ img{
+  max-width: 100px;
+  max-height: 100px;
+  vertical-align: middle;
+}
+.author-image {
+  display: block;
+}
+
+h3{
+  color: rgba(0, 0, 0, 0.54);
+}
+.tag{
+  display: block;
+}
+.tag a{
+  padding: 8px 12px;
+  border: 2px #e5e5e5 solid;
+  margin: 0 8px 8px 0;
+  transition-delay: 0s;
+  transition-duration: 0.2s;
+  transition-property: all;
+  transition-timing-function: ease-in-out;
+  cursor: pointer;
+  display: inline-block;
+  color: rgba(51, 51, 51, 0.68);
+  text-decoration: none;
+}
+.tag a:hover {
+  border-color: #526E9C;
+}
+paper-fab{
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  color: #fff;
+}

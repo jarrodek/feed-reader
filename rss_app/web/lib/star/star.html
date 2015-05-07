@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<link rel="import" href="packages/polymer/polymer.html">
+<link rel="import" href="packages/paper/paper-icon-button/paper-icon-button.html">
+
+<polymer-element name="app-star" attributes="starred">
+  <template>
+    <link rel="stylesheet" href="star.css">
+    <span on-click="{{handleClick}}" class="star">
+      <paper-icon-button icon="{{ starred ? 'star' : 'star-outline' }}" class="{{ {'off':!starred} }}"></paper-icon-button>
+    </span>
+  </template>
+  <script type="application/dart" src="star.dart"></script>
+</polymer-element>
+</html>

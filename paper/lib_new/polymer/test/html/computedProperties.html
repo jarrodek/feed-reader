@@ -1,0 +1,31 @@
+<!DOCTYPE html><!--
+Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><html><head>
+    <title>computed properties</title>
+    <script src="../../../webcomponentsjs/webcomponents.js"></script>
+    <link rel="import" href="../../polymer.html">
+    <script src="../../../tools/test/htmltest.js"></script>
+    <script src="../../../tools/test/chai/chai.js"></script>
+  </head>
+  <body>
+    <polymer-element name="x-foo" attributes="a b concat upper">
+      <template>{{ a }}:{{ b }}:{{ concat }}:{{ upper }}</template>
+      <script src="computedProperties.html.0.js"></script>
+    </polymer-element>
+
+    <polymer-element name="computed-properties-test">
+      <template>
+        <x-foo id="foo" a="a" b="b" concat="{{ concat }}" upper="{{ upper }}"></x-foo>
+      </template>
+      <script src="computedProperties.html.1.js"></script>
+    </polymer-element>
+
+    <computed-properties-test></computed-properties-test>
+  
+
+</body></html>

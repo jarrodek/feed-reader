@@ -1,0 +1,28 @@
+<!--
+Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><html><head><script src="../change_summary.js"></script>
+<script src="constrain.js"></script>
+<script src="persist.js"></script>
+<script src="mdv-object-observe/include.js"></script>
+
+</head><body><h1>Circles</h1>
+<div data-controller="CircleController">
+  <template iterate="">
+    <div style="border: 1px solid black; margin: 8px">
+      <table>
+      <tbody><tr><td>radius:</td><td><input type="number" value="{{ radius }}"></td></tr>
+      <tr><td>area:</td><td><input type="number" value="{{ area }}"></td></tr>
+      <tr><td>circumference:</td><td><input type="number" value="{{ circumference }}"></td></tr>
+      </tbody></table>
+      <button data-action="click:delete">Delete</button>
+    </div>
+  </template>
+  <button data-action="click:add">New</button>
+</div>
+<script src="circles.html.0.js"></script>
+</body></html>

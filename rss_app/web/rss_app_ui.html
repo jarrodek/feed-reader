@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<link rel="import" href="packages/polymer/polymer.html">
+
+<link rel="import" href="packages/paper/core-menu/core-menu.html">
+<link rel="import" href="packages/paper/core-icon/core-icon.html">
+<link rel="import" href="packages/paper/core-icons/core-icons.html">
+<link rel="import" href="packages/paper/core-icons/social-icons.html">
+<link rel="import" href="packages/paper/core-iconset-svg/core-iconset-svg.html">
+<link rel="import" href="packages/paper/core-menu/core-submenu.html">
+<link rel="import" href="packages/paper/core-header-panel/core-header-panel.html">
+<link rel="import" href="packages/paper/core-drawer-panel/core-drawer-panel.html">
+<link rel="import" href="packages/paper/core-toolbar/core-toolbar.html">
+<link rel="import" href="packages/paper/core-animated-pages/core-animated-pages.html">
+<link rel="import" href="packages/paper/core-animated-pages/transitions/slide-from-right.html">
+<link rel="import" href="packages/paper/core-label/core-label.html">
+
+<link rel="import" href="packages/paper/paper-input/paper-input.html">
+<link rel="import" href="packages/paper/paper-button/paper-button.html">
+<link rel="import" href="packages/paper/paper-item/paper-item.html">
+<link rel="import" href="packages/paper/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="packages/paper/paper-dialog/paper-dialog.html">
+<link rel="import" href="packages/paper/paper-ripple/paper-ripple.html">
+<link rel="import" href="packages/paper/paper-dialog/paper-dialog-transition.html">
+<link rel="import" href="packages/paper/paper-toast/paper-toast.html">
+<link rel="import" href="packages/paper/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="packages/paper/paper-fab/paper-fab.html">
+<link rel="import" href="packages/paper/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="packages/paper/paper-checkbox/paper-checkbox.html">
+
+
+<link rel="import" href="lib/rss_database/rss_database.html">
+<link rel="import" href="lib/rss_add_feed/rss_add_feed.html">
+<link rel="import" href="lib/rss_feed/rss_list_entry.html">
+<link rel="import" href="lib/chrome-app/app-image.html">
+<link rel="import" href="lib/app-spinner/app-spinner.html">
+<link rel="import" href="lib/star/star.html">
+<link rel="import" href="lib/rss_entries/rss_entry.html">
+<link rel="import" href="lib/formatters/date-formatter.html">
+<link rel="import" href="lib/iconset/app-icons.html">
+<link rel="import" href="lib/rss-settings/rss-settings.html">
+
+<polymer-element name="rss-app-ui" attributes="page tag currentfeedid currentpostid backgroundloading entriespage">
+  <template>
+    <link rel="stylesheet" href="rss_app_ui.css">
+    <link rel="stylesheet" href="third_party/roboto/roboto.css">
+    <core-drawer-panel responsiveWidth="900px" drawerWidth="350px" id="drawerPanel" on-core-responsive-change="{{onLayoutChange}}" narrow="{{narrow}}">
+      <core-header-panel mode="waterfall-tall" drawer>
+        <core-toolbar class="{{ {tall : !narrow} }}">
+          <div class="bottom">
+            <h2>Your feeds</h2>
+          </div>
+        </core-toolbar>
+        <div>
+          <!-- Feeds list -->
+          <core-menu valueattr="item" selected="{{menuItemSelected}}">
+            <!-- system feeds -->
+            <paper-item icon="markunread" label="Unread" item="unread" on-click="{{menuAction}}"></paper-item>
+            <paper-item icon="star" label="Starred" item="starred" on-click="{{menuAction}}"></paper-item>
+            <paper-item icon="select-all" label="All items" item="all" on-click="{{menuAction}}"></paper-item>
+            <!-- user's feeds -->
+            <template repeat="{{feed in feeds}}">
+              <paper-item title="{{feed.display}}" class="user-feed" noink item="{{feed.id}}">
+                <span flex class="feed-display" item="{{feed.id}}" on-click="{{menuAction}}">{{feed.display}}</span>
+                <template if="{{feed.newItems}}">
+                  <span class="new-items">new</span>
+                </template>
+                <paper-menu-button class="menu-contextmenu" icon="more-vert" title="Options" halign="right" item="{{feed.id}}">
+                  <paper-item fid="{{feed.id}}" on-click="{{removeFeed}}">Delete</paper-item>
+                  <paper-item fid="{{feed.id}}" on-click="{{clearFeed}}">Clear</paper-item>
+                  <paper-item fid="{{feed.id}}" on-click="{{toggleFeedStar}}">{{feed.starred ? "Stop notifications" : "Get notifications"}}</paper-item>
+                </paper-menu-button>
+              </paper-item>
+            </template>
+          </core-menu>
+        </div>
+      </core-header-panel>
+      <core-header-panel id="contentPanel" mode="waterfall-tall" main on-scroll="{{mainContentScroll}}">
+        <core-toolbar class="{{ {tall : !narrow} }}">
+          <paper-icon-button hidden?="{{!narrow}}" icon="menu" id="menuTrigger" on-click="{{openDrawer}}"></paper-icon-button>
+          <paper-icon-button hidden?="{{ !(page == 'entry') }}" icon="arrow-back" id="backFromPostView" on-click="{{displayCurrentFeed}}"></paper-icon-button>
+          <template if="{{backgroundloading==true}}">
+            <core-icon class="refreshing" icon="refresh"></core-icon>
+          </template>
+          <span flex><!--Feed reader--></span>
+          <!-- Control posts in !tall mode -->
+          <template if="{{!listView}}">
+            <paper-icon-button disabled?="{{!hasPrevPost}}" icon="chevron-left" on-click="{{prevPost}}"></paper-icon-button>
+            <paper-icon-button disabled?="{{!hasNextPost}}"  icon="chevron-right" on-click="{{nextPost}}"></paper-icon-button>
+            <paper-menu-button icon="social:share" title="Share" halign="right">
+              <paper-item on-click="{{share}}" media="facebook" icon="rss:post-facebook" label="Facebook">Facebook</paper-item>
+              <paper-item on-click="{{share}}" media="google" icon="rss:post-gplus" label="Google +"></paper-item>
+              <paper-item on-click="{{share}}" media="twitter" icon="rss:post-twitter" label="Twitter"></paper-item>
+              <paper-item on-click="{{share}}" media="linkedin" icon="rss:post-linkedin" label="LinkedIn"></paper-item>
+              <paper-item on-click="{{share}}" media="pinterest" icon="rss:post-pinterest" label="Pinterest"></paper-item>
+            </paper-menu-button>
+            <paper-menu-button icon="more-vert" title="Options" halign="right">
+              <paper-item on-click="{{markAllRead}}">Mark all as read</paper-item>
+              <paper-item on-click="{{refreshFeeds}}">Refresh all</paper-item>
+              <paper-item on-click="{{openAddDialog}}">Add new feed</paper-item>
+              <paper-item on-click="{{markPostUnread}}">Mark post unread</paper-item>
+            </paper-menu-button>
+            <div class="middle" horizontal layout flex center>
+              <app-star starred="{{selectedEntry.starred}}" class="star-action" on-star-change="{{onEntryStarChange}}"></app-star>
+              <h1 flex>{{selectedEntry.title}}</h1>
+            </div>
+          </template>
+          
+          <template if="{{listView}}">
+            <paper-menu-button icon="more-vert" title="Options" halign="right">
+              <paper-item on-click="{{markAllRead}}">Mark all as read</paper-item>
+              <paper-item on-click="{{refreshFeeds}}">Refresh all</paper-item>
+              <paper-item on-click="{{openAddDialog}}">Add new feed</paper-item>
+              <paper-item on-click="{{openSettingsDialog}}">Settings</paper-item>
+            </paper-menu-button>
+            <div class="bottom {{ {indent : narrow} }}" horizontal layout flex>
+              <h1>{{pageTitle}}</h1>
+            </div>
+          </template>
+          <!-- add feed dialog -->
+          <rss-add-feed id="addFeedDialog" on-feed-add="{{addFeedHandler}}"></rss-add-feed>
+          <rss-settings id="settingsDialog" appversion="{{appVersion}}" gaenabled="{{analyticsEnabled}}"></rss-settings>
+        </core-toolbar>
+        <div flex layout vertical class="main-content">
+          <core-animated-pages selected="{{selectedPage}}" transitions="slide-from-right">
+            <!-- entries list -->
+            <section class="entries-view" flex>
+              <template repeat="{{entry in entries}}">
+                <rss-list-entry entry="{{entry}}" on-star-change="{{onEntryStarChange}}" on-read="{{readPostHandler}}"></rss-list-entry>
+              </template>
+              <div class="feed-loading" hidden?="{{!requestingEntries}}">
+                <app-spinner></app-spinner>
+              </div>
+              <div class="list-empty" hidden?="{{ !(!requestingEntries && entries.length == 0) }}">
+                <template if="{{feeds.length>0}}">
+                  <p>Move along, nothing to see here.</p>
+                </template>
+                <template if="{{feeds.length==0}}">
+                  <h2>Hello there!</h2>
+                  <p>Add a news feed to begin.</p>
+                  <paper-button raisedButton label="Add new feed" icon="add" on-click="{{openAddDialog}}" class="addfeed-button"></paper-button>
+                </template>
+              </div>
+            </section>
+            
+            <!-- Post view -->
+            <section flex layout vertical class="post-view">
+              <rss-entry flex layout vertical showtitle="{{narrow}}" entry="{{selectedEntry}}" on-next-post="{{nextPost}}" on-prev-post="{{prevPost}}"></rss-entry>
+            </section>
+            
+          </core-animated-pages>
+          <paper-toast id="toast" text=""></paper-toast>
+          <!-- http://stackoverflow.com/feeds/tag/google-chrome -->
+        </div>
+      </core-header-panel>
+    </core-drawer-panel>
+  </template>
+  <script type="application/dart" src="rss_app_ui.dart"></script>
+</polymer-element>

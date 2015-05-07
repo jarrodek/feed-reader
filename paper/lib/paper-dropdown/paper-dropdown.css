@@ -1,0 +1,31 @@
+#ripple {
+  background-color: #fff;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.26);
+  opacity: 0;
+}
+
+:host([halign=right]) #ripple {
+  left: auto;
+  right: 0;
+}
+
+:host([valign=bottom]) #ripple {
+  top: auto;
+  bottom: 0;
+}
+
+#background {
+  background-color: #fff;
+  border-radius: inherit;
+}
+
+#scroller {
+  overflow: auto;
+  box-sizing: border-box;
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<link rel="import" href="packages/polymer/polymer.html">
+<link rel="import" href="packages/paper/paper-fab/paper-fab.html">
+<link rel="import" href="../formatters/date-formatter.html">
+<link rel="import" href="../chrome-app/app-image.html">
+
+<polymer-element name="rss-entry" attributes="entry showtitle">
+  <template>
+    <link rel="stylesheet" href="rss_entry.css">
+    <div layout vertical flex relative>
+      <section header layout horizontal self-center center>
+          <template if="{{entry.author.image.src != null}}">
+            <chrome-app-image class="author-image" src="{{entry.author.image.src}}"></chrome-app-image>
+          </template>
+          <template if="{{entry.author.name}}">
+            <span class="author-name">
+              by 
+              <template if="{{entry.author.url != null}}">
+                <a target="_blank" href="{{entry.author.url}}">{{entry.author.name}}</a>, 
+              </template>
+              <template if="{{entry.author.url == null}}">
+                <b>{{entry.author.name}}</b>, 
+              </template>
+            </span>
+          </template>
+          <span>published</span> <date-formatter type="relativedate" datetime="{{entry.published}}">{{entry.published}}</date-formatter>
+      </section>
+      <div layout horizontal flex relative>
+        <iframe id="iframe" src="/sandboxed/sandbox.html" class="entry-webview" on-load="{{frameLoad}}" seamless="seamless" flex three></iframe>
+        <template if="{{entry.categories.length > 0}}">
+          <div class="info" flex>
+            <section>
+              <h3>Tags</h3>
+              <div>
+                <template repeat="{{tag in entry.categories}}">
+                  <span class="tag"><a href="{{getCategoryUrl(tag)}}">{{tag}}</a></span>
+                </template>
+              </div>
+            </section>
+          </div>
+        </template>
+      </div>
+      
+      <paper-fab id="openUrlFab" on-click="{{openEntry}}" href="{{entry.url}}"  icon="open-in-new" title="arrow-forward"></paper-fab>
+      
+    </div>
+  </template>
+  <script type="application/dart" src="rss_entry.dart"></script>
+</polymer-element>
+</html>

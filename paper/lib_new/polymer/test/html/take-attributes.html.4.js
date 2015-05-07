@@ -1,0 +1,5 @@
+
+        Polymer('x-array', {
+          values: []
+        });
+      

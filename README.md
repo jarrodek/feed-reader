@@ -1,8 +1,6 @@
-feed-reader
-===========
+# Chrome RSS reader.
 
-Chrome Feed Reader
+A Chrome App-based reader of RSS/Atom feeds.
 
 
-Is an application for Google Chrome to read Atom news feeds.
-This application is under active development.
+This project is based on the Spark project.

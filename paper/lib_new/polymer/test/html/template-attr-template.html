@@ -1,0 +1,42 @@
+<!DOCTYPE html><!--
+Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><html><head><script src="../../../webcomponentsjs/webcomponents.js"></script>
+<link rel="import" href="../../polymer.html">
+<link rel="import" href="template-attr-template-import.html">
+<script src="../../../tools/test/htmltest.js"></script>
+<script src="../../../tools/test/chai/chai.js"></script>
+<script src="template-attr-template.html.0.js"></script>
+
+
+</head><body><polymer-element name="decoration-test2" extends="decoration-test">
+  <template>
+    <table>
+      <thead>
+        <tr><th>one</th>
+        <th>two</th>
+        <th>three</th>
+      </tr></thead>
+      <tbody id="tbody">
+        <tr template="" repeat="{{ arr in arrs }}">
+          <td template="" repeat="{{ n in arr }}">
+            {{n}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </template>
+  <script src="template-attr-template.html.1.js"></script>
+</polymer-element>
+
+<decoration-test></decoration-test>
+<br>
+<decoration-test2></decoration-test2>
+
+
+<script src="template-attr-template.html.2.js"></script>
+</body></html>

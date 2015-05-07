@@ -1,0 +1,4 @@
+
+
+var forceCollectObservers = true;
+

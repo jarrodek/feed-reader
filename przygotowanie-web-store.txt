@@ -1,9 +1,0 @@
-1. Pub build (generate JS) na index.html
-2. Usunąć wszystkie pliki *.dart
-2.1 w packages zostaja tylko katalogi:
-  - browser
-  - rss_app
-  - web_components
-2.2. Usunąć wszystkie .dart z rss_app
-3. Główna i jedyna biblioteka aplikacji to: rss_app.dart.precompiled.js. Reszta do usunięcia (poza background.js)
-4. Zmiana rss_app.html i dodanie referencji do rss_app.dart.precompiled.js

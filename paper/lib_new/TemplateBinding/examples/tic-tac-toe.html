@@ -1,0 +1,49 @@
+<!DOCTYPE html><html><!--
+Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><head>
+<title>Tic Tac Toe Sample</title>
+<script src="../load.js"></script>
+<script src="util/view_controller.js"></script>
+<style>
+
+tr {
+  height: 40px;
+}
+
+td {
+  width: 40px;
+  border: 2px solid black;
+  text-align: center;
+}
+
+.square:not(.taken):hover {
+  border: 2px solid #00FF00;
+}
+
+.square.taken:hover {
+  border: 2px solid #FF0000;
+}
+
+</style>
+<script src="tic-tac-toe.html.0.js"></script>
+</head>
+<body data-controller="TickTackToeController">
+  <template bind="{{}}">
+    <span>It's {{ currentPlayer }}'s turn</span>
+    <table>
+      <tbody><tr template="" repeat="{{board}}">
+        <td template="" repeat="{{}}" class="square {{ move | toggle('taken') }}" data-action="click:makeMove"> {{ move }} </td>
+      </tr>
+    </tbody></table>
+    <span hidden?="{{ expr(winner) !winner }}">{{ winner }} wins!
+      <a href="#" data-action="click:reset">Play Again?</a>
+    </span>
+  </template>
+
+
+</body></html>

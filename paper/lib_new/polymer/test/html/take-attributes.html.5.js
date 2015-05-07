@@ -1,0 +1,5 @@
+
+        Polymer('x-obj', {
+          values: {}
+        });
+      
