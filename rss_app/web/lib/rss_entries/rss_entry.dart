@@ -98,4 +98,11 @@ class RssEntry extends PolymerElement {
   void openEntry(Event e, b, Element target) {
     window.open(entry.url, entry.title);
   }
+  
+  void onEntryStarChange(CustomEvent e, b, Element target){
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    entry.starred = e.detail['starred']; 
+    this.fire('star-change', detail: {'entry': entry});
+  }
 }

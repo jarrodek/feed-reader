@@ -4,15 +4,25 @@
   position: relative;
 }
 [header]{
-  margin: 40px;
+  margin-bottom: 40px;
   font-size: 160%;
 }
 [header],
 [header] a{
   color: rgba(0,0,0,0.60);
 }
-[header] > * {
+[header] > div.meta > * {
   margin-right: 0.2em;
+}
+
+.meta{
+  margin-left: 48px;
+}
+
+app-star{
+  width: 40px;
+  height: 40px;
+  margin-right: 8px;
 }
 
 iframe{
@@ -24,12 +34,13 @@ iframe{
 }
 
 .author-image /deep/ img{
-  max-width: 100px;
-  max-height: 100px;
+  max-width: 60px;
+  max-height: 60px;
   vertical-align: middle;
 }
 .author-image {
   display: block;
+  margin-right: 8px;
 }
 
 h3{

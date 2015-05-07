@@ -13,6 +13,7 @@ import '../rss_database/dbstructures.dart';
 class RssListItemEntry extends PolymerElement {
 
   @published FeedEntry entry;
+  @published String layout = 'list';
   RssListItemEntry.created() : super.created();
   
   void onStarChange(CustomEvent e, b, Element target) {

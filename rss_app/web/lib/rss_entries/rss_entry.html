@@ -8,7 +8,13 @@
   <template>
     <link rel="stylesheet" href="rss_entry.css">
     <div layout vertical flex relative>
-      <section header layout horizontal self-center center>
+    
+      <section header layout vertical>
+        <div layout horizontal center>
+          <app-star starred="{{entry.starred}}" class="star-action" on-star-change="{{onEntryStarChange}}"></app-star>
+          <h1 flex>{{entry.title}}</h1>
+        </div>
+        <div layout horizontal end>
           <template if="{{entry.author.image.src != null}}">
             <chrome-app-image class="author-image" src="{{entry.author.image.src}}"></chrome-app-image>
           </template>
@@ -24,6 +30,7 @@
             </span>
           </template>
           <span>published</span> <date-formatter type="relativedate" datetime="{{entry.published}}">{{entry.published}}</date-formatter>
+        </div>
       </section>
       <div layout horizontal flex relative>
         <iframe id="iframe" src="/sandboxed/sandbox.html" class="entry-webview" on-load="{{frameLoad}}" seamless="seamless" flex three></iframe>

@@ -44,8 +44,8 @@
     <link rel="stylesheet" href="rss_app_ui.css">
     <link rel="stylesheet" href="third_party/roboto/roboto.css">
     <core-drawer-panel responsiveWidth="900px" drawerWidth="350px" id="drawerPanel" on-core-responsive-change="{{onLayoutChange}}" narrow="{{narrow}}">
-      <core-header-panel mode="waterfall-tall" drawer>
-        <core-toolbar class="{{ {tall : !narrow} }}">
+      <core-header-panel mode="standard" drawer>
+        <core-toolbar>
           <div class="bottom">
             <h2>Your feeds</h2>
           </div>
@@ -74,8 +74,8 @@
           </core-menu>
         </div>
       </core-header-panel>
-      <core-header-panel id="contentPanel" mode="waterfall-tall" main on-scroll="{{mainContentScroll}}">
-        <core-toolbar class="{{ {tall : !narrow} }}">
+      <core-header-panel id="contentPanel" mode="standard" main on-scroll="{{mainContentScroll}}">
+        <core-toolbar>
           <paper-icon-button hidden?="{{!narrow}}" icon="menu" id="menuTrigger" on-click="{{openDrawer}}"></paper-icon-button>
           <paper-icon-button hidden?="{{ !(page == 'entry') }}" icon="arrow-back" id="backFromPostView" on-click="{{displayCurrentFeed}}"></paper-icon-button>
           <template if="{{backgroundloading==true}}">
@@ -99,10 +99,10 @@
               <paper-item on-click="{{openAddDialog}}">Add new feed</paper-item>
               <paper-item on-click="{{markPostUnread}}">Mark post unread</paper-item>
             </paper-menu-button>
-            <div class="middle" horizontal layout flex center>
+            <!-- div class="middle" horizontal layout flex center>
               <app-star starred="{{selectedEntry.starred}}" class="star-action" on-star-change="{{onEntryStarChange}}"></app-star>
               <h1 flex>{{selectedEntry.title}}</h1>
-            </div>
+            </div -->
           </template>
           
           <template if="{{listView}}">
@@ -144,7 +144,7 @@
             
             <!-- Post view -->
             <section flex layout vertical class="post-view">
-              <rss-entry flex layout vertical showtitle="{{narrow}}" entry="{{selectedEntry}}" on-next-post="{{nextPost}}" on-prev-post="{{prevPost}}"></rss-entry>
+              <rss-entry flex layout vertical entry="{{selectedEntry}}" on-next-post="{{nextPost}}" on-prev-post="{{prevPost}}" on-star-change="{{onEntryStarChange}}"></rss-entry>
             </section>
             
           </core-animated-pages>
